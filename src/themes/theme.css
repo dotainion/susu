@@ -1,0 +1,115 @@
+body{
+    background-color: var(--bg-primary);
+}
+
+button:not(.btn-dark):not(.btn-primary):not(.btn-secondary):not(.btn-danger):not(.btn-info):not(.btn-light){
+    color: var(--bg-dark);
+    background-color: var(--bg-info);
+}
+
+input[type=search]{
+    width: 400px;
+}
+
+.card{
+    background-color: white;
+    cursor: pointer;
+}
+
+.card-body{
+    background: linear-gradient(to top, #b8a89d, white);
+}
+
+.card .card-img-top{
+    height: 180px;
+}
+
+.card .card-img-mini{
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    margin-right: 5px;
+}
+
+.card .card-img-sub{
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    margin-right: 5px;
+}
+
+.sidebar{
+    width: 280px;
+    min-width: 280px;
+    max-width: 280px;
+    background-color: var(--bg-sidebar);
+}
+
+.sidebar li > div{
+    padding-left: 20px;
+}
+
+.sidebar li > div li a{
+    text-decoration: none;
+}
+
+.sidebar button:not(.collapsed) .caret-right, .sidebar button.collapsed .caret-down{
+    display: none;
+}
+
+.sidebar .dropdown-menu{
+    background-color: var(--bg-secondary);
+}
+
+.sidebar button{
+    background-color: inherit !important;
+    position: relative;
+    z-index: 1000;
+}
+
+.sidebar .dropdown-menu button:hover{
+    background-color: white !important;
+}
+
+.striped-list > div:nth-child(odd) {
+    background-color: inherit;
+}
+  
+.striped-list > div:nth-child(even) {
+    background-color: rgb(255, 255, 255, 0.3);
+}
+
+@media (max-width: 576px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: none !important;
+        z-index: 1000;
+        transition: transform 0.3s ease;
+    }
+    .sidebar .flex-shrink-0{
+        width: 100%;
+        z-index: 1000;
+        background-color: inherit;
+    }
+    .sidebar.show, .sidebar-backdrop.show {
+        display: flex !important;
+    }
+    .sidebar-menu{
+        background-color: var(--bg-sidebar);
+    }
+    .sidebar-menu button{
+        color: white !important;
+    }
+    .sidebar-backdrop{
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: rgb(0, 0, 0, 0.3);
+        z-index: 900;
+    }
+    body{
+        padding-top: 40px;
+    }
+}
