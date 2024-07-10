@@ -35,7 +35,7 @@ export const NewGroup = () =>{
                 </div>
             </div>
             <div className="d-flex justify-content-center my-5">
-                <button className="btn btn-sm px-3">Save</button>
+                <button className="btn btn-sm px-4">Save</button>
             </div>
         </div>
     )

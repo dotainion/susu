@@ -4,9 +4,13 @@ import { GiCondorEmblem } from "react-icons/gi";
 import { MdMenu } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
 import $ from "jquery";
+import { routes } from "../routes/Routes";
+import { useNavigate } from "react-router-dom";
 
 export const Sidebar = () =>{
     const [show, setShow] = useState(false);
+
+    const navigate = useNavigate();
 
     const sidebarRef = useRef();
 
@@ -17,61 +21,64 @@ export const Sidebar = () =>{
         {
             category: 'Dashboard and Overview',
             menus: [
-                {title: 'Dashboard/Home'},
-                {title: 'Contribution Summary'},
-                {title: 'Rotation Schedule Overview'},
-                {title: 'Group Management'},
+                {title: 'Dashboard/Home', disabled: true},
+                {title: 'Contribution Summary', disabled: true},
+                {title: 'Rotation Schedule Overview', disabled: true},
+                {title: 'Group Management', disabled: true},
             ],
         },{
             category: 'Groups',
             menus: [
-                {title: 'Group Details'},
-                {title: 'Group Rules'},
-                {title: 'Member List'},
-                {title: 'Contribution History'},
-                {title: 'User Profile and Settings'},
+                {title: 'Create Group', onClick: ()=>navigate(routes.newGroup())},
+                {title: 'Group List', onClick: ()=>navigate(routes.groupList())},
+                {title: 'Member List', onClick: ()=>navigate(routes.memberList())},
+                {title: 'Contribution History', disabled: true},
+                //{title: 'User Profile and Settings', disabled: true},
             ],
         },{
             category: 'Profile',
             menus: [
-                {title: 'Account Settings'},
-                {title: 'Security Settings'},
-                {title: 'Privacy Settings'},
-                {title: 'Notification Preferences'},
-                {title: 'Financial Management'},
+                {title: 'Account', onClick: ()=>navigate(routes.profile())},
+                {title: 'Account Settings', disabled: true},
+                {title: 'Privacy Settings', disabled: true},
+                {title: 'Notification Preferences', disabled: true},
+                {title: 'Financial Management', disabled: true},
             ],
         },{
             category: 'Contribution Management',
             menus: [
-                {title: 'Make Contributions'},
-                {title: 'View Contributions'},
-                {title: 'Financial Reports'},
-                {title: 'Group Financial Summary'},
-                {title: 'Member Contribution History'},
-                {title: 'Communication and Interaction'},
+                //need to navigate to a page that may have a list of groups and you choose to then navigate to see a list of contibutions
+                // the others may fallow that same structure.
+                {title: 'Make Contributions', disabled: true},
+                {title: 'View Contributions', disabled: true},
+                {title: 'Financial Reports', disabled: true},
+                {title: 'Group Financial Summary', disabled: true},
+                {title: 'Member Contribution History', disabled: true},
+                {title: 'Communication and Interaction', disabled: true},
             ],
         },{
             category: 'Messaging/Chat',
             menus: [
-                {title: 'Notifications'},
-                {title: 'Community Forum'},
-                {title: 'Support and Help'},
+                {title: 'Chats'},
+                {title: 'Notifications', disabled: true},
+                {title: 'Community Forum', disabled: true},
+                {title: 'Support and Help', disabled: true},
             ],
         },{
             category: 'Help/Support',
             menus: [
-                {title: 'FAQ'},
-                {title: 'Contact Support'},
-                {title: 'Information and Management'},
+                {title: 'FAQ', disabled: true},
+                {title: 'Contact Support', disabled: true},
+                {title: 'Information and Management', disabled: true},
             ],
         },{
             devider: true
         },{
             category: 'Onboarding',
             menus: [
-                {title: 'App Settings'},
-                {title: 'Legal/Compliance'},
-                {title: 'Logout/Exit'},
+                {title: 'App Settings', disabled: true},
+                {title: 'Legal/Compliance', disabled: true},
+                {title: 'Logout/Exit', disabled: true},
             ]
         }
     ];
@@ -113,9 +120,9 @@ export const Sidebar = () =>{
                     <GiCondorEmblem className="me-2 text-white display-5"/>
                     <span className="fs-5 fw-semibold text-white">Susu App</span>
                 </button>
-                <ul className="flex-column list-unstyled mb-auto ps-0">
+                <ul className="flex-column list-unstyled mb-auto ps-0 overflow-auto">
                     {categories.map((cat, key)=>(
-                        <li className={cat?.devider ? 'border-top my-3' : 'mb-1'} key={key}>
+                        <li className={`${cat?.devider ? 'border-top my-3' : 'mb-1'}`} key={key}>
                             {!cat?.devider?
                                 <>
                                 <button className="btn btn-toggle align-items-center rounded collapsed shadow-none ps-1" data-bs-toggle="collapse" data-bs-target={`#collapse-sidebar-menu-id${key}`} aria-expanded="false">
@@ -126,7 +133,9 @@ export const Sidebar = () =>{
                                 <div className="collapse" id={`collapse-sidebar-menu-id${key}`}>
                                     <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                         {cat.menus.map((menu, key2)=>(
-                                            <li key={key2}><button onClick={menu?.onClick} className="btn btn-sm">{menu.title}</button></li>
+                                            <li key={key2}>
+                                                <button onClick={menu?.onClick} className={`btn btn-sm text-start ${menu?.disabled ? 'text-secondary border-0' : ''}`} disabled={menu?.disabled}>{menu.title}</button>
+                                            </li>
                                         ))}
                                     </ul>
                                 </div>

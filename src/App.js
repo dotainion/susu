@@ -10,6 +10,8 @@ import { Profile } from "./pages/Profile";
 import { NewGroup } from "./pages/NewGroup";
 import { MembersList } from "./pages/MembersList";
 import { Member } from "./pages/Member";
+import { routes } from "./routes/Routes";
+import { ViewGroup } from "./pages/ViewGroup";
 
 //https://fastsusu.com/
 
@@ -18,13 +20,14 @@ function App() {
     <HashRouter>
       <Layout>
         <Routes>
-          <Route path="/" element={<Onboarding/>} />
-          <Route path="/groups" element={<GroupList/>} />
-          <Route path="/group" element={<Group/>} />
-          <Route path="/profile" element={<Profile/>} />
-          <Route path="/new/group" element={<NewGroup/>} />
-          <Route path="/members" element={<MembersList/>} />
-          <Route path="/member" element={<Member/>} />
+          <Route path={routes.onboarding()} element={<Onboarding/>} />
+          <Route path={routes.groupList()} element={<GroupList/>} />
+          <Route path={routes.group()} element={<Group/>} />
+          <Route path={routes.viewGroup()} element={<ViewGroup/>} />
+          <Route path={routes.profile()} element={<Profile/>} />
+          <Route path={routes.newGroup()} element={<NewGroup/>} />
+          <Route path={routes.memberList()} element={<MembersList/>} />
+          <Route path={routes.member()} element={<Member/>} />
         </Routes>
       </Layout>
     </HashRouter>

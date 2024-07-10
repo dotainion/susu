@@ -3,6 +3,9 @@ import { MdAccessTime } from "react-icons/md";
 import { IoSearchOutline } from "react-icons/io5";
 import { IoAdd } from "react-icons/io5";
 import { IoMdShare } from "react-icons/io";
+import { routes } from "../routes/Routes";
+import { useNavigate } from "react-router-dom";
+import { utils } from "../utils/Utils";
 
 export const GroupList = () => {
     const [groups, setGroups] = useState([
@@ -99,23 +102,29 @@ export const GroupList = () => {
         }
     ]);
 
+    const navigate = useNavigate();
+
+    const onShare = (group) =>{
+        utils.share.url(routes.group(group.id));
+    }
+
     useEffect(() => {
     }, []);
     return (
         <div className="container">
-            <div className="mb-3">
-                <div className="my-3 d-inline-block border border-dark rounded-3">
+            <div className="search-row mb-3">
+                <div className="my-3 d-inline-block border border-light rounded-3 bg-light">
                     <div className="d-flex align-items-center w-auto">
                         <input className="form-control bg-transparent shadow-none border-0 pe-1" placeholder="Search..." type="search" />
                         <IoSearchOutline className="fs-4 me-2"/>
                     </div>
                 </div>
-                <button className="d-flex align-items-center btn d-block shadow-none"><IoAdd className="me-2"/>Create Group</button>
+                <button onClick={()=>navigate(routes.newGroup())} className="d-flex align-items-center btn d-block shadow-none"><IoAdd className="me-2"/>Create Group</button>
             </div>
-            <div className="row">
+            <div className="row row-with-search-above">
                 {groups.map((group, key) => (
                     <div className="col-12 col-xl-3 col-lg-4 col-md-6 p-1" key={key}>
-                        <div className="card position-relative h-100 m-1">
+                        <div onClick={()=>navigate(routes.viewGroup())} className="card position-relative h-100 m-1">
                             <img className="card-img-top" src="https://media.istockphoto.com/id/1327592506/vector/default-avatar-photo-placeholder-icon-grey-profile-picture-business-man.jpg?s=612x612&w=0&k=20&c=BpR0FVaEa5F24GIw7K8nMWiiGmbb8qmhfkpXcp1dhQg=" alt="" />
                             <div className="card-body">
                                 <div className="d-flex">
@@ -137,10 +146,13 @@ export const GroupList = () => {
                                 </div>
                             </div>
                             <div className="card-footer d-flex justify-content-between">
-                                <button className="btn btn-sm">Join Group</button>
-                                <button className="btn btn-sm text-primary">Edit Group</button>
+                                <button onClick={(e)=>e.stopPropagation()} className="btn btn-sm">Join Group</button>
+                                <button onClick={(e)=>{
+                                    e.stopPropagation();
+                                    navigate(routes.group());
+                                }} className="btn btn-sm text-primary">Edit Group</button>
                             </div>
-                            <button className="btn bg-transparent shadow-none border-0 position-absolute top-0 end-0 p-1"><IoMdShare className="fs-4" /></button>
+                            <button onClick={()=>onShare(group)} className="btn bg-transparent shadow-none border-0 position-absolute top-0 end-0 p-1"><IoMdShare className="fs-4" /></button>
                         </div>
                     </div>
                 ))}

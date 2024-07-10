@@ -284,13 +284,13 @@ export const MembersList = () => {
     }, []);
     return (
         <div className="container">
-            <div className="my-3 d-inline-block border border-dark rounded-3">
+            <div className="search-row my-3 d-inline-block border border-light rounded-3 bg-light">
                 <div className="d-flex align-items-center w-auto">
                     <input className="form-control bg-transparent shadow-none border-0 pe-1" placeholder="Search..." type="search" />
                     <IoSearchOutline className="fs-4 me-2"/>
                 </div>
             </div>
-            <div className="row">
+            <div className="row row-with-search-above-mini">
                 {members.map((group, key) => (
                     <div className="col-12 col-xl-3 col-lg-4 col-md-6 p-1" key={key}>
                         <div className="card position-relative h-100 m-1">
