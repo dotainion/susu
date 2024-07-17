@@ -1,35 +1,28 @@
-import { HashRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import "./themes/theme.css"
 
-import { Onboarding } from "./pages/Onboarding";
-import { GroupList } from "./pages/GroupList";
-import { Layout } from "./layout/Layout";
-import { Group } from "./pages/Group";
-import { Profile } from "./pages/Profile";
-import { NewGroup } from "./pages/NewGroup";
-import { MembersList } from "./pages/MembersList";
-import { Member } from "./pages/Member";
 import { routes } from "./routes/Routes";
-import { ViewGroup } from "./pages/ViewGroup";
+import { SusuRouter } from "./routes/SusuRouter";
+import { Onboarding } from "./pages/Onboarding";
+import { Signin } from "./pages/Signin";
+import { Register } from "./pages/Register";
+import { AuthProvider } from "./provider/AuthProvider";
 
 //https://fastsusu.com/
 
 function App() {
   return (
     <HashRouter>
-      <Layout>
+      <AuthProvider>
         <Routes>
+          <Route path={routes.signIn()} element={<Signin/>} />
+          <Route path={routes.register()} element={<Register/>} />
           <Route path={routes.onboarding()} element={<Onboarding/>} />
-          <Route path={routes.groupList()} element={<GroupList/>} />
-          <Route path={routes.group()} element={<Group/>} />
-          <Route path={routes.viewGroup()} element={<ViewGroup/>} />
-          <Route path={routes.profile()} element={<Profile/>} />
-          <Route path={routes.newGroup()} element={<NewGroup/>} />
-          <Route path={routes.memberList()} element={<MembersList/>} />
-          <Route path={routes.member()} element={<Member/>} />
+          <Route path={routes.default()} element={<Navigate to={routes.onboarding()}/>} />
+          <Route path={routes.susu().default()} element={<SusuRouter/>} />
         </Routes>
-      </Layout>
+      </AuthProvider>
     </HashRouter>
   );
 }

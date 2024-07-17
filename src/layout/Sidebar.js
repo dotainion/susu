@@ -29,16 +29,16 @@ export const Sidebar = () =>{
         },{
             category: 'Groups',
             menus: [
-                {title: 'Create Group', onClick: ()=>navigate(routes.newGroup())},
-                {title: 'Group List', onClick: ()=>navigate(routes.groupList())},
-                {title: 'Member List', onClick: ()=>navigate(routes.memberList())},
+                {title: 'Create Group', onClick: ()=>navigate(routes.susu().newGroup())},
+                {title: 'Group List', onClick: ()=>navigate(routes.susu().groupList())},
+                {title: 'Member List', onClick: ()=>navigate(routes.susu().memberList())},
                 {title: 'Contribution History', disabled: true},
                 //{title: 'User Profile and Settings', disabled: true},
             ],
         },{
             category: 'Profile',
             menus: [
-                {title: 'Account', onClick: ()=>navigate(routes.profile())},
+                {title: 'Account', onClick: ()=>navigate(routes.susu().profile())},
                 {title: 'Account Settings', disabled: true},
                 {title: 'Privacy Settings', disabled: true},
                 {title: 'Notification Preferences', disabled: true},

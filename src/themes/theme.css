@@ -2,7 +2,7 @@ body{
     background-color: var(--bg-primary);
 }
 
-button:not(.btn-dark):not(.btn-primary):not(.btn-secondary):not(.btn-danger):not(.btn-info):not(.btn-light){
+button:not(.btn-dark):not(.btn-primary):not(.btn-secondary):not(.btn-danger):not(.btn-info):not(.btn-light):not(.btn-success){
     color: var(--bg-dark);
     background-color: var(--bg-info);
 }
