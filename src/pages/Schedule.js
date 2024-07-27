@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { routes } from "../routes/Routes";
 import { FcClock } from "react-icons/fc";
 import { useAuth } from "../provider/AuthProvider";
+import { api } from "../request/Api";
 
 export const Schedule = () =>{
     const { user } = useAuth();
@@ -19,27 +20,11 @@ export const Schedule = () =>{
     }
 
     useEffect(()=>{
-        const moc = {
-            attributes: {
-                date: 'Mon Jan, 14 2024',
-                user: {
-                    id: 'none',
-                    attributes: {
-                        firstName: 'John',
-                        lastName: 'Wicks'
-                    }
-                },
-                position: null,
-            }
-        }
-        const moc2 = {
-            attributes: {
-                date: 'Tus Jan, 15 2024',
-                user: null
-            },
-            position: null,
-        }
-        setSchedules([moc,moc2,moc,moc2,moc,moc2,moc,moc2,moc,moc2,moc,moc2,moc,moc2,moc,moc2,moc,moc2,moc,moc2,moc,moc2]);
+        api.schedule.list().then((response)=>{
+            setSchedules(response.data.data);
+        }).catch((error)=>{
+
+        });
     }, []);
 
     return(

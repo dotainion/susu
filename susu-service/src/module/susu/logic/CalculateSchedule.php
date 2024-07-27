@@ -74,8 +74,7 @@ class CalculateSchedule{
     }
 
     private function calculate() {
-        foreach ($this->members->list() as $index => $member) {
-            $position = ($index + 1);
+        for ($position = 1; $position <= $this->members->count(); $position++) {
             $schedule = $this->factory->mapResult([
                 'id' => (new Id())->new()->toString(),
                 'date' => $this->payoutDate($position)->toString(),
