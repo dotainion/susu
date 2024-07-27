@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { FaRegCopy } from "react-icons/fa6";
-import { useParams } from "react-router-dom";
 import { api } from "../request/Api";
+import { useAuth } from "../provider/AuthProvider";
+import { utils } from "../utils/Utils";
+import $ from 'jquery';
 
 export const Profile = () =>{
-    const [profile, setProfile] = useState();
-    const [address, setAddress] = useState();
+    const { user } = useAuth();
 
-    const params = useParams();
+    const [address, setAddress] = useState();
+    const [groups, setGroups] = useState([]);
 
     const firstNameRef = useRef();
     const lastNameRef = useRef();
@@ -20,28 +22,27 @@ export const Profile = () =>{
     const addressRef = useRef();
 
     useEffect(() => {
-        if(params.profileId) return;
-        api.user.user(params.profileId).then((response)=>{
-            setProfile(response.data.data[0]);
-        }).catch((error)=>{
+        if(!user) return;
 
-        });
-        api.user.address(params.profileId).then((response)=>{
+        firstNameRef.current.value = user.attributes.firstName;
+        lastNameRef.current.value = user.attributes.lastName;
+        genderRef.current.value = user.attributes.gender;
+        emailRef.current.value = user.attributes.email;
+        phoneRef.current.value = user.attributes.phoneNumber;
+        bioRef.current.value = user.attributes.bio;
+
+        api.user.address(user.id).then((response)=>{
             setAddress(response.data.data[0]);
         }).catch((error)=>{
 
         });
-    }, []);
 
-    useEffect(() => {
-        if(!profile) return;
-        firstNameRef.current.value = profile.attributes.firstName;
-        lastNameRef.current.value = profile.attributes.lastName;
-        genderRef.current.value = profile.attributes.gender;
-        emailRef.current.value = profile.attributes.email;
-        phoneRef.current.value = profile.attributes.phoneNumber;
-        bioRef.current.value = profile.attributes.bio;
-    }, [profile]);
+        api.group.memberGroups(user.id).then((response)=>{
+            setGroups(response.data.data);
+        }).catch((error)=>{
+
+        });
+    }, [user]);
 
     useEffect(() => {
         if(!address) return;
@@ -56,6 +57,10 @@ export const Profile = () =>{
             <div className="d-xl-flex d-block w-100">
                 <div className="me-5 mb-4">
                     <img style={{width: '200px', height: '200px'}} src="https://media.istockphoto.com/id/1327592506/vector/default-avatar-photo-placeholder-icon-grey-profile-picture-business-man.jpg?s=612x612&w=0&k=20&c=BpR0FVaEa5F24GIw7K8nMWiiGmbb8qmhfkpXcp1dhQg=" alt="" />
+                    <div className="py-3 px-2" style={{maxWidth: '500px'}}>
+                        <div>Group Memberships</div>
+                        <div className="fw-bold w-100">{groups.length}</div>
+                    </div>
                 </div>
                 <div className="text-nowrap w-100">
                     <div className="d-md-flex d-block">
@@ -85,7 +90,7 @@ export const Profile = () =>{
                     <div className="border-bottom border-white mb-3 text-muted small">About me</div>
                     <div className="d-md-flex d-block">
                         <div style={{minWidth: '200px'}}>Bio</div>
-                        <textarea ref={bioRef} className="form-control mb-3" placeholder="Description" style={{resize: 'none', maxWidth: '500px'}}/>
+                        <textarea ref={bioRef} className="form-control mb-3" placeholder="Bio" style={{resize: 'none', maxWidth: '500px'}}/>
                     </div>
                     <div className="border-bottom border-white mb-3 text-muted small">Location</div>
                     <div className="d-md-flex d-block">
@@ -97,7 +102,6 @@ export const Profile = () =>{
                     <div className="d-md-flex d-block">
                         <div style={{minWidth: '200px'}}>State</div>
                         <select ref={stateRef} className="form-control form-select mb-3" style={{maxWidth: '500px'}}>
-                            <option>Grenada</option>
                             <option>Saint George</option>
                             <option>Saint John</option>
                             <option>Saint Mark</option>
@@ -117,15 +121,11 @@ export const Profile = () =>{
             <div className="d-flex w-100 justify-content-center flex-column striped-list">
                 <div className="py-3 px-2 m-auto" style={{maxWidth: '500px'}}>
                     <div>Member ID</div>
-                    <div className="d-flex align-items-center form-control bg-white">
-                        <div className="w-100">{profile?.id}</div>
+                    <div onClick={(e)=>utils.copy.toClipboard($(e.currentTarget).find('div').first())} className="d-flex align-items-center form-control bg-white position-relative pointer">
+                        <div className="w-100">{user?.id}</div>
                         <button className="btn bg-transparent shadow-none border-0 p-0"><FaRegCopy className="fs-5"/></button>
                     </div>
                     <div className="small">The Member ID serves as a unique identifier assigned to each member within the SUSU app. You can use this ID to easily locate and add members to your savings and credit groups. Simply paste or enter the Member ID into the search field to find specific members.</div>
-                </div>
-                <div className="py-3 px-2 m-auto" style={{maxWidth: '500px'}}>
-                    <div>Group Memberships</div>
-                    <div className="w-100">25</div>
                 </div>
             </div>
         </div>

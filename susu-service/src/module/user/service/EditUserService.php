@@ -16,13 +16,14 @@ class EditUserService extends Service{
         $this->factory = new UserFactory();
     }
     
-    public function process($id, $name, $email, $phoneNumber){
+    public function process($id, $firstName, $lastName, $email, $phoneNumber){
         Assert::validEmail($email, 'Invalid email');
         Assert::validUuid($id??'', 'User not found.');
 
         $user = $this->factory->mapResult([
             'id' => $id,
-            'name' => $name,
+            'firstName' => $firstName,
+            'lastName' => $lastName,
             'email' => $email,
             'phoneNumber' => $phoneNumber,
             'date' => null,

@@ -1,19 +1,28 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { api } from "../request/Api"
 import { useNavigate } from "react-router-dom";
 import { routes } from "../routes/Routes";
+import { utils } from "../utils/Utils";
+import { SelectOption } from "../widgets/SelectOption";
 
 export const NewGroup = () =>{
     const navigate = useNavigate();
+
+    const [cycle , setCycle] = useState();
 
     const idRef = useRef(null);
     const nameRef = useRef();
     const contributionRef = useRef();
     const descriptionRef = useRef();
-    const cycleRef = useRef();
     const payoutDateRef = useRef();
-    const createdDateRef = useRef();
     const hideRef = useRef(false);
+
+    const cycles = [
+        {title: 'Weekly', value: 'Weekly'},
+        {title: 'Bi-Weekly', value: 'Bi-Weekly'},
+        {title: 'Monthly', value: 'Monthly'},
+        {title: 'Bi-Monthly', value: 'Bi-Monthly'},
+    ];
 
     const createGroup = () =>{
         const group = {
@@ -21,15 +30,14 @@ export const NewGroup = () =>{
             name: nameRef.current.value,
             contribution: contributionRef.current.value,
             description: descriptionRef.current.value,
-            cycle: cycleRef.current.value,
-            payoutDate: payoutDateRef.current.value,
-            createdDate: createdDateRef.current.value,
+            cycle: cycle,
+            payoutDate: utils.date.dbFormat(payoutDateRef.current.value),
             hide: hideRef.current
         }
         api.group.set(group).then((response)=>{
-            navigate(routes.susu().group(response.data.data[0].id));
+            navigate(routes.susu().nested().group(response.data.data[0].id));
         }).catch((error)=>{
-
+            console.log(error);
         });
     }
 
@@ -55,16 +63,11 @@ export const NewGroup = () =>{
                     </div>
                     <div className="d-md-flex d-block">
                         <div style={{minWidth: '200px'}}>Duration Cycle</div>
-                        <select ref={cycleRef} className="form-control form-select mb-3" style={{maxWidth: '500px'}}>
-                            <option>weekly</option>
-                            <option>bi-weekly</option>
-                            <option>monthly</option>
-                            <option>bi-monthly</option>
-                        </select>
+                        <SelectOption options={cycles} onChange={(e)=>setCycle(e.target.value)}/>
                     </div>
                     <div className="d-md-flex d-block">
                         <div style={{minWidth: '200px'}}>Payout Date</div>
-                        <input ref={payoutDateRef} className="form-control" type="date" style={{maxWidth: '500px'}}/>
+                        <input ref={payoutDateRef} className="form-control" type="datetime-local" style={{maxWidth: '500px'}}/>
                     </div>
                 </div>
             </div>

@@ -21,8 +21,7 @@ class Schema{
             ->column('date')->timestamp()
             ->column('phoneNumber')->string()
             ->column('addressId')->bindary()
-            ->column('foreignId')->string()
-            ->column('isAdmin')->bool();
+            ->column('foreignId')->string();
         return $this->sql->execute();
     }
 
@@ -55,7 +54,8 @@ class Schema{
             ->column('description')->paragraph()
             ->column('cycle')->string()
             ->column('payoutDate')->timestamp()
-            ->column('createdDate')->timestamp()
+            ->column('createdDate')->timestamp()     
+            ->column('creatorId')->bindary()
             ->column('hide')->bool();
         return $this->sql->execute();
     }
@@ -64,6 +64,27 @@ class Schema{
         $this->sql->create('groupLink')
             ->column('groupId')->bindary()
             ->column('memberId')->bindary();
+        return $this->sql->execute();
+    }
+
+    public function susu(){
+        $this->sql->create('susu')        
+            ->column('id')->bindary()
+            ->column('contribution')->string()
+            ->column('cycle')->string()
+            ->column('payoutDate')->timestamp()
+            ->column('startDate')->timestamp()     
+            ->column('groupId')->bindary()
+            ->column('pendingStart')->bool()
+            ->column('completed')->bool();
+        return $this->sql->execute();
+    }
+
+    public function susuLink(){
+        $this->sql->create('susuLink')
+            ->column('groupId')->bindary()
+            ->column('memberId')->bindary()
+            ->column('position')->int();
         return $this->sql->execute();
     }
 

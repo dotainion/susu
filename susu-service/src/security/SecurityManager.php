@@ -39,7 +39,6 @@ class SecurityManager{
         $this->assertSignInPass($collector->first()->password(), $password);
         $credential = $collector->first();
         $credential = $this->_updateAccessToken($credential);
-        $this->assertAdminAccess($credential);
         $this->startSession($credential);
     }
 
@@ -57,7 +56,6 @@ class SecurityManager{
         }
         $security = $collector->first();
         $credential = $this->_updateAccessToken($security);
-        $this->assertAdminAccess($credential);
         $this->startSession($credential);
     }
 
@@ -81,14 +79,6 @@ class SecurityManager{
     public function isLoggedIn():bool{
         $session = $this->session();
         if(!$session instanceof ICredential || !$session->token()){
-            throw new NotAuthenticatedException('You are not logged in.');
-        }
-        $this->assertAdminAccess($session);
-        return true;
-    }
-
-    public function assertAdminAccess(ICredential $user):bool{
-        if(Env::isAdminHost() && !$user->user()->isAdmin()){
             throw new NotAuthenticatedException('You are not logged in.');
         }
         return true;

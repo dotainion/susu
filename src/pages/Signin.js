@@ -13,7 +13,7 @@ export const Signin = () =>{
     const navigate = useNavigate();
 
     const login = (e) =>{
-        e.stopPropagation();
+        e.preventDefault();
         const data = new FormData(e.target);
         signIn(data.get('email'), data.get('password'), (status)=>{
             if(status.error){

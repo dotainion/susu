@@ -19,11 +19,10 @@ class UserFactory extends Collector{
     public function mapResult($record):IUser{
         $user = new User();
         $user->setId($this->uuid($record['id']));
-        $user->setIsAdmin((bool)$record['isAdmin']);
         $user->setFirstName($record['firstName']);
         $user->setLastName($record['lastName']);
         $user->setEmail($record['email']);
-        $user->setPhoneNumber($record['phoneNumber']);
+        $user->setPhoneNumber((string)$record['phoneNumber']);
         isset($record['date']) && $user->setDate($record['date']);
         $user->setForeignId($record['foreignId']);
         $user->setPicture($record['picture']??null);

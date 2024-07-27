@@ -1,6 +1,7 @@
 <?php
 namespace src\module\groups\objects;
 
+use src\infrastructure\Collector;
 use src\infrastructure\DateHelper;
 use src\infrastructure\Id;
 use src\infrastructure\IId;
@@ -14,10 +15,13 @@ class Group implements IObjects{
     protected string $cycle;
     protected ?DateHelper $payoutDate = null;
     protected ?DateHelper $createdDate = null;
+    protected ?Collector $members = null;
+    protected Id $creatorId;
     protected bool $hide;
 
     public function __construct(){
         $this->id = new Id();
+        $this->creatorId = new Id();
     }
 
     public function id():IId{
@@ -52,6 +56,14 @@ class Group implements IObjects{
         return $this->createdDate;
     }
 
+    public function members():?Collector{
+        return $this->members;
+    }
+
+    public function creatorId():IId{
+        return $this->creatorId;
+    }
+
     public function setId(string $id):void{
         $this->id->set($id);
     }
@@ -82,5 +94,13 @@ class Group implements IObjects{
     
     public function setCreatedDate(string $createdDate):void{
         $this->createdDate = new DateHelper($createdDate);
+    }
+
+    public function setCreatorId(string $creatorId):void{
+        $this->creatorId->set($creatorId);
+    }
+
+    public function setMembers(Collector $members):void{
+        $this->members = $members;
     }
 }

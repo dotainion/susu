@@ -21,4 +21,10 @@ class ListGroups{
             'memberId' => $memberId
         ]);
     }
+
+    public function ownerGroups(Id $creatorId):Collector{
+        return $this->repo->listGroups([
+            'creatorId' => $creatorId
+        ]);
+    }
 }

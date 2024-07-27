@@ -11,7 +11,6 @@ use src\infrastructure\Token;
 
 class User implements IObjects, IUser{
     protected Id $id;
-    protected bool $isAdmin = false;
     protected ?string $foreignId = null;
     protected string $firstName;
     protected string $lastName;
@@ -34,10 +33,6 @@ class User implements IObjects, IUser{
 
     public function id():IId{
         return $this->id;
-    }
-
-    public function isAdmin():bool{
-        return $this->isAdmin;
     }
 
     public function foreignId():?string{
@@ -96,10 +91,6 @@ class User implements IObjects, IUser{
 
     public function setId(string $id):void{
         $this->id->set($id);
-    }
-
-    public function setIsAdmin(bool $isAdmin):void{
-        $this->isAdmin = $isAdmin;
     }
 
     public function setForeignId(?string $foreignId):void{

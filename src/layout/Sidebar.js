@@ -6,18 +6,15 @@ import { useEffect, useRef, useState } from "react";
 import $ from "jquery";
 import { routes } from "../routes/Routes";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../provider/AuthProvider";
+import { api } from "../request/Api";
 
 export const Sidebar = () =>{
+    const { user, signOut } = useAuth();
+
     const [show, setShow] = useState(false);
-
-    const navigate = useNavigate();
-
-    const sidebarRef = useRef();
-
-    let isDragging = false;
-    let startX, initialPosition;
-    
-    const categories = [
+    const [groups, setGroups] = useState([]);
+    const [categories, setCategories] = useState([
         {
             category: 'Dashboard and Overview',
             menus: [
@@ -59,7 +56,7 @@ export const Sidebar = () =>{
         },{
             category: 'Messaging/Chat',
             menus: [
-                {title: 'Chats'},
+                {title: 'Chats', disabled: true},
                 {title: 'Notifications', disabled: true},
                 {title: 'Community Forum', disabled: true},
                 {title: 'Support and Help', disabled: true},
@@ -81,7 +78,35 @@ export const Sidebar = () =>{
                 {title: 'Logout/Exit', disabled: true},
             ]
         }
-    ];
+    ]);
+
+    const navigate = useNavigate();
+
+    const sidebarRef = useRef();
+
+    let isDragging = false;
+    let startX, initialPosition;
+    
+    useEffect(()=>{
+        if(!user) return;
+        api.group.ownerGroups(user.id).then((response)=>{
+            setGroups(response.data.data.map((g)=>{
+                return {title: g.attributes.name, onClick: ()=>navigate(routes.susu().group(g.id))}
+            }));
+        }).catch((error)=>{
+
+        });
+    }, [user]);
+    
+    useEffect(()=>{
+        const identifier = 'My Groups';
+        if(!groups.length || categories.find((cat)=>cat.category === identifier)) return;
+        const myGroup = {
+            category: identifier,
+            menus: groups,
+        }
+        setCategories((cats)=>[...cats.slice(0, 1), myGroup, ...cats.slice(1)]);
+    }, [groups]);
 
     useEffect(()=>{
         $(sidebarRef.current).on('touchstart mousedown', function(e) {
@@ -96,7 +121,8 @@ export const Sidebar = () =>{
                 const newPosition = initialPosition - moveX;
                 if (newPosition <= initialPosition) {
                     $(sidebarRef.current).css('transform', `translateX(-${moveX}px)`);
-                }if (moveX >= $(sidebarRef.current).width() / 2) {
+                }
+                if (moveX >= $(sidebarRef.current).width() / 2) {
                     setShow(false);
                 }
             }
@@ -151,11 +177,11 @@ export const Sidebar = () =>{
                         <strong>mdo</strong>
                     </a>
                     <ul className="dropdown-menu text-small shadow" aria-labelledby="dropdownUser1">
-                        <li><button className="btn btn-sm w-100">New project...</button></li>
+                        <li><button onClick={()=>navigate(routes.susu().newGroup())} className="btn btn-sm w-100">New Group...</button></li>
                         <li><button className="btn btn-sm w-100">Settings</button></li>
-                        <li><button className="btn btn-sm w-100">Profile</button></li>
+                        <li><button onClick={()=>navigate(routes.susu().profile())} className="btn btn-sm w-100">Profile</button></li>
                         <li><hr className="dropdown-divider"/></li>
-                        <li><button className="btn btn-sm w-100">Sign out</button></li>
+                        <li><button onClick={signOut} className="btn btn-sm w-100">Sign out</button></li>
                     </ul>
                 </div>
             </div>

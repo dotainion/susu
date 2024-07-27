@@ -25,34 +25,28 @@ class CreateUserService extends Service{
         $this->addressFactory = new AddressFactory();
     }
     
-    public function process($name, $email, $phoneNumber, $password, $confirmPassword, $isAdmin=false){
+    public function process($firstName, $lastName, $email, $phoneNumber, $password, $confirmPassword){
         Assert::validPassword($password);
         Assert::validPassword($confirmPassword);
         Assert::validPasswordMatch($password, $confirmPassword);    
 
         $user = $this->factory->mapResult([
             'id' => (new Id())->new()->toString(),
-            'name' => $name,
+            'firstName' => $firstName,
+            'lastName' => $lastName,
             'email' => $email,
             'phoneNumber' => $phoneNumber,
             'foreignId' => null,
-            'isAdmin' => $isAdmin,
             'date' => (new DateHelper())->new()->toString(),
             'hide' => false,
-            'billingAddressId' => (new Id())->new()->toString(),
-            'shippingAddressId' => (new Id())->new()->toString(),
+            'addressId' => (new Id())->new()->toString(),
         ]);
 
-        $billingAddresss = $this->addressFactory->mapResult([
-            'id' => $user->billingAddressId()->toString()
+        $address = $this->addressFactory->mapResult([
+            'id' => $user->addressId()->toString()
         ]);
 
-        $shippingAddresss = $this->addressFactory->mapResult([
-            'id' => $user->shippingAddressId()->toString()
-        ]);
-
-        $this->address->setAddress($billingAddresss);
-        $this->address->setAddress($shippingAddresss);
+        $this->address->setAddress($address);
         
         $this->user->create($user);
 

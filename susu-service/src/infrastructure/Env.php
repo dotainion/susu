@@ -40,7 +40,7 @@ class Env{
     }
 
     public static function accessPath():?string{
-        return $_SERVER['HTTP_ACCESSPATH']; // /green-energy-admin/
+        return $_SERVER['HTTP_ACCESSPATH']; //green-energy-admin/
     }
 
     public static function isAdminHost():bool{
@@ -60,14 +60,14 @@ class Env{
     }
 
     public static function username():string{
-        return 'ccagrena_energy';
+        return 'ccagrena_susu';
     }
 
     public static function password():string{
-        return 'caribbean-green-energy#1_credentials';
+        return 'ccagrena_susu#1';
     }
 
     public static function database():string{
-        return 'ccagrena_caribbean-green-energy';
+        return 'ccagrena_susu';
     }
 }

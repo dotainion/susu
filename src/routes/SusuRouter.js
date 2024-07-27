@@ -10,6 +10,9 @@ import { Member } from "../pages/Member";
 import { routes } from "../routes/Routes";
 import { ViewGroup } from "../pages/ViewGroup";
 import { useAuth } from "../provider/AuthProvider";
+import { Welcome } from "../pages/Welcome";
+import { GroupWallet } from "../pages/GroupWallet";
+import { UpdateGroupWallet } from "../pages/UpdateGroupWallet";
 
 export const SusuRouter = () =>{
   const { isAuthenticated } = useAuth();
@@ -27,6 +30,9 @@ export const SusuRouter = () =>{
         <Route path={routes.susu().newGroup()} element={<NewGroup/>} />
         <Route path={routes.susu().memberList()} element={<MembersList/>} />
         <Route path={routes.susu().member()} element={<Member/>} />
+        <Route path={routes.susu().groupWallet()} element={<GroupWallet/>} />
+        <Route path={routes.susu().updateGroupWallet()} element={<UpdateGroupWallet/>} />
+        <Route path={'*'} element={<Welcome/>} />
       </Routes>
     </Layout>
   )

@@ -6,6 +6,7 @@ use src\module\groups\action\FetchGroupAction;
 use src\module\groups\action\JoinGroupAction;
 use src\module\groups\action\ListGroupsAction;
 use src\module\groups\action\MemberGroupsAction;
+use src\module\groups\action\OwnerGroupsAction;
 use src\module\groups\action\SetGroupAction;
 use src\module\login\action\FetchSessionAction;
 use src\module\login\action\GoogleLoginAction;
@@ -14,6 +15,12 @@ use src\module\login\action\LogoutAction;
 use src\module\login\action\SendRecoveryEmailAction;
 use src\module\login\action\UpdateCredentialAction;
 use src\module\login\action\UpdateCredentialByTokenAction;
+use src\module\susu\action\ConfirmSusuAction;
+use src\module\susu\action\FetchActiveSusuAction;
+use src\module\susu\action\JoinSusuAction;
+use src\module\susu\action\ListScheduleAction;
+use src\module\susu\action\StartSusuAction;
+use src\module\susu\action\UnlinkSusuAction;
 use src\module\user\action\CreateGoogleUserAction;
 use src\module\user\action\CreateUserAction;
 use src\module\user\action\EditUserAction;
@@ -38,6 +45,7 @@ class Router{
         $this->request->route('/schema', function ($req){
             $query = new Schema();
             $query->run();
+            var_dump('Schema done running...');
         });
 
         /*$this->request->route('/truncate', function ($req){
@@ -118,12 +126,40 @@ class Router{
             return new MemberGroupsAction();
         });
 
+        $this->request->route('/owner/groups', function ($req){
+            return new OwnerGroupsAction();
+        });
+
         $this->request->route('/set/group', function ($req){
             return new SetGroupAction();
         });
 
         $this->request->route('/join/group', function ($req){
             return new JoinGroupAction();
+        });
+
+        $this->request->route('/start/susu', function ($req){
+            return new StartSusuAction();
+        });
+
+        $this->request->route('/fetch/active/susu', function ($req){
+            return new FetchActiveSusuAction();
+        });
+
+        $this->request->route('/conform/susu', function ($req){
+            return new ConfirmSusuAction();
+        });
+
+        $this->request->route('/join/susu', function ($req){
+            return new JoinSusuAction();
+        });
+
+        $this->request->route('/unlink/susu', function ($req){
+            return new UnlinkSusuAction();
+        });
+
+        $this->request->route('/list/schedule', function ($req){
+            return new ListScheduleAction();
         });
     }
 

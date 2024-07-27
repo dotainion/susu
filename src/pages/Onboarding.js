@@ -1,7 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { routes } from "../routes/Routes";
+import { useAuth } from "../provider/AuthProvider";
 
 export const Onboarding = () =>{
+    const { isAuthenticated, user } = useAuth();
+
     const navigate = useNavigate();
     return(
         <div className="w-100" style={{minHeight: '100vh'}}>
@@ -20,7 +23,11 @@ export const Onboarding = () =>{
                     </div>
                     <div className="w-100">
                         <div className="d-flex justify-content-end">
-                            <button onClick={()=>navigate(routes.signIn())} className="btn btn-sm btn-success">Sign in</button>
+                            {
+                                isAuthenticated
+                                    ? <button onClick={()=>navigate(routes.susu().default())} className="btn btn-sm btn-success">Continue as {user?.attributes?.firstName} {user?.attributes?.lastName}</button>
+                                    : <button onClick={()=>navigate(routes.signIn())} className="btn btn-sm btn-success">Sign in</button>
+                            }
                             <button onClick={()=>navigate(routes.register())} className="btn btn-sm btn-primary ms-3">Sign up</button>
                         </div>
                         <img className="w-50" src="https://fastsusu.com/wp-content/uploads/2022/06/Frame-167-5.png" alt=""/>

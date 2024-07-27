@@ -16,7 +16,8 @@ class EditUserAction extends Request implements IAction{
     public function execute(){
         return $this->service->process(
             $this->get('id'),
-            $this->get('name'),
+            $this->get('firstName'),
+            $this->get('lastName'),
             $this->get('email'),
             $this->get('phoneNumber')
         );

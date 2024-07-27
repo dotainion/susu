@@ -21,7 +21,6 @@ class SetGroupAction extends Request implements IAction{
             $this->get('description'), 
             $this->get('cycle'), 
             $this->get('payoutDate'), 
-            $this->get('createdDate'),
             $this->get('hide')
         );
     }

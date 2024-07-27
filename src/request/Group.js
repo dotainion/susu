@@ -13,7 +13,11 @@ export class Group{
     }
 
     async memberGroups(memberId){
-        return await this.api.get('/list/groups', {memberId});
+        return await this.api.get('/member/groups', {memberId});
+    }
+
+    async ownerGroups(creatorId){
+        return await this.api.get('/owner/groups', {creatorId});
     }
 
     async set(data){

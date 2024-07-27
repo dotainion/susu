@@ -11,7 +11,7 @@ export const Register = () =>{
     const navigate = useNavigate();
 
     const register = (e) =>{
-        e.stopPropagation();
+        e.preventDefault();
         const formData = new FormData(e.target);
         const data = {
             firstName: formData.get('firstName'),
@@ -27,6 +27,7 @@ export const Register = () =>{
             setError(new ParseError().message(error));
         });
     }
+    
     return(
         <form onSubmit={register} className="d-flex vh-100">
             <div className="d-md-flex d-none align-items-center justify-content-center bg-light w-100">

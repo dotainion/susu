@@ -26,7 +26,8 @@ class GroupRepository extends Repository{
             ->add('description', $group->description())
             ->add('cycle', $group->cycle())
             ->add('payoutDate', $group->payoutDate()->toString())
-            ->add('createdDate', $group->createdDate()->toString());
+            ->add('createdDate', $group->createdDate()->toString())
+            ->add('creatorId', $this->uuid($group->creatorId()));
         $this->execute();
     }
     
@@ -38,6 +39,7 @@ class GroupRepository extends Repository{
             ->set('cycle', $group->cycle())
             ->set('payoutDate', $group->payoutDate()->toString())
             ->set('createdDate', $group->createdDate()->toString())
+            ->add('creatorId', $this->uuid($group->creatorId()))
             ->where('id', $this->uuid($group->id()));
         $this->execute();
     }
@@ -49,10 +51,11 @@ class GroupRepository extends Repository{
         $this->execute();
     }
     
-    public function listJoinGroup(?Id $groupId=null, ?Id $memberId=null):Collector{
-        $this->insert('groupLink');
-        ($groupId !== null) && $this->add('groupId', $this->uuid($groupId));
-        ($memberId !== null) && $this->add('memberId', $this->uuid($memberId));
+    public function listJoinGroup(?Id $groupId=null, ?Id $memberId=null, ?array $groupdIdArray=null):Collector{
+        $this->select('groupLink');
+        ($groupId !== null) && $this->where('groupId', $this->uuid($groupId));
+        ($memberId !== null) && $this->where('memberId', $this->uuid($memberId));
+        ($groupdIdArray !== null) && $this->where('groupId', $this->uuid($groupdIdArray));
         $this->execute();
         return $this->linkFactory->map(
             $this->results()
@@ -64,10 +67,12 @@ class GroupRepository extends Repository{
 
         if(isset($where['memberId'])){
             $this->innerJoin('groupLink', 'groupId', 'group', 'id');
-            $this->innerJoin('user', 'id', 'groupLink', 'memberId');
-            $this->where('id', $this->uuid($where['memberId']), 'user');
+            $this->where('memberId', $this->uuid($where['memberId']), 'groupLink');
         }
 
+        if(isset($where['creatorId'])){
+            $this->where('creatorId', $this->uuid($where['creatorId']));
+        }
         if(isset($where['id'])){
             $this->where('id', $this->uuid($where['id']));
         }

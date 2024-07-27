@@ -3,6 +3,9 @@ import { AiOutlineFileProtect } from "react-icons/ai";
 import { FaRegCopy } from "react-icons/fa6";
 import { useParams } from "react-router-dom";
 import { api } from "../request/Api";
+import { GroupMiniCard } from "../components/GroupMiniCard";
+import { utils } from "../utils/Utils";
+import $ from 'jquery';
 
 export const Member = () => {
     const [member, setMember] = useState();
@@ -11,7 +14,7 @@ export const Member = () => {
     const params = useParams();
 
     useEffect(() => {
-        if(params.memberId) return;
+        if(!params.memberId) return;
         api.user.user(params.memberId).then((response)=>{
             setMember(response.data.data[0]);
         }).catch((error)=>{
@@ -23,6 +26,16 @@ export const Member = () => {
 
         });
     }, []);
+
+    if(!member){
+        return(
+            <div className="d-flex align-items-center justify-content-center w-100 vh-100">
+                <div className="spinner-border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div className="container">
@@ -42,7 +55,7 @@ export const Member = () => {
                 <div className="ms-2">
                     <div>This account is protected</div>
                     <div className="mt-2">Member ID</div>
-                    <div className="d-flex align-items-center form-control bg-white">
+                    <div onClick={(e)=>utils.copy.toClipboard($(e.currentTarget).find('div').first())} className="d-flex align-items-center form-control bg-white position-relative pointer">
                         <div className="w-100">{member?.id}</div>
                         <button className="btn bg-transparent shadow-none border-0 p-0"><FaRegCopy className="fs-5 ms-2"/></button>
                     </div>
@@ -51,22 +64,12 @@ export const Member = () => {
             <hr></hr>
             <div className="fw-bold">Groups</div>
             <div className="row">
-                {groups.map((group, key) => (
-                    <div className="col-12 col-xl-3 col-lg-4 col-md-6 p-1" key={key}>
-                        <div className="card position-relative h-100 m-1">
-                            <div className="card-body">
-                                <div className="d-flex">
-                                    <img className="card-img-sub" src="https://media.istockphoto.com/id/1327592506/vector/default-avatar-photo-placeholder-icon-grey-profile-picture-business-man.jpg?s=612x612&w=0&k=20&c=BpR0FVaEa5F24GIw7K8nMWiiGmbb8qmhfkpXcp1dhQg=" alt="" />
-                                    <div className="ms-2 ps-3 border-start">
-                                        <div className="mb-2">{group.attributes.name}</div>
-                                        <div className="mb-2">Members <b>487</b></div>
-                                        <button className="btn btn-sm shadow-sm border-0 px-3">Join</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                ))}
+                {
+                    groups.length ?
+                    groups.map((group, key) => (
+                        <GroupMiniCard group={group} key={key}/>
+                    )):null
+                }
             </div>
         </div>
     )

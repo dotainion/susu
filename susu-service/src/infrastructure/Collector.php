@@ -54,6 +54,14 @@ class Collector{
         return $idArray;
     }
 
+    public function attrArray($attr):array{
+        $attrArray = [];
+        foreach($this->list() as $item){
+            $attrArray[] = $item->$attr();
+        }
+        return $attrArray;
+    }
+
     public function assertHasItem(string $message='No results'):bool{
         if(!$this->hasItem()){
             throw new NoResultsException($message);

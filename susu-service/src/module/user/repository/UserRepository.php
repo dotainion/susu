@@ -22,7 +22,6 @@ class UserRepository extends Repository{
             ->add('email', $user->email())
             ->add('hide', (int)$user->hide())
             ->add('date', $user->date())
-            ->add('isAdmin', $user->isAdmin())
             ->add('phoneNumber', $user->phoneNumber())
             ->add('addressId', $this->uuid($user->addressId()))
             ->add('foreignId', $user->foreignId());
@@ -35,7 +34,6 @@ class UserRepository extends Repository{
             ->set('lastName', $user->lastName())
             ->set('email', $user->email())
             ->set('hide', (int)$user->hide())
-            ->set('isAdmin', $user->isAdmin())
             //->set('date', $user->date())
             ->set('phoneNumber', $user->phoneNumber())
             ->set('foreignId', $user->foreignId())

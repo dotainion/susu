@@ -3,11 +3,12 @@ import { token } from "../utils/Token";
 import { Auth } from "./Auth";
 import { User } from "./User";
 import { Group } from "./Group";
+import { Susu } from "./Susu";
+import { Schedule } from "./Schedule";
 
 export class Api{
-    //https://www.caribbeancodingacademygrenada.com/caribbean-green-energy-service
-    baseURL = '/susu-service';
-    //baseURL = 'https://www.caribbeancodingacademygrenada.com/caribbean-green-energy-service';
+    //baseURL = '/susu-service';
+    baseURL = 'https://www.caribbeancodingacademygrenada.com/susu-service';
 
     constructor(){
         this.axios = axios.create({
@@ -21,6 +22,8 @@ export class Api{
         this.user = new User(this);
         this.auth = new Auth(this);
         this.group = new Group(this);
+        this.susu = new Susu(this);
+        this.schedule = new Schedule(this);
     }
 
     async post(route, data){
