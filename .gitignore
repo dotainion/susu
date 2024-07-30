@@ -2,6 +2,9 @@
 
 # dependencies
 /node_modules
+/susu
+/susu.zip
+/susu-service.zip
 /.pnp
 .pnp.js
 

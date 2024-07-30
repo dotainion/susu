@@ -6,9 +6,10 @@ use src\infrastructure\Id;
 use src\infrastructure\Service;
 use src\module\susu\logic\FetchSusu;
 use src\module\susu\logic\ListSusuLink;
+use src\module\susu\objects\Susu;
 use src\module\user\logic\ListUsers;
 
-class FetchActiveSusuService extends Service{
+class FetchSusuService extends Service{
     protected FetchSusu $susu;
     protected ListSusuLink $links;
     protected ListUsers $users;
@@ -20,14 +21,14 @@ class FetchActiveSusuService extends Service{
         $this->users = new ListUsers();
     }
     
-    public function process($groupId){
-        Assert::validUuid($groupId, 'Ground not found.');
+    public function process($susuId){
+        Assert::validUuid($susuId, 'Susu not found.');
 
-        $collector = $this->susu->activeByGroupId(new Id($groupId));
+        $collector = $this->susu->byId(new Id($susuId));
         $collector->assertHasItem('No active susu found.');
         $susu = $collector->first();
 
-        $links = $this->links->links(new Id($groupId));
+        $links = $this->links->links($susu->groupId());
         $members = $this->users->usersByIdArray($links->attrArray('memberId'));
 
         $members->hasItem() && $susu->setMembers($members);

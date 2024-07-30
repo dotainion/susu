@@ -1,23 +1,39 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { GoDotFill } from "react-icons/go";
 import { routes } from "../routes/Routes";
 import { FaStar } from "react-icons/fa";
+import { api } from "../request/Api";
 
-export const UpdateGroupWallet = () =>{
+export const UpdateMemberSusuWallet = () =>{
+    const [susu, setSusu] = useState();
+    const [history, setHistory] = useState([]);
+
     const params = useParams();
     const navigate = useNavigate();
 
     useEffect(()=>{
+        api.susu.active(params.groupId).then((response)=>{
+            setSusu(response.data.data[0]);
+        }).catch((error)=>{
 
+        });
     }, []);
+
+    useEffect(()=>{
+        if(!susu) return;
+        api.history.lisHistory(susu.id, params.memberId).then((response)=>{
+            setHistory(response.data.data);
+        }).catch((error)=>{
+
+        });
+    }, [susu]);
 
     return(
         <div className="container">
             <div className="d-flex align-items-center w-100 text-nowrap mt-3">
                 <div className="h4 w-100">Contribution Management</div>
-                <button onClick={()=>navigate(routes.susu().nested().groupWallet(params.groupId))} className="btn btn-sm mx-1">Back to Group Wallet</button>
-                <button className="btn btn-sm mx-1">+ Some thing</button>
+                <button onClick={()=>navigate(routes.susu().nested().groupSusuWallet(params.groupId))} className="btn btn-sm mx-1">Back to Group Wallet</button>
             </div>
             <div className="my-3">Credit Line Details: Overview of May 2024</div>
             <div className="d-block d-md-flex w-100 shadow-sm bg-white p-4">
@@ -74,13 +90,13 @@ export const UpdateGroupWallet = () =>{
             <div>
                 <table className="w-100">
                     <tbody>
-                        {[1, 2, 3].map((member, key)=>(
+                        {history.map((member, key)=>(
                             <tr className="border-bottom border-secondary" key={key}>
-                                <td className="py-2 small">June 1, 2024</td>
+                                <td className="py-2 small">{member.attributes.date}</td>
                                 <td className="py-2 d-none d-sm-block">
                                     <div className="small">
                                         <div>Contribution</div>
-                                        <div>$254.23</div>
+                                        <div>${member.attributes.contribution}</div>
                                     </div>
                                 </td>
                                 <td className="py-2 small">

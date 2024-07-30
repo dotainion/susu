@@ -4,7 +4,7 @@ import { ViewGroup } from "../pages/ViewGroup";
 import { Member } from "../pages/Member";
 import { useParams } from "react-router-dom";
 import $ from "jquery";
-import { GroupWallet } from "../pages/GroupWallet";
+import { GroupWallet } from "../pages/GroupSusuWallet";
 import { api } from "../request/Api";
 import { Schedule } from "../pages/Schedule";
 
@@ -22,12 +22,12 @@ export const Test = () =>{
     }
 
     useEffect(()=>{
-        
+        //https://dribbble.com/shots/19735918-Advice-App-Concept
     }, []);
 
     return(
         <div className="container">
-            <button onClick={getSchedules}>Click to display schedules</button>
+            <ViewGroup/>
         </div>
     )
 }

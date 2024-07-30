@@ -8,6 +8,8 @@ use src\module\groups\action\ListGroupsAction;
 use src\module\groups\action\MemberGroupsAction;
 use src\module\groups\action\OwnerGroupsAction;
 use src\module\groups\action\SetGroupAction;
+use src\module\history\action\AddSusuHistoryAction;
+use src\module\history\action\ListSusuHistoryAction;
 use src\module\login\action\FetchSessionAction;
 use src\module\login\action\GoogleLoginAction;
 use src\module\login\action\LoginAction;
@@ -17,6 +19,7 @@ use src\module\login\action\UpdateCredentialAction;
 use src\module\login\action\UpdateCredentialByTokenAction;
 use src\module\susu\action\ConfirmSusuAction;
 use src\module\susu\action\FetchActiveSusuAction;
+use src\module\susu\action\FetchSusuAction;
 use src\module\susu\action\JoinSusuAction;
 use src\module\susu\action\ListScheduleAction;
 use src\module\susu\action\StartSusuAction;
@@ -146,6 +149,10 @@ class Router{
             return new FetchActiveSusuAction();
         });
 
+        $this->request->route('/fetch/susu', function ($req){
+            return new FetchSusuAction();
+        });
+
         $this->request->route('/conform/susu', function ($req){
             return new ConfirmSusuAction();
         });
@@ -160,6 +167,14 @@ class Router{
 
         $this->request->route('/list/schedule', function ($req){
             return new ListScheduleAction();
+        });
+
+        $this->request->route('/add/susu/history', function ($req){
+            return new AddSusuHistoryAction();
+        });
+
+        $this->request->route('/list/susu/history', function ($req){
+            return new ListSusuHistoryAction();
         });
     }
 

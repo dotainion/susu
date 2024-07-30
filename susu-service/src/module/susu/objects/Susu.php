@@ -1,6 +1,7 @@
 <?php
 namespace src\module\susu\objects;
 
+use src\infrastructure\Collector;
 use src\infrastructure\DateHelper;
 use src\infrastructure\Id;
 use src\infrastructure\IId;
@@ -15,6 +16,7 @@ class Susu implements IObjects{
     protected Id $groupId;
     protected bool $pendingStart;
     protected bool $completed;
+    protected ?Collector $members = null;
 
     public function __construct(){
         $this->id = new Id();
@@ -27,6 +29,10 @@ class Susu implements IObjects{
 
     public function pendingStart():bool{
         return $this->pendingStart;
+    }
+
+    public function members():?Collector{
+        return $this->members;
     }
 
     public function completed():bool{
@@ -83,5 +89,9 @@ class Susu implements IObjects{
 
     public function setGroupId(string $groupId):void{
         $this->groupId->set($groupId);
+    }
+
+    public function setMembers(Collector $members):void{
+        $this->members = $members;
     }
 }

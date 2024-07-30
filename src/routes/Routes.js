@@ -8,8 +8,9 @@ class Susu{
     member = (memberId = ':memberId') => this._nested + 'member/' + memberId;
     memberList = () => this._nested + 'member/list';
     profile = () => this._nested + 'profile';
-    groupWallet = (groupId = ':groupId') => this._nested + 'wallet/' + groupId;
-    updateGroupWallet = (groupId = ':groupId', memberId = ':memberId') => this._nested + 'update/wallet/' + groupId + '/' + memberId;
+    groupSusuWallet = (groupId = ':groupId') => this._nested + 'wallet/' + groupId;
+    updateMemberSusuWallet = (groupId = ':groupId', memberId = ':memberId') => this._nested + 'update/wallet/' + groupId + '/' + memberId;
+    memberSusuHistory = (susuId = ':susuId', memberId = ':memberId') => this._nested + 'member/susu/history/' + susuId + '/' + memberId;
     schedule = (groupId = ':groupId') => this._nested + 'schedule/' + groupId;
     nested = () => {
         this._nested = this.default().replace('*', '');

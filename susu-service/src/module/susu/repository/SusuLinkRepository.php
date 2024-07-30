@@ -3,7 +3,6 @@ namespace src\module\susu\repository;
 
 use src\database\Repository;
 use src\infrastructure\Collector;
-use src\infrastructure\Id;
 use src\module\susu\factory\SusuLinkFactory;
 use src\module\susu\objects\SusuLink;
 

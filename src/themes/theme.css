@@ -176,6 +176,10 @@ hr, table tr{
     font-size: 11px;
 }
 
+.text-brown{
+    color: var(--bg-sidebar);
+}
+
 @media (max-width: 576px) {
     .sidebar {
         position: fixed;

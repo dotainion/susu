@@ -11,20 +11,20 @@ export class Susu{
     async active(groupId){
         return await this.api.get('/fetch/active/susu', {groupId});
     }
+    
+    async fetch(susuId){
+        return await this.api.get('/fetch/susu', {susuId});
+    }
 
     async conform(groupId){
         return await this.api.get('/conform/susu', {groupId});
     }
 
-    async join(memberId, groupId){
+    async join(groupId, memberId){
         return await this.api.get('/join/susu', {memberId, groupId});
     }
     
-    async unlink(memberId, groupId){
+    async unlink(groupId, memberId){
         return await this.api.get('/unlink/susu', {memberId, groupId});
-    }
-
-    async l(groupId){
-        return await this.api.get('/list/schedule', {groupId});
     }
 }

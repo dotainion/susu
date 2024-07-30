@@ -88,6 +88,16 @@ class Schema{
         return $this->sql->execute();
     }
 
+    public function susuHistory(){
+        $this->sql->create('susuHistory')
+            ->column('susuId')->bindary()
+            ->column('memberId')->bindary()
+            ->column('contribution')->string()
+            ->column('date')->timestamp()
+            ->column('hide')->bool();
+        return $this->sql->execute();
+    }
+
     public function run(){
         foreach(get_class_methods($this) as $method){
             if($method === '__construct' || $method === 'run') continue;

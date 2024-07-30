@@ -12,6 +12,12 @@ class FetchSusu{
         $this->repo = new SusuRepository();
     }
 
+    public function byId(Id $id):Collector{
+        return $this->repo->listSusu([
+            'id' => $id
+        ]);
+    }
+
     public function byGroupId(Id $id):Collector{
         return $this->repo->listSusu([
             'groupId' => $id

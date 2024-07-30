@@ -2,15 +2,11 @@
 namespace src\module\susu\service;
 
 use src\infrastructure\Assert;
-use src\infrastructure\Collector;
-use src\infrastructure\DateHelper;
 use src\infrastructure\Id;
 use src\infrastructure\Service;
 use src\module\susu\logic\CalculateSchedule;
 use src\module\susu\logic\FetchSusu;
 use src\module\susu\logic\ListSusuLink;
-use src\module\susu\objects\Susu;
-use src\module\susu\objects\SusuLink;
 use src\module\user\logic\ListUsers;
 
 class ListScheduleService extends Service{

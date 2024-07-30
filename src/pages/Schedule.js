@@ -20,7 +20,7 @@ export const Schedule = () =>{
     }
 
     useEffect(()=>{
-        api.schedule.list().then((response)=>{
+        api.schedule.list(params.groupId).then((response)=>{
             setSchedules(response.data.data);
         }).catch((error)=>{
 
@@ -28,8 +28,8 @@ export const Schedule = () =>{
     }, []);
 
     return(
-        <div className="">
-            <button onClick={()=>navigate(routes.susu().groupWallet(params.groupId))} className="btn bg-transparent p-0 my-4"><IoIosArrowBack/> To Susu Wallet</button>
+        <div className="container">
+            <button onClick={()=>navigate(routes.susu().groupSusuWallet(params.groupId))} className="btn bg-transparent p-0 my-4"><IoIosArrowBack/> To Susu Wallet</button>
             <div className="d-flex align-items-center h4 mb-4">
                 <FcClock/>
                 <div className="mx-2">Payout Schedule</div>

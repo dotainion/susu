@@ -132,7 +132,7 @@ export const Group = () =>{
                         </div>
                         : 
                         <div className="py-3 px-2">
-                            <button onClick={()=>navigate(routes.susu().nested().groupWallet(params.groupId))} className="btn btn-sm bg-secondary text-white">Susu Wallet</button>
+                            <button onClick={()=>navigate(routes.susu().nested().groupSusuWallet(params.groupId))} className="btn btn-sm bg-secondary text-white">Susu Wallet</button>
                             <div className="small">Begin organizing contributions, setting schedules, and achieving financial goals together.</div>
                         </div>
                     }

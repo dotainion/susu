@@ -5,6 +5,7 @@ import { routes } from "../routes/Routes";
 import { useNavigate } from "react-router-dom";
 import { api } from "../request/Api";
 import { GroupCard } from "../components/GroupCard";
+import { Loader } from "../components/Loader";
 
 export const GroupList = () => {
     const [groups, setGroups] = useState([]);
@@ -36,11 +37,7 @@ export const GroupList = () => {
                     groups.map((group, key) => (
                         <GroupCard group={group} key={key}/>
                     )): 
-                    <div className="d-flex justify-content-center">
-                        <div className="spinner-border" role="status">
-                            <span className="visually-hidden">Loading...</span>
-                        </div>
-                    </div>
+                    <Loader/>
                 }
             </div>
         </div>

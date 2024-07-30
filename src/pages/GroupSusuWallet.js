@@ -4,11 +4,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { api } from "../request/Api";
 
-export const GroupWallet = () =>{
+export const GroupSusuWallet = () =>{
     const [susu , setSusu] = useState();
-    const [members, setMembers] = useState([
-        {id: 'some id'},
-    ]);
+    const [members, setMembers] = useState([]);
 
     const params = useParams();
     const navigate = useNavigate();
@@ -18,6 +16,7 @@ export const GroupWallet = () =>{
     useEffect(() => {
         api.susu.active(params.groupId).then((response)=>{
             setSusu(response.data.data[0]);
+            setMembers(response.data.data[0].attributes.members);
         }).catch((error)=>{
             
         });
@@ -52,7 +51,7 @@ export const GroupWallet = () =>{
                 <table className="w-100">
                     <tbody>
                         {members.map((member, key)=>(
-                            <tr onClick={()=>navigate(routes.susu().nested().updateGroupWallet(params.groupId, member.id))} className="border-bottom border-secondary pointer" key={key}>
+                            <tr onClick={()=>navigate(routes.susu().nested().updateMemberSusuWallet(params.groupId, member.id))} className="border-bottom border-secondary pointer" key={key}>
                                 <td className="py-2">
                                     <div className="d-flex">
                                         <div className="me-2 d-none d-sm-block">

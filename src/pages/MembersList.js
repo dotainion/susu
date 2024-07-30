@@ -3,6 +3,7 @@ import { IoSearchOutline } from "react-icons/io5";
 import { api } from "../request/Api";
 import { routes } from "../routes/Routes";
 import { useNavigate } from "react-router-dom";
+import { Loader } from "../components/Loader";
 
 export const MembersList = () => {
     const [members, setMembers] = useState([]);
@@ -43,11 +44,7 @@ export const MembersList = () => {
                             </div>
                         </div>
                     )): 
-                    <div className="d-flex justify-content-center">
-                        <div className="spinner-border" role="status">
-                            <span className="visually-hidden">Loading...</span>
-                        </div>
-                    </div>
+                    <Loader/>
                 }
             </div>
         </div>
