@@ -76,24 +76,51 @@ class Schema{
             ->column('startDate')->timestamp()     
             ->column('groupId')->bindary()
             ->column('pendingStart')->bool()
-            ->column('completed')->bool();
+            ->column('completed')->bool()
+            ->column('canceled')->bool();
         return $this->sql->execute();
     }
 
     public function susuLink(){
         $this->sql->create('susuLink')
-            ->column('groupId')->bindary()
+            ->column('susuId')->bindary()
             ->column('memberId')->bindary()
             ->column('position')->int();
         return $this->sql->execute();
     }
 
-    public function susuHistory(){
-        $this->sql->create('susuHistory')
+    public function contribution(){
+        $this->sql->create('contribution')
+            ->column('id')->bindary()
             ->column('susuId')->bindary()
             ->column('memberId')->bindary()
             ->column('contribution')->string()
+            ->column('description')->paragraph()
             ->column('date')->timestamp()
+            ->column('paid')->bool()
+            ->column('refunded')->bool()
+            ->column('payout')->bool()
+            ->column('hide')->bool();
+        return $this->sql->execute();
+    }
+
+    public function schedule(){
+        $this->sql->create('schedule')
+            ->column('id')->bindary()
+            ->column('susuId')->bindary()
+            ->column('memberId')->bindary(true)
+            ->column('date')->timestamp()
+            ->column('position')->int();
+        return $this->sql->execute();
+    }
+
+    public function message(){
+        $this->sql->create('message')
+            ->column('id')->bindary()
+            ->column('message')->book()
+            ->column('date')->timestamp()
+            ->column('fromId')->bindary()
+            ->column('toId')->bindary()
             ->column('hide')->bool();
         return $this->sql->execute();
     }

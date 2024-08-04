@@ -27,4 +27,12 @@ export class Susu{
     async unlink(groupId, memberId){
         return await this.api.get('/unlink/susu', {memberId, groupId});
     }
+
+    async set(data){
+        return await this.api.get('/set/susu', data);
+    }
+
+    async cycles(){
+        return await this.api.get('/list/cycle', null);
+    }
 }

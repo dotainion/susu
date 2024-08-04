@@ -4,11 +4,15 @@ import { useEffect, useRef, useState } from "react";
 import { utils } from "../utils/Utils";
 import { SelectOption } from "../widgets/SelectOption";
 import { routes } from "../routes/Routes";
+import { SelectMembersOverlay } from "../components/SelectMembersOverlay";
 
 export const Group = () =>{
     const [group, setGroup] = useState();
     const [cycle , setCycle] = useState();
+    const [cycles , setCycles] = useState([]);
     const [susu , setSusu] = useState();
+    const [openSusuMembers , setOpenSusuMembers] = useState(false);
+    const [openGroupMembers , setOpenGroupMembers] = useState(false);
 
     const params = useParams();
     const navigate = useNavigate();
@@ -20,15 +24,8 @@ export const Group = () =>{
     const payoutDateRef = useRef();
     const hideRef = useRef();
 
-    const cycles = [
-        {title: 'Weekly', value: 'Weekly'},
-        {title: 'Bi-Weekly', value: 'Bi-Weekly'},
-        {title: 'Monthly', value: 'Monthly'},
-        {title: 'Bi-Monthly', value: 'Bi-Monthly'},
-    ];
-
     const editGroup = () =>{
-        const group = {
+        const data = {
             id: params.groupId,
             name: nameRef.current.value,
             contribution: contributionRef.current.value,
@@ -37,7 +34,7 @@ export const Group = () =>{
             payoutDate: utils.date.dbFormat(payoutDateRef.current.value),
             hide: hideRef.current
         }
-        api.group.set(group).then((response)=>{
+        api.group.set(data).then((response)=>{
             
         }).catch((error)=>{
             console.log(error);
@@ -60,6 +57,32 @@ export const Group = () =>{
         });
     }
 
+    const cancelSusu = () =>{
+        const data = {
+            ...susu.attributes,
+            susuId: susu.id,
+            canceled: true
+        };
+        api.susu.set(data).then((response)=>{
+            setSusu(null);
+        }).catch((error)=>{
+            console.log(error);
+        });
+    }
+
+    const deleteGroup = () =>{
+        const data = {
+            ...group.attributes,
+            groupId: group.id,
+            hide: true
+        };
+        api.group.delete(data).then((response)=>{
+            navigate(routes.susu().nested().ownerGroups());
+        }).catch((error)=>{
+            console.log(error);
+        });
+    }
+
     useEffect(() => {
         api.group.group(params.groupId).then((response)=>{
             setGroup(response.data.data[0]);
@@ -71,6 +94,19 @@ export const Group = () =>{
         }).catch((error)=>{
             setSusu(null);
         });
+        api.susu.cycles().then((response)=>{
+            const cycleLists = response.data.data.map((cyc)=>{
+                return {
+                    title: cyc.attributes.cycle, 
+                    value: cyc.attributes.cycle
+                }
+            });
+            setCycles(cycleLists);
+        }).catch((error)=>{
+            console.log(error);
+        });
+        setOpenSusuMembers(false);
+        setOpenGroupMembers(false);
     }, [location]);
 
     useEffect(() => {
@@ -118,7 +154,7 @@ export const Group = () =>{
                 {
                     !susu?
                     <div className="py-3 px-2">
-                        <button onClick={startSusu} className="btn btn-sm">Start Susu</button>
+                        <button onClick={startSusu} className="btn btn-sm">Commence a susu</button>
                         <div className="small">Begin organizing contributions, setting schedules, and achieving financial goals together.</div>
                     </div>
                     : 
@@ -126,31 +162,56 @@ export const Group = () =>{
                     {
                         susu.attributes.pendingStart? 
                         <div className="py-3 px-2">
-                            <button onClick={confirmSusu} className="btn btn-sm bg-success text-white me-2">Apply & Confirm</button>
-                            <button className="btn btn-sm bg-primary text-white">Send Invites before confirming</button>
+                            <button onClick={confirmSusu} className="btn btn-sm btn-success me-2">Apply & Confirm</button>
+                            <button onClose={()=>setOpenSusuMembers(false)} className="btn btn-sm bg-primary text-white me-2">Send Invites</button>
+                            <button onClick={()=>{
+                                console.log(susu.id);
+                                console.log(susu);
+                                navigate(routes.susu().nested().susuMembers(params.groupId, susu.id))}
+                            } className="btn btn-sm btn-danger">Remove a members</button>
+                            <button onClick={cancelSusu} className="btn btn-sm btn-danger ms-2">Cancel Susu</button>
                             <div className="small">Begin organizing contributions, setting schedules, and achieving financial goals together.</div>
                         </div>
                         : 
                         <div className="py-3 px-2">
-                            <button onClick={()=>navigate(routes.susu().nested().groupSusuWallet(params.groupId))} className="btn btn-sm bg-secondary text-white">Susu Wallet</button>
+                            <button onClick={()=>navigate(routes.susu().nested().groupSusuWallet(params.groupId, susu.id))} className="btn btn-sm bg-secondary text-white">Susu Wallet</button>
+                            <button onClose={()=>setOpenSusuMembers(false)} className="btn btn-sm bg-primary text-white ms-2">Send Invites</button>
+                            <button onClick={()=>navigate(routes.susu().nested().susuMembers(params.groupId))} className="btn btn-sm btn-danger ms-2">Remove a members</button>
                             <div className="small">Begin organizing contributions, setting schedules, and achieving financial goals together.</div>
                         </div>
                     }
                     </>
                 }
                 <div className="py-3 px-2">
-                    <button onClick={()=>navigate(routes.susu().nested().schedule(params.groupId))} className="btn btn-sm btn-info">Schedule</button>
+                    {
+                        susu?.attributes?.pendingStart 
+                        ? <button onClick={()=>navigate(routes.susu().nested().schedule(params.groupId))} className="btn btn-sm btn-info">Schedule</button>
+                        : <p className="small">To generate the schedule, it is essential to confirm participation in the susu. The schedule will be determined based on the number of members who have joined the susu. Once confirmed, members will have the opportunity to select their preferred schedule.</p>
+                    }
                     <div className="small">Once you remove a member from this group, you may need to send a request so they can be added back.</div>
                 </div>
                 <div className="py-3 px-2">
-                    <button className="btn btn-sm btn-danger">Remove a members</button>
+                    <button onClick={()=>navigate(routes.susu().nested().groupMembers(params.groupId))} className="btn btn-sm btn-danger">Remove a members</button>
+                    <button onClick={()=>setOpenGroupMembers(true)} className="btn btn-sm bg-primary text-white ms-2">Invite members to join group</button>
                     <div className="small">Once you remove a member from this group, you may need to send a request so they can be added back.</div>
                 </div>
                 <div className="py-3 px-2">
-                    <button className="btn btn-sm btn-danger">Delete Group</button>
+                    <button onClick={deleteGroup} className="btn btn-sm btn-danger">Delete Group</button>
                     <div className="small">Once you delete a group, there is no going back. Please be certain.</div>
                 </div>
             </div>
+            <SelectMembersOverlay 
+                isOpen={openSusuMembers} 
+                onClose={()=>setOpenSusuMembers(false)}
+                onSelect={(selected)=>console.log(selected)}
+                title={'Select members to send invites'}
+            />
+            <SelectMembersOverlay 
+                isOpen={openGroupMembers} 
+                onClose={()=>setOpenGroupMembers(false)}
+                onSelect={(selected)=>console.log(selected)}
+                title={'Select members to send invites'}
+            />
         </div>
     )
 }

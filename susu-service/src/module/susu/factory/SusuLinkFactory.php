@@ -13,7 +13,7 @@ class SusuLinkFactory extends Collector{
 
     public function mapResult($record):SusuLink{
         $susu = new SusuLink();
-        $susu->setGroupId($this->uuid($record['groupId']));
+        $susu->setSusuId($this->uuid($record['susuId']));
         $susu->setMemberId($this->uuid($record['memberId']));
         $susu->setPosition((int)$record['position']);
         return $susu;

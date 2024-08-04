@@ -19,6 +19,14 @@ export const Schedule = () =>{
         setCard(currentCard);
     }
 
+    const selectPayout = () =>{
+        api.schedule.select(card.id, user.id).then((response)=>{
+            console.log('schedule selected...');
+        }).catch((error)=>{
+
+        });
+    }
+
     useEffect(()=>{
         api.schedule.list(params.groupId).then((response)=>{
             setSchedules(response.data.data);
@@ -29,16 +37,17 @@ export const Schedule = () =>{
 
     return(
         <div className="container">
-            <button onClick={()=>navigate(routes.susu().groupSusuWallet(params.groupId))} className="btn bg-transparent p-0 my-4"><IoIosArrowBack/> To Susu Wallet</button>
+            <button onClick={()=>navigate(routes.susu().nested().groupSusuWallet(params.groupId))} className="btn bg-transparent p-0 my-4"><IoIosArrowBack/> To Susu Wallet</button>
             <div className="d-flex align-items-center h4 mb-4">
                 <FcClock/>
-                <div className="mx-2">Payout Schedule</div>
+                <div className="mx-2 w-100">Payout Schedule</div>
             </div>
             <div className="d-flex w-100">
-                <div className="w-100 text-center py-3">
+                <div className="w-100 text-center py-3" style={{minHeight: '30vh'}}>
                     <div>Select a day</div>
                     <div className="mb-3 mt-2 fw-bold">Fri Aug - Sat Nov</div>
-                    <div className="schedule-picker">
+                    <hr></hr>
+                    <div className="schedule-picker scrollbar-hidden">
                         {schedules.map((schedule, key)=>(
                             <div className="d-inline-block p-1 rounded-2 text-center user-select-none" key={key}>
                                 <div className="small">{schedule.attributes.date.split(', ')[0]},</div>
@@ -54,7 +63,7 @@ export const Schedule = () =>{
                         ))}
                     </div>
                 </div>
-                <div className="mx-4"></div>
+                <div className="mx-4 border"></div>
                 <div className="w-100 text-nowrap">
                     {
                         card?
@@ -85,7 +94,7 @@ export const Schedule = () =>{
                                             </>
                                         }
                                     </span>
-                                    : <button className="btn">Select Week</button>
+                                    : <button onClick={selectPayout} className="btn">Select Week</button>
                                 }
                             </div>
                         </>

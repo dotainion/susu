@@ -180,6 +180,27 @@ class Repository{
 		return $this;
 	}
 
+	public function like($column, $value, $tableName = null):self{
+		if(! $this->where){
+			$this->where = ' WHERE ';
+		}else{
+			$this->where .= ' AND ';
+		}
+		if(!$tableName){
+			$tableName = $this->parentTableName;
+		}
+		if(is_array($value)){
+			$operator = null; 
+			foreach($value as $val){
+				$this->where .= $operator.'`'.$tableName.'`.`'.$column.'` LIKE "%'.$val.'%"';
+				$operator = ' OR ';
+			}
+			return $this;
+		}
+		$this->where .= '`'.$tableName.'`.`'.$column.'` LIKE "%'.$value.'%"';
+		return $this;
+	}
+
 	public function between($column, $from, $to, $tableName = null){
 		if(! $this->where){
 			$this->where = ' WHERE ';

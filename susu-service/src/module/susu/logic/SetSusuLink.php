@@ -14,7 +14,7 @@ class SetSusuLink{
 
     public function set(SusuLink $link):void{
         $collector = $this->repo->listSusuLink([
-            'groupId' => $link->groupId(),
+            'susuId' => $link->susuId(),
             'memberId' => $link->memberId()
         ]);
         if($collector->hasItem()){

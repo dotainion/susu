@@ -21,7 +21,7 @@ export const MemberSusuHistory = () =>{
     }, []);
 
     useEffect(()=>{
-        api.history.lisHistory(params.susuId, params.memberId).then((response)=>{
+        api.contribution.listContributions(params.susuId, params.memberId).then((response)=>{
             setHistories(response.data.data);
         }).catch((error)=>{
 
@@ -38,7 +38,7 @@ export const MemberSusuHistory = () =>{
                 <table className="w-100">
                     <tbody>
                         {histories.map((history, key)=>(
-                            <tr className="border-bottom border-secondary" key={key}>
+                            <tr className="border-bottom" key={key}>
                                 <td className="py-2 small">{history.attributes.data}</td>
                                 <td className="py-2 d-none d-sm-block">
                                     <div className="small">

@@ -5,17 +5,17 @@ use src\infrastructure\Id;
 use src\infrastructure\IId;
 
 class SusuLink{
-    protected Id $groupId;
+    protected Id $susuId;
     protected Id $memberId;
     protected ?int $position = null;
 
     public function __construct(){
-        $this->groupId = new Id();
+        $this->susuId = new Id();
         $this->memberId = new Id();
     }
 
-    public function groupId():IId{
-        return $this->groupId;
+    public function susuId():IId{
+        return $this->susuId;
     }
 
     public function memberId():IId{
@@ -26,8 +26,8 @@ class SusuLink{
         return $this->position;
     }
 
-    public function setGroupId(string $groupId):void{
-        $this->groupId->set($groupId);
+    public function setSusuId(string $susuId):void{
+        $this->susuId->set($susuId);
     }
 
     public function setMemberId(string $memberId):void{

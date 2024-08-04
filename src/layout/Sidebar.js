@@ -13,12 +13,12 @@ export const Sidebar = () =>{
     const { user, signOut } = useAuth();
 
     const [show, setShow] = useState(false);
-    const [groups, setGroups] = useState([]);
-    const [categories, setCategories] = useState([
+
+    const categories = [
         {
             category: 'Dashboard and Overview',
             menus: [
-                {title: 'Dashboard/Home', disabled: true},
+                {title: 'Dashboard', onClick: ()=>navigate(routes.susu().dashboard())},
                 {title: 'Contribution Summary', disabled: true},
                 {title: 'Rotation Schedule Overview', disabled: true},
                 {title: 'Group Management', disabled: true},
@@ -29,6 +29,7 @@ export const Sidebar = () =>{
                 {title: 'Create Group', onClick: ()=>navigate(routes.susu().newGroup())},
                 {title: 'Group List', onClick: ()=>navigate(routes.susu().groupList())},
                 {title: 'Member List', onClick: ()=>navigate(routes.susu().memberList())},
+                {title: 'My Groups', onClick: ()=>navigate(routes.susu().ownerGroups())},
                 {title: 'Contribution History', disabled: true},
                 //{title: 'User Profile and Settings', disabled: true},
             ],
@@ -56,7 +57,7 @@ export const Sidebar = () =>{
         },{
             category: 'Messaging/Chat',
             menus: [
-                {title: 'Chats', disabled: true},
+                {title: 'Chats', onClick: ()=>navigate(routes.susu().memberMessages())},
                 {title: 'Notifications', disabled: true},
                 {title: 'Community Forum', disabled: true},
                 {title: 'Support and Help', disabled: true},
@@ -78,7 +79,7 @@ export const Sidebar = () =>{
                 {title: 'Logout/Exit', disabled: true},
             ]
         }
-    ]);
+    ];
 
     const navigate = useNavigate();
 
@@ -86,27 +87,6 @@ export const Sidebar = () =>{
 
     let isDragging = false;
     let startX, initialPosition;
-    
-    useEffect(()=>{
-        if(!user) return;
-        api.group.ownerGroups(user.id).then((response)=>{
-            setGroups(response.data.data.map((g)=>{
-                return {title: g.attributes.name, onClick: ()=>navigate(routes.susu().group(g.id))}
-            }));
-        }).catch((error)=>{
-
-        });
-    }, [user]);
-    
-    useEffect(()=>{
-        const identifier = 'My Groups';
-        if(!groups.length || categories.find((cat)=>cat.category === identifier)) return;
-        const myGroup = {
-            category: identifier,
-            menus: groups,
-        }
-        setCategories((cats)=>[...cats.slice(0, 1), myGroup, ...cats.slice(1)]);
-    }, [groups]);
 
     useEffect(()=>{
         $(sidebarRef.current).on('touchstart mousedown', function(e) {
@@ -141,7 +121,7 @@ export const Sidebar = () =>{
             <button onClick={()=>setShow(!show)} className="btn bg-transparent shadow-none border-0 p-2"><MdMenu className="fs-1"/></button>
         </div>
         <div ref={sidebarRef} className={`sidebar ${show ? 'show' : ''}`}>
-            <div className="d-flex flex-column flex-shrink-0 p-3 vh-100">
+            <div className="d-flex flex-column flex-shrink-0 overflow-hidden p-3 vh-100">
                 <button className="btn d-flex align-items-center pb-3 mb-3 w-100 shadow-none border-0 border-bottom rounded-0">
                     <GiCondorEmblem className="me-2 text-white display-5"/>
                     <span className="fs-5 fw-semibold text-white">Susu App</span>
@@ -174,7 +154,7 @@ export const Sidebar = () =>{
                 <div className="dropdown">
                     <a href="#" className="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="https://github.com/mdo.png" alt="" width="32" height="32" className="rounded-circle me-2"/>
-                        <strong>mdo</strong>
+                        <strong className="text-truncate">{user.attributes.firstName} {user.attributes.lastName}</strong>
                     </a>
                     <ul className="dropdown-menu text-small shadow" aria-labelledby="dropdownUser1">
                         <li><button onClick={()=>navigate(routes.susu().newGroup())} className="btn btn-sm w-100">New Group...</button></li>

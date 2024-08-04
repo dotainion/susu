@@ -8,8 +8,10 @@ use src\module\groups\action\ListGroupsAction;
 use src\module\groups\action\MemberGroupsAction;
 use src\module\groups\action\OwnerGroupsAction;
 use src\module\groups\action\SetGroupAction;
-use src\module\history\action\AddSusuHistoryAction;
-use src\module\history\action\ListSusuHistoryAction;
+use src\module\contribution\action\AddSusuContributionAction;
+use src\module\contribution\action\ListSusuContributionAction;
+use src\module\contribution\action\UpdateSusuContributionAction;
+use src\module\groups\action\UnlinkGroupAction;
 use src\module\login\action\FetchSessionAction;
 use src\module\login\action\GoogleLoginAction;
 use src\module\login\action\LoginAction;
@@ -17,11 +19,16 @@ use src\module\login\action\LogoutAction;
 use src\module\login\action\SendRecoveryEmailAction;
 use src\module\login\action\UpdateCredentialAction;
 use src\module\login\action\UpdateCredentialByTokenAction;
+use src\module\messages\action\SearchMessangerAction;
+use src\module\messages\action\SetMessageAction;
 use src\module\susu\action\ConfirmSusuAction;
 use src\module\susu\action\FetchActiveSusuAction;
 use src\module\susu\action\FetchSusuAction;
 use src\module\susu\action\JoinSusuAction;
-use src\module\susu\action\ListScheduleAction;
+use src\module\schedule\action\ListScheduleAction;
+use src\module\schedule\action\SelectScheduleAction;
+use src\module\susu\action\ListCycleAction;
+use src\module\susu\action\SetSusuAction;
 use src\module\susu\action\StartSusuAction;
 use src\module\susu\action\UnlinkSusuAction;
 use src\module\user\action\CreateGoogleUserAction;
@@ -31,6 +38,9 @@ use src\module\user\action\FetchUserAction;
 use src\module\user\action\ListUsersAction;
 use src\schema\Schema;
 use src\module\user\action\FetchAddressAction;
+use src\module\user\action\ListUsersByGroupAction;
+use src\module\user\action\ListUsersBySusuAction;
+use src\module\user\action\SearchUsersAction;
 use src\module\user\action\SetAddressAction;
 
 class Router{
@@ -105,6 +115,18 @@ class Router{
             return new FetchUserAction();
         });
 
+        $this->request->route('/search/users', function ($req){
+            return new SearchUsersAction();
+        });
+
+        $this->request->route('/list/group/users', function ($req){
+            return new ListUsersByGroupAction();
+        });
+
+        $this->request->route('/list/susu/users', function ($req){
+            return new ListUsersBySusuAction();
+        });
+
         $this->request->route('/set/address', function ($req){
             return new SetAddressAction();
         });
@@ -141,8 +163,16 @@ class Router{
             return new JoinGroupAction();
         });
 
+        $this->request->route('/unlink/group', function ($req){
+            return new UnlinkGroupAction();
+        });
+
         $this->request->route('/start/susu', function ($req){
             return new StartSusuAction();
+        });
+
+        $this->request->route('/set/susu', function ($req){
+            return new SetSusuAction();
         });
 
         $this->request->route('/fetch/active/susu', function ($req){
@@ -165,16 +195,37 @@ class Router{
             return new UnlinkSusuAction();
         });
 
+        $this->request->route('/select/schedule', function ($req){
+            return new SelectScheduleAction();
+        });
+
         $this->request->route('/list/schedule', function ($req){
             return new ListScheduleAction();
         });
 
-        $this->request->route('/add/susu/history', function ($req){
-            return new AddSusuHistoryAction();
+        $this->request->route('/add/susu/contribution', function ($req){
+            return new AddSusuContributionAction();
         });
 
-        $this->request->route('/list/susu/history', function ($req){
-            return new ListSusuHistoryAction();
+        $this->request->route('/update/susu/contribution', function ($req){
+            return new UpdateSusuContributionAction();
+        });
+
+
+        $this->request->route('/list/susu/contribution', function ($req){
+            return new ListSusuContributionAction();
+        });
+
+        $this->request->route('/list/cycle', function ($req){
+            return new ListCycleAction();
+        });
+
+        $this->request->route('/messanger/search', function ($req){
+            return new SearchMessangerAction();
+        });
+
+        $this->request->route('/set/message', function ($req){
+            return new SetMessageAction();
         });
     }
 

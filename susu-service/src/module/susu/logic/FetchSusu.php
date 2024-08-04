@@ -27,7 +27,8 @@ class FetchSusu{
     public function activeByGroupId(Id $id):Collector{
         return $this->repo->listSusu([
             'groupId' => $id,
-            'completed' => false
+            'completed' => false,
+            'canceled' => false
         ]);
     }
 }

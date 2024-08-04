@@ -113,13 +113,20 @@ class Table{
 		return str_replace(PHP_EOL, '', $this->statement);
 	}
 
-	public function bindary(){
-		$this->column.="binary(16) NOT NULL";
+	private function addNullable(bool $nullable = false):string{
+		if($nullable){
+			return '';
+		}
+		return 'NOT NULL';
+	}
+
+	public function bindary(bool $nullable = false){
+		$this->column.="binary(16) " . $this->addNullable($nullable);
 		return $this;
 	}
 
-	public function timestamp(){
-		$this->column.="timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP";
+	public function timestamp(bool $nullable = false){
+		$this->column.="timestamp ".$this->addNullable($nullable)." DEFAULT CURRENT_TIMESTAMP";
 		return $this;
 	}
 

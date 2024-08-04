@@ -27,4 +27,12 @@ export class Group{
     async join(groupId, memberId){
         return await this.api.get('/join/group', {groupId, memberId});
     }
+
+    async unlink(groupId, memberId){
+        return await this.api.get('/unlink/group', {groupId, memberId});
+    }
+
+    async delete(data){
+        return await this.set(data);
+    }
 }

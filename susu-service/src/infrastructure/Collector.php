@@ -15,10 +15,11 @@ class Collector{
         $this->collected = [$item, ...$this->collected];
     }
 
-    public function mergeCollection(Collector $collector):void{
+    public function mergeCollection(Collector $collector):self{
         foreach($collector->list() as $item){
             $this->add($item);
         }
+        return $this;
     }
     
     public function list():array{

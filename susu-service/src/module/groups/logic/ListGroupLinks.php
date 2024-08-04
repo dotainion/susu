@@ -13,10 +13,14 @@ class ListGroupLinks{
     }
 
     public function groupLinks(Id $groupId):Collector{
-        return $this->repo->listJoinGroup($groupId);
+        return $this->repo->listJoinGroup([
+            'groupId' => $groupId
+        ]);
     }
 
     public function groupLinksByIdArray(Array $groupIdArray):Collector{
-        return $this->repo->listJoinGroup(null, null, $groupIdArray);
+        return $this->repo->listJoinGroup([
+            'groupId' => $groupIdArray
+        ]);
     }
 }

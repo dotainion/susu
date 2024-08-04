@@ -17,7 +17,19 @@ export class User{
         return await this.api.get('/list/users', null);
     }
 
+    async search(value){
+        return await this.api.get('/search/users', {value});
+    }
+
     async address(id){
         return await this.api.get('/fetch/address', {id});
+    }
+
+    async byGroup(groupId){
+        return await this.api.get('/list/group/users', {groupId});
+    }
+
+    async bySusu(susuId){
+        return await this.api.get('/list/susu/users', {susuId});
     }
 }

@@ -7,6 +7,15 @@ import $ from "jquery";
 import { GroupWallet } from "../pages/GroupSusuWallet";
 import { api } from "../request/Api";
 import { Schedule } from "../pages/Schedule";
+import { NewGroup } from "../pages/NewGroup";
+import { UpdateMemberSusuWallet } from "../pages/UpdateMemberSusuWallet";
+import { Group } from "../pages/Group";
+import { GroupMembers } from "../pages/GroupMembers";
+import { Dashboard } from "../pages/Dashboard";
+import { MemberMessages } from "../pages/MemberMessages";
+import { GroupMessages } from "../pages/GroupMessages";
+import { Messages } from "../pages/Messages";
+import { MessangerSearchGroupOrMember } from "../pages/MessangerSearchGroupOrMember";
 
 export const Test = () =>{
     const dateRef = useRef();
@@ -27,7 +36,7 @@ export const Test = () =>{
 
     return(
         <div className="container">
-            <ViewGroup/>
+            <MessangerSearchGroupOrMember/>
         </div>
     )
 }

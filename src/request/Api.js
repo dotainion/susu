@@ -5,11 +5,12 @@ import { User } from "./User";
 import { Group } from "./Group";
 import { Susu } from "./Susu";
 import { Schedule } from "./Schedule";
-import { History } from "./History";
+import { Contribution } from "./Contribution";
+import { Messages } from "./Messages";
 
 export class Api{
-    baseURL = '/susu-service';
-    //baseURL = 'https://www.caribbeancodingacademygrenada.com/susu-service';
+    //baseURL = '/susu-service';
+    baseURL = 'https://www.caribbeancodingacademygrenada.com/susu-service';
 
     constructor(){
         this.axios = axios.create({
@@ -25,7 +26,8 @@ export class Api{
         this.group = new Group(this);
         this.susu = new Susu(this);
         this.schedule = new Schedule(this);
-        this.history = new History(this);
+        this.contribution = new Contribution(this);
+        this.message = new Messages(this);
     }
 
     async post(route, data){

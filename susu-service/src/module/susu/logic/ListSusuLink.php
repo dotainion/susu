@@ -12,9 +12,9 @@ class ListSusuLink{
         $this->repo = new SusuLinkRepository();
     }
 
-    public function links(Id $groupId):Collector{
+    public function links(Id $susuId):Collector{
         return $this->repo->listSusuLink([
-            'groupId' => $groupId
+            'susuId' => $susuId
         ]);
     }
 }

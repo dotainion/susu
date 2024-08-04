@@ -26,10 +26,11 @@ class UnlinkSusuService extends Service{
 
         $collector = $this->susu->activeByGroupId(new Id($groupId));
         $collector->assertHasItem('Susu not yet stared.');
+        $susu = $collector->first();
 
         $link = $this->factory->mapResult([
-            'groupId' => new Id($groupId),
-            'memberId' => new Id($memberId),
+            'susuId' => $susu->id()->toString(),
+            'memberId' => $memberId,
             'position' => null,
         ]);
 

@@ -16,6 +16,7 @@ class Susu implements IObjects{
     protected Id $groupId;
     protected bool $pendingStart;
     protected bool $completed;
+    protected bool $canceled;
     protected ?Collector $members = null;
 
     public function __construct(){
@@ -33,6 +34,10 @@ class Susu implements IObjects{
 
     public function members():?Collector{
         return $this->members;
+    }
+
+    public function canceled():bool{
+        return $this->canceled;
     }
 
     public function completed():bool{
@@ -93,5 +98,9 @@ class Susu implements IObjects{
 
     public function setMembers(Collector $members):void{
         $this->members = $members;
+    }
+
+    public function setCanceled(bool $canceled):void{
+        $this->canceled = $canceled;
     }
 }

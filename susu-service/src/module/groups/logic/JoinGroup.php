@@ -1,8 +1,7 @@
 <?php
 namespace src\module\groups\logic;
 
-use src\infrastructure\Collector;
-use src\infrastructure\Id;
+use src\module\groups\objects\GroupLink;
 use src\module\groups\repository\GroupRepository;
 
 class JoinGroup{
@@ -12,11 +11,14 @@ class JoinGroup{
         $this->repo = new GroupRepository();
     }
 
-    public function join(Id $groupId, Id $memberId):void{
-        $collector = $this->repo->listJoinGroup($groupId, $memberId);
+    public function join(GroupLink $link):void{
+        $collector = $this->repo->listJoinGroup([
+            'groupId' => $link->groupId(),
+            'memberId' => $link->memberId()
+        ]);
         if($collector->hasItem()){
             return;
         }
-        $this->repo->joinGroup($groupId, $memberId);
+        $this->repo->joinGroup($link);
     }
 }

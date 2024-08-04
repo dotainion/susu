@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { api } from "../request/Api"
 import { useNavigate } from "react-router-dom";
 import { routes } from "../routes/Routes";
@@ -9,6 +9,7 @@ export const NewGroup = () =>{
     const navigate = useNavigate();
 
     const [cycle , setCycle] = useState();
+    const [cycles , setCycles] = useState();
 
     const idRef = useRef(null);
     const nameRef = useRef();
@@ -16,13 +17,6 @@ export const NewGroup = () =>{
     const descriptionRef = useRef();
     const payoutDateRef = useRef();
     const hideRef = useRef(false);
-
-    const cycles = [
-        {title: 'Weekly', value: 'Weekly'},
-        {title: 'Bi-Weekly', value: 'Bi-Weekly'},
-        {title: 'Monthly', value: 'Monthly'},
-        {title: 'Bi-Monthly', value: 'Bi-Monthly'},
-    ];
 
     const createGroup = () =>{
         const group = {
@@ -40,6 +34,20 @@ export const NewGroup = () =>{
             console.log(error);
         });
     }
+
+    useEffect(()=>{
+        api.susu.cycles().then((response)=>{
+            const cycleLists = response.data.data.map((cyc)=>{
+                return {
+                    title: cyc.attributes.cycle, 
+                    value: cyc.attributes.cycle
+                }
+            });
+            setCycles(cycleLists);
+        }).catch((error)=>{
+            console.log(error);
+        });
+    }, []);
 
     return(
         <div className="container">

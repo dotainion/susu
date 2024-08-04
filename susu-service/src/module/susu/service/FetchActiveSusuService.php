@@ -27,7 +27,7 @@ class FetchActiveSusuService extends Service{
         $collector->assertHasItem('No active susu found.');
         $susu = $collector->first();
 
-        $links = $this->links->links(new Id($groupId));
+        $links = $this->links->links($susu->id());
         $members = $this->users->usersByIdArray($links->attrArray('memberId'));
 
         $members->hasItem() && $susu->setMembers($members);

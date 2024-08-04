@@ -152,18 +152,14 @@ hr, table tr{
     border-color: var(--bg-sidebar) !important;
 }
 
-*.border:not(.bg-danger):not(.bg-info):not(.bg-secondary):not(.bg-dark):not(.bg-warning){
+*.border:not(.border-danger):not(.border-info):not(.border-secondary):not(.border-dark):not(.border-warning):not(.border-success), 
+.border-top:not(.border-danger):not(.border-info):not(.border-secondary):not(.border-dark):not(.border-warning):not(.border-success),
+.border-bottom:not(.border-danger):not(.border-info):not(.border-secondary):not(.border-dark):not(.border-warning):not(.border-success){
     border-color: var(--bg-sidebar) !important;
 }
 
 .schedule-picker{
     width: 100%;
-}
-
-.schedule-picker::-webkit-scrollbar{
-    width: 0;
-    height: 0;
-    display: none;
 }
 
 .schedule-picker > div > .card{
@@ -176,8 +172,64 @@ hr, table tr{
     font-size: 11px;
 }
 
+.scrollbar-hidden::-webkit-scrollbar{
+    width: 0;
+    height: 0;
+    display: none;
+}
+
 .text-brown{
     color: var(--bg-sidebar);
+}
+
+.selected-label.checked{
+    background-color: var(--bg-secondary) !important;
+}
+
+.select-members-overlay{
+    width: 100%;
+    max-width: 500px;
+    max-height: calc(100vh - 25px);
+}
+
+.message-left{
+    background-color: white;
+}
+
+.message-left::after {
+    content: "";
+    position: absolute;
+    top: -21px;
+    left: 8px;
+    width: 0;
+    height: 0;
+    border-width: 15px;
+    border-style: solid;
+    border-color: transparent transparent white transparent;
+    transform: rotate(45deg);
+    transform-origin: 0 0;
+}
+
+.message-right{
+    background-color: var(--bg-sidebar);
+}
+
+.message-right::before {
+    content: "";
+    position: absolute;
+    top: -0px;
+    right: 0px;
+    width: 0;
+    height: 0;
+    border-width: 15px;
+    border-style: solid;
+    border-color: transparent transparent var(--bg-sidebar) transparent;
+    transform: rotate(-45deg);
+    transform-origin: 0 0;
+}
+
+.bg-sidebar{
+    background-color: var(--bg-sidebar);
 }
 
 @media (max-width: 576px) {

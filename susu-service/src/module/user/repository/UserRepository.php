@@ -65,6 +65,12 @@ class UserRepository extends Repository{
         if(isset($where['phoneNumber'])){
             $this->where('phoneNumber', $where['phoneNumber']);
         }
+        if(isset($where['firstName'])){
+            $this->like('firstName', $where['firstName']);
+        }
+        if(isset($where['lastName'])){
+            $this->like('lastName', $where['lastName']);
+        }
         $this->execute();
         return $this->factory->map(
             $this->results()

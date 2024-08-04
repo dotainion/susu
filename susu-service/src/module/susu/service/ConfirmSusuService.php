@@ -4,6 +4,7 @@ namespace src\module\susu\service;
 use src\infrastructure\Assert;
 use src\infrastructure\Id;
 use src\infrastructure\Service;
+use src\module\schedule\service\GenerateAndSaveScheduleService;
 use src\module\susu\factory\SusuFactory;
 use src\module\susu\logic\FetchSusu;
 use src\module\susu\logic\SetSusu;
@@ -27,6 +28,8 @@ class ConfirmSusuService extends Service{
         $collector->assertHasItem('Susu not yet stared.');
         $susu = $collector->first();
         $susu->setPendingStart(false);
+
+        (new GenerateAndSaveScheduleService())->process($susu->groupId());
         
         $this->susu->set($susu);
 

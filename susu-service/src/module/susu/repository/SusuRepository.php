@@ -6,6 +6,7 @@ use src\infrastructure\Collector;
 use src\infrastructure\Id;
 use src\module\susu\factory\SusuFactory;
 use src\module\susu\objects\Susu;
+use src\module\susu\objects\SusuLink;
 
 class SusuRepository extends Repository{
     protected SusuFactory $factory;
@@ -24,6 +25,7 @@ class SusuRepository extends Repository{
             ->add('startDate', $susu->startDate()->toString())
             ->add('groupId', $this->uuid($susu->groupId()))
             ->add('pendingStart', $susu->pendingStart())
+            ->add('canceled', $susu->canceled())
             ->add('completed', $susu->completed());
         $this->execute();
     }
@@ -36,15 +38,9 @@ class SusuRepository extends Repository{
             ->set('startDate', $susu->startDate()->toString())
             ->set('groupId', $this->uuid($susu->groupId()))
             ->set('pendingStart', $susu->pendingStart())
+            ->set('canceled', $susu->canceled())
             ->set('completed', $susu->completed())
             ->where('id', $this->uuid($susu->id()));
-        $this->execute();
-    }
-    
-    public function joinSusu(Id $memberId, Id $groupId):void{
-        $this->update('joinSusu')     
-            ->set('memberId', $this->uuid($memberId))
-            ->set('groupId', $this->uuid($groupId));
         $this->execute();
     }
     
@@ -59,6 +55,9 @@ class SusuRepository extends Repository{
         }
         if(isset($where['completed'])){
             $this->where('completed', (int)$where['completed']);
+        }
+        if(isset($where['canceled'])){
+            $this->where('canceled', (int)$where['canceled']);
         }
         $this->execute();
         return $this->factory->map(

@@ -21,6 +21,7 @@ class SusuFactory extends Collector{
         $susu->setGroupId($this->uuid($record['groupId']));
         $susu->setPendingStart((bool)$record['pendingStart']);
         $susu->setCompleted((bool)$record['completed']);
+        $susu->setCanceled((bool)$record['canceled']);
         return $susu;
     }
 }

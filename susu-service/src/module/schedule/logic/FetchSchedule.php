@@ -1,0 +1,21 @@
+<?php
+namespace src\module\schedule\logic;
+
+use src\infrastructure\Collector;
+use src\infrastructure\Id;
+use src\module\susu\repository\ScheduleRepository;
+
+class FetchSchedule{
+
+    protected ScheduleRepository $repo;
+
+    public function __construct() {
+        $this->repo =new ScheduleRepository();
+    }
+
+    public function byId(Id $id):Collector{
+        return $this->repo->listSchedules([
+            'id' => $id
+        ]);
+    }
+}
