@@ -2,34 +2,30 @@ import { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { useAuth } from "../provider/AuthProvider";
 import { MessageBox } from "../components/MessageBox";
+import { api } from "../request/Api";
+import { useParams } from "react-router-dom";
 
 export const Messages = () =>{
-    const [messages, setMessages] = useState([
-        {
-            attributes:{
-                message: 'If Composer is not functioning properly and you cannot install libraries directly, you can manually',
-                date: '15:41',
-                isCurrentUser: true
-            }
-        },{
-            attributes:{
-                message: 'If Composer',
-                date: '15:41',
-                isCurrentUser: false
-            }
-        },{
-            attributes:{
-                message: 'If Composer is not functioning properly and you cannot install libraries directly, you can manually',
-                date: '15:41',
-                isCurrentUser: true
-            }
-        },
-    ]);
+    const { user } = useAuth();
+
+    const [member, setMember] = useState();
+    const [messages, setMessages] = useState([]);
+
+    const params = useParams();
+
+    useEffect(()=>{
+        api.message.memberConversation(user.id, params.memberId).then((response)=>{
+            setMessages(response.data.data);
+            setMember(response.data.data.find((mb)=>mb.attributes.user.id !== user.id));
+        }).catch((error)=>{
+
+        });
+    }, []);
 
     return(
         <MessageBox 
             messages={messages}
-            messageToName={'Sam Smith'}
+            messageToName={`${member?.attributes?.firstName} ${member?.attributes?.lastName}`}
             sendMessage={(message)=>console.log(message)}
         />
     )

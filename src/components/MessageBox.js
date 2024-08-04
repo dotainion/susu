@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { MdSend } from "react-icons/md";
 import { useAuth } from "../provider/AuthProvider";
 
-export const MessageBox = ({messageToName, messages, isGroupMessager, sendMessage}) =>{
+export const MessageBox = ({messageToName, messages, isGroupMessanger, sendMessage}) =>{
     const { user } = useAuth();
     
     const messageRef = useRef();
@@ -23,7 +23,7 @@ export const MessageBox = ({messageToName, messages, isGroupMessager, sendMessag
                                     <div className={`${message.attributes.isCurrentUser ? 'message-right justify-content-end' : 'message-left justify-content-start'} d-flex position-relative w-auto rounded-3 m-0 p-2`}>
                                         <div>
                                             {
-                                                isGroupMessager 
+                                                isGroupMessanger 
                                                 ? <div className="text-primary small">
                                                     {
                                                         message.attributes.user.id === user.id

@@ -19,6 +19,8 @@ use src\module\login\action\LogoutAction;
 use src\module\login\action\SendRecoveryEmailAction;
 use src\module\login\action\UpdateCredentialAction;
 use src\module\login\action\UpdateCredentialByTokenAction;
+use src\module\messages\action\ListConversationAction;
+use src\module\messages\action\ListGroupMessagesAction;
 use src\module\messages\action\SearchMessangerAction;
 use src\module\messages\action\SetMessageAction;
 use src\module\susu\action\ConfirmSusuAction;
@@ -226,6 +228,14 @@ class Router{
 
         $this->request->route('/set/message', function ($req){
             return new SetMessageAction();
+        });
+
+        $this->request->route('/member/conversation', function ($req){
+            return new ListConversationAction();
+        });
+
+        $this->request->route('/group/conversation', function ($req){
+            return new ListGroupMessagesAction();
         });
     }
 

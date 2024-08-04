@@ -11,4 +11,12 @@ export class Messages{
     async set(data){
         return await this.api.get('/set/message', data);
     }
+
+    async memberConversation(memberId, receipientId){
+        return await this.api.get('/member/conversation', {memberId, receipientId});
+    }
+
+    async groupConversation(groupId){
+        return await this.api.get('/group/conversation', {groupId});
+    }
 }

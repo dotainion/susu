@@ -6,6 +6,7 @@ use src\infrastructure\DateHelper;
 use src\infrastructure\Id;
 use src\infrastructure\IId;
 use src\infrastructure\IObjects;
+use src\module\user\objects\User;
 
 class Message implements IObjects{
     protected Id $id;
@@ -14,6 +15,8 @@ class Message implements IObjects{
     protected DateHelper $date;
     protected string $message;
     protected bool $hide;
+    protected bool $isCurrentUser=false;
+    protected ?User $user=null;
 
     public function __construct(){
         $this->id = new Id();
@@ -45,6 +48,14 @@ class Message implements IObjects{
         return $this->hide;
     }
 
+    public function isCurrentUser():bool{
+        return $this->isCurrentUser;
+    }
+
+    public function user():?User{
+        return $this->user;
+    }
+
     public function setId(string $id):void{
         $this->id->set($id);
     }
@@ -70,5 +81,13 @@ class Message implements IObjects{
 
     public function setHide(bool $hide):void{
         $this->hide = $hide;
+    }
+
+    public function setIsCurrentUser(bool $isCurrentUser):void{
+        $this->isCurrentUser = $isCurrentUser;
+    }
+
+    public function setUser(User $user):void{
+        $this->user = $user;
     }
 }
