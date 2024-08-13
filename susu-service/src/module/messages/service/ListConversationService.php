@@ -17,11 +17,11 @@ class ListConversationService extends Service{
         $this->users = new AppendMessageUsers();
     }
     
-    public function process($memberId, $receipientId){
+    public function process($memberId, $receipientId, $read){
         Assert::stringNotEmpty($memberId, 'Member not found.');
         Assert::stringNotEmpty($receipientId, 'Receipient not found.');
 
-        $collector = $this->messages->conversation(new Id($memberId), new Id($receipientId));
+        $collector = $this->messages->conversation(new Id($memberId), new Id($receipientId), $read);
         $this->users->appendUsers($collector, $this->user());
 
         $this->setOutput($collector);

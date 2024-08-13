@@ -121,6 +121,7 @@ class Schema{
             ->column('date')->timestamp()
             ->column('fromId')->bindary()
             ->column('toId')->bindary()
+            ->column('read')->bool()
             ->column('hide')->bool();
         return $this->sql->execute();
     }

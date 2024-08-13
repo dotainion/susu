@@ -23,7 +23,8 @@ export const GroupCard = ({group}) =>{
     const joinGroup = (group, e) =>{
         e.stopPropagation();
         api.group.join(group.id, user.id).then((response)=>{
-            setIsJoined(true);
+            //setIsJoined(true);
+            navigate(routes.susu().nested().viewGroup(group.id))
         }).catch((error)=>{
 
         });

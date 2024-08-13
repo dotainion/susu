@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import { api } from "../request/Api";
 import { routes } from "../routes/Routes";
@@ -9,6 +9,19 @@ export const MembersList = () => {
     const [members, setMembers] = useState([]);
 
     const navigate = useNavigate();
+
+    const timeoutRef = useRef();
+
+    const onSearch = (e) =>{
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = setTimeout(() => {
+            api.user.search(e.target.value).then((response)=>{
+                setMembers(response.data.data);
+            }).catch((error)=>{
+                setMembers([]);
+            });
+        }, 500);
+    }
 
     useEffect(() => {
         api.user.users().then((response)=>{
@@ -21,7 +34,7 @@ export const MembersList = () => {
         <div className="container">
             <div className="search-row my-3 d-inline-block border border-light rounded-3 bg-light">
                 <div className="d-flex align-items-center w-auto">
-                    <input className="form-control bg-transparent shadow-none border-0 pe-1" placeholder="Search..." type="search" />
+                    <input onKeyUp={onSearch} className="form-control bg-transparent shadow-none border-0 pe-1" placeholder="Search..." type="search" />
                     <IoSearchOutline className="fs-4 me-2"/>
                 </div>
             </div>

@@ -1,6 +1,7 @@
 <?php
 namespace src\router;
 
+use InvalidArgumentException;
 use src\infrastructure\Https;
 use src\module\groups\action\FetchGroupAction;
 use src\module\groups\action\JoinGroupAction;
@@ -21,6 +22,7 @@ use src\module\login\action\UpdateCredentialAction;
 use src\module\login\action\UpdateCredentialByTokenAction;
 use src\module\messages\action\ListConversationAction;
 use src\module\messages\action\ListGroupMessagesAction;
+use src\module\messages\action\ListMessangersAction;
 use src\module\messages\action\SearchMessangerAction;
 use src\module\messages\action\SetMessageAction;
 use src\module\susu\action\ConfirmSusuAction;
@@ -69,8 +71,24 @@ class Router{
         });*/
 
         $this->request->route('/test', function ($req){
-            /*$repo = new Repository();
-            $repo->query("ALTER TABLE `products` ADD COLUMN `createdById` binary(16) NOT NULL");*/
+            $scriptPath = __DIR__.'/../../websocket-server.php';
+            $command = "php $scriptPath > /tmp/websocket-server.log 2>&1 &";
+
+            if (!file_exists($scriptPath)) {
+                throw new InvalidArgumentException('Path not exist.');
+            }
+
+            $output = [];
+            $return_var = 0;
+            exec($command, $output, $return_var);
+
+            var_dump($output);
+            var_dump("Return status: " . $return_var);
+            foreach ($output as $line) {
+                echo htmlspecialchars($line) . "<br>";
+            }
+
+            echo "WebSocket server started.";
         });
 
         $this->request->route('/signin', function ($req){
@@ -236,6 +254,10 @@ class Router{
 
         $this->request->route('/group/conversation', function ($req){
             return new ListGroupMessagesAction();
+        });
+
+        $this->request->route('/list/messangers', function ($req){
+            return new ListMessangersAction();
         });
     }
 

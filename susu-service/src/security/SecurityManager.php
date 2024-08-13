@@ -2,7 +2,6 @@
 namespace src\security;
 
 use src\infrastructure\ApiRequest;
-use src\infrastructure\Env;
 use src\infrastructure\exeptions\NotAuthenticatedException;
 use src\infrastructure\ICredential;
 use src\infrastructure\IIdentifier;

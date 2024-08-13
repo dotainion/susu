@@ -14,6 +14,7 @@ class Message implements IObjects{
     protected Id $toId;
     protected DateHelper $date;
     protected string $message;
+    protected bool $read;
     protected bool $hide;
     protected bool $isCurrentUser=false;
     protected ?User $user=null;
@@ -42,6 +43,10 @@ class Message implements IObjects{
 
     public function message():string{
         return $this->message;
+    }
+
+    public function read():bool{
+        return $this->read;
     }
 
     public function hide():bool{
@@ -77,6 +82,10 @@ class Message implements IObjects{
             throw new InvalidArgumentException('Message should not exceed 4000 charactors.');
         }
         $this->message = $message;
+    }
+
+    public function setRead(bool $read):void{
+        $this->read = $read;
     }
 
     public function setHide(bool $hide):void{

@@ -6,7 +6,7 @@ const Context = createContext();
 export const useAuth = () => useContext(Context);
 
 export const AuthProvider = ({children}) =>{
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [user, setUser] = useState();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -16,7 +16,6 @@ export const AuthProvider = ({children}) =>{
             setUser(response.data.data[0]);
             setIsAuthenticated(true);
             callback({success: response});
-            console.log(response.data.data[0]);
         }).catch((error)=>{
             setUser(null);
             setIsAuthenticated(false);
@@ -30,6 +29,9 @@ export const AuthProvider = ({children}) =>{
             setUser(null);
             setIsAuthenticated(false);
         }).catch((error)=>{
+            token.set(null);
+            setUser(null);
+            setIsAuthenticated(false);
         });
     }
 

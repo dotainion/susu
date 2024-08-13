@@ -21,6 +21,7 @@ class MessageRepository extends Repository{
             ->add('toId', $this->uuid($message->toId()))
             ->add('date', $message->date()->toString())
             ->add('message', $message->message())
+            ->add('read', $message->read())
             ->add('hide', $message->hide());
         $this->execute();
     }
@@ -31,6 +32,7 @@ class MessageRepository extends Repository{
             ->set('toId', $this->uuid($message->toId()))
             ->set('date', $message->date()->toString())
             ->set('message', $message->message())
+            ->set('read', $message->read())
             ->set('hide', $message->hide())
             ->where('id', $this->uuid($message->id()));
         $this->execute();
@@ -47,6 +49,9 @@ class MessageRepository extends Repository{
         }
         if(isset($where['toId'])){
             $this->where('toId', $this->uuid($where['toId']));
+        }
+        if(isset($where['read'])){
+            $this->where('read', (int)$where['read']);
         }
         if(isset($where['hide'])){
             $this->where('hide', (int)$where['hide']);

@@ -17,10 +17,10 @@ class ListGroupMessagesService extends Service{
         $this->users = new AppendMessageUsers();
     }
     
-    public function process($groupId){
+    public function process($groupId, $read){
         Assert::stringNotEmpty($groupId, 'Group not found.');
 
-        $collector = $this->messages->groupConversation(new Id($groupId));
+        $collector = $this->messages->groupConversation(new Id($groupId), $read);
         $this->users->appendUsers($collector, $this->user());
 
         $this->setOutput($collector);

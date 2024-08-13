@@ -3,6 +3,7 @@ namespace src\security;
 
 use Exception;
 use InvalidArgumentException;
+use mysqli_result;
 use mysqli_sql_exception;
 
 class Connection extends DatabseSecurity{
@@ -57,6 +58,7 @@ class Connection extends DatabseSecurity{
 	}
 
 	public function commit():void{
+		if(!$this->reference instanceof mysqli_result) return;
 		$this->results = mysqli_fetch_all($this->reference, MYSQLI_ASSOC);
 	}
 

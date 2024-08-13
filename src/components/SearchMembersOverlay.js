@@ -1,17 +1,14 @@
 import { useEffect, useRef, useState } from "react"
-import { FaUserCircle } from "react-icons/fa";
-import { api } from "../request/Api";
-import { FaCheck } from "react-icons/fa";
+import { FaCheck, FaUserCircle } from "react-icons/fa";
 import $ from "jquery";
-import { useParams } from "react-router-dom";
+import { api } from "../request/Api";
 
-export const SelectMembersOverlay = ({isOpen, onClose, onSelect}) =>{
+export const SearchMembersOverlay = ({isOpen, onClose, onSelect}) =>{
     const [selected, setSelected] = useState([]);
     const [members, setMembers] = useState([]);
 
-    const params = useParams();
-
     const hScrollRef = useRef();
+    const timeoutRef = useRef();
 
     const unSelect = (member) =>{
         setSelected((mbrs)=>[...mbrs.filter((mr)=>mr.id !== member.id)]);
@@ -28,18 +25,21 @@ export const SelectMembersOverlay = ({isOpen, onClose, onSelect}) =>{
         unSelect(member);
     }
 
+    const searchMembers = (e) =>{
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = setTimeout(() => {
+            api.user.search(e.target.value).then((response)=>{
+                setMembers(response.data.data);
+            }).catch((error)=>{
+                setMembers([]);
+            });
+        }, 500);
+    }
+
     const onTriggerSelect = () =>{
         onSelect(JSON.parse(JSON.stringify(selected)));
         onClose();
     }
-
-    useEffect(()=>{
-        api.user.byGroup(params.groupId).then((response)=>{
-            setMembers(response.data.data);
-        }).catch((error)=>{
-            
-        });
-    }, []);
 
     useEffect(()=>{
         const $scrollable = $(hScrollRef.current);
@@ -77,11 +77,13 @@ export const SelectMembersOverlay = ({isOpen, onClose, onSelect}) =>{
             <div className="w-100 h-100 d-flex align-items-start justify-content-center">
                 <div onClick={(e)=>e.stopPropagation()} className="d-flex flex-column select-members-overlay px-2 my-2">
                     <div className="bg-white p-3 rounded-top-4">
-                        <div className="h5">Select invites to group members to join susu</div>
+                        <div className="h5">Invite someone to join your group</div>
+                        <div className="fw-bold">Search Members</div>
+                        <input onChange={searchMembers} className="form-control shadow-none" type="text" placeholder="Search members..."/>
                         <div className="small"><small>Click on a member's name to include or exclude them.</small></div>
                         <div className="small lh-1"><small>Changes are saved automatically.</small></div>
                         <div className="d-flex justify-content-end mt-1 px-3">
-                            <button onClick={onTriggerSelect} className="btn btn-sm py-0">Send invite</button>
+                            <button onClick={onTriggerSelect} className="btn btn-sm py-0">Send</button>
                         </div>
                     </div>
                     <div ref={hScrollRef} className="bg-white px-3 py-1 text-wrap overflow-x-auto w-100 text-nowrap scrollbar-hidden user-select-none small">
@@ -120,9 +122,9 @@ const ButtonRow = ({member, onChange}) =>{
     return(
         <button className="btn bg-transparent d-block shadow-none text-start my-1 border-0 w-100">
             <label className="d-flex align-items-center pointer">
-                <input ref={checkRef} className="d-none" onChange={triggerChange} type="checkbox" id={member.id} defaultChecked/>
+                <input ref={checkRef} className="d-none" onChange={triggerChange} type="checkbox" id={member.id}/>
                 <div className="position-relative me-2">
-                    {checked ? <FaCheck className="fs-3 text-success"/> : <FaUserCircle className="fs-3"/>}
+                    {checked ? <FaCheck className="display-5 text-success"/> : <FaUserCircle className="display-5"/>}
                 </div>
                 <div className="w-100">
                     <div className="text-truncate">{member.attributes.firstName} {member.attributes.lastName}</div>

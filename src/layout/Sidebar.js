@@ -57,7 +57,7 @@ export const Sidebar = () =>{
         },{
             category: 'Messaging/Chat',
             menus: [
-                {title: 'Chats', onClick: ()=>navigate(routes.susu().memberMessages())},
+                {title: 'Chats', onClick: ()=>navigate(routes.susu().messangers())},
                 {title: 'Notifications', disabled: true},
                 {title: 'Community Forum', disabled: true},
                 {title: 'Support and Help', disabled: true},

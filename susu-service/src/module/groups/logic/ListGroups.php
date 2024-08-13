@@ -36,4 +36,13 @@ class ListGroups{
             'name' => $name
         ]);
     }
+
+    public function byIdArray(array $groupIdArray):Collector{
+        if(empty($groupIdArray)){
+            return new Collector();
+        }
+        return $this->repo->listGroups([
+            'id' => $groupIdArray
+        ]);
+    }
 }

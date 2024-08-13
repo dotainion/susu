@@ -12,13 +12,14 @@ class MessageFactory extends Collector{
     }
 
     public function mapResult($record):Message{
-        $history = new Message();
-        $history->setId($this->uuid($record['id']));
-        $history->setFromId($this->uuid($record['fromId']));
-        $history->setToId($this->uuid($record['toId']));
-        $history->setDate($record['date']);
-        $history->setMessage($record['message']);
-        $history->setHide($record['hide']);
-        return $history;
+        $message = new Message();
+        $message->setId($this->uuid($record['id']));
+        $message->setFromId($this->uuid($record['fromId']));
+        $message->setToId($this->uuid($record['toId']));
+        $message->setDate($record['date']);
+        $message->setMessage($record['message']);
+        $message->setRead((bool)$record['read']);
+        $message->setHide((bool)$record['hide']);
+        return $message;
     }
 }

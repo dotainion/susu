@@ -27,7 +27,7 @@ export const OwnerGroupList = () => {
     return (
         <div className="container">
             <button onClick={()=>navigate(routes.susu().nested().newGroup())} className="d-flex align-items-center btn d-block shadow-none my-3"><IoAdd className="me-2"/>Create Group</button>
-            <div className="row row-with-search-above">
+            <div className="row">
                 {
                     groups.length ?
                     groups.map((group, key) => (

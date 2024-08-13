@@ -5,6 +5,7 @@ import { utils } from "../utils/Utils";
 import { SelectOption } from "../widgets/SelectOption";
 import { routes } from "../routes/Routes";
 import { SelectMembersOverlay } from "../components/SelectMembersOverlay";
+import { SearchMembersOverlay } from "../components/SearchMembersOverlay";
 
 export const Group = () =>{
     const [group, setGroup] = useState();
@@ -163,19 +164,15 @@ export const Group = () =>{
                         susu.attributes.pendingStart? 
                         <div className="py-3 px-2">
                             <button onClick={confirmSusu} className="btn btn-sm btn-success me-2">Apply & Confirm</button>
-                            <button onClose={()=>setOpenSusuMembers(false)} className="btn btn-sm bg-primary text-white me-2">Send Invites</button>
-                            <button onClick={()=>{
-                                console.log(susu.id);
-                                console.log(susu);
-                                navigate(routes.susu().nested().susuMembers(params.groupId, susu.id))}
-                            } className="btn btn-sm btn-danger">Remove a members</button>
+                            <button onClick={()=>setOpenSusuMembers(true)} className="btn btn-sm bg-primary text-white me-2">Send Invites to group members</button>
+                            <button onClick={()=>navigate(routes.susu().nested().susuMembers(params.groupId, susu.id))} className="btn btn-sm btn-danger">Remove a members</button>
                             <button onClick={cancelSusu} className="btn btn-sm btn-danger ms-2">Cancel Susu</button>
                             <div className="small">Begin organizing contributions, setting schedules, and achieving financial goals together.</div>
                         </div>
                         : 
                         <div className="py-3 px-2">
                             <button onClick={()=>navigate(routes.susu().nested().groupSusuWallet(params.groupId, susu.id))} className="btn btn-sm bg-secondary text-white">Susu Wallet</button>
-                            <button onClose={()=>setOpenSusuMembers(false)} className="btn btn-sm bg-primary text-white ms-2">Send Invites</button>
+                            <button onClick={()=>setOpenSusuMembers(true)} className="btn btn-sm bg-primary text-white ms-2">Send Invites to group members</button>
                             <button onClick={()=>navigate(routes.susu().nested().susuMembers(params.groupId))} className="btn btn-sm btn-danger ms-2">Remove a members</button>
                             <div className="small">Begin organizing contributions, setting schedules, and achieving financial goals together.</div>
                         </div>
@@ -192,7 +189,7 @@ export const Group = () =>{
                 </div>
                 <div className="py-3 px-2">
                     <button onClick={()=>navigate(routes.susu().nested().groupMembers(params.groupId))} className="btn btn-sm btn-danger">Remove a members</button>
-                    <button onClick={()=>setOpenGroupMembers(true)} className="btn btn-sm bg-primary text-white ms-2">Invite members to join group</button>
+                    <button onClick={()=>setOpenGroupMembers(true)} className="btn btn-sm bg-primary text-white ms-2">Invite someone to join group</button>
                     <div className="small">Once you remove a member from this group, you may need to send a request so they can be added back.</div>
                 </div>
                 <div className="py-3 px-2">
@@ -204,13 +201,11 @@ export const Group = () =>{
                 isOpen={openSusuMembers} 
                 onClose={()=>setOpenSusuMembers(false)}
                 onSelect={(selected)=>console.log(selected)}
-                title={'Select members to send invites'}
             />
-            <SelectMembersOverlay 
+            <SearchMembersOverlay 
                 isOpen={openGroupMembers} 
                 onClose={()=>setOpenGroupMembers(false)}
                 onSelect={(selected)=>console.log(selected)}
-                title={'Select members to send invites'}
             />
         </div>
     )
