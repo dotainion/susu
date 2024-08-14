@@ -36,9 +36,9 @@ export const GroupCard = ({group}) =>{
     }
 
     useEffect(()=>{
-        if(group.attributes.creatorId === user.id) setIsCreator(true);
+        if(group.attributes.creatorId === user?.id) setIsCreator(true);
         if(group.attributes.members?.length){
-            const findMe = group.attributes.members.find((member)=>member.id === user.id);
+            const findMe = group.attributes.members.find((member)=>member.id === user?.id);
             if(!findMe) setIsJoined(true);
         }
     }, [group]);

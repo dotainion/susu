@@ -35,7 +35,7 @@ export const Onboarding = () =>{
                 </div>
             </div>
             <div className="d-flex justify-content-center">
-                <div className="text-center border-bottom border-secondary p-3">
+                <div className="text-center border-bottom p-3">
                     <img style={{width: '100px'}} src="https://fastsusu.com/wp-content/uploads/2022/06/Frame-167-5.png" alt=""/>
                     <div className="fw-bold">Choose your journey</div>
                     <small>what is your role at the company. this can help lead where yopu start within our app.</small>

@@ -23,4 +23,8 @@ export class Messages{
     async messangers(memberId){
         return await this.api.get('/list/messangers', {memberId});
     }
+
+    async unSeenMessages(memberId){
+        return await this.api.get('list/unseen/messages', {memberId});
+    }
 }

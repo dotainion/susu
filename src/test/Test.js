@@ -17,6 +17,7 @@ import { GroupMessages } from "../pages/GroupMessages";
 import { Messages } from "../pages/Messages";
 import { MessangerSearchGroupOrMember } from "../pages/MessangerSearchGroupOrMember";
 import { SelectMembersOverlay } from "../components/SelectMembersOverlay";
+import { GroupCard } from "../components/GroupCard";
 
 let start = false;
 export const Test = () =>{
@@ -33,46 +34,12 @@ export const Test = () =>{
     }
 
     useEffect(()=>{
-        if(start === true) return;
-        start = true;
-
-        var ws = new WebSocket('ws://caribbeancodingacademygrenada.com:8080');
         
-        /*ws.onmessage = function(event) {
-            var messages = document.getElementById('messages');
-            var item = document.createElement('li');
-            item.textContent = event.data;
-            messages.appendChild(item);
-        };*/
-        ws.onopen = function() {
-            console.log('WebSocket connection established');
-            ws.send('Hello Server');
-        };
-        
-        ws.onmessage = function(event) {
-            console.log('Message from server:', event.data);
-        };
-        
-        ws.onerror = function(error) {
-            console.error('WebSocket error:', error);
-            console.log(error);
-        };
-
-        var form = document.getElementById('form');
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-            var input = document.getElementById('input');
-            ws.send(input.value);
-            input.value = '';
-        });
     }, []);
 
     return(
         <div className="container">
-             <ul id="messages"></ul>
-            <form id="form">
-                <input id="input" autoComplete="off" /><button>Send</button>
-            </form>
+            <Dashboard/>
         </div>
     )
 }

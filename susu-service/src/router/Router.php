@@ -23,6 +23,7 @@ use src\module\login\action\UpdateCredentialByTokenAction;
 use src\module\messages\action\ListConversationAction;
 use src\module\messages\action\ListGroupMessagesAction;
 use src\module\messages\action\ListMessangersAction;
+use src\module\messages\action\ListUnSeenMessagesAction;
 use src\module\messages\action\SearchMessangerAction;
 use src\module\messages\action\SetMessageAction;
 use src\module\susu\action\ConfirmSusuAction;
@@ -258,6 +259,10 @@ class Router{
 
         $this->request->route('/list/messangers', function ($req){
             return new ListMessangersAction();
+        });
+
+        $this->request->route('/list/unseen/messages', function ($req){
+            return new ListUnSeenMessagesAction();
         });
     }
 

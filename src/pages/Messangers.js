@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { api } from "../request/Api";
 import { useAuth } from "../provider/AuthProvider";
 import { SearchGroupOrMembersToMessageOverlay } from "../components/SearchGroupOrMembersToMessageOverlay";
+import { BiSolidMessageRoundedAdd } from "react-icons/bi";
 
 export const Messangers = () =>{
     const { user } = useAuth();
@@ -31,7 +32,7 @@ export const Messangers = () =>{
         <div className="container">
             <div className="vh-100 overflow-auto mx-auto" style={{maxWidth: '800px'}}>
                 <div className="d-flex justify-content-end py-3">
-                    <button onClick={()=>setIsSearchMsgOpen(true)}>Search Messages</button>
+                    <button onClick={()=>setIsSearchMsgOpen(true)} className="btn btn-light"><BiSolidMessageRoundedAdd/> Search Messages</button>
                 </div>
                 {
                     messangers.length?

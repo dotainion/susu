@@ -6,16 +6,21 @@ export const MessageBox = ({messageToName, messages, isGroupMessanger, sendMessa
     const { user } = useAuth();
     
     const messageRef = useRef();
+    const scrollRef = useRef();
 
     const postMessage = () =>{
         sendMessage(messageRef.current.value);
+    }
+
+    const scrollToBottom = () =>{
+        scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
 
     return(
         <div className="container">
             <div className="d-flex flex-column vh-100 mx-auto" style={{maxWidth: '800px'}}>
                 <div className="bg-sidebar h4 p-3">{messageToName}</div>
-                <div className="overflow-auto mb-auto">
+                <div ref={scrollRef} className="overflow-auto mb-auto">
                     {messages.map((message, key)=>(
                         <div className={`d-flex ${message.attributes.isCurrentUser ? 'justify-content-end' : 'justify-content-start'}`} key={key}>
                             <div className={`d-flex ${message.attributes.isCurrentUser ? 'justify-content-end' : 'justify-content-start'} w-75`}>

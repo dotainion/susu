@@ -24,6 +24,14 @@ class ListMessages{
         );
     }
 
+    public function unSeenConversations(Id $memberId):Collector{
+        return $this->repo->listMessages([
+            'toId' => $memberId,
+            'read' => false,
+            'hide' => false
+        ]);
+    }
+
     public function conversation(Id $fromId, Id $toId, ?bool $read):Collector{
         return $this->repo->listMessages([
             'fromId' => $fromId,

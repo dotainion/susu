@@ -18,6 +18,7 @@ export const Dashboard = () =>{
                     </div>
                 </div>
             </button>
+            
             <div className="py-5">
                 <div className="bg-light p-2" style={{maxWidth: '500px'}}>
                     <div className="mt-2 d-flex">
@@ -39,6 +40,29 @@ export const Dashboard = () =>{
                     </div>
                 </div>
             </div>
+
+            <div className="py-5">
+                <div className="bg-light p-2" style={{maxWidth: '500px'}}>
+                    <div className="mt-2 d-flex">
+                        <div className="fw-bold me-3">Messages</div>
+                        <span className="bg-danger text-white px-2">5 New Messages</span>
+                    </div>
+                    <hr></hr>
+                    {[1,2,3,5,6,4].map((member, key)=>(
+                        <div className="d-inline-block" key={key}>
+                            <div className="d-flex flex-column m-3" key={key}>
+                                <FaPersonFalling className="border display-3 rounded-circle p-2"/>
+                                <div className="text-truncate">John Wick</div>
+                                <div className="text-truncate">Today</div>
+                            </div>
+                        </div>
+                    ))}
+                    <div className="d-flex justify-content-center">
+                        <button className="btn btn-sm bg-transparent link-primary shadow-none border-0">View All Mesages</button>
+                    </div>
+                </div>
+            </div>
+
             <table className="w-100 small table">
                 <thead>
                     <tr className="border-bottom border-dark">

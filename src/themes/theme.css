@@ -17,7 +17,7 @@ input[type=search]{
 }
 
 .card-body{
-    background: linear-gradient(to top, #b8a89d, white);
+    background: white;/*linear-gradient(to top, #b8a89d, white);*/
 }
 
 .card .card-img-top{
