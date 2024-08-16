@@ -1,6 +1,7 @@
-import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.css";
-import "./themes/theme.css"
+//import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
+//import "bootstrap/dist/css/bootstrap.css";
+//import 'bootstrap/dist/css/bootstrap.min.css';
+//import "./themes/theme.css"
 
 import { routes } from "./routes/Routes";
 import { SusuRouter } from "./routes/SusuRouter";
@@ -14,7 +15,9 @@ import { Test } from "./test/Test";
 
 function App() {
   return (
-    <HashRouter>
+    <div>
+      <input/>
+    {/*<HashRouter>
       <AuthProvider>
         <Routes>
           <Route path={routes.signIn()} element={<Signin/>} />
@@ -25,7 +28,8 @@ function App() {
           <Route path={'/test/:memberId'} element={<Test/>} />
         </Routes>
       </AuthProvider>
-    </HashRouter>
+    </HashRouter>*/}
+    </div>
   );
 }
 
