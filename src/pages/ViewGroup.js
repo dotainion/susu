@@ -74,11 +74,13 @@ export const ViewGroup = () =>{
                                 {
                                     isJoinedSusu
                                     ? <div>
-                                        <ul>
-                                            <li>Contribution Amount: [<b>{susu.attributes.contribution}</b>]</li>
-                                            <li>Cycle Duration: [<b>{susu.attributes.cycle}</b>]</li>
-                                        </ul>
-                                        <button onClick={()=>navigate(routes.susu().nested().memberSusuHistory(susu.id, user.id))} className="btn btn-sm">view current susu history</button>
+                                        <div className="mb-3">
+                                            <div className="my-2"><GiPayMoney className="fs-4 me-2 text-brown"/>Contribution Amount: [<b>{susu.attributes.contribution}</b>]</div>
+                                            <div className="my-2"><RiRecycleFill className="fs-4 me-2 text-brown"/>Cycle Duration: [<b>{susu.attributes.cycle}</b>]</div>
+                                            <div className="my-2"><GiReceiveMoney className="fs-4 me-2 text-brown"/>Next Payout: [<b>None</b>]</div>
+                                        </div>
+                                        <button onClick={()=>navigate(routes.susu().nested().memberSusuHistory(susu.id, user.id))} className="btn btn-sm me-2">View current susu history</button>
+                                        <button onClick={()=>navigate(routes.susu().nested().schedule(params.groupId))} className="btn btn-sm">Schedule</button>
                                     </div>
                                     : <div>
                                         <p className="fw-bold">We are excited to announce that a new susu will be starting soon, and you’re invited to join!</p>
@@ -103,59 +105,26 @@ export const ViewGroup = () =>{
             }
             {
                 group ? 
-                <div className="row mt-4">
-                    <div className="col-12 col-md-6 col-lg-4 m-0 p-0">
-                        <div className="d-flex bg-light p-3 m-1 rounded-3 shadow-sm">
-                            <div><CgNametag className="display-5 text-brown"/></div>
-                            <div className="ms-2">
-                                <small className="fw-bold text-secondary">Group Name</small>
-                                <div className="text-brown small fw-bold" type="text">{group.attributes.name}</div>
-                            </div>
+                <div className="row- mt-4">
+                    <div className="d-flex bg-light p-3 m-1 rounded-3 shadow-sm">
+                        <div><CgNametag className="display-5 text-brown"/></div>
+                        <div className="ms-2">
+                            <small className="fw-bold text-secondary">Group Name</small>
+                            <div className="text-brown small fw-bold" type="text">{group.attributes.name}</div>
                         </div>
                     </div>
-                    <div className="col-12 col-md-6 col-lg-4 m-0 p-0">
-                        <div className="d-flex bg-light p-3 m-1 rounded-3 shadow-sm">
-                            <div><GiPayMoney className="display-5 text-brown"/></div>
-                            <div className="ms-2">
-                                <small className="fw-bold text-secondary">Contribution Amount</small>
-                                <div className="text-brown small fw-bold">{group.attributes.contribution}</div>
-                            </div>
+                    <div className="d-flex bg-light p-3 m-1 rounded-3 shadow-sm">
+                        <div><HiMiniUsers className="display-5 text-brown"/></div>
+                        <div className="ms-2">
+                            <small className="fw-bold text-secondary">Members</small>
+                            <div className="text-brown small fw-bold">{group.attributes.members.length || 'none'}</div>
                         </div>
                     </div>
-                    <div className="col-12 col-md-6 col-lg-4 m-0 p-0">
-                        <div className="d-flex bg-light p-3 m-1 rounded-3 shadow-sm">
-                            <div><RiRecycleFill className="display-5 text-brown"/></div>
-                            <div className="ms-2">
-                                <small className="fw-bold text-secondary">Duration Cycle</small>
-                                <div className="text-brown small fw-bold">{group.attributes.cycle}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-12 col-md-6 col-lg-4 m-0 p-0">
-                        <div className="d-flex bg-light p-3 m-1 rounded-3 shadow-sm">
-                            <div><GiReceiveMoney className="display-5 text-brown"/></div>
-                            <div className="ms-2">
-                                <small className="fw-bold text-secondary">Payout Estimated Date</small>
-                                <div className="text-brown small fw-bold">{group.attributes.payoutDate}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-12 col-md-6 col-lg-4 m-0 p-0">
-                        <div className="d-flex bg-light p-3 m-1 rounded-3 shadow-sm">
-                            <div><HiMiniUsers className="display-5 text-brown"/></div>
-                            <div className="ms-2">
-                                <small className="fw-bold text-secondary">Members</small>
-                                <div className="text-brown small fw-bold">{group.attributes.members.length || 'none'}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-12 m-0 p-0 my-3">
-                        <div className="d-flex bg-light p-3 m-1 rounded-3 shadow-sm">
-                            <div><MdDescription className="display-5 text-brown"/></div>
-                            <div className="ms-2">
-                                <small className="fw-bold text-secondary">Description</small>
-                                <div className="text-brown small fw-bold">{group.attributes.description}</div>
-                            </div>
+                    <div className="d-flex bg-light p-3 m-1 rounded-3 shadow-sm">
+                        <div><MdDescription className="display-5 text-brown"/></div>
+                        <div className="ms-2">
+                            <small className="fw-bold text-secondary">Description</small>
+                            <div className="text-brown small fw-bold">{group.attributes.description}</div>
                         </div>
                     </div>
                 </div>

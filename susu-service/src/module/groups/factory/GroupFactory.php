@@ -15,10 +15,7 @@ class GroupFactory extends Collector{
         $group = new Group();
         $group->setId($this->uuid($record['id']));
         $group->setName($record['name']);
-        $group->setContribution($record['contribution']);
         $group->setDescription($record['description'] ?? '');
-        $group->setCycle($record['cycle']);
-        $group->setPayoutDate($record['payoutDate']);
         $group->setCreatedDate($record['createdDate']);
         $group->setCreatorId($this->uuid($record['creatorId']));
         $group->setHide((bool)$record['hide']);

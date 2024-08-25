@@ -19,6 +19,8 @@ class Susu{
     messangers = () => this._nested + 'owner/messages';
     messages = (memberId = ':memberId') => this._nested + 'messages/' + memberId;
     groupMessages = (groupId = ':groupId') => this._nested + 'group/messages/' + groupId;
+    groupInvites = (groupId = ':groupId') => this._nested + 'group/invites/' + groupId;
+    susuInvites = (susuId = ':susuId') => this._nested + 'susu/invites/' + susuId;
     nested = () => {
         this._nested = this.default().replace('*', '');
         return this;

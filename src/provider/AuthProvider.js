@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { api } from "../request/Api";
 import { token } from "../utils/Token";
+import { Notifications } from "../components/Notifications";
 
 const Context = createContext();
 export const useAuth = () => useContext(Context);
@@ -57,6 +58,7 @@ export const AuthProvider = ({children}) =>{
     return(
         <Context.Provider value={value}>
             {loading ? null : children}
+            {isAuthenticated ? <Notifications/> : null}
         </Context.Provider>
     )
 }

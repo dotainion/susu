@@ -1,20 +1,20 @@
 export class Share{
-    share(data){
+    async share(data){
         data.via = 'Susu'; // Optional
         data.dialogTitle = 'Share this article'; // Optional/**/
         // Share the data
-        return navigator.share(data);
+        return await navigator.share(data);
     }
 
-    url(url, title){
-        return this.share({url: `${window.location.origin}/#${url}`, title});
+    async url(url, title){
+        return await this.share({url: `${window.location.origin}/#${url}`, title});
     }
 
-    content(text, title){
-        return this.share({text, title});
+    async content(text, title){
+        return await this.share({text, title});
     }
 
-    images(images, title){
+    async images(images, title){
         let files = [];
         images.forEach((file)=>{
             if(!file.file) console.error('each images just contain attribute file');
@@ -22,7 +22,7 @@ export class Share{
             if(!file.fileType) console.error('each images just contain attribute fileType');
             files.push(new File([file.file], file.fileName, {type: file.fileType}));
         });
-        return this.share({files, title});
+        return await this.share({files, title});
     }
 }
 

@@ -21,9 +21,13 @@ export const SusuMembers = () =>{
             <div className="w-100" style={{maxWidth: '600px'}}>
                 <div className="h4 text-center my-4">Susu Members</div>
                 <hr></hr>
-                {members.map((member, key)=>(
-                    <MemberCard member={member} key={key}/>
-                ))}
+                {
+                    members.length ?
+                    members.map((member, key)=>(
+                        <MemberCard member={member} key={key}/>
+                    )):
+                    <div className="h4">No Members</div>
+                }
             </div>
         </div>
     )
@@ -72,7 +76,7 @@ const MemberCard = ({member}) =>{
                 <div>
                     {
                         undo
-                        ? <button onClick={undoDeleteMember} className="d-flex align-items-center btn btn-sm btn-outline-primary bg-transparent text-primary">
+                        ? <button onClick={()=>undoDeleteMember()} className="d-flex align-items-center btn btn-sm btn-outline-primary bg-transparent text-primary">
                             {
                                 undoSpinner 
                                 ? <div className="spinner-border spinner-border-sm me-2" role="status">
@@ -82,7 +86,7 @@ const MemberCard = ({member}) =>{
                             }
                             <div>Undo</div>
                         </button>
-                        : <button onClick={deleteMember} className="d-flex align-items-center btn btn-sm btn-danger">
+                        : <button onClick={()=>deleteMember()} className="d-flex align-items-center btn btn-sm btn-danger">
                             {
                                 removeSpinner
                                 ? <div className="spinner-border spinner-border-sm me-2" role="status">

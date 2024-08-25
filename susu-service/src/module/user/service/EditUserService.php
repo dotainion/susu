@@ -16,7 +16,7 @@ class EditUserService extends Service{
         $this->factory = new UserFactory();
     }
     
-    public function process($id, $firstName, $lastName, $email, $phoneNumber){
+    public function process($id, $firstName, $lastName, $email, $phoneNumber, $gender){
         Assert::validEmail($email, 'Invalid email');
         Assert::validUuid($id??'', 'User not found.');
 
@@ -27,6 +27,7 @@ class EditUserService extends Service{
             'email' => $email,
             'phoneNumber' => $phoneNumber,
             'date' => null,
+            'gender' => $gender,
             'hide' => false
         ]);
         

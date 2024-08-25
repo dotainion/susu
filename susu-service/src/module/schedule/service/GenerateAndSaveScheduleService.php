@@ -32,13 +32,12 @@ class GenerateAndSaveScheduleService extends Service{
         $collector->assertHasItem('Susu not yet stared.');
         $susu = $collector->first();
     
-
         $links = $this->links->links($susu->id());
         $userIdArray = array_map(fn($us) => $us->memberId(), $links->list());
         $users = $this->users->usersByIdArray($userIdArray);
 
         if($users->count() < 2){
-            throw new InvalidArgumentException('A susu must have a minimum of two members join before it can be confirmed.');
+            throw new InvalidArgumentException('A susu must have a minimum of two members join before it can be confirmed. Current members: ('.$users->count().')');
         }
 
         $generator = new CalculateSchedule($susu, $users);

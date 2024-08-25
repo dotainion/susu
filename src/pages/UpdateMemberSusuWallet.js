@@ -4,11 +4,13 @@ import { GoDotFill } from "react-icons/go";
 import { routes } from "../routes/Routes";
 import { api } from "../request/Api";
 import $ from 'jquery';
+import { utils } from "../utils/Utils";
 
 export const UpdateMemberSusuWallet = () =>{
     const [susu, setSusu] = useState();
     const [schedules, setSchedules] = useState([]);
-    const [dueScedule, setDueSchedule] = useState();
+    const [member, setMember] = useState();
+    const [dueDate, setDueDate] = useState();
     const [showCustom, setShowCustom] = useState(false);
     const [contributions, setContributions] = useState([]);
     const [price, setPrice] = useState({payments: 0, refunds: 0, payouts: 0});
@@ -51,6 +53,11 @@ export const UpdateMemberSusuWallet = () =>{
 
     useEffect(()=>{
         if(!susu) return;
+        api.user.user(params.memberId).then((response)=>{
+            setMember(response.data.data[0]);
+        }).catch((error)=>{
+
+        });
         api.contribution.listContributions(susu.id, params.memberId).then((response)=>{
             setContributions(response.data.data);
         }).catch((error)=>{
@@ -58,8 +65,8 @@ export const UpdateMemberSusuWallet = () =>{
         });
         api.schedule.list(params.groupId).then((response)=>{
             setSchedules(response.data.data);
-            setExtimatedTotalPayout(response.data.data.length * parseFloat(susu.attributes.contribution || 0));
-            setDueSchedule(response.data.data.find((sch)=>sch.attributes.memberId === params.memberId));
+            setExtimatedTotalPayout((response.data.data.length * parseFloat(susu.attributes.contribution || 0)) * susu.attributes.accurance);
+            setDueDate(response.data.data.find((sch)=>sch.attributes.memberId === params.memberId));
         }).catch((error)=>{
 
         });
@@ -68,9 +75,9 @@ export const UpdateMemberSusuWallet = () =>{
     useEffect(()=>{
         let priceObject = {payments: 0, refunds: 0, payouts: 0};
         contributions.forEach((history)=>{
-            if(history.attributes.paid) priceObject.payments += parseFloat(history.attributes.contribution || 0);
-            if(history.attributes.refunded) priceObject.refunds += parseFloat(history.attributes.contribution || 0);
-            if(history.attributes.payout) priceObject.payouts += parseFloat(history.attributes.contribution || 0);
+            if(history.type === 'contribution') priceObject.payments += parseFloat(history.attributes.contribution || 0);
+            if(history.type === 'refund') priceObject.refunds += parseFloat(history.attributes.amount || 0);
+            if(history.type === 'payout') priceObject.payouts += parseFloat(history.attributes.amount || 0);
         });
         setPrice(priceObject);
     }, [contributions]);
@@ -82,14 +89,17 @@ export const UpdateMemberSusuWallet = () =>{
                 <button onClick={()=>navigate(routes.susu().nested().groupSusuWallet(params.groupId))} className="btn btn-sm mx-1">Back to Group Wallet</button>
             </div>
             <div className="my-3">Credit Line Details: Overview</div>
-            <div className="d-block d-md-flex w-100 shadow-sm bg-white p-4">
+            <div className="d-block d-md-flex w-100 shadow-sm bg-light rounded-4 p-4">
                 <div className="w-100">
                     <div>
-                        <button onClick={()=>navigate(routes.susu().nested().member(params.memberId))} className="btn bg-transparent shadow-none border-0 mb-3 text-decoration-underline link-primary pointer p-0">John Wick</button>
+                        <button 
+                            onClick={()=>navigate(routes.susu().nested().member(params.memberId))} 
+                            className="btn bg-transparent shadow-none border-0 mb-3 text-decoration-underline link-primary pointer p-0"
+                        >{member?.attributes?.firstName} {member?.attributes?.lastName}</button>
                         <div className="d-flex">
                             <div className="w-50">
                                 <div>Susu Credit Line</div>
-                                <div className="h3">${susu?.attributes?.contribution || 0.00}</div>
+                                <div className="h3">${parseFloat(susu?.attributes?.contribution || 0).toFixed(2)}</div>
                             </div>
                             <div className="w-50">
                                 <div className="small"><small>Extimated total payout</small></div>
@@ -98,9 +108,9 @@ export const UpdateMemberSusuWallet = () =>{
                         </div>
                     </div>
                     <div className="d-flex my-3">
-                        <progress className="w-100 p-3 mb-3 me-1" value={price.payments} max={extimatedTotalPayout} />
-                        <progress className="w-100 p-3 mb-3 mx-1" value={price.refunds} max={extimatedTotalPayout} />
-                        <progress className="w-100 p-3 mb-3 ms-1" value={price.payouts} max={extimatedTotalPayout} />
+                        <progress className="w-100 p-3 me-1" value={price.payments} max={extimatedTotalPayout} />
+                        <progress className="w-100 p-3 mx-1" value={price.refunds} max={extimatedTotalPayout} />
+                        <progress className="w-100 p-3 ms-1" value={price.payouts} max={extimatedTotalPayout} />
                     </div>
                     <div className="d-flex w-100">
                         <div className="w-50">
@@ -128,13 +138,13 @@ export const UpdateMemberSusuWallet = () =>{
                         </div>
                         <div className="w-50">
                             <div className="small">Due Date</div>
-                            {dueScedule ? <div className="fw-bold">{dueScedule.attributes.date}</div> : null}
+                            {dueDate ? <div className="fw-bold">{utils.date.toLocalDate(dueDate.attributes.date)}</div> : null}
                         </div>
                     </div>
                     <div className="d-flex justify-content-center align-items-center position-relative">
                         <div className="me-5">View Details</div>
                         <div className="d-flex flex-column">
-                            <button onClick={addContribution} className="btn btn-sm btn-primary px-3 mb-1">Add Contribution</button>
+                            <button onClick={addContribution} className="btn btn-sm bg-sidebar px-3 mb-1">Add Contribution</button>
                             <button onClick={(e)=>{setShowCustom(true); e.stopPropagation();}} className="btn btn-sm btn-secondary px-3 mt-1">Custom Contribution</button>
                         </div>
                         {
@@ -155,7 +165,7 @@ export const UpdateMemberSusuWallet = () =>{
                 <table className="w-100">
                     <tbody>
                         {contributions.map((contribe, key)=>(
-                            <tr className="border-bottom border-secondary" key={key}>
+                            <tr className="border-bottom" key={key}>
                                 <td className="py-2 small">{contribe.attributes.date}</td>
                                 <td className="py-2 d-none d-sm-block">
                                     <div className="small">

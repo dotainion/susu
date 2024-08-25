@@ -1,6 +1,7 @@
 <?php
 namespace src\module\susu\service;
 
+use InvalidArgumentException;
 use src\infrastructure\Assert;
 use src\infrastructure\Id;
 use src\infrastructure\Service;
@@ -25,6 +26,11 @@ class JoinSusuService extends Service{
         Assert::validUuid($groupId, 'Group not found.');
 
         $collector = $this->susu->activeByGroupId(new Id($groupId));
+        if(!$collector->hasItem()){
+            //just incase groupId is actrually a susuId.
+            $collector = $this->susu->activeById(new Id($groupId));
+        }
+        
         $collector->assertHasItem('Susu not yet stared.');
         $susu = $collector->first();
 

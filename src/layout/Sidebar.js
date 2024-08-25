@@ -140,7 +140,13 @@ export const Sidebar = () =>{
                                     <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                         {cat.menus.map((menu, key2)=>(
                                             <li key={key2}>
-                                                <button onClick={menu?.onClick} className={`btn btn-sm text-start ${menu?.disabled ? 'text-secondary border-0' : ''}`} disabled={menu?.disabled}>{menu.title}</button>
+                                                <button 
+                                                    onClick={(e)=>{
+                                                        menu?.onClick(e);
+                                                        setShow(false);
+                                                    }} className={`btn btn-sm text-start ${menu?.disabled ? 'text-secondary border-0' : ''}`} 
+                                                    disabled={menu?.disabled}
+                                                >{menu.title}</button>
                                             </li>
                                         ))}
                                     </ul>

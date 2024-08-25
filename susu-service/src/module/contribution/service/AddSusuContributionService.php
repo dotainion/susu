@@ -7,6 +7,7 @@ use src\infrastructure\Id;
 use src\infrastructure\Service;
 use src\module\contribution\factory\ContributionFactory;
 use src\module\contribution\logic\AddContribution;
+use src\module\susu\logic\AssertUserInSusu;
 
 class AddSusuContributionService extends Service{
     protected AddContribution $save;
@@ -28,12 +29,10 @@ class AddSusuContributionService extends Service{
             'date' => (new DateHelper())->new()->toString(),
             'memberId' => $memberId,
             'contribution' => $contribution,
-            'setDescription' => null,
-            'paid' => true,
-            'refunded' => false,
-            'payout' => false,
-            'hide' => false
+            'setDescription' => null
         ]);
+
+        (new AssertUserInSusu())->assertUserInSusu($history->memberId(), $history->susuId());
 
         $this->save->add($history);
 

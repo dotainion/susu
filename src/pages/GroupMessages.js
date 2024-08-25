@@ -68,7 +68,7 @@ export const GroupMessages = () =>{
         <MessageBox 
             isGroupMessanger
             messages={messages}
-            messageToName={group?.attributes?.name}
+            messageToName={group?.attributes?.name || ''}
             sendMessage={sendMessage}
         />
     )

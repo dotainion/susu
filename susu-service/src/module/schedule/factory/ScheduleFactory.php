@@ -14,7 +14,7 @@ class ScheduleFactory extends Collector{
     public function mapResult($record):Schedule{
         $susu = new Schedule();
         $susu->setId($this->uuid($record['id']));
-        isset($record['memberId']) && $this->isValidUUid($record['memberId']) && $susu->setMemberId($this->uuid($record['memberId']));
+        $susu->setMemberId($this->uuid($record['memberId']));
         $susu->setDate($record['date']);
         $susu->setSusuId($this->uuid($record['susuId']));
         $susu->setPosition((int)$record['position']);

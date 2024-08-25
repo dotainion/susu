@@ -2,6 +2,7 @@
 namespace src\infrastructure;
 
 use Exception;
+use Throwable;
 
 trait Factory{
     public function map(array $records){
@@ -30,9 +31,13 @@ trait Factory{
     }
 
     public function uuid($uuidBytes){
-        if($this->isValidUUid($uuidBytes)){
-            return $uuidBytes;
+        try{
+            if($this->isValidUUid($uuidBytes)){
+                return $uuidBytes;
+            }
+            return (new Id())->fromBytes((string)$uuidBytes)->toString();
+        }catch(Throwable $ex){
+            return null;
         }
-        return (new Id())->fromBytes((string)$uuidBytes)->toString();
     }
 }

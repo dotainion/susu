@@ -13,10 +13,15 @@ class ListContribution{
     }
 
     public function history(Id $susuId, Id $memberId):Collector{
-        return $this->repo->listHistory([
+        return $this->repo->listContribution([
             'susuId' => $susuId,
-            'memberId' => $memberId,
-            'hide' => false
+            'memberId' => $memberId
+        ]);
+    }
+
+    public function bySusuId(Id $susuId):Collector{
+        return $this->repo->listContribution([
+            'susuId' => $susuId,
         ]);
     }
 }

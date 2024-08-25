@@ -6,9 +6,13 @@ class Copy{
         if($(element).is('input')) this.toClipboard($(element).get(0));
         else this.clickNoneInput($(element).get(0));
         $(document).find('[data-coppied]').remove();
-        const overlay = $('<div class="text-success position-absolute bg-white end-0 top-50 translate-middle-y me-3" data-coppied>Coppied!</div>');
+        const overlay = $('<div class="text-success position-absolute bg-white end-0 top-50 translate-middle-y pe-3" data-coppied>Coppied!</div>');
         $(element).append(overlay);
-        setTimeout(() => overlay.remove(), 2000);
+        $(element).parent().addClass('border border-success');
+        setTimeout(() => {
+            overlay.remove();
+            $(element).parent().removeClass('border border-success');
+        }, 2000);
     }
 
     clipInput(element) {
@@ -32,7 +36,7 @@ class Copy{
 
 class DateTime{
     dbFormat(dateInstance){
-        if(!dateInstance) return null;
+        if(!dateInstance) return '';
         dateInstance = new Date(dateInstance);
         
         const year = dateInstance.getFullYear();
@@ -43,6 +47,15 @@ class DateTime{
         const seconds = String(dateInstance.getSeconds()).padStart(2, '0');
     
         return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
+
+    toLocalDate(dateInstance){
+        if(!dateInstance) return '';
+        return new Date(dateInstance).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: '2-digit'
+        });
     }
 
     to2D(num){

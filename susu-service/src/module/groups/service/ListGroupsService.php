@@ -16,20 +16,14 @@ class ListGroupsService extends Service{
     public function __construct(){
         parent::__construct(false);
         $this->groups = new ListGroups();
-        $this->groupLinks = new ListGroupLinks();
         $this->bind = new BindMembersToGroups();
-        $this->users = new ListUsers();
     }
     
     public function process(){
         $collector = $this->groups->groups();
         $collector->assertHasItem('Group not found.');
-
-        $groupLinks = $this->groupLinks->groupLinksByIdArray($collector->idArray());
-        $membersIdArray = $groupLinks->attrArray('memberId');
-        $usersCollector = $this->users->usersByIdArray($membersIdArray);
         
-        $this->bind->bind($collector, $usersCollector, $groupLinks);
+        $this->bind->bindRequirements($collector);
         $this->setOutput($collector);
         return $this;
     }

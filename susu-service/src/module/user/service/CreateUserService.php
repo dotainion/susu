@@ -25,7 +25,7 @@ class CreateUserService extends Service{
         $this->addressFactory = new AddressFactory();
     }
     
-    public function process($firstName, $lastName, $email, $phoneNumber, $password, $confirmPassword){
+    public function process($firstName, $lastName, $email, $phoneNumber, $gender, $password, $confirmPassword){
         Assert::validPassword($password);
         Assert::validPassword($confirmPassword);
         Assert::validPasswordMatch($password, $confirmPassword);    
@@ -39,6 +39,7 @@ class CreateUserService extends Service{
             'foreignId' => null,
             'date' => (new DateHelper())->new()->toString(),
             'hide' => false,
+            'gender' => $gender,
             'addressId' => (new Id())->new()->toString(),
         ]);
 

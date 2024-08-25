@@ -5,6 +5,7 @@ namespace src\infrastructure;
 use Ramsey\Uuid\Uuid;
 
 class Id implements IId, IObjects{
+    const Default = '00000000-0000-0000-0000-000000000000';
     protected $uuid;
 
     public function __construct(?string $uuid = null){

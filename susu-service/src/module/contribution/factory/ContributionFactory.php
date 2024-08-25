@@ -19,10 +19,6 @@ class ContributionFactory extends Collector{
         $history->setMemberId($this->uuid($record['memberId']));
         $history->setContribution($record['contribution']);
         $history->setDescription((string)$record['description']);
-        $history->setPaid((bool) $record['paid']);
-        $history->setRefunded((bool) $record['refunded']);
-        $history->setPayout((bool) $record['payout']);
-        $history->setHide($record['hide']);
         return $history;
     }
 }

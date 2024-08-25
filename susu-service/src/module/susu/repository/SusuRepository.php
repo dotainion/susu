@@ -3,10 +3,8 @@ namespace src\module\susu\repository;
 
 use src\database\Repository;
 use src\infrastructure\Collector;
-use src\infrastructure\Id;
 use src\module\susu\factory\SusuFactory;
 use src\module\susu\objects\Susu;
-use src\module\susu\objects\SusuLink;
 
 class SusuRepository extends Repository{
     protected SusuFactory $factory;
@@ -21,7 +19,7 @@ class SusuRepository extends Repository{
             ->add('id', $this->uuid($susu->id()))
             ->add('contribution', $susu->contribution())
             ->add('cycle', $susu->cycle())
-            ->add('payoutDate', $susu->payoutDate()->toString())
+            ->add('accurance', $susu->accurance())
             ->add('startDate', $susu->startDate()->toString())
             ->add('groupId', $this->uuid($susu->groupId()))
             ->add('pendingStart', $susu->pendingStart())
@@ -34,7 +32,7 @@ class SusuRepository extends Repository{
         $this->update('susu')     
             ->set('contribution', $susu->contribution())
             ->set('cycle', $susu->cycle())
-            ->set('payoutDate', $susu->payoutDate()->toString())
+            ->set('accurance', $susu->accurance())
             ->set('startDate', $susu->startDate()->toString())
             ->set('groupId', $this->uuid($susu->groupId()))
             ->set('pendingStart', $susu->pendingStart())

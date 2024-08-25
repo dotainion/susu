@@ -1,5 +1,3 @@
-import { token } from "../utils/Token";
-
 export class User{
     constructor(API){
         this.api = API;

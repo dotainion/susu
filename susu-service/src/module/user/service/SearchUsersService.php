@@ -16,7 +16,7 @@ class SearchUsersService extends Service{
     public function process($value){
         $value = trim($value);
         if((new Id())->isValid($value)){
-            $collector = $this->list->usersByIdArray([$value]);
+            $collector = $this->list->usersByIdArray([new Id($value)]);
         }else{
             $collector = $this->list->byName($value);
         }

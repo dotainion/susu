@@ -1,4 +1,3 @@
-
 export class Group{
     constructor(API){
         this.api = API;
@@ -6,6 +5,10 @@ export class Group{
 
     async group(id){
         return await this.api.get('/fetch/group', {id});
+    }
+
+    async search(value){
+        return await this.api.get('/search/groups', {value});
     }
 
     async groups(){

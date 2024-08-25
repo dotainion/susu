@@ -24,9 +24,17 @@ class FetchSusu{
         ]);
     }
 
-    public function activeByGroupId(Id $id):Collector{
+    public function activeById(Id $id):Collector{
         return $this->repo->listSusu([
-            'groupId' => $id,
+            'id' => $id,
+            'completed' => false,
+            'canceled' => false
+        ]);
+    }
+
+    public function activeByGroupId(Id $groupId):Collector{
+        return $this->repo->listSusu([
+            'groupId' => $groupId,
             'completed' => false,
             'canceled' => false
         ]);

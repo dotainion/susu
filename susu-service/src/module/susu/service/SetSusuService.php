@@ -25,7 +25,7 @@ class SetSusuService extends Service{
         $this->activeSusu = new FetchSusu();
     }
     
-    public function process($susuId, $contribution, $cycle, $payoutDate, $startDate, $groupId, $pendingStart, $completed, $canceled){
+    public function process($susuId, $contribution, $cycle, $accurance, $startDate, $groupId, $pendingStart, $completed, $canceled){
         Assert::validUuid($susuId, 'Susu not found.');
         Assert::validUuid($groupId, 'Group not found.');
 
@@ -36,7 +36,7 @@ class SetSusuService extends Service{
             'id' => $susuId,
             'contribution' => $contribution,
             'cycle' => $cycle,
-            'payoutDate' => $payoutDate,
+            'accurance' => (int)$accurance,
             'startDate' => $startDate,
             'groupId' => $groupId,
             'pendingStart' => $pendingStart,

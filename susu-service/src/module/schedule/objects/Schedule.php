@@ -1,6 +1,7 @@
 <?php
 namespace src\module\schedule\objects;
 
+use src\infrastructure\Collector;
 use src\infrastructure\DateHelper;
 use src\infrastructure\Id;
 use src\infrastructure\IId;
@@ -14,6 +15,8 @@ class Schedule implements IObjects{
     protected int $position;
     protected Id $susuId;
     protected ?Id $memberId=null;
+    protected ?Collector $payouts=null;
+    protected ?Collector $contributions=null;
 
     public function __construct(){
         $this->id = new Id();
@@ -44,6 +47,14 @@ class Schedule implements IObjects{
         return $this->user;
     }
 
+    public function payouts():?Collector{
+        return $this->payouts;
+    }
+
+    public function contributions():?Collector{
+        return $this->contributions;
+    }
+
     public function setId(string $id):void{
         $this->id->set($id);
     }
@@ -56,7 +67,10 @@ class Schedule implements IObjects{
         $this->date = new DateHelper($date);
     }
 
-    public function setMemberId(string $memberId):void{
+    public function setMemberId(?string $memberId):void{
+        if($memberId === null || $memberId === Id::Default){
+            return;
+        }
         $this->memberId = new Id($memberId);
     }
 
@@ -66,5 +80,13 @@ class Schedule implements IObjects{
 
     public function setUser(User $user):void{
         $this->user = $user;
+    }
+
+    public function setPayouts(Collector $payouts):void{
+        $this->payouts = $payouts;
+    }
+
+    public function setContributions(Collector $contributions):void{
+        $this->contributions = $contributions;
     }
 }

@@ -6,17 +6,18 @@ use src\infrastructure\DateHelper;
 use src\infrastructure\Id;
 use src\infrastructure\IId;
 use src\infrastructure\IObjects;
+use src\infrastructure\IUser;
+use src\module\susu\objects\Susu;
 
 class Group implements IObjects{
     protected Id $id;
     protected string $name;
-    protected string $contribution;
     protected string $description;
-    protected string $cycle;
-    protected ?DateHelper $payoutDate = null;
     protected ?DateHelper $createdDate = null;
     protected ?Collector $members = null;
     protected Id $creatorId;
+    protected ?IUser $owner = null;
+    protected ?Susu $susu = null;
     protected bool $hide;
 
     public function __construct(){
@@ -32,24 +33,20 @@ class Group implements IObjects{
         return $this->name;
     }
 
+    public function owner():?IUser{
+        return $this->owner;
+    }
+
+    public function susu():?Susu{
+        return $this->susu;
+    }
+
     public function hide():bool{
         return $this->hide;
     }
 
-    public function contribution():string{
-        return $this->contribution;
-    }
-
     public function description():string{
         return $this->description;
-    }
-
-    public function cycle():string{
-        return $this->cycle;
-    }
-
-    public function payoutDate():?DateHelper{
-        return $this->payoutDate;
     }
 
     public function createdDate():?DateHelper{
@@ -72,24 +69,20 @@ class Group implements IObjects{
         $this->name = $name;
     }
 
+    public function setOwner(IUser $owner):void{
+        $this->owner = $owner;
+    }
+
+    public function setSusu(Susu $susu):void{
+        $this->susu = $susu;
+    }
+
     public function setHide(bool $hide):void{
         $this->hide = $hide;
     }
 
-    public function setContribution(string $contribution):void{
-        $this->contribution = $contribution;
-    }
-
     public function setDescription(string $description):void{
         $this->description = $description;
-    }
-
-    public function setCycle(string $cycle):void{
-        $this->cycle = $cycle;
-    }
-    
-    public function setPayoutDate(string $payoutDate):void{
-        $this->payoutDate = new DateHelper($payoutDate);
     }
     
     public function setCreatedDate(string $createdDate):void{

@@ -27,6 +27,7 @@ class UserFactory extends Collector{
         $user->setForeignId($record['foreignId']);
         $user->setPicture($record['picture']??null);
         $user->setHide($record['hide']);
+        $user->setGender($record['gender']??'');
         $this->isValidUUid($record['addressId']) && $user->setAddressId($this->uuid($record['addressId']));
         return $user;
     }

@@ -7,6 +7,7 @@ use src\infrastructure\Id;
 use src\infrastructure\Service;
 use src\module\schedule\logic\FetchSchedule;
 use src\module\schedule\logic\SetSchedule;
+use src\module\susu\logic\AssertUserInSusu;
 
 class SelectScheduleService extends Service{
     protected FetchSchedule $fetch;
@@ -22,6 +23,9 @@ class SelectScheduleService extends Service{
         Assert::validUuid($id, 'Schedule not found.');
         Assert::validUuid($memberId, 'Member not found.');
 
+        $collector = $this->fetch->byMemberId(new Id($memberId));
+        $collector->assertItemNotExist('You already been assign to a schedule.');
+
         $collector = $this->fetch->byId(new Id($id));
         $collector->assertHasItem('Schedule not found.');
         $schedule = $collector->first();
@@ -30,8 +34,10 @@ class SelectScheduleService extends Service{
             throw new InvalidArgumentException('You are already been assign to the schedule '.$schedule->date()->toString());
         }
         if($schedule->memberId() !== null){
-            throw new InvalidArgumentException('Member already assign to the schedule '.$schedule->date()->toString());
+            throw new InvalidArgumentException('A member already assign to the schedule '.$schedule->date()->toString());
         }
+
+        (new AssertUserInSusu())->assertUserInSusu(new Id($memberId), $schedule->susuId());
 
         $schedule->setMemberId($memberId);
 

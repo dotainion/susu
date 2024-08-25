@@ -25,7 +25,7 @@ class StartSusuService extends Service{
         $this->activeSusu = new FetchSusu();
     }
     
-    public function process($groupId){
+    public function process($groupId, $accurance, $contribution, $cycle){
         Assert::validUuid($groupId, 'Group not found.');
 
         $susuCollector = $this->activeSusu->activeByGroupId(new Id($groupId));
@@ -39,9 +39,9 @@ class StartSusuService extends Service{
 
         $susu = $this->factory->mapResult([
             'id' => (new Id())->new()->toString(),
-            'contribution' => $group->contribution(),
-            'cycle' => $group->cycle(),
-            'payoutDate' => $group->payoutDate()->toString(),
+            'contribution' => $contribution,
+            'cycle' => $cycle,
+            'accurance' => (int)$accurance,
             'startDate' => (new DateHelper())->new()->toString(),
             'groupId' => $group->id()->toString(),
             'pendingStart' => true,

@@ -32,6 +32,13 @@ class Assert extends Repository{
         return true;
     }
 
+    public static function minNumber($number, float $min, string $message = 'Must be more then the minimum value.'):bool{
+        if(((float)$number??0) < $min){
+            throw new InvalidArgumentException($message);
+        }
+        return true;
+    }
+
     public static function validEmail($email, string $message = 'Invalid email format.'):bool{
         if(filter_var($email, FILTER_VALIDATE_EMAIL) === false){
             throw new InvalidArgumentException($message);
@@ -91,11 +98,6 @@ class Assert extends Repository{
         if(!is_numeric($string)){
             throw new InvalidArgumentException($message);
         }
-        return true;
-    }
-
-    public static function validTaxNotification($string, string $message = 'Invalid tax notification value.'):bool{
-        TaxHelper::valid($string, $message);
         return true;
     }
 

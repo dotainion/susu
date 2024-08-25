@@ -18,7 +18,7 @@ class SetSusuAction extends Request implements IAction{
             $this->get('susuId'), 
             $this->get('contribution'), 
             $this->get('cycle'), 
-            $this->get('payoutDate'), 
+            $this->get('accurance'), 
             $this->get('startDate'), 
             $this->get('groupId'), 
             $this->get('pendingStart'), 

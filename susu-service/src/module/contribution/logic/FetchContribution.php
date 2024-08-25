@@ -13,7 +13,7 @@ class FetchContribution{
     }
 
     public function contribution(Id $id):Collector{
-        return $this->repo->listHistory([
+        return $this->repo->listContribution([
             'id' => $id,
         ]);
     }

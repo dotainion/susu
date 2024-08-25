@@ -118,7 +118,7 @@ export const Profile = () =>{
                     </div>
                 </div>
             </div>
-            <div className="d-flex w-100 justify-content-center flex-column striped-list">
+            <div className="bg-sec rounded-4 d-flex w-100 justify-content-center flex-column striped-list">
                 <div className="py-3 px-2 m-auto" style={{maxWidth: '500px'}}>
                     <div>Member ID</div>
                     <div onClick={(e)=>utils.copy.toClipboard($(e.currentTarget).find('div').first())} className="d-flex align-items-center form-control bg-white position-relative pointer">

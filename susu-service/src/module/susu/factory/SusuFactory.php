@@ -16,7 +16,7 @@ class SusuFactory extends Collector{
         $susu->setId($this->uuid($record['id']));
         $susu->setContribution($record['contribution']);
         $susu->setCycle($record['cycle']);
-        $susu->setPayoutDate($record['payoutDate']);
+        $susu->setAccurance((int)$record['accurance']);
         $susu->setStartDate($record['startDate']);
         $susu->setGroupId($this->uuid($record['groupId']));
         $susu->setPendingStart((bool)$record['pendingStart']);

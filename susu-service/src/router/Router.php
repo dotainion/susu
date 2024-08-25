@@ -10,9 +10,14 @@ use src\module\groups\action\MemberGroupsAction;
 use src\module\groups\action\OwnerGroupsAction;
 use src\module\groups\action\SetGroupAction;
 use src\module\contribution\action\AddSusuContributionAction;
+use src\module\contribution\action\ListContributionAction;
 use src\module\contribution\action\ListSusuContributionAction;
-use src\module\contribution\action\UpdateSusuContributionAction;
+use src\module\groups\action\SearchGroupsAction;
 use src\module\groups\action\UnlinkGroupAction;
+use src\module\invites\action\DeleteInviteAction;
+use src\module\invites\action\ListMemberInvitesAction;
+use src\module\invites\action\ListTargetInvitesAction;
+use src\module\invites\action\SetInviteAction;
 use src\module\login\action\FetchSessionAction;
 use src\module\login\action\GoogleLoginAction;
 use src\module\login\action\LoginAction;
@@ -26,6 +31,12 @@ use src\module\messages\action\ListMessangersAction;
 use src\module\messages\action\ListUnSeenMessagesAction;
 use src\module\messages\action\SearchMessangerAction;
 use src\module\messages\action\SetMessageAction;
+use src\module\payout\action\AddSusuPayoutAction;
+use src\module\payout\action\ListPayoutAction;
+use src\module\payout\action\ListSusuPayoutAction;
+use src\module\refund\action\AddSusuRefundAction;
+use src\module\refund\action\ListRefundAction;
+use src\module\refund\action\ListSusuRefundAction;
 use src\module\susu\action\ConfirmSusuAction;
 use src\module\susu\action\FetchActiveSusuAction;
 use src\module\susu\action\FetchSusuAction;
@@ -176,6 +187,10 @@ class Router{
             return new OwnerGroupsAction();
         });
 
+        $this->request->route('/search/groups', function ($req){
+            return new SearchGroupsAction();
+        });
+
         $this->request->route('/set/group', function ($req){
             return new SetGroupAction();
         });
@@ -228,13 +243,24 @@ class Router{
             return new AddSusuContributionAction();
         });
 
-        $this->request->route('/update/susu/contribution', function ($req){
-            return new UpdateSusuContributionAction();
-        });
-
-
         $this->request->route('/list/susu/contribution', function ($req){
             return new ListSusuContributionAction();
+        });
+
+        $this->request->route('/list/contribution', function ($req){
+            return new ListContributionAction();
+        });
+
+        $this->request->route('/add/susu/payout', function ($req){
+            return new AddSusuPayoutAction();
+        });
+
+        $this->request->route('/list/susu/payout', function ($req){
+            return new ListSusuPayoutAction();
+        });
+
+        $this->request->route('/list/payout', function ($req){
+            return new ListPayoutAction();
         });
 
         $this->request->route('/list/cycle', function ($req){
@@ -263,6 +289,34 @@ class Router{
 
         $this->request->route('/list/unseen/messages', function ($req){
             return new ListUnSeenMessagesAction();
+        });
+
+        $this->request->route('/set/invite', function ($req){
+            return new SetInviteAction();
+        });
+
+        $this->request->route('/delete/invite', function ($req){
+            return new DeleteInviteAction();
+        });
+
+        $this->request->route('/list/member/invite', function ($req){
+            return new ListMemberInvitesAction();
+        });
+
+        $this->request->route('/list/target/invite', function ($req){
+            return new ListTargetInvitesAction();
+        });
+
+        $this->request->route('/add/susu/refund', function ($req){
+            return new AddSusuRefundAction();
+        });
+
+        $this->request->route('/list/refund', function ($req){
+            return new ListRefundAction();
+        });
+
+        $this->request->route('/list/susu/refund', function ($req){
+            return new ListSusuRefundAction();
         });
     }
 

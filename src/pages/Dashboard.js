@@ -2,87 +2,89 @@ import { FaLayerGroup } from "react-icons/fa6";
 import { FaPersonFalling } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { routes } from "../routes/Routes";
+import { SchedulePayoutChart } from "../components/SchedulePayoutChart";
+import { useEffect, useState } from "react";
+import { api } from "../request/Api";
+import { Dropdown } from "../widgets/Dropdown";
+import { useAuth } from "../provider/AuthProvider";
 
 export const Dashboard = () =>{
+    const { user } = useAuth();
+
+    const [groups, setGroups] = useState([]);
+    const [histories, setHistories] = useState([]);
+    const [selectGroup, setSelectGroup] = useState();
+
     const navigate = useNavigate();
+
+    useEffect(()=>{
+        if(!user?.id) return;
+        api.group.memberGroups(user.id).then((response)=>{
+            setGroups(response.data.data);
+        }).catch((error)=>{
+
+        });
+    }, [user]);
+
+    useEffect(()=>{
+        if(!selectGroup) return;
+        api.schedule.list(selectGroup.id).then((response)=>{
+            let unSortedPayments = [];
+            response.data.data.forEach((schedule)=>{
+                unSortedPayments = [
+                    ...unSortedPayments, 
+                    ...schedule.attributes.payouts, 
+                    ...schedule.attributes.contributions
+                ];
+            });
+            setHistories(unSortedPayments.sort((a, b)=> new Date(a.attributes.date) - new Date(b.attributes.date)));
+        }).catch((error)=>{
+
+        });
+    }, [selectGroup]);
+
     return(
         <div className="container">
             <div className="h4 my-4">Dashboard</div>
             <hr></hr>
-            <button onClick={()=>navigate(routes.susu().nested().ownerGroups())} className="btn btn-light text-start shadow-sm me-2">
-                <div className="d-flex">
-                    <FaLayerGroup className="display-5"/>
-                    <div className="ms-2">
-                        <div className="h4">My Groups</div>
-                        <div className="small">254</div>
-                    </div>
-                </div>
-            </button>
-            
-            <div className="py-5">
-                <div className="bg-light p-2" style={{maxWidth: '500px'}}>
-                    <div className="mt-2 d-flex">
-                        <div className="fw-bold me-3">Messages</div>
-                        <span className="bg-danger text-white px-2">5 New Messages</span>
-                    </div>
-                    <hr></hr>
-                    {[1,2,3,5,6,4].map((member, key)=>(
-                        <div className="d-inline-block" key={key}>
-                            <div className="d-flex flex-column m-3" key={key}>
-                                <FaPersonFalling className="border display-3 rounded-circle p-2"/>
-                                <div className="text-truncate">John Wick</div>
-                                <div className="text-truncate">Today</div>
-                            </div>
-                        </div>
-                    ))}
-                    <div className="d-flex justify-content-center">
-                        <button className="btn btn-sm bg-transparent link-primary shadow-none border-0">View All Mesages</button>
-                    </div>
-                </div>
+            <div className="d-flex mb-3">
+                <button 
+                    onClick={()=>navigate(routes.susu().nested().ownerGroups())} 
+                    className="btn btn-light text-start shadow-sm me-2 d-flex align-items-center"
+                >
+                    <FaLayerGroup className="fs-5"/>
+                    <div className="fs-bold ms-2">Go to my groups</div>
+                </button>
+                <Dropdown 
+                    className="btn-light text-start shadow-sm me-2 d-flex align-items-center"
+                    options={groups.map((g)=>({title: g.attributes.name, onClick: ()=>setSelectGroup(g)}))}
+                    defaultValue={'You are not yet in a group'}
+                >
+                    <FaLayerGroup className="fs-5"/>
+                    <div className="fs-bold ms-2">{selectGroup?.attributes?.name || 'Select group to see'} :stats</div>
+                </Dropdown>
             </div>
 
-            <div className="py-5">
-                <div className="bg-light p-2" style={{maxWidth: '500px'}}>
-                    <div className="mt-2 d-flex">
-                        <div className="fw-bold me-3">Messages</div>
-                        <span className="bg-danger text-white px-2">5 New Messages</span>
-                    </div>
-                    <hr></hr>
-                    {[1,2,3,5,6,4].map((member, key)=>(
-                        <div className="d-inline-block" key={key}>
-                            <div className="d-flex flex-column m-3" key={key}>
-                                <FaPersonFalling className="border display-3 rounded-circle p-2"/>
-                                <div className="text-truncate">John Wick</div>
-                                <div className="text-truncate">Today</div>
-                            </div>
-                        </div>
-                    ))}
-                    <div className="d-flex justify-content-center">
-                        <button className="btn btn-sm bg-transparent link-primary shadow-none border-0">View All Mesages</button>
-                    </div>
-                </div>
-            </div>
+            <SchedulePayoutChart/>
 
-            <table className="w-100 small table">
+            <table className="w-100 small table mt-3">
                 <thead>
                     <tr className="border-bottom border-dark">
                         <th className="py-2">Member</th>
                         <th className="py-2">Date</th>
                         <th className="py-2">Status</th>
-                        <th className="py-2">Contribution</th>
-                        <th className="py-2">Amount Paid</th>
+                        <th className="py-2">Amount</th>
                     </tr>
                 </thead>
                 <tbody className="">
-                    {[1,2,3].map((history, key)=>(
+                    {histories.map((history, key)=>(
                         <tr className="border-bottom" key={key}>
-                            <td className="py-2">Member</td>
-                            <td className="py-2">04/23/2024</td>
+                            <td className="py-2">{history.attributes.user.attributes.firstName} {history.attributes.user.attributes.lastName}</td>
+                            <td className="py-2">{history.attributes.date}</td>
                             <td className="py-2">
-                                <span className="border border-success rounded-pill px-3 py-1 small">PAID</span>
+                                <span className="border border-success rounded-pill px-3 py-1 small">{history.type === 'contribution' ? 'PAID' : 'PAYOUT'}</span>
                             </td>
-                            <td className="py-2">$25.21</td>
-                            <td className="py-2">$20.21</td>
+                            <td className="py-2">${history.attributes.contribution || history.attributes.amount}</td>
                         </tr>
                     ))}
                 </tbody>

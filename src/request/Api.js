@@ -7,6 +7,9 @@ import { Susu } from "./Susu";
 import { Schedule } from "./Schedule";
 import { Contribution } from "./Contribution";
 import { Messages } from "./Messages";
+import { Payout } from "./Payout";
+import { Inviate } from "./Inviate";
+import { Refund } from "./Refund";
 
 export class Api{
     baseURL = '/susu-service';
@@ -27,7 +30,10 @@ export class Api{
         this.susu = new Susu(this);
         this.schedule = new Schedule(this);
         this.contribution = new Contribution(this);
+        this.payout = new Payout(this);
+        this.refund = new Refund(this);
         this.message = new Messages(this);
+        this.invite = new Inviate(this);
     }
 
     async post(route, data){

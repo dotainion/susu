@@ -17,10 +17,8 @@ class SetGroupAction extends Request implements IAction{
         return $this->service->process(
             $this->get('id'), 
             $this->get('name'), 
-            $this->get('contribution'), 
             $this->get('description'), 
             $this->get('cycle'), 
-            $this->get('payoutDate'), 
             $this->get('hide')
         );
     }

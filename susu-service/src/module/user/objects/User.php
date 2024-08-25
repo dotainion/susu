@@ -23,6 +23,7 @@ class User implements IObjects, IUser{
     protected ?Id $addressId = null;
     protected ?Address $address = null;
     protected ?string $bio = null;
+    protected ?string $gender = null;
 
     public function __construct(){
         $this->id = new Id();
@@ -89,6 +90,10 @@ class User implements IObjects, IUser{
         return $this->bio;
     }
 
+    public function gender():?string{
+        return $this->gender;
+    }
+
     public function setId(string $id):void{
         $this->id->set($id);
     }
@@ -139,5 +144,9 @@ class User implements IObjects, IUser{
     
     public function setBio(string $bio):void{
         $this->bio = $bio;
+    }
+    
+    public function setGender(string $gender):void{
+        $this->gender = $gender;
     }
 }

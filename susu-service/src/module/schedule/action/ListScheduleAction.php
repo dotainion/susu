@@ -15,7 +15,7 @@ class ListScheduleAction extends Request implements IAction{
 
     public function execute(){
         return $this->service->process(
-            $this->get('groupId')
+            $this->get('susuId')
         );
     }
 }

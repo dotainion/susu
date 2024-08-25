@@ -2,6 +2,7 @@
 namespace src\module\user\logic;
 
 use src\infrastructure\Collector;
+use src\infrastructure\Id;
 use src\module\user\repository\UserRepository;
 
 class ListUsers{

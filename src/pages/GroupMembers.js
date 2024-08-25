@@ -22,9 +22,13 @@ export const GroupMembers = () =>{
             <div className="w-100" style={{maxWidth: '600px'}}>
                 <div className="h4 text-center my-4">Group Members</div>
                 <hr></hr>
-                {members.map((member, key)=>(
-                    <MemberCard member={member} key={key}/>
-                ))}
+                {
+                    members.length ?
+                    members.map((member, key)=>(
+                        <MemberCard member={member} key={key}/>
+                    )):
+                    <div className="h4">No Members</div>
+                }
             </div>
         </div>
     )

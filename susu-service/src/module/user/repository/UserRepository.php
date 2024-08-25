@@ -22,6 +22,7 @@ class UserRepository extends Repository{
             ->add('email', $user->email())
             ->add('hide', (int)$user->hide())
             ->add('date', $user->date())
+            ->add('gender', $user->gender())
             ->add('phoneNumber', $user->phoneNumber())
             ->add('addressId', $this->uuid($user->addressId()))
             ->add('foreignId', $user->foreignId());
@@ -35,6 +36,7 @@ class UserRepository extends Repository{
             ->set('email', $user->email())
             ->set('hide', (int)$user->hide())
             //->set('date', $user->date())
+            ->set('gender', $user->gender())
             ->set('phoneNumber', $user->phoneNumber())
             ->set('foreignId', $user->foreignId())
             //->set('addressId', $this->uuid($user->addressId()))
@@ -61,6 +63,9 @@ class UserRepository extends Repository{
         }
         if(isset($where['date'])){
             $this->where('date', $where['date']);
+        }
+        if(isset($where['gender'])){
+            $this->where('gender', $where['gender']);
         }
         if(isset($where['phoneNumber'])){
             $this->where('phoneNumber', $where['phoneNumber']);

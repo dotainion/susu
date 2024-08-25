@@ -5,12 +5,15 @@ import { routes } from "../routes/Routes";
 import { FcClock } from "react-icons/fc";
 import { useAuth } from "../provider/AuthProvider";
 import { api } from "../request/Api";
+import { utils } from "../utils/Utils";
+import { ParseError } from "../utils/ParseError";
 
 export const Schedule = () =>{
     const { user } = useAuth();
 
     const [card, setCard] = useState();
     const [schedules, setSchedules] = useState([]);
+    const [errors, setErrors] = useState();
 
     const  params = useParams();
     const navigate = useNavigate();
@@ -20,10 +23,17 @@ export const Schedule = () =>{
     }
 
     const selectPayout = () =>{
+        setErrors(null);
         api.schedule.select(card.id, user.id).then((response)=>{
-            console.log('schedule selected...');
+            let temptCard = JSON.parse(JSON.stringify(card));
+            temptCard.attributes.memberId = user.id;
+            setCard(temptCard);
+            setSchedules((scheds)=>[...scheds.map((sch)=>{
+                sch.attributes.memberId = user.id;
+                return sch;
+            })]);
         }).catch((error)=>{
-
+            setErrors(new ParseError().message(error));
         });
     }
 
@@ -42,6 +52,7 @@ export const Schedule = () =>{
                 <FcClock/>
                 <div className="mx-2 w-100">Payout Schedule</div>
             </div>
+            {errors ? <div className="alert alert-danger border-0">{errors}</div> : null}
             <div className="d-flex w-100">
                 <div className="w-100 text-center py-3" style={{minHeight: '30vh'}}>
                     <div>Select a day</div>
@@ -50,12 +61,11 @@ export const Schedule = () =>{
                     <div className="schedule-picker scrollbar-hidden">
                         {schedules.map((schedule, key)=>(
                             <div className="d-inline-block p-1 rounded-2 text-center user-select-none" key={key}>
-                                <div className="small">{schedule.attributes.date.split(', ')[0]},</div>
-                                <div className="small">{schedule.attributes.date.split(', ')[1]}</div>
                                 <div onClick={()=>viewCard(schedule)} className="card mt-1">
                                     <div className="d-flex align-items-center justify-content-center w-100 h-100">
-                                        <div>
-                                            <div>{schedule.attributes.position || (key+1)}</div>
+                                        <div className="px-3">
+                                            <div>{schedule.attributes.position}</div>
+                                            <div className="small">{utils.date.toLocalDate(schedule.attributes.date)}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -70,16 +80,13 @@ export const Schedule = () =>{
                         <>
                             <div>Select a time</div>
                             <div className="d-flex align-items-center">
-                                <div className="">10.00 AM</div>
+                                <div className="">{utils.date.toLocalDate(card.attributes.date)}</div>
                                 <hr className="w-100"></hr>
                             </div>
                             <div className="my-2">
                                 <span className="bg-info p-2 rounded-3">{card.attributes.date}</span>
                             </div>
-                            <div className="d-flex align-items-center">
-                                <div className="">10.00 AM</div>
-                                <hr className="w-100"></hr>
-                            </div>
+                            <hr className="w-100"></hr>
                             <div className="my-2">
                                 {
                                     card.attributes.user 

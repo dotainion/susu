@@ -18,4 +18,10 @@ class FetchSchedule{
             'id' => $id
         ]);
     }
+
+    public function byMemberId(Id $memberId):Collector{
+        return $this->repo->listSchedules([
+            'memberId' => $memberId
+        ]);
+    }
 }

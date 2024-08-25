@@ -19,6 +19,7 @@ class Schema{
             ->column('email')->string()
             ->column('hide')->bool()
             ->column('date')->timestamp()
+            ->column('gender')->string()
             ->column('phoneNumber')->string()
             ->column('addressId')->bindary()
             ->column('foreignId')->string();
@@ -50,10 +51,7 @@ class Schema{
         $this->sql->create('group')        
             ->column('id')->bindary()
             ->column('name')->string()
-            ->column('contribution')->string()
             ->column('description')->paragraph()
-            ->column('cycle')->string()
-            ->column('payoutDate')->timestamp()
             ->column('createdDate')->timestamp()     
             ->column('creatorId')->bindary()
             ->column('hide')->bool();
@@ -72,7 +70,7 @@ class Schema{
             ->column('id')->bindary()
             ->column('contribution')->string()
             ->column('cycle')->string()
-            ->column('payoutDate')->timestamp()
+            ->column('accurance')->int()
             ->column('startDate')->timestamp()     
             ->column('groupId')->bindary()
             ->column('pendingStart')->bool()
@@ -96,11 +94,29 @@ class Schema{
             ->column('memberId')->bindary()
             ->column('contribution')->string()
             ->column('description')->paragraph()
-            ->column('date')->timestamp()
-            ->column('paid')->bool()
-            ->column('refunded')->bool()
-            ->column('payout')->bool()
-            ->column('hide')->bool();
+            ->column('date')->timestamp();
+        return $this->sql->execute();
+    }
+
+    public function payout(){
+        $this->sql->create('payout')
+            ->column('id')->bindary()
+            ->column('susuId')->bindary()
+            ->column('memberId')->bindary()
+            ->column('amount')->string()
+            ->column('description')->paragraph()
+            ->column('date')->timestamp();
+        return $this->sql->execute();
+    }
+
+    public function refund(){
+        $this->sql->create('refund')
+            ->column('id')->bindary()
+            ->column('susuId')->bindary()
+            ->column('memberId')->bindary()
+            ->column('amount')->string()
+            ->column('description')->paragraph()
+            ->column('date')->timestamp();
         return $this->sql->execute();
     }
 
@@ -123,6 +139,17 @@ class Schema{
             ->column('toId')->bindary()
             ->column('read')->bool()
             ->column('hide')->bool();
+        return $this->sql->execute();
+    }
+
+    public function invite(){
+        $this->sql->create('invite')
+            ->column('id')->bindary()
+            ->column('memberId')->bindary()
+            ->column('targetId')->bindary()
+            ->column('date')->timestamp()
+            ->column('expire')->timestamp()
+            ->column('isSusu')->bool();
         return $this->sql->execute();
     }
 

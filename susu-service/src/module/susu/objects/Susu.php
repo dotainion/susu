@@ -1,23 +1,28 @@
 <?php
 namespace src\module\susu\objects;
 
+use InvalidArgumentException;
+use ReflectionClass;
+use src\infrastructure\Assert;
 use src\infrastructure\Collector;
 use src\infrastructure\DateHelper;
 use src\infrastructure\Id;
 use src\infrastructure\IId;
 use src\infrastructure\IObjects;
+use src\infrastructure\IUser;
 
 class Susu implements IObjects{
     protected Id $id;
     protected string $contribution;
     protected string $cycle;
-    protected DateHelper $payoutDate;
+    protected int $accurance;
     protected DateHelper $startDate;
     protected Id $groupId;
     protected bool $pendingStart;
     protected bool $completed;
     protected bool $canceled;
     protected ?Collector $members = null;
+    protected ?IUser $owner = null;
 
     public function __construct(){
         $this->id = new Id();
@@ -36,6 +41,10 @@ class Susu implements IObjects{
         return $this->members;
     }
 
+    public function owner():?IUser{
+        return $this->owner;
+    }
+
     public function canceled():bool{
         return $this->canceled;
     }
@@ -52,8 +61,8 @@ class Susu implements IObjects{
         return $this->cycle;
     }
 
-    public function payoutDate():DateHelper{
-        return $this->payoutDate;
+    public function accurance():int{
+        return $this->accurance;
     }
 
     public function startDate():DateHelper{
@@ -73,18 +82,26 @@ class Susu implements IObjects{
     }
 
     public function setContribution(string $contribution):void{
+        Assert::validNumericValue($contribution, 'Invalid contribution value.');
         $this->contribution = $contribution;
     }
 
     public function setCycle(string $cycle):void{
+        if(!in_array($cycle, (new ReflectionClass(new Cycle()))->getConstants())){
+            throw new InvalidArgumentException('Cycle not valid for a susu.');
+        }
         $this->cycle = $cycle;
     }
     
-    public function setPayoutDate(string $payoutDate):void{
-        $this->payoutDate = new DateHelper($payoutDate);
+    public function setAccurance(int $accurance):void{
+        Assert::validNumericValue($accurance, 'Invalid accurance value.');
+        Assert::positiveNumber($accurance, 'Invalid accurance value.');
+        Assert::minNumber($accurance, 1, 'Invalid accurance value.');
+        $this->accurance = (int)$accurance;
     }
     
     public function setStartDate(string $startDate):void{
+        Assert::validDate($startDate, 'Invalid start date.');
         $this->startDate = new DateHelper($startDate);
     }
 
@@ -98,6 +115,10 @@ class Susu implements IObjects{
 
     public function setMembers(Collector $members):void{
         $this->members = $members;
+    }
+
+    public function setOwner(IUser $owner):void{
+        $this->owner = $owner;
     }
 
     public function setCanceled(bool $canceled):void{

@@ -8,6 +8,8 @@ import { api } from "../request/Api";
 export const MemberSusuHistory = () =>{
     const [susu, setSusu] = useState();
     const [histories, setHistories] = useState([]);
+    const [payouts, setPayouts] = useState([]);
+    const [contributions, setContributions] = useState([]);
 
     const params = useParams();
     const navigate = useNavigate();
@@ -22,17 +24,26 @@ export const MemberSusuHistory = () =>{
 
     useEffect(()=>{
         api.contribution.listContributions(params.susuId, params.memberId).then((response)=>{
-            setHistories(response.data.data);
+            setContributions(response.data.data);
+        }).catch((error)=>{
+
+        });
+        api.payout.listPayouts(params.susuId, params.memberId).then((response)=>{
+            setPayouts(response.data.data);
         }).catch((error)=>{
 
         });
     }, []);
 
+    useEffect(()=>{
+        setHistories([...payouts, ...contributions].sort((a, b)=>new Date(a.attributes.date) - new Date(b.attributes.date)));
+    }, [payouts, contributions]);
+
     return(
         <div className="container">
             <div className="d-flex align-items-center w-100 text-nowrap mt-3">
                 <div className="h4 w-100">Contribution History</div>
-                <button onClick={()=>navigate(routes.susu().nested().groupSusuWallet(params.groupId))} className="btn btn-sm mx-1">To Group Wallet</button>
+                {susu ? <button onClick={()=>navigate(routes.susu().nested().groupSusuWallet(susu.attributes.groupId))} className="btn btn-sm mx-1">To Group Wallet</button> : null}
             </div>
             <div>
                 <table className="w-100">

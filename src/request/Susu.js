@@ -1,11 +1,10 @@
-
 export class Susu{
     constructor(API){
         this.api = API;
     }
 
-    async start(groupId){
-        return await this.api.get('/start/susu', {groupId});
+    async start(data){
+        return await this.api.get('/start/susu', data);
     }
 
     async active(groupId){

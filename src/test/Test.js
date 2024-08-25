@@ -1,30 +1,23 @@
-import { useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
-import { api } from "../request/Api";
+import { useEffect } from "react";
+import { Dashboard } from "../pages/Dashboard";
+import { Messangers } from "../pages/Messangers";
+import { GroupMembersInvite } from "../pages/GroupMembersInvite";
+import { NewGroup } from "../pages/NewGroup";
+import { Group } from "../pages/Group";
+import { Profile } from "../pages/Profile";
+import { ViewGroup } from "../pages/ViewGroup";
+import { UpdateMemberSusuWallet } from "../pages/UpdateMemberSusuWallet";
+import { CommenceSusuOverlay } from "../components/CommenceSusuOverlay";
 
-let start = false;
 export const Test = () =>{
-    const dateRef = useRef();
-
-    const params = useParams();
-
-    const getSchedules = () =>{
-        api.schedule.list(params?.memberId).then((response)=>{
-            console.log(response.data.data);
-        }).catch((error)=>{
-            console.log(error);
-        });
-    }
-
+    
     useEffect(()=>{
         
     }, []);
 
     return(
         <div className="container">
-            <div>
-                <input className=""/>
-            </div>
+            <ViewGroup/>
         </div>
     )
 }

@@ -19,7 +19,8 @@ class EditUserAction extends Request implements IAction{
             $this->get('firstName'),
             $this->get('lastName'),
             $this->get('email'),
-            $this->get('phoneNumber')
+            $this->get('phoneNumber'),
+            $this->get('gender')
         );
     }
 }

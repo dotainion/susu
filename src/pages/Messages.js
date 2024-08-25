@@ -66,7 +66,7 @@ export const Messages = () =>{
     return(
         <MessageBox 
             messages={messages}
-            messageToName={`${member?.attributes?.firstName} ${member?.attributes?.lastName}`}
+            messageToName={`${member?.attributes?.firstName || ''} ${member?.attributes?.lastName || ''}`}
             sendMessage={sendMessage}
         />
     )

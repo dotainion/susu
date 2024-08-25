@@ -23,10 +23,7 @@ class GroupRepository extends Repository{
         $this->insert('group')        
             ->add('id', $this->uuid($group->id()))
             ->add('name', $group->name())
-            ->add('contribution', $group->contribution())
             ->add('description', $group->description())
-            ->add('cycle', $group->cycle())
-            ->add('payoutDate', $group->payoutDate()->toString())
             ->add('createdDate', $group->createdDate()->toString())
             ->add('creatorId', $this->uuid($group->creatorId()));
         $this->execute();
@@ -35,10 +32,7 @@ class GroupRepository extends Repository{
     public function edit(Group $group):void{
         $this->update('group')     
             ->set('name', $group->name())
-            ->set('contribution', $group->contribution())
             ->set('description', $group->description())
-            ->set('cycle', $group->cycle())
-            ->set('payoutDate', $group->payoutDate()->toString())
             ->set('createdDate', $group->createdDate()->toString())
             ->set('creatorId', $this->uuid($group->creatorId()))
             ->where('id', $this->uuid($group->id()));

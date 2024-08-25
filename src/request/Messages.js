@@ -1,4 +1,3 @@
-
 export class Messages{
     constructor(API){
         this.api = API;
