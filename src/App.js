@@ -23,7 +23,7 @@ function App() {
           <Route path={routes.onboarding()} element={<Onboarding/>} />
           <Route path={routes.default()} element={<Navigate to={routes.onboarding()}/>} />
           <Route path={routes.susu().default()} element={<SusuRouter/>} />
-          <Route path={'/test/:memberId'} element={<Test/>} />
+          <Route path={'/test/:susuId/:memberId'} element={<Test/>} />
         </Routes>
       </AuthProvider>
     </HashRouter>
