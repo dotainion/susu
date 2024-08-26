@@ -6,6 +6,7 @@ class Payment implements IObjects{
     protected Id $susuId;
     protected Id $memberId;
     protected DateHelper $date;
+    protected ?IUser $user=null;
     protected string $description;
 
     public function __construct(){
@@ -16,6 +17,10 @@ class Payment implements IObjects{
 
     public function id():IId{
         return $this->id;
+    }
+
+    public function user():?IUser{
+        return $this->user;
     }
 
     public function memberId():IId{
@@ -49,6 +54,11 @@ class Payment implements IObjects{
     public function setDate(string $date):void{
         $this->date = new DateHelper($date);
     }
+
+    public function setUser(IUser $user):void{
+        $this->user = $user;
+    }
+
     public function setDescription(string $description):void{
         $this->description = $description;
     }

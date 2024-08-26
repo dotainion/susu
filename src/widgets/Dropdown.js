@@ -10,7 +10,7 @@ export const Dropdown = ({className, options, defaultValue, children}) =>{
                         <a onClick={option?.onClick} className="dropdown-item pointer">{option.title}</a>
                     </li>
                 ))}
-                {defaultValue ? <li><a className="dropdown-item pointer">{defaultValue}</a></li> : null}
+                {defaultValue && !options.length ? <li><a className="dropdown-item pointer">{defaultValue}</a></li> : null}
             </ul>
         </div>
     )

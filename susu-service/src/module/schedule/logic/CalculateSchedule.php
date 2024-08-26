@@ -57,21 +57,28 @@ class CalculateSchedule{
         }
     }
 
-    private function calculate() {
+    private function calculate(int $accurance) {
         for ($position = 1; $position <= $this->members->count(); $position++) {
             $schedule = $this->factory->mapResult([
                 'id' => (new Id())->new()->toString(),
                 'memberId' => null,
                 'date' => $this->payoutDate($position)->toString(),
                 'position' => $position,
-                'susuId' => $this->susu->id()->toString()
+                'susuId' => $this->susu->id()->toString(),
+                'accurance' => $accurance
             ]);
             $this->factory->add($schedule);
         }
     }
 
+    private function buildAccurances():void{
+        for ($accurance = 1; $accurance <= $this->susu->accurance(); $accurance++) {
+            $this->calculate($accurance);
+        }
+    }
+
     public function schedules():Collector {
-        $this->calculate();
+        $this->buildAccurances();
         return $this->factory;
     }
 }

@@ -116,6 +116,7 @@ class Schema{
             ->column('memberId')->bindary()
             ->column('amount')->string()
             ->column('description')->paragraph()
+            ->column('contributionId')->bindary()
             ->column('date')->timestamp();
         return $this->sql->execute();
     }
@@ -126,7 +127,8 @@ class Schema{
             ->column('susuId')->bindary()
             ->column('memberId')->bindary(true)
             ->column('date')->timestamp()
-            ->column('position')->int();
+            ->column('position')->int()
+            ->column('accurance')->int();
         return $this->sql->execute();
     }
 

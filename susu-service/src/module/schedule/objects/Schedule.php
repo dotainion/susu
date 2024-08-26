@@ -13,14 +13,17 @@ class Schedule implements IObjects{
     protected DateHelper $date;
     protected ?User $user=null;
     protected int $position;
+    protected int $accurance;
     protected Id $susuId;
     protected ?Id $memberId=null;
-    protected ?Collector $payouts=null;
-    protected ?Collector $contributions=null;
+    protected Collector $payouts;
+    protected Collector $contributions;
 
     public function __construct(){
         $this->id = new Id();
         $this->susuId = new Id();
+        $this->payouts = new Collector();
+        $this->contributions = new Collector();
     }
 
     public function id():IId{
@@ -39,6 +42,10 @@ class Schedule implements IObjects{
         return $this->position;
     }
 
+    public function accurance():int{
+        return $this->accurance;
+    }
+
     public function date():DateHelper{
         return $this->date;
     }
@@ -47,11 +54,11 @@ class Schedule implements IObjects{
         return $this->user;
     }
 
-    public function payouts():?Collector{
+    public function payouts():Collector{
         return $this->payouts;
     }
 
-    public function contributions():?Collector{
+    public function contributions():Collector{
         return $this->contributions;
     }
 
@@ -61,6 +68,10 @@ class Schedule implements IObjects{
 
     public function setPosition(int $position):void{
         $this->position = $position;
+    }
+
+    public function setAccurance(int $accurance):void{
+        $this->accurance = $accurance;
     }
     
     public function setDate(string $date):void{

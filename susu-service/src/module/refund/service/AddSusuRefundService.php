@@ -19,7 +19,7 @@ class AddSusuRefundService extends Service{
         $this->factory = new RefundFactory();
     }
     
-    public function process($susuId, $memberId, $amount){
+    public function process($susuId, $memberId, $amount, $contributionId){
         Assert::validUuid($susuId, 'Susu not found.');
         Assert::validUuid($memberId, 'Member not found.');
 
@@ -29,6 +29,7 @@ class AddSusuRefundService extends Service{
             'date' => (new DateHelper())->new()->toString(),
             'memberId' => $memberId,
             'amount' => $amount,
+            'contributionId' => $contributionId,
             'setDescription' => null
         ]);
 

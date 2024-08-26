@@ -4,6 +4,7 @@ export class Schedule{
     }
 
     async list(susuId){
+        //allow groupId or susuId
         return await this.api.get('/list/schedule', {susuId});
     }
 

@@ -22,7 +22,13 @@ export const UpdateMemberSusuWallet = () =>{
     const contributionRef = useRef();
 
     const addContribution = () =>{
-        api.contribution.add(susu.id, params.memberId, susu.attributes.contribution).then((response)=>{
+        const data = {
+            susuId: susu.id, 
+            memberId: params.memberId, 
+            contribution: susu.attributes.contribution,
+            accurance: ''
+        }
+        api.contribution.add(data).then((response)=>{
             setContributions((contributs)=>[response.data.data[0], ...contributs]);
         }).catch((error)=>{
             console.log(error);
@@ -33,7 +39,13 @@ export const UpdateMemberSusuWallet = () =>{
         if(parseFloat(contributionRef.current.value || 0) <= 0){
             return console.error('Contribution cannot be under zero.');
         }
-        api.contribution.add(susu.id, params.memberId, contributionRef.current.value).then((response)=>{
+        const data = {
+            susuId: susu.id, 
+            memberId: params.memberId, 
+            contribution: contributionRef.current.value,
+            accurance: ''
+        }
+        api.contribution.add(data).then((response)=>{
             setShowCustom(false);
             setContributions((contributs)=>[response.data.data[0], ...contributs]);
         }).catch((error)=>{

@@ -4,12 +4,14 @@ import { api } from "../request/Api";
 import { useAuth } from "../provider/AuthProvider";
 import { utils } from "../utils/Utils";
 import $ from 'jquery';
+import { ParseError } from "../utils/ParseError";
 
 export const Profile = () =>{
     const { user } = useAuth();
 
     const [address, setAddress] = useState();
     const [groups, setGroups] = useState([]);
+    const [error, setError] = useState();
 
     const firstNameRef = useRef();
     const lastNameRef = useRef();
@@ -20,6 +22,47 @@ export const Profile = () =>{
     const countryRef = useRef();
     const stateRef = useRef();
     const addressRef = useRef();
+    const aptRef = useRef();
+    const zipRef = useRef();
+
+    
+    const update = () =>{
+    }
+
+    const updateProfile = () =>{
+        setError(null);
+        const data = {
+            id: user.id,
+            firstName: firstNameRef.current.value,
+            lastName: lastNameRef.current.value,
+            gender: genderRef.current.value,
+            email: emailRef.current.value,
+            phoneNumber: phoneRef.current.value,
+            bio: bioRef.current.value,
+        };
+        api.user.editProfile(data).then((response)=>{
+            
+        }).catch((error)=>{
+            setError(new ParseError().message(error));
+        });
+    }
+
+    const upateAddress = () =>{
+        setError(null);
+        const data = {
+            id: address.id,
+            country: countryRef.current.value,
+            state: stateRef.current.value,
+            address: addressRef.current.value,
+            apt: aptRef.current.value,
+            zip: zipRef.current.value
+        }
+        api.user.setAddress(data).then((response)=>{
+            
+        }).catch((error)=>{
+            setError(new ParseError().message(error));
+        });
+    }
 
     useEffect(() => {
         if(!user) return;
@@ -62,7 +105,8 @@ export const Profile = () =>{
                         <div className="fw-bold w-100">{groups.length}</div>
                     </div>
                 </div>
-                <div className="text-nowrap w-100">
+                <div onChange={update} className="text-nowrap w-100">
+                    {error ? <div className="alert alert-danger border-0">{error}</div> : null}
                     <div className="d-md-flex d-block">
                         <div style={{minWidth: '200px'}}>First Name</div>
                         <input ref={firstNameRef} className="form-control mb-3" placeholder="John" type="text" style={{maxWidth: '500px'}}/>
@@ -78,7 +122,7 @@ export const Profile = () =>{
                             <option>Female</option>
                         </select>
                     </div>
-                    <div className="border-bottom border-white mb-3 text-muted small">Contact information</div>
+                    <div className="border-bottom mb-3 text-muted small">Contact information</div>
                     <div className="d-md-flex d-block">
                         <div style={{minWidth: '200px'}}>Email</div>
                         <input ref={emailRef} className="form-control mb-3" placeholder="example@example.com" type="email" style={{maxWidth: '500px'}}/>
@@ -87,12 +131,12 @@ export const Profile = () =>{
                         <div style={{minWidth: '200px'}}>Phone Number</div>
                         <input ref={phoneRef} className="form-control mb-3" placeholder="1 (473) 000 0000" type="tel" style={{maxWidth: '500px'}}/>
                     </div>
-                    <div className="border-bottom border-white mb-3 text-muted small">About me</div>
+                    <div className="border-bottom mb-3 text-muted small">About me</div>
                     <div className="d-md-flex d-block">
                         <div style={{minWidth: '200px'}}>Bio</div>
                         <textarea ref={bioRef} className="form-control mb-3" placeholder="Bio" style={{resize: 'none', maxWidth: '500px'}}/>
                     </div>
-                    <div className="border-bottom border-white mb-3 text-muted small">Location</div>
+                    <div className="border-bottom mb-3 text-muted small">Location</div>
                     <div className="d-md-flex d-block">
                         <div style={{minWidth: '200px'}}>Country</div>
                         <select ref={countryRef} className="form-control form-select mb-3" style={{maxWidth: '500px'}}>
@@ -115,6 +159,14 @@ export const Profile = () =>{
                     <div className="d-md-flex d-block">
                         <div style={{minWidth: '200px'}}>Address</div>
                         <input ref={addressRef} className="form-control mb-3" placeholder="Address" type="text" style={{maxWidth: '500px'}}/>
+                    </div>
+                    <div className="d-md-flex d-block">
+                        <div style={{minWidth: '200px'}}>Apartment</div>
+                        <input ref={aptRef} className="form-control mb-3" placeholder="Apt" type="text" style={{maxWidth: '500px'}}/>
+                    </div>
+                    <div className="d-md-flex d-block">
+                        <div style={{minWidth: '200px'}}>Zip</div>
+                        <input ref={zipRef} className="form-control mb-3" placeholder="00000" type="text" style={{maxWidth: '500px'}} disabled/>
                     </div>
                 </div>
             </div>

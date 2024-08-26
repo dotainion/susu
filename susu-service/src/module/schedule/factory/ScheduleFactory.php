@@ -18,6 +18,7 @@ class ScheduleFactory extends Collector{
         $susu->setDate($record['date']);
         $susu->setSusuId($this->uuid($record['susuId']));
         $susu->setPosition((int)$record['position']);
+        $susu->setAccurance((int)$record['accurance']);
         return $susu;
     }
 }

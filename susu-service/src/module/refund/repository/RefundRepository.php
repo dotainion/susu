@@ -21,6 +21,7 @@ class RefundRepository extends Repository{
             ->add('memberId', $this->uuid($refund->memberId()))
             ->add('date', $refund->date()->toString())
             ->add('amount', $refund->amount())
+            ->add('contributionId', $refund->contributionId())
             ->add('description', $refund->description());
         $this->execute();
     }
@@ -31,6 +32,7 @@ class RefundRepository extends Repository{
             ->set('memberId', $this->uuid($refund->memberId()))       
             ->set('date', $refund->date()->toString())
             ->set('amount', $refund->amount())
+            ->set('contributionId', $refund->contributionId())
             ->set('description', $refund->description())
             ->where('id', $this->uuid($refund->id()));
         $this->execute();

@@ -23,6 +23,10 @@ export class User{
         return await this.api.get('/fetch/address', {id});
     }
 
+    async setAddress(data){
+        return await this.api.get('/set/address', data);
+    }
+
     async byGroup(groupId){
         return await this.api.get('/list/group/users', {groupId});
     }

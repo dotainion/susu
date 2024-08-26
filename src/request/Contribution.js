@@ -3,8 +3,8 @@ export class Contribution{
         this.api = API;
     }
 
-    async add(susuId, memberId, contribution){
-        return await this.api.get('/add/susu/contribution', {susuId, memberId, contribution});
+    async add(data){
+        return await this.api.get('/add/susu/contribution', data);
     }
 
     async listContributions(susuId, memberId){

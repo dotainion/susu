@@ -65,7 +65,7 @@ export const Dashboard = () =>{
                 </Dropdown>
             </div>
 
-            <SchedulePayoutChart/>
+            <SchedulePayoutChart groupId={selectGroup?.id}/>
 
             <table className="w-100 small table mt-3">
                 <thead>
