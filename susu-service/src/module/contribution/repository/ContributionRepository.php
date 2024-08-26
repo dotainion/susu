@@ -20,6 +20,7 @@ class ContributionRepository extends Repository{
             ->add('susuId', $this->uuid($contribution->susuId()))
             ->add('memberId', $this->uuid($contribution->memberId()))
             ->add('date', $contribution->date()->toString())
+            ->add('scheduleId', $this->uuid($contribution->scheduleId()))
             ->add('contribution', $contribution->contribution())
             ->add('description', $contribution->description());
         $this->execute();
@@ -30,6 +31,7 @@ class ContributionRepository extends Repository{
             ->set('susuId', $this->uuid($contribution->susuId()))  
             ->set('memberId', $this->uuid($contribution->memberId()))       
             ->set('date', $contribution->date()->toString())
+            ->set('scheduleId', $this->uuid($contribution->scheduleId()))
             ->set('contribution', $contribution->contribution())
             ->set('description', $contribution->description())
             ->where('id', $this->uuid($contribution->id()));

@@ -9,6 +9,7 @@ import { ViewGroup } from "../pages/ViewGroup";
 import { UpdateMemberSusuWallet } from "../pages/UpdateMemberSusuWallet";
 import { CommenceSusuOverlay } from "../components/CommenceSusuOverlay";
 import { api } from "../request/Api";
+import { ContributionRefund } from "../pages/ContributionRefund";
 
 export const Test = () =>{
 
@@ -26,7 +27,7 @@ export const Test = () =>{
 
     return(
         <div className="container">
-            <button onClick={test} className="btn">Click Me</button>
+            <ContributionRefund/>
         </div>
     )
 }

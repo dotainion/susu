@@ -24,6 +24,7 @@ import { Messages } from "../pages/Messages";
 import { GroupMessages } from "../pages/GroupMessages";
 import { GroupMembersInvite } from "../pages/GroupMembersInvite";
 import { SusuMembersInvite } from "../pages/SusuMembersInvite";
+import { ContributionRefund } from "../pages/ContributionRefund";
 
 export const SusuRouter = () =>{
   const { isAuthenticated } = useAuth();
@@ -54,6 +55,7 @@ export const SusuRouter = () =>{
         <Route path={routes.susu().groupMessages()} element={<GroupMessages/>} />
         <Route path={routes.susu().groupInvites()} element={<GroupMembersInvite/>} />
         <Route path={routes.susu().susuInvites()} element={<SusuMembersInvite/>} />
+        <Route path={routes.susu().refund()} element={<ContributionRefund/>} />
         <Route path={'*'} element={<Welcome/>} />
       </Routes>
     </Layout>

@@ -19,6 +19,7 @@ class ContributionFactory extends Collector{
         $history->setMemberId($this->uuid($record['memberId']));
         $history->setContribution($record['contribution']);
         $history->setDescription((string)$record['description']);
+        $history->setScheduleId($this->uuid($record['scheduleId']));
         return $history;
     }
 }

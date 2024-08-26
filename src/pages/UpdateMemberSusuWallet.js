@@ -5,12 +5,15 @@ import { routes } from "../routes/Routes";
 import { api } from "../request/Api";
 import $ from 'jquery';
 import { utils } from "../utils/Utils";
+import { Dropdown } from "../widgets/Dropdown";
+import { ParseError } from "../utils/ParseError";
 
 export const UpdateMemberSusuWallet = () =>{
     const [susu, setSusu] = useState();
-    const [schedules, setSchedules] = useState([]);
+    const [memberSchedules, setMemberSchedules] = useState([]);
+    const [selectedSchedules, setSelectedSchedules] = useState();
     const [member, setMember] = useState();
-    const [dueDate, setDueDate] = useState();
+    const [errors, setErrors] = useState();
     const [showCustom, setShowCustom] = useState(false);
     const [contributions, setContributions] = useState([]);
     const [price, setPrice] = useState({payments: 0, refunds: 0, payouts: 0});
@@ -21,35 +24,42 @@ export const UpdateMemberSusuWallet = () =>{
 
     const contributionRef = useRef();
 
+    const selectContributionSchedule = (schedule) =>{
+        setSelectedSchedules(schedule);
+    }
+
     const addContribution = () =>{
+        setErrors(null);
+        if(!selectedSchedules) return setErrors('First select a schedule');
         const data = {
             susuId: susu.id, 
             memberId: params.memberId, 
             contribution: susu.attributes.contribution,
-            accurance: ''
+            scheduleId: selectedSchedules.id
         }
         api.contribution.add(data).then((response)=>{
             setContributions((contributs)=>[response.data.data[0], ...contributs]);
         }).catch((error)=>{
-            console.log(error);
+            setErrors(new ParseError().message(error));
         });
     }
 
     const addCustomContribution = () =>{
+        if(!selectedSchedules) return setErrors('First select a schedule');
         if(parseFloat(contributionRef.current.value || 0) <= 0){
-            return console.error('Contribution cannot be under zero.');
+            return setErrors('Contribution cannot be under zero.');
         }
         const data = {
             susuId: susu.id, 
             memberId: params.memberId, 
             contribution: contributionRef.current.value,
-            accurance: ''
+            scheduleId: selectedSchedules.id
         }
         api.contribution.add(data).then((response)=>{
             setShowCustom(false);
             setContributions((contributs)=>[response.data.data[0], ...contributs]);
         }).catch((error)=>{
-            console.log(error);
+            setErrors(new ParseError().message(error));
         });
     }
 
@@ -76,9 +86,8 @@ export const UpdateMemberSusuWallet = () =>{
 
         });
         api.schedule.list(params.groupId).then((response)=>{
-            setSchedules(response.data.data);
+            setMemberSchedules(response.data.data.filter((sch)=>sch.attributes.memberId === params.memberId));
             setExtimatedTotalPayout((response.data.data.length * parseFloat(susu.attributes.contribution || 0)) * susu.attributes.accurance);
-            setDueDate(response.data.data.find((sch)=>sch.attributes.memberId === params.memberId));
         }).catch((error)=>{
 
         });
@@ -142,15 +151,28 @@ export const UpdateMemberSusuWallet = () =>{
                 <div className="border border danger mx-3 d-none d-md-block"></div>
                 <div className="border border danger my-4 d-block d-md-none"></div>
                 <div className="text-nowrap">
-                    <div>Credit Statement</div>
-                    <div className="d-flex w-100 my-4">
-                        <div className="w-50">
+                    <div className="d-flex">
+                        <div className="w-100">Credit Statement</div>
+                        <button onClick={()=>navigate(routes.susu().nested().refund(susu?.id, params.memberId))} className="btn btn-sm btn-light">Add Refund</button>
+                    </div>
+                    {errors ? <div className="alert alert-danger border-0 py-1">{errors}</div> : null}
+                    <div className="d-flex justify-content-center w-100 my-4">
+                        <div className="me-3 w-100">
                             <div className="small">Total Payment</div>
                             <div className="fw-bold">{price.payments.toFixed(2)}</div>
                         </div>
-                        <div className="w-50">
-                            <div className="small">Due Date</div>
-                            {dueDate ? <div className="fw-bold">{utils.date.toLocalDate(dueDate.attributes.date)}</div> : null}
+                        <div className="w-auto">
+                            <div className="small">Schedule Date</div>
+                            <Dropdown 
+                                className="btn btn-sm btn-light border" 
+                                defaultValue="No schedule date" 
+                                options={memberSchedules.map((sch)=>({
+                                    title: utils.date.toLocalDate(sch.attributes.data),
+                                    onClick: ()=>selectContributionSchedule(sch)
+                                }))}
+                            >
+                                {selectedSchedules ? utils.date.toLocalDate(selectedSchedules.attributes.date) : 'Select a schedule date'}
+                            </Dropdown>
                         </div>
                     </div>
                     <div className="d-flex justify-content-center align-items-center position-relative">

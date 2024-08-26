@@ -26,7 +26,10 @@ class AppendRequirementsToSchedule{
             $payoutCollector = new Collector();
             $contributionCollector = new Collector();
             foreach($payments->list() as $payment){
-                if($schedule->memberId()->toString() === $payment->memberId()->toString() && $schedule->accurance() === $schedule->accurance()){
+                if(
+                    $schedule->memberId()->toString() === $payment->memberId()->toString() && 
+                    $schedule->id()->toString() === $schedule->scheduleId()->toString()
+                ){
                     foreach($users->list() as $user){
                         if($payment->memberId()->toString() === $user->id()->toString()){
                             $payment->setUser($user);

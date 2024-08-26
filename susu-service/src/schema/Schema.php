@@ -92,6 +92,7 @@ class Schema{
             ->column('id')->bindary()
             ->column('susuId')->bindary()
             ->column('memberId')->bindary()
+            ->column('scheduleId')->bindary()
             ->column('contribution')->string()
             ->column('description')->paragraph()
             ->column('date')->timestamp();
@@ -103,6 +104,7 @@ class Schema{
             ->column('id')->bindary()
             ->column('susuId')->bindary()
             ->column('memberId')->bindary()
+            ->column('scheduleId')->bindary()
             ->column('amount')->string()
             ->column('description')->paragraph()
             ->column('date')->timestamp();

@@ -1,4 +1,4 @@
-input:focus, textarea:focus, button:focus{
+input:focus, textarea:focus, button:focus, select:focus{
     border-color: var(--bg-sidebar) !important;
     box-shadow: 0 0 0 0.2rem var(--bg-shadow) !important;
 }

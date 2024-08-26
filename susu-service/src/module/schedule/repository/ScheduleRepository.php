@@ -20,6 +20,7 @@ class ScheduleRepository extends Repository{
             ->add('memberId', $this->uuid($schedule->memberId()))
             ->add('susuId', $this->uuid($schedule->susuId()))
             ->add('date', $schedule->date()->toString())
+            ->add('accurance', $schedule->accurance())
             ->add('position', $schedule->position());
         $this->execute();
     }
@@ -29,6 +30,7 @@ class ScheduleRepository extends Repository{
             ->set('memberId', $this->uuid($schedule->memberId()))
             ->set('susuId', $this->uuid($schedule->susuId()))
             ->set('date', $schedule->date()->toString())
+            ->set('accurance', $schedule->accurance())
             ->set('position', $schedule->position())
             ->where('id', $this->uuid($schedule->id()));
         $this->execute();

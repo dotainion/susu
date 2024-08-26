@@ -19,6 +19,7 @@ class PayoutFactory extends Collector{
         $payout->setMemberId($this->uuid($record['memberId']));
         $payout->setAmount($record['amount']);
         $payout->setDescription((string)$record['description']);
+        $payout->setScheduleId($this->uuid($record['scheduleId']));
         return $payout;
     }
 }

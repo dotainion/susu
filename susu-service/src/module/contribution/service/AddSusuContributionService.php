@@ -19,15 +19,17 @@ class AddSusuContributionService extends Service{
         $this->factory = new ContributionFactory();
     }
     
-    public function process($susuId, $memberId, $contribution){
+    public function process($susuId, $memberId, $contribution, $scheduleId){
         Assert::validUuid($susuId, 'Susu not found.');
         Assert::validUuid($memberId, 'Member not found.');
+        Assert::validUuid($scheduleId, 'Schedule not found.');
 
         $history = $this->factory->mapResult([
             'id' => (new Id())->new()->toString(),
             'susuId' => $susuId,
             'date' => (new DateHelper())->new()->toString(),
             'memberId' => $memberId,
+            'scheduleId' => $scheduleId,
             'contribution' => $contribution,
             'setDescription' => null
         ]);

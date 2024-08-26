@@ -17,7 +17,8 @@ class AddSusuContributionAction extends Request implements IAction{
         return $this->service->process(
             $this->get('susuId'),
             $this->get('memberId'),
-            $this->get('contribution')
+            $this->get('contribution'),
+            $this->get('scheduleId')
         );
     }
 }
