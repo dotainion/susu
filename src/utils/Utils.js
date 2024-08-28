@@ -49,6 +49,16 @@ class DateTime{
         return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     }
 
+    toLocalTime(dateInstance){
+        if(!dateInstance) return '';
+        return new Date(dateInstance).toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        });
+    }
+
     toLocalDate(dateInstance){
         if(!dateInstance) return '';
         return new Date(dateInstance).toLocaleDateString('en-US', {
@@ -56,6 +66,11 @@ class DateTime{
             month: 'short',
             day: '2-digit'
         });
+    }
+
+    toLocalDateTime(dateInstance){
+        if(!dateInstance) return '';
+        return `${this.toLocalDate(dateInstance)} ${this.toLocalTime(dateInstance)}`;
     }
 
     to2D(num){

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { api } from "../request/Api";
 import { Dropdown } from "../widgets/Dropdown";
 import { useAuth } from "../provider/AuthProvider";
+import { utils } from "../utils/Utils";
 
 export const Dashboard = () =>{
     const { user } = useAuth();
@@ -47,16 +48,16 @@ export const Dashboard = () =>{
         <div className="container">
             <div className="h4 my-4">Dashboard</div>
             <hr></hr>
-            <div className="d-flex mb-3">
+            <div className="d-sm-flex d-block">
                 <button 
                     onClick={()=>navigate(routes.susu().nested().ownerGroups())} 
-                    className="btn btn-light text-start shadow-sm me-2 d-flex align-items-center"
+                    className="btn btn-light text-start shadow-sm me-2 d-flex align-items-center mb-3"
                 >
                     <FaLayerGroup className="fs-5"/>
                     <div className="fs-bold ms-2">Go to my groups</div>
                 </button>
                 <Dropdown 
-                    className="btn-light text-start shadow-sm me-2 d-flex align-items-center"
+                    className="btn-light text-start shadow-sm me-2 d-flex align-items-center mb-3"
                     options={groups.map((g)=>({title: g.attributes.name, onClick: ()=>setSelectGroup(g)}))}
                     defaultValue={'You are not yet in a group'}
                 >
@@ -80,7 +81,7 @@ export const Dashboard = () =>{
                     {histories.map((history, key)=>(
                         <tr className="border-bottom" key={key}>
                             <td className="py-2">{history.attributes.user.attributes.firstName} {history.attributes.user.attributes.lastName}</td>
-                            <td className="py-2">{history.attributes.date}</td>
+                            <td className="py-2">{utils.date.toLocalDateTime(history.attributes.date)}</td>
                             <td className="py-2">
                                 <span className="border border-success rounded-pill px-3 py-1 small">{history.type === 'contribution' ? 'PAID' : 'PAYOUT'}</span>
                             </td>

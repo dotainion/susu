@@ -29,7 +29,7 @@ export const Sidebar = () =>{
                 {title: 'Create Group', onClick: ()=>navigate(routes.susu().newGroup())},
                 {title: 'Group List', onClick: ()=>navigate(routes.susu().groupList())},
                 {title: 'Member List', onClick: ()=>navigate(routes.susu().memberList())},
-                {title: 'My Groups', onClick: ()=>navigate(routes.susu().ownerGroups())},
+                {title: 'My Groups', onClick: ()=>navigate(routes.susu().associateGroups())},
                 {title: 'Contribution History', disabled: true},
                 //{title: 'User Profile and Settings', disabled: true},
             ],
@@ -76,7 +76,12 @@ export const Sidebar = () =>{
             menus: [
                 {title: 'App Settings', disabled: true},
                 {title: 'Legal/Compliance', disabled: true},
-                {title: 'Logout/Exit', disabled: true},
+                {title: 'Logout/Exit', onClick: ()=>signOut()},
+            ]
+        },{
+            category: 'Setting',
+            menus: [
+                {title: 'Appearance', disabled: true},
             ]
         }
     ];
@@ -159,7 +164,7 @@ export const Sidebar = () =>{
                 <div className="border-top my-3"></div>
                 <div className="dropdown">
                     <a href="#" className="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://github.com/mdo.png" alt="" width="32" height="32" className="rounded-circle me-2"/>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQJxKGGpPc9-5g25KWwnsCCy9O_dlS4HWo5A&s" alt="" width="32" height="32" className="rounded-circle me-2"/>
                         <strong className="text-truncate">{user.attributes.firstName} {user.attributes.lastName}</strong>
                     </a>
                     <ul className="dropdown-menu text-small shadow" aria-labelledby="dropdownUser1">

@@ -1,8 +1,8 @@
 import { GiCondorEmblem } from "react-icons/gi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { routes } from "../routes/Routes";
 import { useAuth } from "../provider/AuthProvider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ParseError } from "../utils/ParseError";
 
 export const Signin = () =>{
@@ -22,6 +22,11 @@ export const Signin = () =>{
             navigate(routes.susu().default());
         });
     }
+
+    useEffect(()=>{
+        const params = new URLSearchParams(window.location.href);
+        console.log(params.get('susuId'));
+    }, []);
 
     return(
         <form onSubmit={login} className="d-flex vh-100">

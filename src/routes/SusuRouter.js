@@ -17,7 +17,7 @@ import { Schedule } from "../pages/Schedule";
 import { MemberSusuHistory } from "../pages/MemberSusuHistory";
 import { GroupMembers } from "../pages/GroupMembers";
 import { SusuMembers } from "../pages/SusuMembers";
-import { OwnerGroupList } from "../pages/OwnerGroupList";
+import { AssociateGroups } from "../pages/AssociateGroups";
 import { Dashboard } from "../pages/Dashboard";
 import { Messangers } from "../pages/Messangers";
 import { Messages } from "../pages/Messages";
@@ -48,7 +48,7 @@ export const SusuRouter = () =>{
         <Route path={routes.susu().memberSusuHistory()} element={<MemberSusuHistory/>} />
         <Route path={routes.susu().groupMembers()} element={<GroupMembers/>} />
         <Route path={routes.susu().susuMembers()} element={<SusuMembers/>} />
-        <Route path={routes.susu().ownerGroups()} element={<OwnerGroupList/>} />
+        <Route path={routes.susu().associateGroups()} element={<AssociateGroups/>} />
         <Route path={routes.susu().dashboard()} element={<Dashboard/>} />
         <Route path={routes.susu().messangers()} element={<Messangers/>} />
         <Route path={routes.susu().messages()} element={<Messages/>} />

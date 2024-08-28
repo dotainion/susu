@@ -3,11 +3,11 @@ export class Refund{
         this.api = API;
     }
 
-    async add(susuId, memberId, amount){
-        return await this.api.get('/add/susu/refund', {susuId, memberId, amount});
+    async add(data){
+        return await this.api.get('/add/susu/refund', data);
     }
 
-    async listPayouts(susuId, memberId){
+    async listRefunds(susuId, memberId){
         return await this.api.get('/list/susu/refund', {susuId, memberId});
     }
 

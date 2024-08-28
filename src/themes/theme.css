@@ -1,8 +1,3 @@
-input:focus, textarea:focus, button:focus, select:focus{
-    border-color: var(--bg-sidebar) !important;
-    box-shadow: 0 0 0 0.2rem var(--bg-shadow) !important;
-}
-
 input[type=search]{
     width: 400px;
 }
@@ -253,6 +248,11 @@ hr, table tr{
     max-height: 50vh;
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+.alert{
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
 @media (max-width: 576px) {

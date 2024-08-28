@@ -11,18 +11,19 @@ class Contribution extends Payment{
 
     public function __construct(){
         parent::__construct();
+        $this->scheduleId = new Id();
     }
 
     public function contribution():string{
         return $this->contribution;
     }
 
-    public function scheduleId():Id{
+    public function scheduleId():?Id{
         return $this->scheduleId;
     }
 
-    public function setScheduleId(int $scheduleId):void{
-        $this->scheduleId = $scheduleId;
+    public function setScheduleId(string $scheduleId):void{
+        $this->scheduleId->set($scheduleId);
     }
 
     public function setContribution(string $contribution):void{

@@ -16,6 +16,9 @@ export const UpdateMemberSusuWallet = () =>{
     const [errors, setErrors] = useState();
     const [showCustom, setShowCustom] = useState(false);
     const [contributions, setContributions] = useState([]);
+    const [payouts, setPayouts] = useState([]);
+    const [refunds, setRefunds] = useState([]);
+    const [history, setHistory] = useState([]);
     const [price, setPrice] = useState({payments: 0, refunds: 0, payouts: 0});
     const [extimatedTotalPayout, setExtimatedTotalPayout] = useState(0);
 
@@ -85,6 +88,16 @@ export const UpdateMemberSusuWallet = () =>{
         }).catch((error)=>{
 
         });
+        api.refund.listRefunds(susu.id, params.memberId).then((response)=>{
+            setRefunds(response.data.data);
+        }).catch((error)=>{
+
+        });
+        api.payout.listPayouts(susu.id, params.memberId).then((response)=>{
+            setPayouts(response.data.data);
+        }).catch((error)=>{
+
+        });
         api.schedule.list(params.groupId).then((response)=>{
             setMemberSchedules(response.data.data.filter((sch)=>sch.attributes.memberId === params.memberId));
             setExtimatedTotalPayout((response.data.data.length * parseFloat(susu.attributes.contribution || 0)) * susu.attributes.accurance);
@@ -95,17 +108,16 @@ export const UpdateMemberSusuWallet = () =>{
 
     useEffect(()=>{
         let priceObject = {payments: 0, refunds: 0, payouts: 0};
-        contributions.forEach((history)=>{
-            if(history.type === 'contribution') priceObject.payments += parseFloat(history.attributes.contribution || 0);
-            if(history.type === 'refund') priceObject.refunds += parseFloat(history.attributes.amount || 0);
-            if(history.type === 'payout') priceObject.payouts += parseFloat(history.attributes.amount || 0);
-        });
+        refunds.forEach((refund)=> priceObject.refunds += parseFloat(refund.attributes.amount || 0));
+        payouts.forEach((payout)=>priceObject.payouts += parseFloat(payout.attributes.amount || 0));
+        contributions.forEach((contribution)=>priceObject.payments += parseFloat(contribution.attributes.contribution || 0));
         setPrice(priceObject);
-    }, [contributions]);
+        setHistory([...refunds, ...payouts, ...contributions].sort((a, b)=>new Date(a.attributes.date) - new Date(b.attributes.date)).reverse());
+    }, [contributions, payouts, refunds]);
 
     return(
         <div className="container">
-            <div className="d-flex align-items-center w-100 text-nowrap mt-3">
+            <div className="d-block d-sm-flex align-items-center w-100 text-nowrap mt-3">
                 <div className="h4 w-100">Contribution Management</div>
                 <button onClick={()=>navigate(routes.susu().nested().groupSusuWallet(params.groupId))} className="btn btn-sm mx-1">Back to Group Wallet</button>
             </div>
@@ -167,7 +179,7 @@ export const UpdateMemberSusuWallet = () =>{
                                 className="btn btn-sm btn-light border" 
                                 defaultValue="No schedule date" 
                                 options={memberSchedules.map((sch)=>({
-                                    title: utils.date.toLocalDate(sch.attributes.data),
+                                    title: utils.date.toLocalDate(sch.attributes.date),
                                     onClick: ()=>selectContributionSchedule(sch)
                                 }))}
                             >
@@ -195,22 +207,17 @@ export const UpdateMemberSusuWallet = () =>{
                 </div>
             </div>
             <div className="text-secondary mt-5">History</div>
-            <div>
+            <div className="bg-light">
                 <table className="w-100">
                     <tbody>
-                        {contributions.map((contribe, key)=>(
-                            <tr className="border-bottom" key={key}>
-                                <td className="py-2 small">{contribe.attributes.date}</td>
-                                <td className="py-2 d-none d-sm-block">
-                                    <div className="small">
-                                        <div>Contribution</div>
-                                        <div>${contribe.attributes.contribution}</div>
-                                    </div>
-                                </td>
+                        {history.map((his)=>(
+                            <tr className="border-bottom" key={his.id}>
+                                <td className="py-2 small">{utils.date.toLocalDateTime(his.attributes.date)}</td>
+                                <td className="py-2 d-none d-sm-block small">${his.attributes?.contribution || his.attributes?.amount}</td>
                                 <td className="py-2 small">
-                                    {contribe.attributes.paid ? <span className="border border-success rounded-pill px-3 py-1">PAID</span> : null}
-                                    {contribe.attributes.refunded ? <span className="border border-success rounded-pill px-3 py-1">REFUNDED</span> : null}
-                                    {contribe.attributes.payout ? <span className="border border-success rounded-pill px-3 py-1">WITHDRAWAL</span> : null}
+                                    {his.type === 'contribution' ? <span className="border border-success rounded-pill px-3 py-1">PAID</span> : null}
+                                    {his.type === 'refund' ? <span className="border border-success rounded-pill px-3 py-1">REFUNDED</span> : null}
+                                    {his.type === 'payout' ? <span className="border border-success rounded-pill px-3 py-1">WITHDRAWAL</span> : null}
                                 </td>
                             </tr>
                         ))}

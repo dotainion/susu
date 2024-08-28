@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Bar, BarChart } from 'recharts';
 import { api } from '../request/Api';
 
@@ -29,9 +29,21 @@ export const SchedulePayoutChart = ({groupId}) => {
     const [lines, setLines] = useState([]);
     const [employees, setEmployees] = useState([]);
 
+    const dashboardNamesRef = useRef({});
+
+    const toName = (payment) =>{
+        const firstName = payment.attributes.user.attributes.firstName;
+        const lastName = payment.attributes.user.attributes.lastName;
+        return `${firstName} ${lastName}`;
+    }
+
     const buildEmployeeContributions = (contributions) =>{
         let contribute = {};
-        contributions.forEach((pay)=>contribute[pay.attributes.user.attributes.firstName] = pay.attributes.contribution);
+        contributions.forEach((pay)=>{
+            const name = dashboardNamesRef.current[pay.attributes.user.id];
+            if(!contribute.hasOwnProperty(name)) contribute[name] = 0;
+            contribute[name] += parseFloat(pay.attributes.contribution);
+        });
         return contribute;
     }
 
@@ -46,10 +58,21 @@ export const SchedulePayoutChart = ({groupId}) => {
         colorIndex = (colorIndex + 1) % colors.length;
         return currentColor;
     }
+    
+    const uniqueName = (name) =>{
+        let newName = name;
+        let count = 1;
+        while (dashboardNamesRef.current.hasOwnProperty(newName)) {
+            newName = `${name}(${count})`;
+            count++;
+        }
+        return newName;
+    }
 
     useEffect(()=>{
         if(!groupId) return;
         api.schedule.list(groupId).then((response)=>{
+            response.data.data.map((p)=>dashboardNamesRef.current[p.attributes.user.id] = uniqueName(toName(p)));
             setLines(
                 response.data.data.map((d)=>({
                     month: new Date(d.attributes.date).toLocaleDateString('en-US', {month: 'short'}),
@@ -57,7 +80,7 @@ export const SchedulePayoutChart = ({groupId}) => {
                     ...buildEmployeeContributions(d.attributes.contributions)
                 }))
             );
-            setEmployees(response.data.data.map((d)=>d.attributes.user.attributes.firstName));
+            setEmployees(Object.values(dashboardNamesRef.current));
         }).catch((error)=>{
 
         });

@@ -1,0 +1,63 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+  
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
+}
+
+button{
+    color: white !important;
+}
+
+button.bg-sidebar{
+    background-color: var(--bg-info);
+}
+
+button.bg-sidebar:hover{
+    color: var(--bg-info) !important;
+    border: 1px solid var(--bg-info) !important;
+}
+
+button.bg-light, button.btn-light{
+    color: black !important;
+}
+
+input:focus, textarea:focus, button:focus, select:focus{
+    border-color: var(--bg-sidebar) !important;
+    box-shadow: 0 0 0 0.2rem var(--bg-shadow) !important;
+}
+
+.sidebar button, .sidebar button svg, .sidebar button span, .sidebar a{
+    color: black !important;
+}
+
+.sidebar button.shadow-none{
+    box-shadow: none !important;
+}
+
+.sidebar button.text-secondary{
+    color: gray !important;
+}
+
+.sidebar ul li > div{
+    border-radius: 8px;
+    background-color: white;
+}
+  
+:root{
+    --bg-primary: rgba(210, 184, 255, 0.15);
+    --bg-secondary: rgba(165, 112, 255, 0.9);
+    --bg-dark: #444444;
+    --bg-light: #f5f5f5;
+    --bg-info: #8b3dff;
+    --bg-sidebar: rgba(210, 184, 255, 0.15);
+    --bg-shadow: rgb(139, 61, 255, 0.3);
+}
+  

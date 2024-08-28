@@ -8,9 +8,10 @@ import { GroupCard } from "../components/GroupCard";
 import { Loader } from "../components/Loader";
 import { useAuth } from "../provider/AuthProvider";
 
-export const OwnerGroupList = () => {
+export const AssociateGroups = () => {
     const { user } = useAuth();
 
+    const [memberGroups, setMemberGroups] = useState([]);
     const [groups, setGroups] = useState([]);
 
     const navigate = useNavigate();
@@ -22,7 +23,17 @@ export const OwnerGroupList = () => {
         }).catch((error)=>{
 
         });
+        api.group.memberGroups(user.id).then((response)=>{
+            setMemberGroups(response.data.data);
+        }).catch((error)=>{
+
+        });
     }, [user]);
+
+    useEffect(() => {
+        if(!memberGroups.length) return;
+        setGroups((ownerGroups)=>[...ownerGroups, ...memberGroups.filter((group)=>!ownerGroups.find((g)=>g.id === group.id))]);
+    }, [memberGroups]);
 
     return (
         <div className="container">
@@ -30,8 +41,8 @@ export const OwnerGroupList = () => {
             <div className="row">
                 {
                     groups.length ?
-                    groups.map((group, key) => (
-                        <GroupCard group={group} key={key}/>
+                    groups.map((group) => (
+                        <GroupCard group={group} key={group.id}/>
                     )): 
                     <Loader/>
                 }

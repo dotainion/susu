@@ -9,6 +9,8 @@ export class Auth{
         return await this.api.post('/logout', null);
     }
     async signIn(email, password){
+        const url = new URL('urlString');
+        const params = new URLSearchParams(url.search);
         return await this.api.post('/signin', {email, password});
     }
 

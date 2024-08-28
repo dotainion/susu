@@ -92,7 +92,7 @@ export const GroupSusuWallet = () =>{
 
             <div className="my-2">Members <b>({members.length})</b></div>
             <div className="mt-3">
-                <span className="mt-3 me-3">Complete <b>{percentage.percent}%</b></span>
+                <span className="mt-3 me-3">Complete <b>{percentage.percent?.toFixed?.(2)}%</b></span>
                 <span className="mt-3">Complete date <b>{consolidate?.endDate}</b></span>
             </div>
             <progress className="w-100 p-3 mb-3" value={percentage.value} max={percentage.max} />

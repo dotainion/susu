@@ -14,7 +14,7 @@ class Susu{
     schedule = (groupId = ':groupId') => this._nested + 'schedule/' + groupId;
     groupMembers = (groupId = ':groupId') => this._nested + 'group/members/' + groupId;
     susuMembers = (groupId = ':groupId', susuId = ':susuId') => this._nested + 'list/of/members/' + groupId + '/' + susuId;
-    ownerGroups = () => this._nested + 'owner/groups';
+    associateGroups = () => this._nested + 'associate/groups';
     dashboard = () => this._nested + 'dashboard';
     messangers = () => this._nested + 'owner/messages';
     messages = (memberId = ':memberId') => this._nested + 'messages/' + memberId;

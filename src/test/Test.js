@@ -27,7 +27,7 @@ export const Test = () =>{
 
     return(
         <div className="container">
-            <ContributionRefund/>
+            <div className="test-bg">hello oworld</div>
         </div>
     )
 }

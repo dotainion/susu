@@ -12,6 +12,11 @@ code {
     monospace;
 }
 
+input:focus, textarea:focus, button:focus, select:focus{
+    border-color: var(--bg-sidebar) !important;
+    box-shadow: 0 0 0 0.2rem var(--bg-shadow) !important;
+}
+
 :root{
   --bg-primary: #eae5dc;
   --bg-secondary: #b8a89d;
@@ -21,3 +26,4 @@ code {
   --bg-sidebar: #c29b87;
   --bg-shadow: rgb(194, 155, 135, 0.3);
 }
+

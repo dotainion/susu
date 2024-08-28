@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { routes } from "../routes/Routes";
 import { useAuth } from "../provider/AuthProvider";
+import mobileView from "../images/mobile-view.png";
 
 export const Onboarding = () =>{
     const { isAuthenticated, user } = useAuth();
@@ -30,7 +31,7 @@ export const Onboarding = () =>{
                             }
                             <button onClick={()=>navigate(routes.register())} className="btn btn-sm btn-primary ms-3">Sign up</button>
                         </div>
-                        <img className="w-50" src="https://fastsusu.com/wp-content/uploads/2022/06/Frame-167-5.png" alt=""/>
+                        <img className="w-50" src={mobileView} alt=""/>
                     </div>
                 </div>
             </div>

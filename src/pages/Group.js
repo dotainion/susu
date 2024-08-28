@@ -116,47 +116,47 @@ export const Group = () =>{
             <div className="striped-list">
                 {
                     !susu?
-                    <div className="py-3 px-2">
-                        <button onClick={()=>setOpenCommenceSusu(true)} className="btn btn-sm">Commence a susu</button>
-                        <div className="small">Begin organizing contributions, setting schedules, and achieving financial goals together.</div>
+                    <div className="py-3 px-1">
+                        <button onClick={()=>setOpenCommenceSusu(true)} className="btn btn-sm m-1">Commence a susu</button>
+                        <div className="small px-1">Begin organizing contributions, setting schedules, and achieving financial goals together.</div>
                     </div>
                     : 
                     <>
                     {
                         susu.attributes.pendingStart? 
-                        <div className="py-3 px-2">
-                            <button onClick={confirmSusu} className="btn btn-sm btn-success me-2">Apply & Confirm</button>
-                            <button onClick={()=>navigate(routes.susu().nested().susuInvites(susu.id))} className="btn btn-sm bg-primary text-white me-2">Send Invites to group members</button>
-                            <button onClick={()=>navigate(routes.susu().nested().susuMembers(params.groupId, susu.id))} className="btn btn-sm btn-danger">Remove a members</button>
-                            <button onClick={cancelSusu} className="btn btn-sm btn-danger ms-2">Cancel Susu</button>
-                            <div className="small">Begin organizing contributions, setting schedules, and achieving financial goals together.</div>
+                        <div className="py-3 px-1">
+                            <button onClick={confirmSusu} className="btn btn-sm btn-success m-1">Apply & Confirm</button>
+                            <button onClick={()=>navigate(routes.susu().nested().susuInvites(susu.id))} className="btn btn-sm bg-primary text-white m-1">Send Invites to group members</button>
+                            <button onClick={()=>navigate(routes.susu().nested().susuMembers(params.groupId, susu.id))} className="btn btn-sm btn-danger m-1">Remove a members</button>
+                            <button onClick={cancelSusu} className="btn btn-sm btn-danger m-1">Cancel Susu</button>
+                            <div className="small px-1">Begin organizing contributions, setting schedules, and achieving financial goals together.</div>
                         </div>
                         : 
-                        <div className="py-3 px-2">
-                            <button onClick={()=>navigate(routes.susu().nested().groupSusuWallet(params.groupId, susu.id))} className="btn btn-sm bg-secondary text-white">Susu Wallet</button>
-                            <button onClick={()=>navigate(routes.susu().nested().groupInvites(params.groupId))} className="btn btn-sm bg-primary text-white ms-2">Send Invites to group members</button>
-                            <button onClick={()=>navigate(routes.susu().nested().susuMembers(params.groupId))} className="btn btn-sm btn-danger ms-2">Remove a members</button>
-                            <div className="small">Begin organizing contributions, setting schedules, and achieving financial goals together.</div>
+                        <div className="py-3 px-1">
+                            <button onClick={()=>navigate(routes.susu().nested().groupSusuWallet(params.groupId, susu.id))} className="btn btn-sm bg-secondary text-white m-1">Susu Wallet</button>
+                            <button onClick={()=>navigate(routes.susu().nested().groupInvites(params.groupId))} className="btn btn-sm bg-primary text-white m-1">Send Invites to group members</button>
+                            <button onClick={()=>navigate(routes.susu().nested().susuMembers(params.groupId))} className="btn btn-sm btn-danger m-1">Remove a members</button>
+                            <div className="small px-1">Begin organizing contributions, setting schedules, and achieving financial goals together.</div>
                         </div>
                     }
                     </>
                 }
-                <div className="py-3 px-2">
+                <div className="py-3 px-1">
                     {
                         susu?.attributes?.pendingStart 
-                        ? <p className="small">To generate the schedule, it is essential to confirm participation in the susu. The schedule will be determined based on the number of members who have joined the susu. Once confirmed, members will have the opportunity to select their preferred schedule.</p>
-                        : <button onClick={()=>navigate(routes.susu().nested().schedule(params.groupId))} className="btn btn-sm btn-info">Schedule</button>
+                        ? <p className="small px-1">To generate the schedule, it is essential to confirm participation in the susu. The schedule will be determined based on the number of members who have joined the susu. Once confirmed, members will have the opportunity to select their preferred schedule.</p>
+                        : <button onClick={()=>navigate(routes.susu().nested().schedule(params.groupId))} className="btn btn-sm btn-info m-1">Schedule</button>
                     }
-                    <div className="small">Once you remove a member from this group, you may need to send a request so they can be added back.</div>
+                    <div className="small px-1">Once you remove a member from this group, you may need to send a request so they can be added back.</div>
                 </div>
-                <div className="py-3 px-2">
-                    <button onClick={()=>navigate(routes.susu().nested().groupMembers(params.groupId))} className="btn btn-sm btn-danger">Remove a members</button>
-                    <button onClick={()=>navigate(routes.susu().nested().groupInvites(params.groupId))} className="btn btn-sm bg-primary text-white ms-2">Invite someone to join group</button>
-                    <div className="small">Once you remove a member from this group, you may need to send a request so they can be added back.</div>
+                <div className="py-3 px-1">
+                    <button onClick={()=>navigate(routes.susu().nested().groupMembers(params.groupId))} className="btn btn-sm btn-danger m-1">Remove a members</button>
+                    <button onClick={()=>navigate(routes.susu().nested().groupInvites(params.groupId))} className="btn btn-sm bg-primary text-white m-1">Invite someone to join group</button>
+                    <div className="small px-1">Once you remove a member from this group, you may need to send a request so they can be added back.</div>
                 </div>
-                <div className="py-3 px-2">
-                    <button onClick={deleteGroup} className="btn btn-sm btn-danger">Delete Group</button>
-                    <div className="small">Once you delete a group, there is no going back. Please be certain.</div>
+                <div className="py-3 px-1">
+                    <button onClick={deleteGroup} className="btn btn-sm btn-danger m-1">Delete Group</button>
+                    <div className="small px-1">Once you delete a group, there is no going back. Please be certain.</div>
                 </div>
             </div>
             <CommenceSusuOverlay

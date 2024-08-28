@@ -27,8 +27,9 @@ class AppendRequirementsToSchedule{
             $contributionCollector = new Collector();
             foreach($payments->list() as $payment){
                 if(
+                    $schedule->memberId() !== null &&
                     $schedule->memberId()->toString() === $payment->memberId()->toString() && 
-                    $schedule->id()->toString() === $schedule->scheduleId()->toString()
+                    $schedule->id()->toString() === $payment->scheduleId()->toString()
                 ){
                     foreach($users->list() as $user){
                         if($payment->memberId()->toString() === $user->id()->toString()){
