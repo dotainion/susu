@@ -64,7 +64,7 @@ export const GroupSusuWallet = () =>{
 
     return(
         <div className="container">
-            <div className="h4 my-3">Group Wallet</div>
+            <div className="h4 my-3">Group Susu Manager</div>
             <div>Susu Credit Line</div>
             <div className="h1 mb-4">${parseFloat(susu?.attributes?.contribution || 0).toFixed(2)}</div>
 

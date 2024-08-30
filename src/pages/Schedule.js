@@ -7,11 +7,13 @@ import { useAuth } from "../provider/AuthProvider";
 import { api } from "../request/Api";
 import { utils } from "../utils/Utils";
 import { ParseError } from "../utils/ParseError";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 export const Schedule = () =>{
     const { user } = useAuth();
 
     const [card, setCard] = useState();
+    const [susu, setSusu] = useState();
     const [schedules, setSchedules] = useState([]);
     const [errors, setErrors] = useState();
 
@@ -41,17 +43,23 @@ export const Schedule = () =>{
         api.schedule.list(params.groupId).then((response)=>{
             setSchedules(response.data.data);
         }).catch((error)=>{
-
+            setErrors(new ParseError().message(error));
+        });
+        api.susu.active(params.groupId).then((response)=>{
+            setSusu(response.data.data[0]);
+        }).catch((error)=>{
+            setErrors(new ParseError().message(error));
         });
     }, []);
 
     return(
         <div className="container">
             <button onClick={()=>navigate(routes.susu().nested().groupSusuWallet(params.groupId))} className="btn bg-transparent p-0 my-4"><IoIosArrowBack/> To Susu Wallet</button>
-            <div className="d-flex align-items-center h4 mb-4">
+            <div className="d-flex align-items-center h4 mb-3">
                 <FcClock/>
                 <div className="mx-2 w-100">Payout Schedule</div>
             </div>
+            {susu?.attributes?.owner?.id === user?.id ? <button onClick={()=>navigate(routes.susu().nested().assignSchedule(params.groupId))} className="btn btn-sm bg-sec mb-4">Assign Schedule</button> : null}
             {errors ? <div className="alert alert-danger border-0">{errors}</div> : null}
             <div className="d-flex w-100">
                 <div className="w-100 text-center py-3" style={{minHeight: '30vh'}}>
@@ -84,7 +92,7 @@ export const Schedule = () =>{
                                 <hr className="w-100"></hr>
                             </div>
                             <div className="my-2">
-                                <span className="bg-info p-2 rounded-3">{card.attributes.date}</span>
+                                <div className="bg-sec p-2 rounded-3">{utils.date.toLocalDateTime(card.attributes.date)}</div>
                             </div>
                             <hr className="w-100"></hr>
                             <div className="my-2">
@@ -97,7 +105,7 @@ export const Schedule = () =>{
                                             : <>
                                                 <span className="me-2">This time slot has already been selected by</span> 
                                                 <b>{card.attributes.user.attributes.firstName} {card.attributes.user.attributes.lastName}</b>
-                                                <span className="link-primary pointer d-block text-truncate">Request swap from "{card.attributes.user.attributes.firstName}"</span>
+                                                <span className="link-primary pointer d-block text-truncate">Request swap from "{card.attributes.user.attributes.firstName} {card.attributes.user.attributes.lastName}"</span>
                                             </>
                                         }
                                     </span>
@@ -106,8 +114,12 @@ export const Schedule = () =>{
                             </div>
                         </>
                         :
-                        <div>
-                            <div>Select a card to view avaibale date</div>
+                        <div className="d-flex align-items-center h-100">
+                            <div className="text-center">
+                                <FaRegCalendarAlt className="text-sec display-1"/>
+                                <hr className="w-100"></hr>
+                                <div>Select a card to view avaibale date</div>
+                            </div>
                         </div>
                     }
                     

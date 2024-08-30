@@ -18,4 +18,11 @@ class FetchSusuLink{
             'memberId' => $memberId
         ]);
     }
+
+    public function linkByIdArray(array $susuIdArray, array $memberIdArray):Collector{
+        return $this->repo->listSusuLink([
+            'susuId' => $susuIdArray,
+            'memberId' => $memberIdArray
+        ]);
+    }
 }

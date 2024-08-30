@@ -21,7 +21,6 @@ class PayoutRepository extends Repository{
             ->add('memberId', $this->uuid($payout->memberId()))
             ->add('date', $payout->date()->toString())
             ->add('amount', $payout->amount())
-            ->add('scheduleId', $this->uuid($payout->scheduleId()))
             ->add('description', $payout->description());
         $this->execute();
     }
@@ -32,7 +31,6 @@ class PayoutRepository extends Repository{
             ->set('memberId', $this->uuid($payout->memberId()))       
             ->set('date', $payout->date()->toString())
             ->set('amount', $payout->amount())
-            ->set('scheduleId', $this->uuid($payout->scheduleId()))
             ->set('description', $payout->description())
             ->where('id', $this->uuid($payout->id()));
         $this->execute();

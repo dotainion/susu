@@ -7,6 +7,7 @@ use src\module\user\logic\ListUsers;
 class AppendRequirementsToSchedule{
 
     const PAYOUT = 'PAYOUT';
+    const REFUND = 'REFUND';
     const CONTRIBUTION = 'CONTRIBUTION';
     protected ListUsers $users;
 
@@ -23,32 +24,31 @@ class AppendRequirementsToSchedule{
 
     private function appendPayments(Collector &$schedules, Collector &$payments, Collector &$users, string $CMD):Collector{        
         foreach($schedules->list() as $schedule){
-            $payoutCollector = new Collector();
-            $contributionCollector = new Collector();
+            $paymentCollector = new Collector();
             foreach($payments->list() as $payment){
-                if(
-                    $schedule->memberId() !== null &&
-                    $schedule->memberId()->toString() === $payment->memberId()->toString() && 
-                    $schedule->id()->toString() === $payment->scheduleId()->toString()
-                ){
+                if($schedule->memberId() !== null && $schedule->memberId()->toString() === $payment->memberId()->toString()){
                     foreach($users->list() as $user){
                         if($payment->memberId()->toString() === $user->id()->toString()){
                             $payment->setUser($user);
                             break;
                         }
                     }
-                    ($CMD === AppendRequirementsToSchedule::PAYOUT) && $payoutCollector->add($payment);
-                    ($CMD === AppendRequirementsToSchedule::CONTRIBUTION) && $contributionCollector->add($payment);
+                    $paymentCollector->add($payment);
                 }
             }
-            ($CMD === AppendRequirementsToSchedule::PAYOUT) && $schedule->setPayouts($payoutCollector);
-            ($CMD === AppendRequirementsToSchedule::CONTRIBUTION) && $schedule->setContributions($contributionCollector);
+            ($CMD === AppendRequirementsToSchedule::PAYOUT) && $schedule->setPayouts($paymentCollector);
+            ($CMD === AppendRequirementsToSchedule::REFUND) && $schedule->setRefunds($paymentCollector);
+            ($CMD === AppendRequirementsToSchedule::CONTRIBUTION) && $schedule->setContributions($paymentCollector);
         }
         return $schedules;
     }
 
     public function payouts(Collector &$schedules, Collector &$payments, Collector &$users):Collector{
         return $this->appendPayments($schedules, $payments, $users, AppendRequirementsToSchedule::PAYOUT);
+    }
+
+    public function refunds(Collector &$schedules, Collector &$payments, Collector &$users):Collector{
+        return $this->appendPayments($schedules, $payments, $users, AppendRequirementsToSchedule::REFUND);
     }
 
     public function contributions(Collector &$schedules, Collector &$payments, Collector &$users):Collector{

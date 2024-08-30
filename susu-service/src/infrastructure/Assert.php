@@ -53,6 +53,13 @@ class Assert extends Repository{
         return true;
     }
 
+    public static function validUuidArray($uuidArray, string $message = 'Invalid id.'):bool{
+        foreach($uuidArray as $uuid){
+            self::validUuid($uuid, $message);
+        }
+        return true;
+    }
+
     public static function validToken($token, string $message = 'Invalid token.'):bool{
         if(!(new Id())->isValid((string)$token)){
             throw new InvalidArgumentException($message);

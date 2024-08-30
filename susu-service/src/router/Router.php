@@ -37,6 +37,7 @@ use src\module\payout\action\ListSusuPayoutAction;
 use src\module\refund\action\AddSusuRefundAction;
 use src\module\refund\action\ListRefundAction;
 use src\module\refund\action\ListSusuRefundAction;
+use src\module\schedule\action\AssignScheduleAction;
 use src\module\susu\action\ConfirmSusuAction;
 use src\module\susu\action\FetchActiveSusuAction;
 use src\module\susu\action\FetchSusuAction;
@@ -233,6 +234,10 @@ class Router{
 
         $this->request->route('/select/schedule', function ($req){
             return new SelectScheduleAction();
+        });
+
+        $this->request->route('/assign/schedule', function ($req){
+            return new AssignScheduleAction();
         });
 
         $this->request->route('/list/schedule', function ($req){

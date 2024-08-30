@@ -10,6 +10,10 @@ import { UpdateMemberSusuWallet } from "../pages/UpdateMemberSusuWallet";
 import { CommenceSusuOverlay } from "../components/CommenceSusuOverlay";
 import { api } from "../request/Api";
 import { ContributionRefund } from "../pages/ContributionRefund";
+import { ModalOverlay } from "../container/ModalOverlay";
+import { InviteOption } from "../components/InviteOption";
+import { Invited } from "../pages/Invited";
+import { AssignSchedule } from "../pages/AssignSchedule";
 
 export const Test = () =>{
 
@@ -27,7 +31,7 @@ export const Test = () =>{
 
     return(
         <div className="container">
-            <div className="test-bg">hello oworld</div>
+            <AssignSchedule/>
         </div>
     )
 }

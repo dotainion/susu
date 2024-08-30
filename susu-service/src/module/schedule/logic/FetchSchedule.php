@@ -19,6 +19,12 @@ class FetchSchedule{
         ]);
     }
 
+    public function byIdArray(array $idArray):Collector{
+        return $this->repo->listSchedules([
+            'id' => $idArray
+        ]);
+    }
+
     public function byMemberId(Id $memberId):Collector{
         return $this->repo->listSchedules([
             'memberId' => $memberId

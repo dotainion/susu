@@ -19,10 +19,9 @@ class AddSusuPayoutService extends Service{
         $this->factory = new PayoutFactory();
     }
     
-    public function process($susuId, $memberId, $amount, $scheduleId){
+    public function process($susuId, $memberId, $amount){
         Assert::validUuid($susuId, 'Susu not found.');
         Assert::validUuid($memberId, 'Member not found.');
-        Assert::validUuid($scheduleId, 'Schedule not found.');
 
         $payout = $this->factory->mapResult([
             'id' => (new Id())->new()->toString(),
@@ -30,7 +29,6 @@ class AddSusuPayoutService extends Service{
             'date' => (new DateHelper())->new()->toString(),
             'memberId' => $memberId,
             'amount' => $amount,
-            'scheduleId' => $scheduleId,
             'setDescription' => null
         ]);
 

@@ -2,12 +2,10 @@
 namespace src\module\payout\objects;
 
 use InvalidArgumentException;
-use src\infrastructure\Id;
 use src\infrastructure\Payment;
 
 class Payout extends Payment{
     protected string $amount;
-    protected Id $scheduleId;
 
     public function __construct(){
         parent::__construct();
@@ -15,14 +13,6 @@ class Payout extends Payment{
 
     public function amount():string{
         return $this->amount;
-    }
-
-    public function scheduleId():Id{
-        return $this->scheduleId;
-    }
-
-    public function setScheduleId(int $scheduleId):void{
-        $this->scheduleId = $scheduleId;
     }
 
     public function setAmount(string $amount):void{

@@ -18,4 +18,12 @@ class AssertUserInSusu{
         }
         return true;
     }
+
+    public function assertUserInSusuByMemberIdArray(array $memberIdArray, array $susuIdArray):bool{
+        $links = $this->link->linkByIdArray($susuIdArray, $memberIdArray);
+        if($links->count() !== count($memberIdArray)){
+            throw new InvalidArgumentException('One or more members must first join the susu.');
+        }
+        return true;
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace src\module\schedule\logic;
 
+use src\infrastructure\Collector;
 use src\module\schedule\objects\Schedule;
 use src\module\susu\repository\ScheduleRepository;
 
@@ -21,5 +22,11 @@ class SetSchedule{
             return;
         }
         $this->repo->create($schedule);
+    }
+
+    public function masSet(Collector $scheduleCollector):void{
+        foreach($scheduleCollector->list() as $schedule){
+            $this->set($schedule);
+        }
     }
 }

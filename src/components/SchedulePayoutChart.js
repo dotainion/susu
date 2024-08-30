@@ -28,6 +28,7 @@ const colors = [
 export const SchedulePayoutChart = ({groupId}) => {
     const [lines, setLines] = useState([]);
     const [employees, setEmployees] = useState([]);
+    const [payments, setPayments] = useState({contributions: 0, payouts: 0, refunds: 0});
 
     const dashboardNamesRef = useRef({});
 
@@ -53,6 +54,12 @@ export const SchedulePayoutChart = ({groupId}) => {
         return total;
     }
 
+    const buildRefunds = (refunds) =>{
+        let total = 0;
+        refunds.forEach((refund)=>total += parseFloat(refund.attributes.amount));
+        return total;
+    }
+
     const getColor = () =>{
         const currentColor = colors[colorIndex];
         colorIndex = (colorIndex + 1) % colors.length;
@@ -72,14 +79,23 @@ export const SchedulePayoutChart = ({groupId}) => {
     useEffect(()=>{
         if(!groupId) return;
         api.schedule.list(groupId).then((response)=>{
-            response.data.data.map((p)=>dashboardNamesRef.current[p.attributes.user.id] = uniqueName(toName(p)));
+            let pay = {contributions: 0, payouts: 0, refunds: 0};
+            response.data.data.forEach((p)=>p.attributes.contributions.forEach((r)=>pay.contributions += parseFloat(r.attributes.contribution)));
+            response.data.data.forEach((p)=>p.attributes.payouts.forEach((r)=>pay.payouts += parseFloat(r.attributes.amount)));
+            response.data.data.forEach((p)=>p.attributes.refunds.forEach((r)=>pay.refunds += parseFloat(r.attributes.amount)));
+            setPayments(pay);
+
+            response.data.data.forEach((p)=>dashboardNamesRef.current[p.attributes.user.id] = uniqueName(toName(p)));
+
             setLines(
                 response.data.data.map((d)=>({
                     month: new Date(d.attributes.date).toLocaleDateString('en-US', {month: 'short'}),
                     payout: buildPayouts(d.attributes.payouts),
+                    refund: buildRefunds(d.attributes.refunds),
                     ...buildEmployeeContributions(d.attributes.contributions)
                 }))
             );
+
             setEmployees(Object.values(dashboardNamesRef.current));
         }).catch((error)=>{
 
@@ -100,8 +116,15 @@ export const SchedulePayoutChart = ({groupId}) => {
                         <Bar dataKey={employee} fill={getColor()} stackId="a" key={key} />
                     ))}
                     <Bar dataKey="payout" fill="#ff7300" stackId="b" />
+                    <Bar dataKey="refund" fill="#A397D1" stackId="c" />
                 </BarChart >
             </ResponsiveContainer>
+            <div className="my-4 p-3 bg-light rounded-3">
+                <div className="h4">Contributions</div>
+                <div>Payment: <b>${payments.contributions.toFixed(2)}</b></div>
+                <div>Payout: <b>${payments.payouts.toFixed(2)}</b></div>
+                <div>Refund: <b>${payments.refunds.toFixed(2)}</b></div>
+            </div>
         </div>
     );
 };

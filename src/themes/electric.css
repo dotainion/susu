@@ -29,11 +29,6 @@ button.bg-light, button.btn-light{
     color: black !important;
 }
 
-input:focus, textarea:focus, button:focus, select:focus{
-    border-color: var(--bg-sidebar) !important;
-    box-shadow: 0 0 0 0.2rem var(--bg-shadow) !important;
-}
-
 .sidebar button, .sidebar button svg, .sidebar button span, .sidebar a{
     color: black !important;
 }

@@ -22,6 +22,7 @@ class Susu{
     groupInvites = (groupId = ':groupId') => this._nested + 'group/invites/' + groupId;
     susuInvites = (susuId = ':susuId') => this._nested + 'susu/invites/' + susuId;
     refund = (susuId = ':susuId', memberId = ':memberId') => this._nested + 'susu/refund/' + susuId + '/member/' + memberId;
+    assignSchedule = (groupId = ':groupId') => this._nested + 'assign/schedule/' + groupId;
     nested = () => {
         this._nested = this.default().replace('*', '');
         return this;
@@ -34,6 +35,7 @@ class Routes{
     onboarding = () => this._nested + '/onboarding';
     signIn = () => this._nested + '/sign/in';
     register = () => this._nested + '/register';
+    invited = () => this._nested + 'invited';
     susu = () => new Susu();
 }
 

@@ -8,13 +8,7 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-input:focus, textarea:focus, button:focus, select:focus{
-    border-color: var(--bg-sidebar) !important;
-    box-shadow: 0 0 0 0.2rem var(--bg-shadow) !important;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 :root{

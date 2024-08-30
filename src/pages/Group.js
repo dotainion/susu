@@ -4,12 +4,16 @@ import { useEffect, useRef, useState } from "react";
 import { routes } from "../routes/Routes";
 import { CommenceSusuOverlay } from "../components/CommenceSusuOverlay";
 import { ParseError } from "../utils/ParseError";
+import { Dropdown } from "../widgets/Dropdown";
+import { InviteOption } from "../components/InviteOption";
 
 export const Group = () =>{
     const [group, setGroup] = useState();
     const [susu , setSusu] = useState();
     const [errors , setErrors] = useState();
     const [openCommenceSusu , setOpenCommenceSusu] = useState(false);
+    const [openSusuInvite , setOpenSusuInvite] = useState(false);
+    const [openGroupInvite , setOpenGroupInvite] = useState(false);
 
     const params = useParams();
     const navigate = useNavigate();
@@ -126,15 +130,15 @@ export const Group = () =>{
                         susu.attributes.pendingStart? 
                         <div className="py-3 px-1">
                             <button onClick={confirmSusu} className="btn btn-sm btn-success m-1">Apply & Confirm</button>
-                            <button onClick={()=>navigate(routes.susu().nested().susuInvites(susu.id))} className="btn btn-sm bg-primary text-white m-1">Send Invites to group members</button>
+                            <button onClick={()=>setOpenSusuInvite(true)} className="btn btn-sm bg-primary text-white m-1">Invites someone to join susu</button>
                             <button onClick={()=>navigate(routes.susu().nested().susuMembers(params.groupId, susu.id))} className="btn btn-sm btn-danger m-1">Remove a members</button>
                             <button onClick={cancelSusu} className="btn btn-sm btn-danger m-1">Cancel Susu</button>
                             <div className="small px-1">Begin organizing contributions, setting schedules, and achieving financial goals together.</div>
                         </div>
                         : 
                         <div className="py-3 px-1">
-                            <button onClick={()=>navigate(routes.susu().nested().groupSusuWallet(params.groupId, susu.id))} className="btn btn-sm bg-secondary text-white m-1">Susu Wallet</button>
-                            <button onClick={()=>navigate(routes.susu().nested().groupInvites(params.groupId))} className="btn btn-sm bg-primary text-white m-1">Send Invites to group members</button>
+                            <button onClick={()=>navigate(routes.susu().nested().groupSusuWallet(params.groupId, susu.id))} className="btn btn-sm bg-secondary text-white m-1">Susu Manager</button>
+                            <button onClick={()=>setOpenGroupInvite(true)} className="btn btn-sm bg-primary text-white m-1">Invites someone to join group</button>
                             <button onClick={()=>navigate(routes.susu().nested().susuMembers(params.groupId))} className="btn btn-sm btn-danger m-1">Remove a members</button>
                             <div className="small px-1">Begin organizing contributions, setting schedules, and achieving financial goals together.</div>
                         </div>
@@ -151,7 +155,7 @@ export const Group = () =>{
                 </div>
                 <div className="py-3 px-1">
                     <button onClick={()=>navigate(routes.susu().nested().groupMembers(params.groupId))} className="btn btn-sm btn-danger m-1">Remove a members</button>
-                    <button onClick={()=>navigate(routes.susu().nested().groupInvites(params.groupId))} className="btn btn-sm bg-primary text-white m-1">Invite someone to join group</button>
+                    <button onClick={()=>setOpenGroupInvite(true)} className="btn btn-sm bg-primary text-white m-1">Invites someone to join group</button>
                     <div className="small px-1">Once you remove a member from this group, you may need to send a request so they can be added back.</div>
                 </div>
                 <div className="py-3 px-1">
@@ -163,6 +167,18 @@ export const Group = () =>{
                 isOpen={openCommenceSusu}
                 onClose={()=>setOpenCommenceSusu(false)}
                 onResponse={setSusu}
+            />
+            <InviteOption
+                show={openSusuInvite}
+                onClose={()=>setOpenSusuInvite(false)}
+                onMemberShare={()=>navigate(routes.susu().nested().susuInvites(susu?.id))}
+                urlParams={{susuId: susu?.id}}
+            />
+            <InviteOption
+                show={openGroupInvite}
+                onClose={()=>setOpenGroupInvite(false)}
+                onMemberShare={()=>navigate(routes.susu().nested().groupInvites(params.groupId))}
+                urlParams={{groupId: params.groupId}}
             />
         </div>
     )

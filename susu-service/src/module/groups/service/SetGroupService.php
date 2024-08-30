@@ -9,14 +9,12 @@ use src\module\groups\factory\GroupLinkFactory;
 use src\module\groups\logic\BindMembersToGroups;
 use src\module\groups\logic\JoinGroup;
 use src\module\groups\logic\SetGroup;
-use src\module\susu\logic\FetchSusu;
 
 class SetGroupService extends Service{
     protected GroupFactory $factory;
     protected GroupLinkFactory $linkFactory;
     protected SetGroup $group;
     protected JoinGroup $join;
-    protected FetchSusu $susu;
     protected BindMembersToGroups $bind;
 
     public function __construct(){
@@ -25,7 +23,6 @@ class SetGroupService extends Service{
         $this->linkFactory = new GroupLinkFactory();
         $this->group = new SetGroup();
         $this->join = new JoinGroup();
-        $this->susu = new FetchSusu();
         $this->bind = new BindMembersToGroups();
     }
     
@@ -33,10 +30,7 @@ class SetGroupService extends Service{
         $idObj = new Id();
         $groupId = $idObj->isValid($id) ? $idObj->set($id) : $idObj->new();
 
-        $collector = $this->susu->activeByGroupId($groupId);
-        $collector->assertItemNotExist('Cannot edit group when susu is active.');
-
-        $groupCollector = $this->factory->map([[
+        $collector = $this->factory->map([[
             'id' => $groupId->toString(),
             'name' => $name,
             'description' => $description,
@@ -45,7 +39,7 @@ class SetGroupService extends Service{
             'creatorId' => $this->user()->id()->toString(),
             'hide' => $hide
         ]]);
-        $group = $groupCollector->first();
+        $group = $collector->first();
 
         $link = $this->linkFactory->mapResult([
             'groupId' => $group->id()->toString(),
@@ -55,9 +49,9 @@ class SetGroupService extends Service{
         $this->group->set($group);
         $this->join->join($link);
 
-        $this->bind->bindRequirements($groupCollector);
+        $this->bind->bindRequirements($collector);
 
-        $this->setOutput($groupCollector);
+        $this->setOutput($collector);
         return $this;
     }
 }

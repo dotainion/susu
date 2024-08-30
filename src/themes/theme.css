@@ -2,6 +2,14 @@ input[type=search]{
     width: 400px;
 }
 
+input:focus, textarea:focus, button:focus, select:focus{
+  border-color: var(--bg-sidebar) !important;
+}
+
+input:not(.shadow-none):focus, textarea:not(.shadow-none):focus, button:not(.shadow-none):focus, select:not(.shadow-none):focus{
+  box-shadow: 0 0 0 0.2rem var(--bg-shadow) !important;
+}
+
 button:not(.btn-dark):not(.btn-primary):not(.btn-secondary):not(.btn-danger):not(.btn-info):not(.btn-light):not(.btn-success):not(.bg-sidebar){
     color: var(--bg-dark);
     background-color: var(--bg-info);
@@ -240,6 +248,10 @@ hr, table tr{
     background-color: var(--bg-sidebar);
 }
 
+.text-sec{
+    color: var(--bg-secondary);
+}
+
 .bg-sec{
     background-color: var(--bg-secondary);
 }
@@ -253,6 +265,14 @@ hr, table tr{
 .alert{
     overflow-wrap: break-word;
     word-wrap: break-word;
+}
+
+.modal.fade.show{
+    display: block !important;
+}
+
+.modal.fade{
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 @media (max-width: 576px) {
@@ -318,5 +338,13 @@ hr, table tr{
         display: block !important;
         border: none !important;
         padding: 3px 0;
+    }
+
+    .invited .w-50{
+        width: 100% !important;
+    }
+
+    .invited .pe-5{
+        padding-right: 0 !important;
     }
 }

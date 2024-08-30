@@ -12,8 +12,8 @@ import { Inviate } from "./Inviate";
 import { Refund } from "./Refund";
 
 export class Api{
-    //baseURL = '/susu-service';
-    baseURL = 'https://www.caribbeancodingacademygrenada.com/susu-service';
+    baseURL = '/susu-service';
+    //baseURL = 'https://www.caribbeancodingacademygrenada.com/susu-service';
 
     constructor(){
         this.axios = axios.create({

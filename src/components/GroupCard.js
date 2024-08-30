@@ -17,7 +17,7 @@ export const GroupCard = ({group}) =>{
 
     const onShare = (group, e) =>{
         e.stopPropagation();
-        utils.share.url(routes.susu().nested().group(group.id));
+        utils.share.url(`${routes.invited()}?groupId=${group.id}`);
     }
 
     const joinGroup = (group, e) =>{

@@ -6,6 +6,7 @@ use src\infrastructure\Id;
 use src\infrastructure\Service;
 use src\module\contribution\logic\ListContribution;
 use src\module\payout\logic\ListPayout;
+use src\module\refund\logic\ListRefund;
 use src\module\schedule\logic\AppendRequirementsToSchedule;
 use src\module\schedule\logic\ListSchedule;
 use src\module\susu\logic\FetchSusu;
@@ -16,6 +17,7 @@ class ListScheduleService extends Service{
     protected ListUsers $user;
     protected ListSchedule $schedule;
     protected ListPayout $payout;
+    protected ListRefund $refund;
     protected ListContribution $contribution;
     protected AppendRequirementsToSchedule $append;
 
@@ -25,6 +27,7 @@ class ListScheduleService extends Service{
         $this->user = new ListUsers();
         $this->schedule = new ListSchedule();
         $this->payout = new ListPayout();
+        $this->refund = new ListRefund();
         $this->contribution = new ListContribution();
         $this->append = new AppendRequirementsToSchedule();
     }
@@ -51,10 +54,12 @@ class ListScheduleService extends Service{
 
         $users = $this->user->usersByIdArray($userIdArray);
         $payouts = $this->payout->bySusuId($susu->id());
+        $refunds = $this->refund->bySusuId($susu->id());
         $contributions = $this->contribution->bySusuId($susu->id());
 
         $this->append->users($collector, $users);
         $this->append->payouts($collector, $payouts, $users);
+        $this->append->refunds($collector, $refunds, $users);
         $this->append->contributions($collector, $contributions, $users);
 
         $this->setOutput($collector);

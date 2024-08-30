@@ -17,12 +17,14 @@ class Schedule implements IObjects{
     protected Id $susuId;
     protected ?Id $memberId=null;
     protected Collector $payouts;
+    protected Collector $refunds;
     protected Collector $contributions;
 
     public function __construct(){
         $this->id = new Id();
         $this->susuId = new Id();
         $this->payouts = new Collector();
+        $this->refunds = new Collector();
         $this->contributions = new Collector();
     }
 
@@ -56,6 +58,10 @@ class Schedule implements IObjects{
 
     public function payouts():Collector{
         return $this->payouts;
+    }
+
+    public function refunds():Collector{
+        return $this->refunds;
     }
 
     public function contributions():Collector{
@@ -95,6 +101,10 @@ class Schedule implements IObjects{
 
     public function setPayouts(Collector $payouts):void{
         $this->payouts = $payouts;
+    }
+
+    public function setRefunds(Collector $refunds):void{
+        $this->refunds = $refunds;
     }
 
     public function setContributions(Collector $contributions):void{

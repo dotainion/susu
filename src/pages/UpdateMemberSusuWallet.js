@@ -11,7 +11,6 @@ import { ParseError } from "../utils/ParseError";
 export const UpdateMemberSusuWallet = () =>{
     const [susu, setSusu] = useState();
     const [memberSchedules, setMemberSchedules] = useState([]);
-    const [selectedSchedules, setSelectedSchedules] = useState();
     const [member, setMember] = useState();
     const [errors, setErrors] = useState();
     const [showCustom, setShowCustom] = useState(false);
@@ -21,24 +20,20 @@ export const UpdateMemberSusuWallet = () =>{
     const [history, setHistory] = useState([]);
     const [price, setPrice] = useState({payments: 0, refunds: 0, payouts: 0});
     const [extimatedTotalPayout, setExtimatedTotalPayout] = useState(0);
+    const [currentDateTime, setCurrentDateTime] = useState();
 
     const params = useParams();
     const navigate = useNavigate();
 
     const contributionRef = useRef();
-
-    const selectContributionSchedule = (schedule) =>{
-        setSelectedSchedules(schedule);
-    }
+    const intervalRef = useRef();
 
     const addContribution = () =>{
         setErrors(null);
-        if(!selectedSchedules) return setErrors('First select a schedule');
         const data = {
             susuId: susu.id, 
             memberId: params.memberId, 
             contribution: susu.attributes.contribution,
-            scheduleId: selectedSchedules.id
         }
         api.contribution.add(data).then((response)=>{
             setContributions((contributs)=>[response.data.data[0], ...contributs]);
@@ -48,7 +43,6 @@ export const UpdateMemberSusuWallet = () =>{
     }
 
     const addCustomContribution = () =>{
-        if(!selectedSchedules) return setErrors('First select a schedule');
         if(parseFloat(contributionRef.current.value || 0) <= 0){
             return setErrors('Contribution cannot be under zero.');
         }
@@ -56,7 +50,6 @@ export const UpdateMemberSusuWallet = () =>{
             susuId: susu.id, 
             memberId: params.memberId, 
             contribution: contributionRef.current.value,
-            scheduleId: selectedSchedules.id
         }
         api.contribution.add(data).then((response)=>{
             setShowCustom(false);
@@ -73,7 +66,16 @@ export const UpdateMemberSusuWallet = () =>{
 
         });
 
+        clearInterval(intervalRef.current);
+        intervalRef.current = setInterval(() => {
+            setCurrentDateTime(utils.date.toLocalDateTime(new Date()));
+        }, 1000);
+
         $(document).on('click', ()=>setShowCustom(false));
+
+        return()=>{
+            clearInterval(intervalRef.current);
+        }
     }, []);
 
     useEffect(()=>{
@@ -171,20 +173,11 @@ export const UpdateMemberSusuWallet = () =>{
                     <div className="d-flex justify-content-center w-100 my-4">
                         <div className="me-3 w-100">
                             <div className="small">Total Payment</div>
-                            <div className="fw-bold">{price.payments.toFixed(2)}</div>
+                            <div className="fw-bold">{(price.payments - price.refunds).toFixed(2)}</div>
                         </div>
                         <div className="w-auto">
-                            <div className="small">Schedule Date</div>
-                            <Dropdown 
-                                className="btn btn-sm btn-light border" 
-                                defaultValue="No schedule date" 
-                                options={memberSchedules.map((sch)=>({
-                                    title: utils.date.toLocalDate(sch.attributes.date),
-                                    onClick: ()=>selectContributionSchedule(sch)
-                                }))}
-                            >
-                                {selectedSchedules ? utils.date.toLocalDate(selectedSchedules.attributes.date) : 'Select a schedule date'}
-                            </Dropdown>
+                            <div className="small">Current Time</div>
+                            <div className="small">{currentDateTime}</div>
                         </div>
                     </div>
                     <div className="d-flex justify-content-center align-items-center position-relative">

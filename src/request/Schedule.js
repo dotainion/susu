@@ -11,4 +11,8 @@ export class Schedule{
     async select(id, memberId){
         return await this.api.get('/select/schedule', {id, memberId});
     }
+
+    async assign(assignSchedules){
+        return await this.api.get('/assign/schedule', {assignSchedules});
+    }
 }

@@ -23,11 +23,6 @@ export const Signin = () =>{
         });
     }
 
-    useEffect(()=>{
-        const params = new URLSearchParams(window.location.href);
-        console.log(params.get('susuId'));
-    }, []);
-
     return(
         <form onSubmit={login} className="d-flex vh-100">
             <div className="d-md-flex d-none align-items-center justify-content-center bg-light w-100">

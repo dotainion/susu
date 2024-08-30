@@ -35,6 +35,7 @@ export const Dashboard = () =>{
                 unSortedPayments = [
                     ...unSortedPayments, 
                     ...schedule.attributes.payouts, 
+                    ...schedule.attributes.refunds, 
                     ...schedule.attributes.contributions
                 ];
             });
@@ -65,10 +66,12 @@ export const Dashboard = () =>{
                     <div className="fs-bold ms-2">{selectGroup?.attributes?.name || 'Select group to see'} :stats</div>
                 </Dropdown>
             </div>
+            <hr></hr>
 
             <SchedulePayoutChart groupId={selectGroup?.id}/>
 
-            <table className="w-100 small table mt-3">
+            <div className="text-secondary mt-3">History</div>
+            <table className="w-100 small table">
                 <thead>
                     <tr className="border-bottom border-dark">
                         <th className="py-2">Member</th>
@@ -83,7 +86,9 @@ export const Dashboard = () =>{
                             <td className="py-2">{history.attributes.user.attributes.firstName} {history.attributes.user.attributes.lastName}</td>
                             <td className="py-2">{utils.date.toLocalDateTime(history.attributes.date)}</td>
                             <td className="py-2">
-                                <span className="border border-success rounded-pill px-3 py-1 small">{history.type === 'contribution' ? 'PAID' : 'PAYOUT'}</span>
+                                {history.type === 'contribution' ? <span className="border border-success rounded-pill px-3 py-1 small">PAID</span> : null}
+                                {history.type === 'refund' ? <span className="border border-success rounded-pill px-3 py-1 small">REFUND</span> : null}
+                                {history.type === 'payout' ? <span className="border border-success rounded-pill px-3 py-1 small">PAYOUT</span> : null}
                             </td>
                             <td className="py-2">${history.attributes.contribution || history.attributes.amount}</td>
                         </tr>
