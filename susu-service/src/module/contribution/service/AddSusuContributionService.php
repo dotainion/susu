@@ -14,7 +14,7 @@ class AddSusuContributionService extends Service{
     protected ContributionFactory $factory;
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
         $this->save = new AddContribution();
         $this->factory = new ContributionFactory();
     }

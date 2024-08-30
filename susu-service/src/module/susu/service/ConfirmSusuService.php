@@ -15,7 +15,7 @@ class ConfirmSusuService extends Service{
     protected FetchSusu $activeSusu;
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
         $this->susu = new SetSusu();
         $this->factory = new SusuFactory();
         $this->activeSusu = new FetchSusu();

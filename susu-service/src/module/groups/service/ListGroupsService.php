@@ -14,7 +14,7 @@ class ListGroupsService extends Service{
     protected ListUsers $users;
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
         $this->groups = new ListGroups();
         $this->bind = new BindMembersToGroups();
     }

@@ -12,7 +12,7 @@ class ListUnSeenMessagesService extends Service{
     protected AppendMessageUsers $users;
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
         $this->messages = new ListMessages();
         $this->users = new AppendMessageUsers();
     }

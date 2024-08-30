@@ -14,7 +14,7 @@ class SelectScheduleService extends Service{
     protected SetSchedule $schedule;
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
         $this->fetch = new FetchSchedule();
         $this->schedule = new SetSchedule();
     }

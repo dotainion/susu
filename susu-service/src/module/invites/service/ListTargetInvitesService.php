@@ -12,7 +12,7 @@ class ListTargetInvitesService extends Service{
     protected AppendGroupToInvites $append;
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
         $this->invites = new ListInvites();
         $this->append = new AppendGroupToInvites();
     }

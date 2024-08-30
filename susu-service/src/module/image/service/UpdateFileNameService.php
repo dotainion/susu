@@ -12,7 +12,7 @@ class UpdateFileNameService extends Service{
     protected SaveImage $save;
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
         $this->file = new FetchImage();
         $this->save = new SaveImage();
     }

@@ -15,7 +15,7 @@ class UploadFileService extends Service{
     protected FetchProduct $product;
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
         $this->path = $_SERVER['DOCUMENT_ROOT'];
         $this->factory = new ImageFactory();
         $this->save = new SaveImage();

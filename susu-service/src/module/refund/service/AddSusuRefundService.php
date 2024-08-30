@@ -14,7 +14,7 @@ class AddSusuRefundService extends Service{
     protected RefundFactory $factory;
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
         $this->save = new AddRefund();
         $this->factory = new RefundFactory();
     }

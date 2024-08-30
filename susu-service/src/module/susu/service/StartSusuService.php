@@ -18,7 +18,7 @@ class StartSusuService extends Service{
     protected FetchSusu $activeSusu;
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
         $this->susu = new SetSusu();
         $this->group = new FetchGroup();
         $this->factory = new SusuFactory();

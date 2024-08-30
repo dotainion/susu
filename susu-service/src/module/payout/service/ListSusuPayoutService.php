@@ -10,7 +10,7 @@ class ListSusuPayoutService extends Service{
     protected ListPayout $contribution;
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
         $this->contribution = new ListPayout();
     }
     

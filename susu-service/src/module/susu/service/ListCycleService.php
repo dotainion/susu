@@ -8,7 +8,7 @@ use src\module\susu\objects\Cycle;
 class ListCycleService extends Service{
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
     }
     
     public function process(){

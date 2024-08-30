@@ -15,7 +15,7 @@ class SetInviteService extends Service{
     protected AppendGroupToInvites $append;
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
         $this->save = new SetInvite();
         $this->factory = new InviteFactory();
         $this->append = new AppendGroupToInvites();

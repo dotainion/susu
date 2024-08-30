@@ -14,7 +14,7 @@ class AddSusuPayoutService extends Service{
     protected PayoutFactory $factory;
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
         $this->save = new AddPayout();
         $this->factory = new PayoutFactory();
     }

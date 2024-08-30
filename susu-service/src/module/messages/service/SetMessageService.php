@@ -15,7 +15,7 @@ class SetMessageService extends Service{
     protected AppendMessageUsers $users;
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
         $this->message = new SetMessage();
         $this->factory = new MessageFactory();
         $this->users = new AppendMessageUsers();

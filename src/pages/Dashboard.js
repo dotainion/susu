@@ -87,8 +87,8 @@ export const Dashboard = () =>{
                             <td className="py-2">{utils.date.toLocalDateTime(history.attributes.date)}</td>
                             <td className="py-2">
                                 {history.type === 'contribution' ? <span className="border border-success rounded-pill px-3 py-1 small">PAID</span> : null}
-                                {history.type === 'refund' ? <span className="border border-success rounded-pill px-3 py-1 small">REFUND</span> : null}
-                                {history.type === 'payout' ? <span className="border border-success rounded-pill px-3 py-1 small">PAYOUT</span> : null}
+                                {history.type === 'refund' ? <span className="border border-danger rounded-pill px-3 py-1 small">REFUND</span> : null}
+                                {history.type === 'payout' ? <span className="border border-primary rounded-pill px-3 py-1 small">PAYOUT</span> : null}
                             </td>
                             <td className="py-2">${history.attributes.contribution || history.attributes.amount}</td>
                         </tr>

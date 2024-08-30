@@ -13,7 +13,7 @@ class UnlinkGroupService extends Service{
     protected GroupLinkFactory $factory;
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
         $this->group = new UnlinkGroup();
         $this->fetch = new FetchGroup();
         $this->factory = new GroupLinkFactory();

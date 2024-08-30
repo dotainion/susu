@@ -1,9 +1,7 @@
 <?php
 namespace src\module\susu\service;
 
-use InvalidArgumentException;
 use src\infrastructure\Assert;
-use src\infrastructure\DateHelper;
 use src\infrastructure\Id;
 use src\infrastructure\Service;
 use src\module\groups\logic\FetchGroup;
@@ -18,7 +16,7 @@ class SetSusuService extends Service{
     protected FetchSusu $activeSusu;
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
         $this->susu = new SetSusu();
         $this->group = new FetchGroup();
         $this->factory = new SusuFactory();

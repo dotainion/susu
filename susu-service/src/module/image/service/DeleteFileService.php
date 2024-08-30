@@ -13,7 +13,7 @@ class DeleteFileService extends Service{
     protected DeleteImages $delete;
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
         $this->delete = new DeleteImages();
         $this->image = new FetchImage();
     }

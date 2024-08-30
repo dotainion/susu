@@ -14,7 +14,7 @@ class UnlinkSusuService extends Service{
     protected SusuLinkFactory $factory;
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
         $this->link = new UnlinkSusu();
         $this->susu = new FetchSusu();
         $this->factory = new SusuLinkFactory();

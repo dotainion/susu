@@ -9,6 +9,7 @@ export const MemberSusuHistory = () =>{
     const [susu, setSusu] = useState();
     const [histories, setHistories] = useState([]);
     const [payouts, setPayouts] = useState([]);
+    const [refunds, setRefunds] = useState([]);
     const [contributions, setContributions] = useState([]);
 
     const params = useParams();
@@ -33,11 +34,16 @@ export const MemberSusuHistory = () =>{
         }).catch((error)=>{
 
         });
+        api.refund.listRefunds(params.susuId, params.memberId).then((response)=>{
+            setRefunds(response.data.data);
+        }).catch((error)=>{
+
+        });
     }, []);
 
     useEffect(()=>{
-        setHistories([...payouts, ...contributions].sort((a, b)=>new Date(a.attributes.date) - new Date(b.attributes.date)));
-    }, [payouts, contributions]);
+        setHistories([...payouts, ...refunds, ...contributions].sort((a, b)=>new Date(a.attributes.date) - new Date(b.attributes.date)));
+    }, [payouts, refunds, contributions]);
 
     return(
         <div className="container">
@@ -58,7 +64,9 @@ export const MemberSusuHistory = () =>{
                                     </div>
                                 </td>
                                 <td className="py-2 small">
-                                    <span className="border border-success rounded-pill px-3 py-1">PAID</span>
+                                    {history.type === 'contribution' ? <span className="border border-success rounded-pill px-3 py-1 small">PAID</span> : null}
+                                    {history.type === 'refund' ? <span className="border border-danger rounded-pill px-3 py-1 small">REFUND</span> : null}
+                                    {history.type === 'payout' ? <span className="border border-primary rounded-pill px-3 py-1 small">PAYOUT</span> : null}
                                 </td>
                             </tr>
                         ))}

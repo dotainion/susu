@@ -22,7 +22,7 @@ class ListScheduleService extends Service{
     protected AppendRequirementsToSchedule $append;
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
         $this->susu = new FetchSusu();
         $this->user = new ListUsers();
         $this->schedule = new ListSchedule();

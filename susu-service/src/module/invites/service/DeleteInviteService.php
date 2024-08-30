@@ -14,7 +14,7 @@ class DeleteInviteService extends Service{
     protected AppendGroupToInvites $append;
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
         $this->invite = new DeleteInvite();
         $this->fetch = new FetchInvite();
         $this->append = new AppendGroupToInvites();

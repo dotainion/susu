@@ -93,7 +93,7 @@ export const ContributionRefund = () =>{
                                     <td className="py-2 small">{utils.date.toLocalDateTime(refund.attributes.date)}</td>
                                     <td className="py-2 d-none d-sm-block small">${refund.attributes.amount}</td>
                                     <td className="py-2 small">
-                                        <span className="border border-success rounded-pill px-3 py-1">REFUNDED</span>
+                                        <span className="border border-danger rounded-pill px-3 py-1">REFUNDED</span>
                                     </td>
                                 </tr>
                             ))}

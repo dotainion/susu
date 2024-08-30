@@ -1,7 +1,6 @@
 <?php
 namespace src\module\susu\service;
 
-use InvalidArgumentException;
 use src\infrastructure\Assert;
 use src\infrastructure\Id;
 use src\infrastructure\Service;
@@ -15,7 +14,7 @@ class JoinSusuService extends Service{
     protected SusuLinkFactory $factory;
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
         $this->link = new SetSusuLink();
         $this->susu = new FetchSusu();
         $this->factory = new SusuLinkFactory();

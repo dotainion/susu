@@ -5,29 +5,7 @@ import { useRef, useState } from "react";
 import { api } from "../request/Api";
 
 export const MessangerSearchGroupOrMember = () =>{
-    const [messangers, setMessangers] = useState([
-        {id: 1},
-        {id: 1},
-        {id: 1},
-        {id: 1},
-        {id: 1},
-        {id: 1},
-        {id: 1},
-        {id: 1},
-        {id: 1},
-        {id: 1},
-        {id: 1},
-        {id: 1},
-        {id: 1},
-        {id: 1},
-        {id: 1},
-        {id: 1},
-        {id: 1},
-        {id: 1},
-        {id: 1},
-        {id: 1},
-        {id: 1},
-    ]);
+    const [messangers, setMessangers] = useState([]);
 
     const navigate = useNavigate();
 

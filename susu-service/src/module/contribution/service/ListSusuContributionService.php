@@ -10,7 +10,7 @@ class ListSusuContributionService extends Service{
     protected ListContribution $contribution;
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
         $this->contribution = new ListContribution();
     }
     

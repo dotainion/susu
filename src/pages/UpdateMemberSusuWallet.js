@@ -208,9 +208,9 @@ export const UpdateMemberSusuWallet = () =>{
                                 <td className="py-2 small">{utils.date.toLocalDateTime(his.attributes.date)}</td>
                                 <td className="py-2 d-none d-sm-block small">${his.attributes?.contribution || his.attributes?.amount}</td>
                                 <td className="py-2 small">
-                                    {his.type === 'contribution' ? <span className="border border-success rounded-pill px-3 py-1">PAID</span> : null}
-                                    {his.type === 'refund' ? <span className="border border-success rounded-pill px-3 py-1">REFUNDED</span> : null}
-                                    {his.type === 'payout' ? <span className="border border-success rounded-pill px-3 py-1">WITHDRAWAL</span> : null}
+                                    {his.type === 'contribution' ? <span className="border border-success rounded-pill px-3 py-1 small">PAID</span> : null}
+                                    {his.type === 'refund' ? <span className="border border-danger rounded-pill px-3 py-1 small">REFUND</span> : null}
+                                    {his.type === 'payout' ? <span className="border border-primary rounded-pill px-3 py-1 small">PAYOUT</span> : null}
                                 </td>
                             </tr>
                         ))}

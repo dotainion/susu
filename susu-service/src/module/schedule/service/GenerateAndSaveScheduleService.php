@@ -18,7 +18,7 @@ class GenerateAndSaveScheduleService extends Service{
     protected SetSchedule $schedule;
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
         $this->susu = new FetchSusu();
         $this->links = new ListSusuLink();
         $this->users = new ListUsers();

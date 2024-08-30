@@ -18,7 +18,7 @@ class SetGroupService extends Service{
     protected BindMembersToGroups $bind;
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
         $this->factory = new GroupFactory();
         $this->linkFactory = new GroupLinkFactory();
         $this->group = new SetGroup();

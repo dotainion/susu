@@ -16,7 +16,7 @@ class ListMessangersService extends Service{
     protected ListMessages $messages;
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
         $this->users = new ListUsers();
         $this->groups = new ListGroups();
         $this->messages = new ListMessages();

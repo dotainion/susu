@@ -10,7 +10,7 @@ class ListPayoutService extends Service{
     protected ListRefund $refund;
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
         $this->refund = new ListRefund();
     }
     

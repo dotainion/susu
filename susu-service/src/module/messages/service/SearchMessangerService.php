@@ -11,7 +11,7 @@ class SearchMessangerService extends Service{
     protected ListGroups $groups;
 
     public function __construct(){
-        parent::__construct(false);
+        parent::__construct();
         $this->users = new ListUsers();
         $this->groups = new ListGroups();
     }
