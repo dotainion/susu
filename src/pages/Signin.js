@@ -24,7 +24,7 @@ export const Signin = () =>{
     }
 
     return(
-        <form onSubmit={login} className="d-flex vh-100">
+        <form onSubmit={login} onKeyUp={()=>setError(null)} className="d-flex vh-100">
             <div className="d-md-flex d-none align-items-center justify-content-center bg-light w-100">
                 <GiCondorEmblem style={{fontSize: '300px'}}/>
             </div>

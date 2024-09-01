@@ -7,7 +7,7 @@ import $ from "jquery";
 import { routes } from "../routes/Routes";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../provider/AuthProvider";
-import { api } from "../request/Api";
+import logo from "../images/logo.png";
 
 export const Sidebar = () =>{
     const { user, signOut } = useAuth();
@@ -128,8 +128,9 @@ export const Sidebar = () =>{
         <div ref={sidebarRef} className={`sidebar ${show ? 'show' : ''}`}>
             <div className="d-flex flex-column flex-shrink-0 overflow-hidden p-3 vh-100">
                 <button className="btn d-flex align-items-center pb-3 mb-3 w-100 shadow-none border-0 border-bottom rounded-0">
-                    <GiCondorEmblem className="me-2 text-white display-5"/>
-                    <span className="fs-5 fw-semibold text-white">Susu App</span>
+                    <GiCondorEmblem className="text-white display-5 d-none"/>
+                    <img className="w-25" src={logo} alt="Susu Application"/>
+                    <span className="fs-5 fw-semibold text-white text-decoration-underline">Susu App</span>
                 </button>
                 <ul className="flex-column list-unstyled mb-auto ps-0 overflow-auto">
                     {categories.map((cat, key)=>(

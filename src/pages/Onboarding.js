@@ -7,6 +7,7 @@ import { FaInstagram } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 import mobileView from "../images/mobile-view.png";
 import tabletView from "../images/tablet-view.png";
+import logo from "../images/logo.png";
 
 export const Onboarding = () =>{
     const { isAuthenticated, user } = useAuth();
@@ -14,11 +15,16 @@ export const Onboarding = () =>{
     const navigate = useNavigate();
     return(
         <div className="w-100" style={{minHeight: '100vh'}}>
-            <div className="container pt-5">
-                <div className="d-flex pt-5">
-                    <div className="w-100">
-                        <h1>Boost your savings:</h1>
-                        <h1>Smarter.</h1>
+            <div className="container pt-sm-5 pt-0">
+                <div className="d-block d-sm-flex pt-sm-5 pt-sm-0">
+                    <div className="w-100 pe-sm-4 pe-0">
+                        <div className="d-block d-sm-flex">
+                            <img src={logo} style={{height: '100px'}} alt="Susu Application"/>
+                            <div>
+                                <h1>Boost your savings:</h1>
+                                <h1>Smarter.</h1>
+                            </div>
+                        </div>
                         <p>Jon the community of users who are revolutionizing their financial habits</p>
                         <ul>
                             <li>Flexible Saving Plans</li>
@@ -34,7 +40,7 @@ export const Onboarding = () =>{
                             {/* the button is hidden untill and dropdown is use until download is available */}
                         </ul>
                     </div>
-                    <div className="w-100">
+                    <div className="w-100 mt-5 mt-sm-0 pt-5 pt-sm-0">
                         <div className="d-flex justify-content-end">
                             {
                                 isAuthenticated
@@ -43,7 +49,7 @@ export const Onboarding = () =>{
                             }
                             <button onClick={()=>navigate(routes.register())} className="btn btn-sm btn-primary ms-3">Sign up</button>
                         </div>
-                        <img className="w-50" src={mobileView} alt=""/>
+                        <img className="w-50 w-sm-100" src={mobileView} alt=""/>
                     </div>
                 </div>
                 <div className="my-5">

@@ -347,4 +347,8 @@ hr, table tr{
     .invited .pe-5{
         padding-right: 0 !important;
     }
+
+    .w-sm-100{
+        width: 100% !important;
+    }
 }
