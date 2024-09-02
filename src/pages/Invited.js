@@ -122,7 +122,7 @@ export const Invited = () =>{
                 </div>
                 <img className="w-50" src={mobileView} alt=""/>
             </div>
-            <ModalOverlay show={showLogin} title={'Account confirmation'} onClose={()=>setShowLogin(false)}>
+            <ModalOverlay show={showLogin} centered title={'Account confirmation'} onClose={()=>setShowLogin(false)}>
                 {error ? <div className="alert alert-danger border-0 py-1">{error}</div> : null}
                 <small>Email</small>
                 <input ref={emailRef} className="form-control mb-2" placeholder="example@example.com" type="email"/>
@@ -132,7 +132,7 @@ export const Invited = () =>{
                     <button onClick={login} className="btn btn-sm btn-primary">Confirm Access</button>
                 </div>
             </ModalOverlay>
-            <ModalOverlay show={showRegister} title={'Account confirmation: Register'} onClose={()=>setShowRegister(false)}>
+            <ModalOverlay show={showRegister} centered title={'Account confirmation: Register'} onClose={()=>setShowRegister(false)}>
                 <form onSubmit={register}>
                     {error ? <div className="alert alert-danger border-0 py-1">{error}</div> : null}
                     <small>First Name</small>
@@ -153,6 +153,7 @@ export const Invited = () =>{
                 title={'Account confirmation'} 
                 noHeader
                 backdropOff
+                centered
                 footer={[
                     {title: 'Okay', color: 'primary', onClick: ()=>{
                         setShowConfirm(false);

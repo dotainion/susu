@@ -76,7 +76,7 @@ class ListMessangersService extends Service{
 
             $msgCollector = new Collector();
             foreach($messages->list() as $message){
-                if($user->id()->toString() === $message->toId()->toString()){
+                if($user->id()->toString() === $message->fromId()->toString()){
                     $msgCollector->add($message);
                 }
             }

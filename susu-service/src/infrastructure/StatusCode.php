@@ -56,9 +56,9 @@ class StatusCode{
 
         $sapi_type = php_sapi_name();
         if (substr($sapi_type, 0, 3) == 'cgi'){
-            header("Status: 404 Not Found");
+            header('Status: '.$this->code().' Not Found');
         }else{
-            header("HTTP/1.1 404 Not Found");
+            header('HTTP/1.1 '.$this->code().' Not Found');
         }
     }
 
@@ -93,7 +93,7 @@ class StatusCode{
             $this->setCode($this->OK);
             $callBack();
         }catch(NoResultsException $ex){
-            $this->setCode($this->NO_RESULTS);
+            $this->setCode($this->NOT_FOUND/*$this->NO_RESULTS*/);
             $this->setMessage($ex->getMessage());
         }catch (NotAuthenticatedException $ex){
             $this->setCode($this->UNAUTHORIZED);

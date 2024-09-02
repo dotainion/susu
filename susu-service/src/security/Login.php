@@ -2,6 +2,7 @@
 namespace src\security;
 
 use src\infrastructure\Collector;
+use src\infrastructure\DateHelper;
 use src\infrastructure\exeptions\NotAuthenticatedException;
 use src\infrastructure\Id;
 use src\infrastructure\IIdentifier;
@@ -33,6 +34,12 @@ class Login{
         return $collector;
     }
 
+    public function byToken(Token $token):Collector{
+        return $this->repo->listSecurity([
+            'token' => $token->toString()
+        ]);
+    }
+
     public function googleLogin(string $foreignId):Collector{
         $collector = $this->repo->listSecurity([
             'foreignId' => $foreignId
@@ -44,6 +51,8 @@ class Login{
     }
 
     public function updateToken(Id $id, Token $token):void{
-        $this->repo->updateToken($id, $token);
+        $expire = new DateHelper();
+        $expire->new()->addMinutes(30);
+        $this->repo->updateToken($id, $token, $expire);
     }
 }

@@ -17,7 +17,7 @@ class SecurityFactory extends Collector{
     public function mapResult($record):ICredential{
         $security = new Security();
         $security->setId($this->uuid($record['id']));
-        //$security->setExpire($record['expire']);
+        $security->setExpire($record['expire']);
         if(isset($record['password'])){
             $security->setPassword($record['password']);
         }

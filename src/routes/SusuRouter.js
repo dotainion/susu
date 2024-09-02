@@ -10,7 +10,6 @@ import { Member } from "../pages/Member";
 import { routes } from "../routes/Routes";
 import { ViewGroup } from "../pages/ViewGroup";
 import { useAuth } from "../provider/AuthProvider";
-import { Welcome } from "../pages/Welcome";
 import { GroupSusuWallet } from "../pages/GroupSusuWallet";
 import { UpdateMemberSusuWallet } from "../pages/UpdateMemberSusuWallet";
 import { Schedule } from "../pages/Schedule";
@@ -26,6 +25,7 @@ import { GroupMembersInvite } from "../pages/GroupMembersInvite";
 import { SusuMembersInvite } from "../pages/SusuMembersInvite";
 import { ContributionRefund } from "../pages/ContributionRefund";
 import { AssignSchedule } from "../pages/AssignSchedule";
+import { Home } from "../pages/Home";
 
 export const SusuRouter = () =>{
   const { isAuthenticated } = useAuth();
@@ -58,7 +58,8 @@ export const SusuRouter = () =>{
         <Route path={routes.susu().susuInvites()} element={<SusuMembersInvite/>} />
         <Route path={routes.susu().refund()} element={<ContributionRefund/>} />
         <Route path={routes.susu().assignSchedule()} element={<AssignSchedule/>} />
-        <Route path={'*'} element={<Welcome/>} />
+        <Route path={routes.susu().home()} element={<Home/>} />
+        <Route path={'*'} element={<Navigate to={routes.susu().home()}/>} />
       </Routes>
     </Layout>
   )

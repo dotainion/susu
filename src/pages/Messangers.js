@@ -48,7 +48,7 @@ export const Messangers = () =>{
                                 </div>
                                 <div className="d-flex w-100">
                                     <div className="small text-truncate w-100">{messanger.attributes.latestMessage}</div>
-                                    <div className="badge bg-success">{messanger.attributes.quantity}</div>
+                                    {parseInt(messanger.attributes.quantity) ? <div className="badge bg-success">{messanger.attributes.quantity}</div> : null}
                                 </div>
                             </div>
                         </button>

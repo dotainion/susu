@@ -45,15 +45,15 @@ export const Member = () => {
                 </div>
                 <div>
                     <div className="fs-3">{member?.attributes?.firstName} {member?.attributes?.lastName}</div>
-                    <div className="my-2">Groups <b>45</b></div>
+                    <div className="my-2">Groups <b>{groups.length}</b></div>
                     <div className="my-2">{member?.attributes?.email}</div>
                     <div className="my-2">{member?.attributes?.phoneNumber}</div>
                 </div>
             </div>
             <div className="d-flex justify-content-center w-100 my-5">
                 <AiOutlineFileProtect className="display-1 text-dark"/>
-                <div className="ms-2">
-                    <div>This account is protected</div>
+                <div className="ms-2 text-nowrap">
+                    <div>This account is public</div>
                     <div className="mt-2">Member ID</div>
                     <div onClick={(e)=>utils.copy.toClipboard($(e.currentTarget).find('div').first())} className="d-flex align-items-center form-control bg-white position-relative pointer">
                         <div className="w-100">{member?.id}</div>

@@ -29,7 +29,6 @@ class User implements IObjects, IUser{
         $this->id = new Id();
         $this->token = new Token();
         $this->email = new Email();
-        $this->date = new DateHelper();
     }
 
     public function id():IId{
@@ -40,11 +39,8 @@ class User implements IObjects, IUser{
         return $this->foreignId;
     }
     
-    public function date():?string{
-        if($this->date === null){
-            return null;
-        }
-        return $this->date->toString();
+    public function date():?DateHelper{
+        return $this->date;
     }
     
     public function firstName():string{
@@ -123,7 +119,7 @@ class User implements IObjects, IUser{
     }
 
     public function setDate(string $date):void{
-        $this->date->set($date);
+        $this->date = new DateHelper($date);
     }
     
     public function setFirstName(string $firstName):void{

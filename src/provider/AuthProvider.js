@@ -1,7 +1,11 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 import { api } from "../request/Api";
 import { token } from "../utils/Token";
 import { Notifications } from "../components/Notifications";
+import { ModalOverlay } from "../container/ModalOverlay";
+import $ from "jquery";
+import { routes } from "../routes/Routes";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Context = createContext();
 export const useAuth = () => useContext(Context);
@@ -11,9 +15,15 @@ export const AuthProvider = ({children}) =>{
     const [user, setUser] = useState();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const alertIdRef = useRef('login-notification');
+
     const signIn = (email, password, callback) =>{
         api.auth.signIn(email, password).then((response)=>{
             token.set(response.data.data[0].attributes.token);
+            api.reInitializeAuthorizationHeader();
             setUser(response.data.data[0]);
             setIsAuthenticated(true);
             callback({success: response});
@@ -35,6 +45,13 @@ export const AuthProvider = ({children}) =>{
             setIsAuthenticated(false);
         });
     }
+
+    useEffect(()=>{
+        const path = window.location.hash.replace('#', '');
+        if([routes.signIn(), routes.register(), routes.onboarding()].includes(path) || path.includes('test')){
+            $(`#${alertIdRef.current}`).hide('fast');
+        }
+    }, [location]);
 
     useEffect(()=>{
         api.auth.session().then((response)=>{
@@ -59,6 +76,17 @@ export const AuthProvider = ({children}) =>{
         <Context.Provider value={value}>
             {loading ? null : children}
             {isAuthenticated ? <Notifications/> : null}
+            <div id="login-notification" style={{display: 'none'}}>
+                <ModalOverlay show centered noHeader>
+                    <div className="d-flex align-items-center w-100">
+                        <div className="w-100">You are no longer logged in.</div>
+                        <button onClick={()=>{
+                            $(`#${alertIdRef.current}`).hide('fast');
+                            navigate(routes.signIn());
+                        }} className="btn btn-sm btn-primary">Okay</button>
+                    </div>
+                </ModalOverlay>
+            </div>
         </Context.Provider>
     )
 }

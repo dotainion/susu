@@ -1,6 +1,8 @@
 <?php
 namespace src\infrastructure;
 
+use InvalidArgumentException;
+
 class Env{
     protected array $messages = [];
 
@@ -53,6 +55,21 @@ class Env{
 
     public static function uri():string{
         return $_SERVER['REQUEST_URI'];
+    }
+
+    public static function headers($key=null){
+        $headers = getallheaders();
+        if($key === null){
+            return $headers;
+        }
+        if(!isset($headers[$key])){
+            throw new InvalidArgumentException('"'.$key.'" not in headers.');
+        }
+        return $headers[$key];
+    }
+
+    public static function authorizationHeader():?string{
+        return self::headers('Authorization');
     }
 
     public static function server():string{

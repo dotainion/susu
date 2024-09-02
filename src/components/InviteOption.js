@@ -24,7 +24,7 @@ export const InviteOption = ({show, onClose, urlParams, onMemberShare}) =>{
     }, [urlParams]);
 
     return(
-        <ModalOverlay show={show} onClose={onClose} title={'Share Your Experience'}>
+        <ModalOverlay show={show} onClose={onClose} centered title={'Share Your Experience'}>
             <div>Share with app members</div>
             <button onClick={onMemberShare} className="btn btn-sm btn-primary d-flex align-items-center">
                 <FaRegShareSquare/>

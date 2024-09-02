@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 
-export const ModalOverlay = ({show, onClose, title, footer, noHeader, backdropOff, children}) =>{
+export const ModalOverlay = ({show, onClose, title, footer, noHeader, backdropOff, centered, children}) =>{
 
     if(!show) return null;
 
     return(
         <div className="modal fade show" onClick={!backdropOff && onClose}>
-            <div className="modal-dialog modal-dialog-centered">
+            <div className={`modal-dialog ${centered ? 'modal-dialog-centered' : ''}`}>
                 <div className="modal-content border-0" onClick={e=>e.stopPropagation()}>
                     {
                         !noHeader && 

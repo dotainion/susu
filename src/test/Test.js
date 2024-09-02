@@ -14,6 +14,7 @@ import { ModalOverlay } from "../container/ModalOverlay";
 import { InviteOption } from "../components/InviteOption";
 import { Invited } from "../pages/Invited";
 import { AssignSchedule } from "../pages/AssignSchedule";
+import { Home } from "../pages/Home";
 
 export const Test = () =>{
 
@@ -31,7 +32,7 @@ export const Test = () =>{
 
     return(
         <div className="container">
-            <AssignSchedule/>
+            <Home/>
         </div>
     )
 }

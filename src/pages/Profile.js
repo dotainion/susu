@@ -27,6 +27,8 @@ export const Profile = () =>{
 
     
     const update = () =>{
+        updateProfile();
+        upateAddress();
     }
 
     const updateProfile = () =>{
@@ -50,7 +52,7 @@ export const Profile = () =>{
     const upateAddress = () =>{
         setError(null);
         const data = {
-            id: address.id,
+            id: address?.id || user.id,//the address id is the same as the user id, this is the link
             country: countryRef.current.value,
             state: stateRef.current.value,
             address: addressRef.current.value,
@@ -92,6 +94,7 @@ export const Profile = () =>{
         countryRef.current.value = address.attributes.country;
         stateRef.current.value = address.attributes.state;
         addressRef.current.value = address.attributes.address;
+        aptRef.current.value = address.attributes.apt;
     }, [address]);
 
     return(
@@ -174,7 +177,7 @@ export const Profile = () =>{
                 <div className="py-3 px-2 m-auto" style={{maxWidth: '500px'}}>
                     <div>Member ID</div>
                     <div onClick={(e)=>utils.copy.toClipboard($(e.currentTarget).find('div').first())} className="d-flex align-items-center form-control bg-white position-relative pointer">
-                        <div className="w-100">{user?.id}</div>
+                        <div className="w-100 text-nowrap">{user?.id}</div>
                         <button className="btn bg-transparent shadow-none border-0 p-0"><FaRegCopy className="fs-5"/></button>
                     </div>
                     <div className="small">The Member ID serves as a unique identifier assigned to each member within the SUSU app. You can use this ID to easily locate and add members to your savings and credit groups. Simply paste or enter the Member ID into the search field to find specific members.</div>

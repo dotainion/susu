@@ -2,6 +2,8 @@
 namespace src\security;
 
 use src\infrastructure\ApiRequest;
+use src\infrastructure\DateHelper;
+use src\infrastructure\Env;
 use src\infrastructure\exeptions\NotAuthenticatedException;
 use src\infrastructure\ICredential;
 use src\infrastructure\IIdentifier;
@@ -14,10 +16,12 @@ class SecurityManager{
     use PasswordTrait;
 
     protected string $SESSION_KEY = 'session-key';
+    protected Env $env;
     protected Login $login;
     protected Logout $logout;
 
     public function __construct(){
+        $this->env = new Env();
         $this->login = new Login();
         $this->logout = new Logout();
     }
@@ -62,6 +66,26 @@ class SecurityManager{
         return (array_key_exists($this->SESSION_KEY, $_SESSION) && unserialize($_SESSION[$this->SESSION_KEY]) !== false);
     }
 
+    public function hasValidAccessToken():bool{
+        $token = new Token();
+        $authorizationToken = $this->env->authorizationHeader();
+        if(!$token->stringIsValid($authorizationToken)){
+            return false;
+        }
+        $token->set($authorizationToken);
+        $collector = $this->login->byToken($token);
+        if(!$collector->hasItem()){
+            return false;
+        }
+        $security = $collector->first();
+        if(!$security->expire() || (new DateHelper())->new()->expired($security->expire()->toString())){
+            return false;
+        }
+        $this->startSession($security);
+        $this->login->updateToken($security->user()->id(), $token);
+        return true;
+    }
+
     public function user():IUser{
         $this->assertUserAccess();
         return $this->session()->user();
@@ -76,6 +100,9 @@ class SecurityManager{
     }
 
     public function isLoggedIn():bool{
+        if($this->hasValidAccessToken()){
+            return true;
+        }
         $session = $this->session();
         if(!$session instanceof ICredential || !$session->token()){
             throw new NotAuthenticatedException('You are not logged in.');
@@ -84,10 +111,10 @@ class SecurityManager{
     }
 
     public function assertUserAccess():bool{
-        if($this->isLoggedIn()){
-            return true;
+        if(!$this->isLoggedIn()){
+            throw new NotAuthenticatedException('You are not logged in.');
         }
-        throw new NotAuthenticatedException('You are not logged in.');
+        return true;
     }
 
     public function startSession(ICredential $user){

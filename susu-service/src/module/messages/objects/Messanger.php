@@ -6,16 +6,15 @@ use src\infrastructure\DateHelper;
 use src\infrastructure\Id;
 use src\infrastructure\IId;
 use src\infrastructure\IObjects;
-use src\module\groups\objects\Group;
-use src\module\user\objects\User;
+use src\security\SecurityManager;
 
 class Messanger implements IObjects{
     protected Id $id;
     protected Collector $messages;
-    protected User|Group $user;
-    protected DateHelper $latestDate;
-    protected string $latestMessage;
-    protected string $quantity;
+    protected IObjects $user;
+    protected ?DateHelper $latestDate = null;
+    protected string $latestMessage = '';
+    protected string $quantity = '';
 
     public function __construct(){
         $this->id = new Id();
@@ -29,7 +28,7 @@ class Messanger implements IObjects{
         return $this->messages;
     }
 
-    public function latestDate():DateHelper{
+    public function latestDate():?DateHelper{
         return $this->latestDate;
     }
 
@@ -41,20 +40,25 @@ class Messanger implements IObjects{
         return $this->quantity;
     }
 
-    public function user():User|Group{
+    public function user():IObjects{
         return $this->user;
     }
 
     public function setMessages(Collector $messages):void{
-        $unSeenMsgs = array_map(fn($msg)=>!$msg->read(), $messages->list());
-        $msg = $messages->first();
+        $manager = new SecurityManager();
+        $recipMessages = array_filter($messages->list(), fn($msg)=>!$msg->toId()->toString() === $manager->user()->id()->toString());
+        $unSeenMsgs = array_filter($recipMessages, fn($msg)=>!$msg->read());
         $this->messages = $messages;
+        if(!$messages->hasItem()){
+            return;
+        }
+        $msg = $messages->first();
         $this->quantity = (count($unSeenMsgs) >= 100) ? '99+' : ((string)count($unSeenMsgs));
         $this->latestMessage = $msg->message();
         $this->latestDate = $msg->date();
     }
 
-    public function setUser(User|Group $user):void{
+    public function setUser(IObjects $user):void{
         $this->user = $user;
         $this->id->set($user->id()->toString());
     }

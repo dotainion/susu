@@ -3,6 +3,7 @@ namespace src\security;
 
 use src\database\Repository;
 use src\infrastructure\Collector;
+use src\infrastructure\DateHelper;
 use src\infrastructure\Id;
 use src\infrastructure\Token;
 
@@ -14,9 +15,10 @@ class SecurityRepository extends Repository{
         $this->factory = new SecurityFactory();
     }
     
-    public function updateToken(Id $id, Token $token):void{
+    public function updateToken(Id $id, Token $token, DateHelper $expire):void{
         $this->update('credential')
-            ->set('token', $token->toString());
+            ->set('token', $token->toString())
+            ->set('expire', $expire->toString());
         $this->where('id', $this->uuid($id));
         $this->execute();
     }

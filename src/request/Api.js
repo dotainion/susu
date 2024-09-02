@@ -10,12 +10,14 @@ import { Messages } from "./Messages";
 import { Payout } from "./Payout";
 import { Inviate } from "./Inviate";
 import { Refund } from "./Refund";
+import { routes } from "../routes/Routes";
+import $ from "jquery";
 
 export class Api{
-    baseURL = '/susu-service';
-    //baseURL = 'https://www.caribbeancodingacademygrenada.com/susu-service';
+    baseURL;
 
     constructor(){
+        this.initialize();
         this.axios = axios.create({
             baseURL: this.baseURL,
             headers: {
@@ -36,12 +38,55 @@ export class Api{
         this.invite = new Inviate(this);
     }
 
+    initialize(){
+        if(process.env.NODE_ENV === 'development'){
+            this.baseURL = 'https://www.caribbeancodingacademygrenada.com/susu-service'
+        }else if(process.env.NODE_ENV === 'production'){
+            this.baseURL = '/susu-service';
+        }else{
+            console.error('Environment not determined.');
+        }
+    }
+
+    reInitializeAuthorizationHeader(){
+        this.axios.defaults.headers.Authorization = token.get();
+    }
+
+    isAuthRoute(){
+        if(
+            window.location.href.includes(routes.signIn()) || 
+            window.location.href.includes(routes.register()) || 
+            window.location.href.includes(routes.onboarding())
+        ){
+            return true;
+        }
+        return false;
+    }
+
+    parseError(error){
+        const notification = $('#login-notification');
+        if(error.status === 401 && !this.isAuthRoute()){
+            notification.show('fast');
+        }else{
+            notification.hide();
+        }
+        return error;
+    }
+
     async post(route, data){
-        return await this.axios.post(route, data);
+        try{
+            return await this.axios.post(route, data);
+        }catch(error){
+            return this.parseError(error);
+        }
     }
 
     async get(route, data){
-        return await this.axios.post(route, data);
+        try{
+            return await this.axios.post(route, data);
+        }catch(error){
+            return this.parseError(error);
+        }
     }
 }
 

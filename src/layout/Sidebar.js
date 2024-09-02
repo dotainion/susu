@@ -8,92 +8,28 @@ import { routes } from "../routes/Routes";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../provider/AuthProvider";
 import logo from "../images/logo.png";
+import { useSidebar } from "./SidebarProvider";
+import { utils } from "../utils/Utils";
 
 export const Sidebar = () =>{
     const { user, signOut } = useAuth();
+    const { categories } = useSidebar();
 
     const [show, setShow] = useState(false);
-
-    const categories = [
-        {
-            category: 'Dashboard and Overview',
-            menus: [
-                {title: 'Dashboard', onClick: ()=>navigate(routes.susu().dashboard())},
-                {title: 'Contribution Summary', disabled: true},
-                {title: 'Rotation Schedule Overview', disabled: true},
-                {title: 'Group Management', disabled: true},
-            ],
-        },{
-            category: 'Groups',
-            menus: [
-                {title: 'Create Group', onClick: ()=>navigate(routes.susu().newGroup())},
-                {title: 'Group List', onClick: ()=>navigate(routes.susu().groupList())},
-                {title: 'Member List', onClick: ()=>navigate(routes.susu().memberList())},
-                {title: 'My Groups', onClick: ()=>navigate(routes.susu().associateGroups())},
-                {title: 'Contribution History', disabled: true},
-                //{title: 'User Profile and Settings', disabled: true},
-            ],
-        },{
-            category: 'Profile',
-            menus: [
-                {title: 'Account', onClick: ()=>navigate(routes.susu().profile())},
-                {title: 'Account Settings', disabled: true},
-                {title: 'Privacy Settings', disabled: true},
-                {title: 'Notification Preferences', disabled: true},
-                {title: 'Financial Management', disabled: true},
-            ],
-        },{
-            category: 'Contribution Management',
-            menus: [
-                //need to navigate to a page that may have a list of groups and you choose to then navigate to see a list of contibutions
-                // the others may fallow that same structure.
-                {title: 'Make Contributions', disabled: true},
-                {title: 'View Contributions', disabled: true},
-                {title: 'Financial Reports', disabled: true},
-                {title: 'Group Financial Summary', disabled: true},
-                {title: 'Member Contribution History', disabled: true},
-                {title: 'Communication and Interaction', disabled: true},
-            ],
-        },{
-            category: 'Messaging/Chat',
-            menus: [
-                {title: 'Chats', onClick: ()=>navigate(routes.susu().messangers())},
-                {title: 'Notifications', disabled: true},
-                {title: 'Community Forum', disabled: true},
-                {title: 'Support and Help', disabled: true},
-            ],
-        },{
-            category: 'Help/Support',
-            menus: [
-                {title: 'FAQ', disabled: true},
-                {title: 'Contact Support', disabled: true},
-                {title: 'Information and Management', disabled: true},
-            ],
-        },{
-            devider: true
-        },{
-            category: 'Onboarding',
-            menus: [
-                {title: 'App Settings', disabled: true},
-                {title: 'Legal/Compliance', disabled: true},
-                {title: 'Logout/Exit', onClick: ()=>signOut()},
-            ]
-        },{
-            category: 'Setting',
-            menus: [
-                {title: 'Appearance', disabled: true},
-            ]
-        }
-    ];
 
     const navigate = useNavigate();
 
     const sidebarRef = useRef();
+    const backdropRef = useRef();
 
     let isDragging = false;
     let startX, initialPosition;
 
     useEffect(()=>{
+        $(backdropRef.current).on('click', ()=>{
+            if(isDragging) return;
+            setShow(false);
+        });
         $(sidebarRef.current).on('touchstart mousedown', function(e) {
             if(window.innerWidth > 576) return;
             isDragging = true;
@@ -126,8 +62,11 @@ export const Sidebar = () =>{
             <button onClick={()=>setShow(!show)} className="btn bg-transparent shadow-none border-0 p-2"><MdMenu className="fs-1"/></button>
         </div>
         <div ref={sidebarRef} className={`sidebar ${show ? 'show' : ''}`}>
-            <div className="d-flex flex-column flex-shrink-0 overflow-hidden p-3 vh-100">
-                <button className="btn d-flex align-items-center pb-3 mb-3 w-100 shadow-none border-0 border-bottom rounded-0">
+            <div onClick={(e)=>e.stopPropagation()} className="d-flex flex-column flex-shrink-0 overflow-hidden p-3 vh-100">
+                <button onClick={()=>{
+                    setShow(false);
+                    navigate(routes.susu().home());
+                }} className="btn d-flex align-items-center mb-3 px-0 shadow-none border-0 border-bottom rounded-0">
                     <GiCondorEmblem className="text-white display-5 d-none"/>
                     <img className="w-25" src={logo} alt="Susu Application"/>
                     <span className="fs-5 fw-semibold text-white text-decoration-underline">Susu App</span>
@@ -137,7 +76,7 @@ export const Sidebar = () =>{
                         <li className={`${cat?.devider ? 'border-top my-3' : 'mb-1'}`} key={key}>
                             {!cat?.devider?
                                 <>
-                                <button className="btn btn-toggle align-items-center rounded collapsed shadow-none ps-1" data-bs-toggle="collapse" data-bs-target={`#collapse-sidebar-menu-id${key}`} aria-expanded="false">
+                                <button className="btn btn-toggle align-items-center rounded collapsed shadow-none ps-1" data-bs-toggle="collapse" data-bs-target={`#collapse-sidebar-menu-id${key}`} aria-expanded="false" id={utils.element.nameToId(cat.category, true)}>
                                     <PiCaretDownLight className="caret-down"/>
                                     <PiCaretRightLight className="caret-right"/>
                                     {cat.category}
@@ -152,6 +91,7 @@ export const Sidebar = () =>{
                                                         setShow(false);
                                                     }} className={`btn btn-sm text-start ${menu?.disabled ? 'text-secondary border-0' : ''}`} 
                                                     disabled={menu?.disabled}
+                                                    id={utils.element.nameToId(menu.title, true)}
                                                 >{menu.title}</button>
                                             </li>
                                         ))}
@@ -177,7 +117,7 @@ export const Sidebar = () =>{
                     </ul>
                 </div>
             </div>
-            <div className="sidebar-backdrop w-100 vh-100 d-block d-sm-none"></div>
+            <div ref={backdropRef} className="sidebar-backdrop w-100 vh-100 d-block d-sm-none"></div>
         </div>
         </>
     )

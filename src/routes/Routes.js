@@ -23,6 +23,7 @@ class Susu{
     susuInvites = (susuId = ':susuId') => this._nested + 'susu/invites/' + susuId;
     refund = (susuId = ':susuId', memberId = ':memberId') => this._nested + 'susu/refund/' + susuId + '/member/' + memberId;
     assignSchedule = (groupId = ':groupId') => this._nested + 'assign/schedule/' + groupId;
+    home = () => this._nested + 'home/grid';
     nested = () => {
         this._nested = this.default().replace('*', '');
         return this;

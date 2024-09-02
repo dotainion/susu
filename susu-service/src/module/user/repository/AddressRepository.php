@@ -3,15 +3,15 @@ namespace src\module\user\repository;
 
 use src\database\Repository;
 use src\infrastructure\Collector;
-use src\module\user\factory\UserFactory;
+use src\module\user\factory\AddressFactory;
 use src\module\user\objects\Address;
 
 class AddressRepository extends Repository{
-    protected UserFactory $factory;
+    protected AddressFactory $factory;
 
     public function __construct(){
         parent::__construct();
-        $this->factory = new UserFactory();
+        $this->factory = new AddressFactory();
     }
     
     public function create(Address $address):void{
