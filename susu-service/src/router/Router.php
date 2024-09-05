@@ -2,6 +2,7 @@
 namespace src\router;
 
 use InvalidArgumentException;
+use src\database\Repository;
 use src\infrastructure\Https;
 use src\module\communities\action\FetchCommunityAction;
 use src\module\communities\action\JoinCommunityAction;
@@ -84,24 +85,12 @@ class Router{
         });*/
 
         $this->request->route('/test', function ($req){
-            $scriptPath = __DIR__.'/../../websocket-server.php';
-            $command = "php $scriptPath > /tmp/websocket-server.log 2>&1 &";
-
-            if (!file_exists($scriptPath)) {
-                throw new InvalidArgumentException('Path not exist.');
-            }
-
-            $output = [];
-            $return_var = 0;
-            exec($command, $output, $return_var);
-
-            var_dump($output);
-            var_dump("Return status: " . $return_var);
-            foreach ($output as $line) {
-                echo htmlspecialchars($line) . "<br>";
-            }
-
-            echo "WebSocket server started.";
+            $query = new Repository();
+            //$query->query('ALTER TABLE `group` RENAME TO `community`;');
+            //$query->query('ALTER TABLE `groupLink` RENAME TO `communityLink`;');
+            //$query->query('ALTER TABLE communityLink CHANGE COLUMN `groupId` `communityId` INT');
+            //$query->query('ALTER TABLE susu CHANGE COLUMN `groupId` `communityId` INT');
+            var_dump('None...');
         });
 
         $this->request->route('/signin', function ($req){

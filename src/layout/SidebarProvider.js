@@ -56,7 +56,7 @@ export const SidebarProvider = ({children}) =>{
         title: 'Communities',
         description: 'Manage and participate in your communities. View community activities, access shared resources, and collaborate with members.',
         list: [
-            {title: 'Create Community', onClick: ()=>navigate(routes.susu().newCommunities()), icon: LuGroup},
+            {title: 'Create Community', onClick: ()=>navigate(routes.susu().newCommunity()), icon: LuGroup},
             {title: 'Communities', onClick: ()=>navigate(routes.susu().communities()), icon: FaLayerGroup},
             {title: 'My Communities', onClick: ()=>navigate(routes.susu().associateCommunities()), icon: FaObjectUngroup},
             {title: 'Contribution History', disabled: true, icon: GiTakeMyMoney},

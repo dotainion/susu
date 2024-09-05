@@ -4,8 +4,8 @@ import { routes } from "../routes/Routes";
 import { useEffect, useState } from "react";
 import { api } from "../request/Api";
 import { useAuth } from "../provider/AuthProvider";
-import { SearchCommunitiesOrMembersToMessageOverlay } from "../components/SearchCommunitiesOrMembersToMessageOverlay";
 import { BiSolidMessageRoundedAdd } from "react-icons/bi";
+import { SearchCommunitiesOrMembersToMessageOverlay } from "../components/SearchCommunitiesOrMembersToMessageOverlay";
 
 export const Messangers = () =>{
     const { user } = useAuth();
@@ -56,7 +56,7 @@ export const Messangers = () =>{
                     null
                 }
             </div>
-            <SearchCommunitiesOrMembersToMessageOverlay 
+            <SearchCommunitiesOrMembersToMessageOverlay
                 isOpen={isSearchMsgOpen} 
                 onClose={()=>setIsSearchMsgOpen(false)}
             />
