@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Bar, BarChart } from 'recharts';
-import { api } from '../request/Api';
+import React, { useEffect, useRef, useState } from "react";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Bar, BarChart } from "recharts";
+import { api } from "../request/Api";
 
 let colorIndex = 0;
 const colors = [
@@ -25,7 +25,7 @@ const colors = [
     '#A397D1',
 ]
 
-export const SchedulePayoutChart = ({groupId}) => {
+export const SchedulePayoutChart = ({communityId}) => {
     const [lines, setLines] = useState([]);
     const [employees, setEmployees] = useState([]);
     const [payments, setPayments] = useState({contributions: 0, payouts: 0, refunds: 0});
@@ -77,8 +77,8 @@ export const SchedulePayoutChart = ({groupId}) => {
     }
 
     useEffect(()=>{
-        if(!groupId) return;
-        api.schedule.list(groupId).then((response)=>{
+        if(!communityId) return;
+        api.schedule.list(communityId).then((response)=>{
             let pay = {contributions: 0, payouts: 0, refunds: 0};
             response.data.data.forEach((p)=>p.attributes.contributions.forEach((r)=>pay.contributions += parseFloat(r.attributes.contribution)));
             response.data.data.forEach((p)=>p.attributes.payouts.forEach((r)=>pay.payouts += parseFloat(r.attributes.amount)));
@@ -100,7 +100,7 @@ export const SchedulePayoutChart = ({groupId}) => {
         }).catch((error)=>{
 
         });
-    }, [groupId]);
+    }, [communityId]);
 
     return (
         <div>
@@ -121,9 +121,20 @@ export const SchedulePayoutChart = ({groupId}) => {
             </ResponsiveContainer>
             <div className="my-4 p-3 bg-light rounded-3">
                 <div className="h4">Contributions</div>
-                <div>Payment: <b>${payments.contributions.toFixed(2)}</b></div>
-                <div>Payout: <b>${payments.payouts.toFixed(2)}</b></div>
-                <div>Refund: <b>${payments.refunds.toFixed(2)}</b></div>
+                <div className="d-flex">
+                    <div className="border rounded-3 px-3">
+                        <div>Payment:</div>
+                        <div><b>${payments.contributions.toFixed(2)}</b></div>
+                    </div>
+                    <div className="border rounded-3 px-3 mx-2">
+                        <div>Payout:</div>
+                        <div><b>${payments.payouts.toFixed(2)}</b></div>
+                    </div>
+                    <div className="border rounded-3 px-3">
+                        <div>Refund:</div>
+                        <div><b>${payments.refunds.toFixed(2)}</b></div>
+                    </div>
+                </div>
             </div>
         </div>
     );

@@ -13,7 +13,9 @@ import { utils } from "../utils/Utils";
 
 export const Sidebar = () =>{
     const { user, signOut } = useAuth();
-    const { categories } = useSidebar();
+    const { dashboardAndOverview, communities, profile, contributionManagement, messaging, help, onboarding, settings } = useSidebar();
+
+    const categories = [dashboardAndOverview, communities, profile, contributionManagement, messaging, help, onboarding, settings];
 
     const [show, setShow] = useState(false);
 
@@ -76,14 +78,14 @@ export const Sidebar = () =>{
                         <li className={`${cat?.devider ? 'border-top my-3' : 'mb-1'}`} key={key}>
                             {!cat?.devider?
                                 <>
-                                <button className="btn btn-toggle align-items-center rounded collapsed shadow-none ps-1" data-bs-toggle="collapse" data-bs-target={`#collapse-sidebar-menu-id${key}`} aria-expanded="false" id={utils.element.nameToId(cat.category, true)}>
+                                <button className="btn btn-toggle align-items-center rounded collapsed shadow-none ps-1" data-bs-toggle="collapse" data-bs-target={`#collapse-sidebar-menu-id${key}`} aria-expanded="false">
                                     <PiCaretDownLight className="caret-down"/>
                                     <PiCaretRightLight className="caret-right"/>
-                                    {cat.category}
+                                    {cat.title}
                                 </button>
                                 <div className="collapse" id={`collapse-sidebar-menu-id${key}`}>
                                     <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                        {cat.menus.map((menu, key2)=>(
+                                        {cat.list.map((menu, key2)=>(
                                             <li key={key2}>
                                                 <button 
                                                     onClick={(e)=>{
@@ -91,7 +93,6 @@ export const Sidebar = () =>{
                                                         setShow(false);
                                                     }} className={`btn btn-sm text-start ${menu?.disabled ? 'text-secondary border-0' : ''}`} 
                                                     disabled={menu?.disabled}
-                                                    id={utils.element.nameToId(menu.title, true)}
                                                 >{menu.title}</button>
                                             </li>
                                         ))}
@@ -109,7 +110,7 @@ export const Sidebar = () =>{
                         <strong className="text-truncate">{user.attributes.firstName} {user.attributes.lastName}</strong>
                     </a>
                     <ul className="dropdown-menu text-small shadow" aria-labelledby="dropdownUser1">
-                        <li><button onClick={()=>navigate(routes.susu().newGroup())} className="btn btn-sm w-100">New Group...</button></li>
+                        <li><button onClick={()=>navigate(routes.susu().newCommunity())} className="btn btn-sm w-100">New Community...</button></li>
                         <li><button className="btn btn-sm w-100">Settings</button></li>
                         <li><button onClick={()=>navigate(routes.susu().profile())} className="btn btn-sm w-100">Profile</button></li>
                         <li><hr className="dropdown-divider"/></li>

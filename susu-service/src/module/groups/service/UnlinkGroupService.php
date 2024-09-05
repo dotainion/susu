@@ -1,35 +1,35 @@
 <?php
-namespace src\module\groups\service;
+namespace src\module\communities\service;
 
 use src\infrastructure\Assert;
 use src\infrastructure\Service;
-use src\module\groups\factory\GroupLinkFactory;
-use src\module\groups\logic\FetchGroup;
-use src\module\groups\logic\UnlinkGroup;
+use src\module\communities\factory\CommunityLinkFactory;
+use src\module\communities\logic\FetchCommunity;
+use src\module\communities\logic\UnlinkCommunity;
 
-class UnlinkGroupService extends Service{
-    protected UnlinkGroup $group;
-    protected FetchGroup $fetch;
-    protected GroupLinkFactory $factory;
+class UnlinkCommunityService extends Service{
+    protected UnlinkCommunity $community;
+    protected FetchCommunity $fetch;
+    protected CommunityLinkFactory $factory;
 
     public function __construct(){
         parent::__construct();
-        $this->group = new UnlinkGroup();
-        $this->fetch = new FetchGroup();
-        $this->factory = new GroupLinkFactory();
+        $this->community = new UnlinkCommunity();
+        $this->fetch = new FetchCommunity();
+        $this->factory = new CommunityLinkFactory();
     }
     
-    public function process($groupId, $memberId){
-        Assert::validUuid($groupId, 'Group not found.');
+    public function process($communityId, $memberId){
+        Assert::validUuid($communityId, 'Community not found.');
         Assert::validUuid($memberId, 'Member not found.');
 
         $link = $this->factory->mapResult([
-            'groupId' => $groupId,
+            'communityId' => $communityId,
             'memberId' => $memberId,
         ]);
 
-        $this->group->unlink($link);
-        $collector = $this->fetch->group($link->groupId());
+        $this->community->unlink($link);
+        $collector = $this->fetch->community($link->communityId());
         
         $this->setOutput($collector);
         return $this;

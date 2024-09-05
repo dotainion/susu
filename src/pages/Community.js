@@ -7,13 +7,13 @@ import { ParseError } from "../utils/ParseError";
 import { Dropdown } from "../widgets/Dropdown";
 import { InviteOption } from "../components/InviteOption";
 
-export const Group = () =>{
-    const [group, setGroup] = useState();
+export const Community = () =>{
+    const [community, setCommunity] = useState();
     const [susu , setSusu] = useState();
     const [errors , setErrors] = useState();
     const [openCommenceSusu , setOpenCommenceSusu] = useState(false);
     const [openSusuInvite , setOpenSusuInvite] = useState(false);
-    const [openGroupInvite , setOpenGroupInvite] = useState(false);
+    const [openCommunityInvite , setOpenCommunityInvite] = useState(false);
 
     const params = useParams();
     const navigate = useNavigate();
@@ -23,15 +23,15 @@ export const Group = () =>{
     const descriptionRef = useRef();
     const hideRef = useRef();
 
-    const editGroup = () =>{
+    const editCommunity = () =>{
         setErrors(null);
         const data = {
-            id: params.groupId,
+            id: params.communityId,
             name: nameRef.current.value,
             description: descriptionRef.current.value,
             hide: hideRef.current
         }
-        api.group.set(data).then((response)=>{
+        api.community.set(data).then((response)=>{
             
         }).catch((error)=>{
             setErrors(new ParseError().message(error));
@@ -40,7 +40,7 @@ export const Group = () =>{
 
     const confirmSusu = () =>{
         setErrors(null);
-        api.susu.conform(params.groupId).then((response)=>{
+        api.susu.conform(params.communityId).then((response)=>{
             setSusu(response.data.data[0]);
         }).catch((error)=>{
             setErrors(new ParseError().message(error));
@@ -61,27 +61,27 @@ export const Group = () =>{
         });
     }
 
-    const deleteGroup = () =>{
+    const deleteCommunity = () =>{
         setErrors(null);
         const data = {
-            ...group.attributes,
-            groupId: group.id,
+            ...community.attributes,
+            communityId: community.id,
             hide: true
         };
-        api.group.delete(data).then((response)=>{
-            navigate(routes.susu().nested().ownerGroups());
+        api.community.delete(data).then((response)=>{
+            navigate(routes.susu().nested().ownerCommunities());
         }).catch((error)=>{
             setErrors(new ParseError().message(error));
         });
     }
 
     useEffect(() => {
-        api.group.group(params.groupId).then((response)=>{
-            setGroup(response.data.data[0]);
+        api.community.community(params.communityId).then((response)=>{
+            setCommunity(response.data.data[0]);
         }).catch((error)=>{
-            setGroup(null);
+            setCommunity(null);
         });
-        api.susu.active(params.groupId).then((response)=>{
+        api.susu.active(params.communityId).then((response)=>{
             setSusu(response.data.data[0]);
         }).catch((error)=>{
             setSusu(null);
@@ -89,24 +89,24 @@ export const Group = () =>{
     }, [location]);
 
     useEffect(() => {
-        if(!group) return;
-        nameRef.current.value = group.attributes.name;
-        descriptionRef.current.value = group.attributes.description;
-        hideRef.current = group.attributes.hide;
-    }, [group]);
+        if(!community) return;
+        nameRef.current.value = community.attributes.name;
+        descriptionRef.current.value = community.attributes.description;
+        hideRef.current = community.attributes.hide;
+    }, [community]);
     
     return(
         <div className="container">
             <div className="bg-light py-1 px-3 rounded-4 mt-2">
-                <div className="h4 my-3">Group</div>
-                <div onChange={editGroup} className="d-xl-flex d-block w-100">
+                <div className="h4 my-3">Community</div>
+                <div onChange={editCommunity} className="d-xl-flex d-block w-100">
                     <div className="me-5 mb-4">
                         <img style={{width: '200px', height: '200px'}} src="https://media.istockphoto.com/id/1327592506/vector/default-avatar-photo-placeholder-icon-grey-profile-picture-business-man.jpg?s=612x612&w=0&k=20&c=BpR0FVaEa5F24GIw7K8nMWiiGmbb8qmhfkpXcp1dhQg=" alt="" />
                     </div>
                     <div className="text-nowrap w-100">
                         <div className="d-md-flex d-block">
-                            <div style={{minWidth: '200px'}}>Group Name</div>
-                            <input ref={nameRef} className="form-control mb-3" placeholder="Group Name" type="text" style={{maxWidth: '500px'}}/>
+                            <div style={{minWidth: '200px'}}>Community Name</div>
+                            <input ref={nameRef} className="form-control mb-3" placeholder="Community Name" type="text" style={{maxWidth: '500px'}}/>
                         </div>
                         <div className="d-md-flex d-block">
                             <div style={{minWidth: '200px'}}>Description</div>
@@ -131,15 +131,15 @@ export const Group = () =>{
                         <div className="py-3 px-1">
                             <button onClick={confirmSusu} className="btn btn-sm btn-success m-1">Apply & Confirm</button>
                             <button onClick={()=>setOpenSusuInvite(true)} className="btn btn-sm bg-primary text-white m-1">Invites someone to join susu</button>
-                            <button onClick={()=>navigate(routes.susu().nested().susuMembers(params.groupId, susu.id))} className="btn btn-sm btn-danger m-1">Remove a members</button>
+                            <button onClick={()=>navigate(routes.susu().nested().susuMembers(params.communityId, susu.id))} className="btn btn-sm btn-danger m-1">Remove a members</button>
                             <button onClick={cancelSusu} className="btn btn-sm btn-danger m-1">Cancel Susu</button>
                             <div className="small px-1">Begin organizing contributions, setting schedules, and achieving financial goals together.</div>
                         </div>
                         : 
                         <div className="py-3 px-1">
-                            <button onClick={()=>navigate(routes.susu().nested().groupSusuWallet(params.groupId, susu.id))} className="btn btn-sm bg-secondary text-white m-1">Susu Manager</button>
-                            <button onClick={()=>setOpenGroupInvite(true)} className="btn btn-sm bg-primary text-white m-1">Invites someone to join group</button>
-                            <button onClick={()=>navigate(routes.susu().nested().susuMembers(params.groupId))} className="btn btn-sm btn-danger m-1">Remove a members</button>
+                            <button onClick={()=>navigate(routes.susu().nested().communitySusuWallet(params.communityId, susu.id))} className="btn btn-sm bg-secondary text-white m-1">Susu Manager</button>
+                            <button onClick={()=>setOpenCommunityInvite(true)} className="btn btn-sm bg-primary text-white m-1">Invites someone to join community</button>
+                            <button onClick={()=>navigate(routes.susu().nested().susuMembers(params.communityId))} className="btn btn-sm btn-danger m-1">Remove a members</button>
                             <div className="small px-1">Begin organizing contributions, setting schedules, and achieving financial goals together.</div>
                         </div>
                     }
@@ -149,18 +149,18 @@ export const Group = () =>{
                     {
                         susu?.attributes?.pendingStart 
                         ? <p className="small px-1">To generate the schedule, it is essential to confirm participation in the susu. The schedule will be determined based on the number of members who have joined the susu. Once confirmed, members will have the opportunity to select their preferred schedule.</p>
-                        : <button onClick={()=>navigate(routes.susu().nested().schedule(params.groupId))} className="btn btn-sm btn-info m-1">Schedule</button>
+                        : <button onClick={()=>navigate(routes.susu().nested().schedule(params.communityId))} className="btn btn-sm btn-info m-1">Schedule</button>
                     }
-                    <div className="small px-1">Once you remove a member from this group, you may need to send a request so they can be added back.</div>
+                    <div className="small px-1">Once you remove a member from this community, you may need to send a request so they can be added back.</div>
                 </div>
                 <div className="py-3 px-1">
-                    <button onClick={()=>navigate(routes.susu().nested().groupMembers(params.groupId))} className="btn btn-sm btn-danger m-1">Remove a members</button>
-                    <button onClick={()=>setOpenGroupInvite(true)} className="btn btn-sm bg-primary text-white m-1">Invites someone to join group</button>
-                    <div className="small px-1">Once you remove a member from this group, you may need to send a request so they can be added back.</div>
+                    <button onClick={()=>navigate(routes.susu().nested().communityMembers(params.communityId))} className="btn btn-sm btn-danger m-1">Remove a members</button>
+                    <button onClick={()=>setOpenCommunityInvite(true)} className="btn btn-sm bg-primary text-white m-1">Invites someone to join community</button>
+                    <div className="small px-1">Once you remove a member from this community, you may need to send a request so they can be added back.</div>
                 </div>
                 <div className="py-3 px-1">
-                    <button onClick={deleteGroup} className="btn btn-sm btn-danger m-1">Delete Group</button>
-                    <div className="small px-1">Once you delete a group, there is no going back. Please be certain.</div>
+                    <button onClick={deleteCommunity} className="btn btn-sm btn-danger m-1">Delete Community</button>
+                    <div className="small px-1">Once you delete a community, there is no going back. Please be certain.</div>
                 </div>
             </div>
             <CommenceSusuOverlay
@@ -175,10 +175,10 @@ export const Group = () =>{
                 urlParams={{susuId: susu?.id}}
             />
             <InviteOption
-                show={openGroupInvite}
-                onClose={()=>setOpenGroupInvite(false)}
-                onMemberShare={()=>navigate(routes.susu().nested().groupInvites(params.groupId))}
-                urlParams={{groupId: params.groupId}}
+                show={openCommunityInvite}
+                onClose={()=>setOpenCommunityInvite(false)}
+                onMemberShare={()=>navigate(routes.susu().nested().communityInvites(params.communityId))}
+                urlParams={{communityId: params.communityId}}
             />
         </div>
     )

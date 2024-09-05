@@ -5,7 +5,7 @@ import { api } from "../request/Api";
 import { useNavigate } from "react-router-dom";
 import { routes } from "../routes/Routes";
 
-export const SearchGroupOrMembersToMessageOverlay = ({isOpen, onClose}) =>{
+export const SearchCommunitiesOrMembersToMessageOverlay = ({isOpen, onClose}) =>{
     const [messagners, setMessagners] = useState([]);
 
     const navigate = useNavigate();
@@ -24,7 +24,7 @@ export const SearchGroupOrMembersToMessageOverlay = ({isOpen, onClose}) =>{
     }
 
     const navigateTo = (messagner) =>{
-        if(messagner.type === 'group') return navigate(routes.susu().nested().groupMessages(messagner.id));
+        if(messagner.type === 'community') return navigate(routes.susu().nested().communityMessages(messagner.id));
         navigate(routes.susu().nested().messages(messagner.id));
     }
 
@@ -41,7 +41,7 @@ export const SearchGroupOrMembersToMessageOverlay = ({isOpen, onClose}) =>{
                     <div className="bg-white p-3 rounded-top-4">
                         <div className="fw-bold">Search members or goups</div>
                         <input onChange={searchMembers} className="form-control shadow-none" type="text" placeholder="Search members..."/>
-                        <div className="small"><small>Click on a member or group to send a message</small></div>
+                        <div className="small"><small>Click on a member or community to send a message</small></div>
                         <button onClick={onClose} className="btn-danger btn-close position-absolute top-0 end-0 me-3 mt-1"></button>
                     </div>
                     <div className="bg-white py-3 px-1 rounded-bottom-4 shadow-sm overflow-y-auto overflow-x-hidden">

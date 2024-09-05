@@ -25,8 +25,8 @@ export const Invited = () =>{
     const emailRef = useRef();
     const passwordRef = useRef();
 
-    const joinGroup = (groupId, memberId) =>{
-        api.group.join(groupId, memberId).then((response)=>{
+    const joinCommunity = (communityId, memberId) =>{
+        api.community.join(communityId, memberId).then((response)=>{
             setShowConfirm(true);
         }).catch((error)=>{
             setError(new ParseError().message(error));
@@ -45,12 +45,12 @@ export const Invited = () =>{
         const searchArgs = window.location.hash.substring(1).split('?')[1];
         const params = new URLSearchParams(searchArgs);
         if(params.get('susuId')){
-            setMessage('Congratulations! You have successfully joined the susu group. Welcome!');
+            setMessage('Congratulations! You have successfully joined the susu community. Welcome!');
             return joinSusu(params.get('susuId'), user.id);
         }
-        if(params.get('groupId')){
-            setMessage('Congratulations! You have successfully joined the group. Welcome!');
-            return joinGroup(params.get('groupId'), user.id);
+        if(params.get('communityId')){
+            setMessage('Congratulations! You have successfully joined the community. Welcome!');
+            return joinCommunity(params.get('communityId'), user.id);
         }
     }
 

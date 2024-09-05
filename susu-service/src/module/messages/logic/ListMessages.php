@@ -41,7 +41,7 @@ class ListMessages{
         ]);
     }
 
-    public function groupConversation(Id $toId, ?bool $read):Collector{
+    public function communityConversation(Id $toId, ?bool $read):Collector{
         return $this->repo->listMessages([
             'toId' => $toId,
             'read' => $read,

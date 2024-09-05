@@ -20,14 +20,14 @@ class JoinSusuService extends Service{
         $this->factory = new SusuLinkFactory();
     }
     
-    public function process($memberId, $groupId){
+    public function process($memberId, $communityId){
         Assert::validUuid($memberId, 'User not found.');
-        Assert::validUuid($groupId, 'Group not found.');
+        Assert::validUuid($communityId, 'Community not found.');
 
-        $collector = $this->susu->activeByGroupId(new Id($groupId));
+        $collector = $this->susu->activeByCommunityId(new Id($communityId));
         if(!$collector->hasItem()){
-            //just incase groupId is actrually a susuId.
-            $collector = $this->susu->activeById(new Id($groupId));
+            //just incase communityId is actrually a susuId.
+            $collector = $this->susu->activeById(new Id($communityId));
         }
         
         $collector->assertHasItem('Susu not yet stared.');

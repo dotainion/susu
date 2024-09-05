@@ -10,7 +10,7 @@ export const Profile = () =>{
     const { user } = useAuth();
 
     const [address, setAddress] = useState();
-    const [groups, setGroups] = useState([]);
+    const [communities, setCommunities] = useState([]);
     const [error, setError] = useState();
 
     const firstNameRef = useRef();
@@ -82,8 +82,8 @@ export const Profile = () =>{
 
         });
 
-        api.group.memberGroups(user.id).then((response)=>{
-            setGroups(response.data.data);
+        api.community.memberCommunities(user.id).then((response)=>{
+            setCommunities(response.data.data);
         }).catch((error)=>{
 
         });
@@ -104,8 +104,8 @@ export const Profile = () =>{
                 <div className="me-5 mb-4">
                     <img style={{width: '200px', height: '200px'}} src="https://media.istockphoto.com/id/1327592506/vector/default-avatar-photo-placeholder-icon-grey-profile-picture-business-man.jpg?s=612x612&w=0&k=20&c=BpR0FVaEa5F24GIw7K8nMWiiGmbb8qmhfkpXcp1dhQg=" alt="" />
                     <div className="py-3 px-2" style={{maxWidth: '500px'}}>
-                        <div>Group Memberships</div>
-                        <div className="fw-bold w-100">{groups.length}</div>
+                        <div>Community Memberships</div>
+                        <div className="fw-bold w-100">{communities.length}</div>
                     </div>
                 </div>
                 <div onChange={update} className="text-nowrap w-100">
@@ -180,7 +180,7 @@ export const Profile = () =>{
                         <div className="w-100 text-nowrap">{user?.id}</div>
                         <button className="btn bg-transparent shadow-none border-0 p-0"><FaRegCopy className="fs-5"/></button>
                     </div>
-                    <div className="small">The Member ID serves as a unique identifier assigned to each member within the SUSU app. You can use this ID to easily locate and add members to your savings and credit groups. Simply paste or enter the Member ID into the search field to find specific members.</div>
+                    <div className="small">The Member ID serves as a unique identifier assigned to each member within the SUSU app. You can use this ID to easily locate and add members to your savings and credit communities. Simply paste or enter the Member ID into the search field to find specific members.</div>
                 </div>
             </div>
         </div>

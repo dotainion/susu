@@ -1,19 +1,19 @@
 <?php
-namespace src\module\groups\factory;
+namespace src\module\communities\factory;
 
 use src\infrastructure\Collector;
 use src\infrastructure\Factory;
-use src\module\groups\objects\GroupLink;
+use src\module\communities\objects\CommunityLink;
 
-class GroupLinkFactory extends Collector{
+class CommunityLinkFactory extends Collector{
     use Factory;
 
     public function __construct(){
     }
 
-    public function mapResult($record):GroupLink{
-        $link = new GroupLink();
-        $link->setGroupId($this->uuid($record['groupId']));
+    public function mapResult($record):CommunityLink{
+        $link = new CommunityLink();
+        $link->setCommunityId($this->uuid($record['communityId']));
         $link->setMemberId($this->uuid($record['memberId']));
         return $link;
     }

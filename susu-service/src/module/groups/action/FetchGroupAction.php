@@ -1,16 +1,16 @@
 <?php
-namespace src\module\groups\action;
+namespace src\module\communities\action;
 
 use src\infrastructure\IAction;
 use src\infrastructure\Request;
-use src\module\groups\service\FetchGroupService;
+use src\module\communities\service\FetchCommunityService;
 
-class FetchGroupAction extends Request implements IAction{
+class FetchCommunityAction extends Request implements IAction{
     protected $service;
 
     public function __construct(){
         parent::__REQUEST__();
-        $this->service = new FetchGroupService();
+        $this->service = new FetchCommunityService();
     }
 
     public function execute(){

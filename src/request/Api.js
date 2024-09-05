@@ -2,7 +2,7 @@ import axios from "axios";
 import { token } from "../utils/Token";
 import { Auth } from "./Auth";
 import { User } from "./User";
-import { Group } from "./Group";
+import { Community } from "./Community";
 import { Susu } from "./Susu";
 import { Schedule } from "./Schedule";
 import { Contribution } from "./Contribution";
@@ -28,7 +28,7 @@ export class Api{
         });
         this.user = new User(this);
         this.auth = new Auth(this);
-        this.group = new Group(this);
+        this.community = new Community(this);
         this.susu = new Susu(this);
         this.schedule = new Schedule(this);
         this.contribution = new Contribution(this);

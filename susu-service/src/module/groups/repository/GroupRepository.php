@@ -1,61 +1,60 @@
 <?php
-namespace src\module\groups\repository;
+namespace src\module\communities\repository;
 
 use src\database\Repository;
 use src\infrastructure\Collector;
-use src\infrastructure\Id;
-use src\module\groups\factory\GroupFactory;
-use src\module\groups\factory\GroupLinkFactory;
-use src\module\groups\objects\Group;
-use src\module\groups\objects\GroupLink;
+use src\module\communities\factory\CommunityFactory;
+use src\module\communities\factory\CommunityLinkFactory;
+use src\module\communities\objects\Community;
+use src\module\communities\objects\CommunityLink;
 
-class GroupRepository extends Repository{
-    protected GroupFactory $factory;
-    protected GroupLinkFactory $linkFactory;
+class CommunityRepository extends Repository{
+    protected CommunityFactory $factory;
+    protected CommunityLinkFactory $linkFactory;
 
     public function __construct(){
         parent::__construct();
-        $this->factory = new GroupFactory();
-        $this->linkFactory = new GroupLinkFactory();
+        $this->factory = new CommunityFactory();
+        $this->linkFactory = new CommunityLinkFactory();
     }
     
-    public function create(Group $group):void{
-        $this->insert('group')        
-            ->add('id', $this->uuid($group->id()))
-            ->add('name', $group->name())
-            ->add('description', $group->description())
-            ->add('createdDate', $group->createdDate()->toString())
-            ->add('creatorId', $this->uuid($group->creatorId()));
+    public function create(Community $community):void{
+        $this->insert('community')        
+            ->add('id', $this->uuid($community->id()))
+            ->add('name', $community->name())
+            ->add('description', $community->description())
+            ->add('createdDate', $community->createdDate()->toString())
+            ->add('creatorId', $this->uuid($community->creatorId()));
         $this->execute();
     }
     
-    public function edit(Group $group):void{
-        $this->update('group')     
-            ->set('name', $group->name())
-            ->set('description', $group->description())
-            ->set('createdDate', $group->createdDate()->toString())
-            ->set('creatorId', $this->uuid($group->creatorId()))
-            ->where('id', $this->uuid($group->id()));
+    public function edit(Community $community):void{
+        $this->update('community')     
+            ->set('name', $community->name())
+            ->set('description', $community->description())
+            ->set('createdDate', $community->createdDate()->toString())
+            ->set('creatorId', $this->uuid($community->creatorId()))
+            ->where('id', $this->uuid($community->id()));
         $this->execute();
     }
     
-    public function joinGroup(GroupLink $link):void{
-        $this->insert('groupLink')        
-            ->add('groupId', $this->uuid($link->groupId()))
+    public function joinCommunities(CommunityLink $link):void{
+        $this->insert('communityLink')        
+            ->add('communityId', $this->uuid($link->communityId()))
             ->add('memberId', $this->uuid($link->memberId()));
         $this->execute();
     }
     
-    public function unlinkGroup(GroupLink $link):void{
-        $this->delete('groupLink')        
-            ->where('groupId', $this->uuid($link->groupId()))
+    public function unlinkCommunities(CommunityLink $link):void{
+        $this->delete('communityLink')        
+            ->where('communityId', $this->uuid($link->communityId()))
             ->where('memberId', $this->uuid($link->memberId()));
         $this->execute();
     }
     
-    public function listJoinGroup(array $where = []):Collector{
-        $this->select('groupLink');
-        isset($where['groupId']) && $this->where('groupId', $this->uuid($where['groupId']));
+    public function listJoinCommunity(array $where = []):Collector{
+        $this->select('communityLink');
+        isset($where['communityId']) && $this->where('communityId', $this->uuid($where['communityId']));
         isset($where['memberId']) && $this->where('memberId', $this->uuid($where['memberId']));
         $this->execute();
         return $this->linkFactory->map(
@@ -63,12 +62,12 @@ class GroupRepository extends Repository{
         );
     }
     
-    public function listGroups(array $where = []):Collector{
-        $this->select('group');
+    public function listCommunities(array $where = []):Collector{
+        $this->select('community');
 
         if(isset($where['memberId'])){
-            $this->innerJoin('groupLink', 'groupId', 'group', 'id');
-            $this->where('memberId', $this->uuid($where['memberId']), 'groupLink');
+            $this->innerJoin('communityLink', 'communityId', 'community', 'id');
+            $this->where('memberId', $this->uuid($where['memberId']), 'communityLink');
         }
 
         if(isset($where['name'])){

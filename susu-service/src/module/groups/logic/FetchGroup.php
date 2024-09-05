@@ -1,19 +1,19 @@
 <?php
-namespace src\module\groups\logic;
+namespace src\module\communities\logic;
 
 use src\infrastructure\Collector;
 use src\infrastructure\Id;
-use src\module\groups\repository\GroupRepository;
+use src\module\communities\repository\CommunityRepository;
 
-class FetchGroup{
-    protected GroupRepository $repo;
+class FetchCommunity{
+    protected CommunityRepository $repo;
 
     public function __construct(){
-        $this->repo = new GroupRepository();
+        $this->repo = new CommunityRepository();
     }
 
-    public function group(Id $id):Collector{
-        return $this->repo->listGroups([
+    public function community(Id $id):Collector{
+        return $this->repo->listCommunities([
             'id' => $id
         ]);
     }

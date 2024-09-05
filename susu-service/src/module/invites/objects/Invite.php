@@ -5,7 +5,7 @@ use src\infrastructure\DateHelper;
 use src\infrastructure\Id;
 use src\infrastructure\IId;
 use src\infrastructure\IObjects;
-use src\module\groups\objects\Group;
+use src\module\communities\objects\Community;
 
 class Invite implements IObjects{
     protected IId $id;
@@ -13,7 +13,7 @@ class Invite implements IObjects{
     protected IId $targetId;
     protected DateHelper $date;
     protected DateHelper $expire;
-    protected ?Group $group;
+    protected ?Community $community;
     protected bool $isSusu;
 
     public function __construct(){
@@ -44,8 +44,8 @@ class Invite implements IObjects{
         return $this->expire;
     }
 
-    public function group():?Group{
-        return $this->group;
+    public function community():?Community{
+        return $this->community;
     }
 
     public function isSusu():bool{
@@ -72,8 +72,8 @@ class Invite implements IObjects{
         $this->expire->set($expire);
     }
 
-    public function setGroup(Group $group):void{
-        $this->group = $group;
+    public function setCommunity(Community $community):void{
+        $this->community = $community;
     }
 
     public function setIsSusu(bool $isSusu):void{

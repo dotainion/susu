@@ -16,7 +16,7 @@ class JoinSusuAction extends Request implements IAction{
     public function execute(){
         return $this->service->process(
             $this->get('memberId'),
-            $this->get('groupId')
+            $this->get('communityId')
         );
     }
 }

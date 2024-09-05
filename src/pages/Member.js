@@ -3,13 +3,13 @@ import { AiOutlineFileProtect } from "react-icons/ai";
 import { FaRegCopy } from "react-icons/fa6";
 import { useParams } from "react-router-dom";
 import { api } from "../request/Api";
-import { GroupMiniCard } from "../components/GroupMiniCard";
+import { CommunityMiniCard } from "../components/CommunityMiniCard";
 import { utils } from "../utils/Utils";
 import $ from 'jquery';
 
 export const Member = () => {
     const [member, setMember] = useState();
-    const [groups, setGroups] = useState([]);
+    const [communities, setCommunities] = useState([]);
 
     const params = useParams();
 
@@ -20,8 +20,8 @@ export const Member = () => {
         }).catch((error)=>{
 
         });
-        api.group.memberGroups(params.memberId).then((response)=>{
-            setGroups(response.data.data);
+        api.community.memberCommunities(params.memberId).then((response)=>{
+            setCommunities(response.data.data);
         }).catch((error)=>{
 
         });
@@ -45,7 +45,7 @@ export const Member = () => {
                 </div>
                 <div>
                     <div className="fs-3">{member?.attributes?.firstName} {member?.attributes?.lastName}</div>
-                    <div className="my-2">Groups <b>{groups.length}</b></div>
+                    <div className="my-2">Communities <b>{communities.length}</b></div>
                     <div className="my-2">{member?.attributes?.email}</div>
                     <div className="my-2">{member?.attributes?.phoneNumber}</div>
                 </div>
@@ -62,12 +62,12 @@ export const Member = () => {
                 </div>
             </div>
             <hr></hr>
-            <div className="fw-bold">Groups</div>
+            <div className="fw-bold">Communities</div>
             <div className="row">
                 {
-                    groups.length ?
-                    groups.map((group, key) => (
-                        <GroupMiniCard group={group} key={key}/>
+                    communities.length ?
+                    communities.map((community, key) => (
+                        <CommunityMiniCard communities={community} key={key}/>
                     )):null
                 }
             </div>

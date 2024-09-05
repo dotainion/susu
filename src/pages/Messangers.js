@@ -4,7 +4,7 @@ import { routes } from "../routes/Routes";
 import { useEffect, useState } from "react";
 import { api } from "../request/Api";
 import { useAuth } from "../provider/AuthProvider";
-import { SearchGroupOrMembersToMessageOverlay } from "../components/SearchGroupOrMembersToMessageOverlay";
+import { SearchCommunitiesOrMembersToMessageOverlay } from "../components/SearchCommunitiesOrMembersToMessageOverlay";
 import { BiSolidMessageRoundedAdd } from "react-icons/bi";
 
 export const Messangers = () =>{
@@ -16,7 +16,7 @@ export const Messangers = () =>{
     const navigate = useNavigate();
 
     const navigateTo = (messagner) =>{
-        if(messagner.type === 'group') return navigate(routes.susu().nested().groupMessages(messagner.id));
+        if(messagner.type === 'community') return navigate(routes.susu().nested().communityMessages(messagner.id));
         navigate(routes.susu().nested().messages(messagner.id));
     }
 
@@ -56,7 +56,7 @@ export const Messangers = () =>{
                     null
                 }
             </div>
-            <SearchGroupOrMembersToMessageOverlay 
+            <SearchCommunitiesOrMembersToMessageOverlay 
                 isOpen={isSearchMsgOpen} 
                 onClose={()=>setIsSearchMsgOpen(false)}
             />

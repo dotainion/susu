@@ -1,17 +1,17 @@
 <?php
-namespace src\module\groups\logic;
+namespace src\module\communities\logic;
 
-use src\module\groups\objects\GroupLink;
-use src\module\groups\repository\GroupRepository;
+use src\module\communities\objects\CommunityLink;
+use src\module\communities\repository\CommunityRepository;
 
-class UnlinkGroup{
-    protected GroupRepository $repo;
+class UnlinkCommunity{
+    protected CommunityRepository $repo;
 
     public function __construct(){
-        $this->repo = new GroupRepository();
+        $this->repo = new CommunityRepository();
     }
 
-    public function unlink(GroupLink $link):void{
-        $this->repo->unlinkGroup($link);
+    public function unlink(CommunityLink $link):void{
+        $this->repo->unlinkCommunity($link);
     }
 }

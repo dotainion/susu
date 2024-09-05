@@ -1,24 +1,24 @@
 <?php
-namespace src\module\groups\factory;
+namespace src\module\communities\factory;
 
 use src\infrastructure\Collector;
 use src\infrastructure\Factory;
-use src\module\groups\objects\Group;
+use src\module\communities\objects\Community;
 
-class GroupFactory extends Collector{
+class CommunityFactory extends Collector{
     use Factory;
 
     public function __construct(){
     }
 
-    public function mapResult($record):Group{
-        $group = new Group();
-        $group->setId($this->uuid($record['id']));
-        $group->setName($record['name']);
-        $group->setDescription($record['description'] ?? '');
-        $group->setCreatedDate($record['createdDate']);
-        $group->setCreatorId($this->uuid($record['creatorId']));
-        $group->setHide((bool)$record['hide']);
-        return $group;
+    public function mapResult($record):Community{
+        $community = new Community();
+        $community->setId($this->uuid($record['id']));
+        $community->setName($record['name']);
+        $community->setDescription($record['description'] ?? '');
+        $community->setCreatedDate($record['createdDate']);
+        $community->setCreatorId($this->uuid($record['creatorId']));
+        $community->setHide((bool)$record['hide']);
+        return $community;
     }
 }

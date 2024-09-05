@@ -7,24 +7,24 @@ export class Susu{
         return await this.api.get('/start/susu', data);
     }
 
-    async active(groupId){
-        return await this.api.get('/fetch/active/susu', {groupId});
+    async active(communityId){
+        return await this.api.get('/fetch/active/susu', {communityId});
     }
     
     async fetch(susuId){
         return await this.api.get('/fetch/susu', {susuId});
     }
 
-    async conform(groupId){
-        return await this.api.get('/conform/susu', {groupId});
+    async conform(communityId){
+        return await this.api.get('/conform/susu', {communityId});
     }
 
-    async join(groupId, memberId){
-        return await this.api.get('/join/susu', {memberId, groupId});
+    async join(communityId, memberId){
+        return await this.api.get('/join/susu', {memberId, communityId});
     }
     
-    async unlink(groupId, memberId){
-        return await this.api.get('/unlink/susu', {memberId, groupId});
+    async unlink(communityId, memberId){
+        return await this.api.get('/unlink/susu', {memberId, communityId});
     }
 
     async set(data){

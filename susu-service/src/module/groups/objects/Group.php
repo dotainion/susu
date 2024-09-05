@@ -1,5 +1,5 @@
 <?php
-namespace src\module\groups\objects;
+namespace src\module\communities\objects;
 
 use src\infrastructure\Collector;
 use src\infrastructure\DateHelper;
@@ -9,7 +9,7 @@ use src\infrastructure\IObjects;
 use src\infrastructure\IUser;
 use src\module\susu\objects\Susu;
 
-class Group implements IObjects{
+class Community implements IObjects{
     protected Id $id;
     protected string $name;
     protected string $description;

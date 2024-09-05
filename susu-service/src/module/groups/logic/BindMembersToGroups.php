@@ -1,35 +1,35 @@
 <?php
-namespace src\module\groups\logic;
+namespace src\module\communities\logic;
 
 use src\infrastructure\Collector;
-use src\module\groups\repository\GroupRepository;
+use src\module\communities\repository\CommunityRepository;
 use src\module\susu\logic\ListSusu;
 use src\module\user\logic\ListUsers;
 
-class BindMembersToGroups{
-    protected GroupRepository $repo;
-    protected ListGroupLinks $groupLinks;
+class BindMembersToCommunities{
+    protected CommunityRepository $repo;
+    protected ListCommunityLinks $communityLinks;
     protected ListUsers $users;
     protected ListSusu $susus;
 
     public function __construct(){
-        $this->repo = new GroupRepository();
-        $this->groupLinks = new ListGroupLinks();
+        $this->repo = new CommunityRepository();
+        $this->communityLinks = new ListCommunityLinks();
         $this->users = new ListUsers();
         $this->susus = new ListSusu();
     }
 
-    public function bindRequirements(Collector &$groups):void{
-        $links = $this->groupLinks->groupLinksByIdArray($groups->idArray());
+    public function bindRequirements(Collector &$communities):void{
+        $links = $this->communityLinks->communityLinksByIdArray($communities->idArray());
         $membersIdArray = $links->attrArray('memberId');
         $members = $this->users->usersByIdArray($membersIdArray);
-        $susus = $this->susus->activeByGroupIdArray($groups->idArray());
+        $susus = $this->susus->activeByCommunityIdArray($communities->idArray());
 
-        foreach($groups->list() as $group){
+        foreach($communities->list() as $community){
             $membersIdArray = [];
             $memberCollector = new Collector();
             foreach($links->list() as $link){
-                if($link->groupId()->toString() === $group->id()->toString()){
+                if($link->communityId()->toString() === $community->id()->toString()){
                     $membersIdArray[] = $link->memberId()->toString();
                 }
             }
@@ -37,16 +37,16 @@ class BindMembersToGroups{
                 if(in_array($member->id()->toString(), $membersIdArray)){
                     $memberCollector->add($member);
                 }
-                if($member->id()->toString() === $group->creatorId()->toString()){
-                    $group->setOwner($member);
+                if($member->id()->toString() === $community->creatorId()->toString()){
+                    $community->setOwner($member);
                 }
             }
             if($memberCollector->hasItem()){
-                $group->setMembers($memberCollector);
+                $community->setMembers($memberCollector);
             }
             foreach($susus->list() as $susu){
-                if($susu->groupId()->toString() === $group->id()->toString()){
-                    $group->setSusu($susu);
+                if($susu->communityId()->toString() === $community->id()->toString()){
+                    $community->setSusu($susu);
                     break;
                 }
             }

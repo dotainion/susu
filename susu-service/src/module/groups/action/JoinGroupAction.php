@@ -1,21 +1,21 @@
 <?php
-namespace src\module\groups\action;
+namespace src\module\communities\action;
 
 use src\infrastructure\IAction;
 use src\infrastructure\Request;
-use src\module\groups\service\JoinGroupService;
+use src\module\communities\service\JoinCommunityService;
 
-class JoinGroupAction extends Request implements IAction{
+class JoinCommunityAction extends Request implements IAction{
     protected $service;
 
     public function __construct(){
         parent::__REQUEST__();
-        $this->service = new JoinGroupService();
+        $this->service = new JoinCommunityService();
     }
 
     public function execute(){
         return $this->service->process(
-            $this->get('groupId'),
+            $this->get('communityId'),
             $this->get('memberId')
         );
     }

@@ -1,29 +1,29 @@
 <?php
-namespace src\module\groups\logic;
+namespace src\module\communities\logic;
 
 use src\infrastructure\Collector;
 use src\infrastructure\Id;
-use src\module\groups\repository\GroupRepository;
+use src\module\communities\repository\CommunitiesRepository;
 
-class ListGroups{
-    protected GroupRepository $repo;
+class ListCommunities{
+    protected CommunityRepository $repo;
 
     public function __construct(){
-        $this->repo = new GroupRepository();
+        $this->repo = new CommunityRepository();
     }
 
-    public function groups():Collector{
-        return $this->repo->listGroups();
+    public function communities():Collector{
+        return $this->repo->listCommunities();
     }
 
-    public function memberGroups(Id $memberId):Collector{
-        return $this->repo->listGroups([
+    public function memberCommunities(Id $memberId):Collector{
+        return $this->repo->listCommunities([
             'memberId' => $memberId
         ]);
     }
 
-    public function ownerGroups(Id $creatorId):Collector{
-        return $this->repo->listGroups([
+    public function ownerCommunities(Id $creatorId):Collector{
+        return $this->repo->listCommunities([
             'creatorId' => $creatorId
         ]);
     }
@@ -32,17 +32,17 @@ class ListGroups{
         if(empty($name)){
             return new Collector();
         }
-        return $this->repo->listGroups([
+        return $this->repo->listCommunities([
             'name' => $name
         ]);
     }
 
-    public function byIdArray(array $groupIdArray):Collector{
-        if(empty($groupIdArray)){
+    public function byIdArray(array $communityIdArray):Collector{
+        if(empty($communityIdArray)){
             return new Collector();
         }
-        return $this->repo->listGroups([
-            'id' => $groupIdArray
+        return $this->repo->listCommunities([
+            'id' => $communityIdArray
         ]);
     }
 }

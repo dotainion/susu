@@ -1,24 +1,24 @@
 <?php
-namespace src\module\groups\logic;
+namespace src\module\communities\logic;
 
-use src\module\groups\objects\Group;
-use src\module\groups\repository\GroupRepository;
+use src\module\communities\objects\Community;
+use src\module\communities\repository\CommunityRepository;
 
-class SetGroup{
-    protected GroupRepository $repo;
+class SetCommunity{
+    protected CommunityRepository $repo;
 
     public function __construct(){
-        $this->repo = new GroupRepository();
+        $this->repo = new CommunityRepository();
     }
 
-    public function set(Group $group):void{
-        $collector = $this->repo->listGroups([
-            'id' => $group->id()
+    public function set(Community $community):void{
+        $collector = $this->repo->listCommunities([
+            'id' => $community->id()
         ]);
         if($collector->hasItem()){
-            $this->repo->edit($group);
+            $this->repo->edit($community);
             return;
         }
-        $this->repo->create($group);
+        $this->repo->create($community);
     }
 }

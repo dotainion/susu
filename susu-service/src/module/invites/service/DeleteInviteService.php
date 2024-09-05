@@ -4,20 +4,20 @@ namespace src\module\invites\service;
 use src\infrastructure\Assert;
 use src\infrastructure\Id;
 use src\infrastructure\Service;
-use src\module\invites\logic\AppendGroupToInvites;
+use src\module\invites\logic\AppendCommunityToInvites;
 use src\module\invites\logic\DeleteInvite;
 use src\module\invites\logic\FetchInvite;
 
 class DeleteInviteService extends Service{
     protected DeleteInvite $invite;
     protected FetchInvite $fetch;
-    protected AppendGroupToInvites $append;
+    protected AppendCommunityToInvites $append;
 
     public function __construct(){
         parent::__construct();
         $this->invite = new DeleteInvite();
         $this->fetch = new FetchInvite();
-        $this->append = new AppendGroupToInvites();
+        $this->append = new AppendCommunityToInvites();
     }
     
     public function process($id){
@@ -28,7 +28,7 @@ class DeleteInviteService extends Service{
         $invite = $collector->first();
 
         $this->invite->delete($invite->id());
-        $this->append->appendGroup($invite);
+        $this->append->appendCommunity($invite);
 
         $this->setOutput($invite);
         return $this;

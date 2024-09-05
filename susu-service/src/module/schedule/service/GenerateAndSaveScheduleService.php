@@ -25,10 +25,10 @@ class GenerateAndSaveScheduleService extends Service{
         $this->schedule = new SetSchedule();
     }
     
-    public function process($groupId){
-        Assert::validUuid($groupId, 'Group not found.');
+    public function process($communityId){
+        Assert::validUuid($communityId, 'Community not found.');
 
-        $collector = $this->susu->activeByGroupId(new Id($groupId));
+        $collector = $this->susu->activeByCommunityId(new Id($communityId));
         $collector->assertHasItem('Susu not yet stared.');
         $susu = $collector->first();
     

@@ -20,9 +20,9 @@ class ListSusu{
         ]);
     }
 
-    public function activeByGroupIdArray(array $groupIdArray):Collector{
+    public function activeByCommunityIdArray(array $communityIdArray):Collector{
         return $this->repo->listSusu([
-            'groupId' => $groupIdArray,
+            'communityId' => $communityIdArray,
             'completed' => false,
             'canceled' => false
         ]);

@@ -4,7 +4,7 @@ import { routes } from "../routes/Routes";
 import { useRef, useState } from "react";
 import { api } from "../request/Api";
 
-export const MessangerSearchGroupOrMember = () =>{
+export const MessangerSearchCommunityOrMember = () =>{
     const [messangers, setMessangers] = useState([]);
 
     const navigate = useNavigate();
@@ -22,18 +22,18 @@ export const MessangerSearchGroupOrMember = () =>{
         }, 500);
     }
 
-    const navigateTo = (memberOrGroup) =>{
-        if(memberOrGroup.type === 'group'){
-            return navigate(routes.susu().nested().groupMessages(memberOrGroup.id));
+    const navigateTo = (memberOrCommunity) =>{
+        if(memberOrCommunity.type === 'Community'){
+            return navigate(routes.susu().nested().communityMessages(memberOrCommunity.id));
         }
-        navigate(routes.susu().nested().messages(memberOrGroup.id));
+        navigate(routes.susu().nested().messages(memberOrCommunity.id));
     }
 
     return(
         <div className="container">
             <div className="d-flex flex-column vh-100 mx-auto" style={{maxWidth: '800px'}}>
                 <div className="d-flex align-items-center w-100 rounded-3 bg-white py-2 my-3">
-                    <input onChange={search} className="form-control shadow-none border-0" type="text" placeholder="Search members or group..."/>
+                    <input onChange={search} className="form-control shadow-none border-0" type="text" placeholder="Search members or community..."/>
                 </div>
                 <div className="mb-auto overflow-auto">
                     {messangers.map((messenger, key)=>(
@@ -43,7 +43,7 @@ export const MessangerSearchGroupOrMember = () =>{
                             </div>
                             <div className="w-100">
                                 <div className="fw-bold text-truncate w-100">John Wick</div>
-                                <div className="small lh-1">{messenger.type === 'user' ? 'Member' : 'Group'}</div>
+                                <div className="small lh-1">{messenger.type === 'user' ? 'Member' : 'Community'}</div>
                             </div>
                         </button>
                     ))}

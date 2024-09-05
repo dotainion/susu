@@ -1,27 +1,27 @@
 <?php
-namespace src\module\groups\service;
+namespace src\module\communities\service;
 
 use src\infrastructure\Id;
 use src\infrastructure\Service;
-use src\module\groups\logic\BindMembersToGroups;
-use src\module\groups\logic\ListGroups;
+use src\module\communities\logic\BindMembersToCommunities;
+use src\module\communities\logic\ListCommunities;
 
-class SearchGroupsService extends Service{
-    protected ListGroups $groups;
-    protected BindMembersToGroups $bind;
+class SearchCommunitiesService extends Service{
+    protected ListCommunities $communities;
+    protected BindMembersToCommunities $bind;
 
     public function __construct(){
         parent::__construct();
-        $this->groups = new ListGroups();
-        $this->bind = new BindMembersToGroups();
+        $this->communities = new ListCommunities();
+        $this->bind = new BindMembersToCommunities();
     }
     
     public function process($value){
         $value = trim($value);
         if((new Id())->isValid($value)){
-            $collector = $this->groups->byIdArray([new Id($value)]);
+            $collector = $this->communities->byIdArray([new Id($value)]);
         }else{
-            $collector = $this->groups->byName($value);
+            $collector = $this->communities->byName($value);
         }
 
         $this->bind->bindRequirements($collector);

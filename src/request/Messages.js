@@ -15,8 +15,8 @@ export class Messages{
         return await this.api.get('/member/conversation', {memberId, receipientId, read});
     }
 
-    async groupConversation(groupId, read=null){
-        return await this.api.get('/group/conversation', {groupId, read});
+    async communityConversation(communityId, read=null){
+        return await this.api.get('/community/conversation', {communityId, read});
     }
 
     async messangers(memberId){

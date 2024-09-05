@@ -40,12 +40,12 @@ export const Schedule = () =>{
     }
 
     useEffect(()=>{
-        api.schedule.list(params.groupId).then((response)=>{
+        api.schedule.list(params.communityId).then((response)=>{
             setSchedules(response.data.data);
         }).catch((error)=>{
             setErrors(new ParseError().message(error));
         });
-        api.susu.active(params.groupId).then((response)=>{
+        api.susu.active(params.communityId).then((response)=>{
             setSusu(response.data.data[0]);
         }).catch((error)=>{
             setErrors(new ParseError().message(error));
@@ -54,12 +54,12 @@ export const Schedule = () =>{
 
     return(
         <div className="container">
-            <button onClick={()=>navigate(routes.susu().nested().groupSusuWallet(params.groupId))} className="btn bg-transparent p-0 my-4"><IoIosArrowBack/> To Susu Manager</button>
+            <button onClick={()=>navigate(routes.susu().nested().communitySusuWallet(params.communityId))} className="btn bg-transparent p-0 my-4"><IoIosArrowBack/> To Susu Manager</button>
             <div className="d-flex align-items-center h4 mb-3">
                 <FcClock/>
                 <div className="mx-2 w-100">Payout Schedule</div>
             </div>
-            {susu?.attributes?.owner?.id === user?.id ? <button onClick={()=>navigate(routes.susu().nested().assignSchedule(params.groupId))} className="btn btn-sm bg-sec mb-4">Assign Schedule</button> : null}
+            {susu?.attributes?.owner?.id === user?.id ? <button onClick={()=>navigate(routes.susu().nested().assignSchedule(params.communityId))} className="btn btn-sm bg-sec mb-4">Assign Schedule</button> : null}
             {errors ? <div className="alert alert-danger border-0">{errors}</div> : null}
             <div className="d-flex w-100">
                 <div className="w-100 text-center py-3" style={{minHeight: '30vh'}}>

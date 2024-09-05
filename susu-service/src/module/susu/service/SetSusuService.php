@@ -4,28 +4,28 @@ namespace src\module\susu\service;
 use src\infrastructure\Assert;
 use src\infrastructure\Id;
 use src\infrastructure\Service;
-use src\module\groups\logic\FetchGroup;
+use src\module\communities\logic\FetchCommunity;
 use src\module\susu\factory\SusuFactory;
 use src\module\susu\logic\FetchSusu;
 use src\module\susu\logic\SetSusu;
 
 class SetSusuService extends Service{
     protected SetSusu $susu;
-    protected FetchGroup $group;
+    protected FetchCommunity $community;
     protected SusuFactory $factory;
     protected FetchSusu $activeSusu;
 
     public function __construct(){
         parent::__construct();
         $this->susu = new SetSusu();
-        $this->group = new FetchGroup();
+        $this->community = new FetchCommunity();
         $this->factory = new SusuFactory();
         $this->activeSusu = new FetchSusu();
     }
     
-    public function process($susuId, $contribution, $cycle, $accurance, $startDate, $groupId, $pendingStart, $completed, $canceled){
+    public function process($susuId, $contribution, $cycle, $accurance, $startDate, $communityId, $pendingStart, $completed, $canceled){
         Assert::validUuid($susuId, 'Susu not found.');
-        Assert::validUuid($groupId, 'Group not found.');
+        Assert::validUuid($communityId, 'Community not found.');
 
         $collector = $this->activeSusu->byId(new Id($susuId));
         $collector->assertHasItem('Susu not found.');
@@ -36,7 +36,7 @@ class SetSusuService extends Service{
             'cycle' => $cycle,
             'accurance' => (int)$accurance,
             'startDate' => $startDate,
-            'groupId' => $groupId,
+            'communityId' => $communityId,
             'pendingStart' => $pendingStart,
             'completed' => $completed,
             'canceled' => $canceled,

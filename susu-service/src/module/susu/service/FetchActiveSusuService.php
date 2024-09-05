@@ -4,7 +4,7 @@ namespace src\module\susu\service;
 use src\infrastructure\Assert;
 use src\infrastructure\Id;
 use src\infrastructure\Service;
-use src\module\groups\logic\FetchGroup;
+use src\module\communities\logic\FetchCommunity;
 use src\module\susu\logic\FetchSusu;
 use src\module\susu\logic\ListSusuLink;
 use src\module\user\logic\FetchUser;
@@ -15,7 +15,7 @@ class FetchActiveSusuService extends Service{
     protected ListSusuLink $links;
     protected ListUsers $users;
     protected FetchUser $user;
-    protected FetchGroup $group;
+    protected FetchCommunity $community;
 
     public function __construct(){
         parent::__construct();
@@ -23,23 +23,23 @@ class FetchActiveSusuService extends Service{
         $this->links = new ListSusuLink();
         $this->users = new ListUsers();
         $this->user = new FetchUser();
-        $this->group = new FetchGroup();
+        $this->community = new FetchCommunity();
     }
     
-    public function process($groupId){
-        Assert::validUuid($groupId, 'Group not found.');
+    public function process($communityId){
+        Assert::validUuid($communityId, 'Community not found.');
 
-        $groupCollector = $this->group->group(new Id($groupId));
-        $groupCollector->assertHasItem('Group not found.');
-        $group = $groupCollector->first();
+        $communityCollector = $this->community->community(new Id($communityId));
+        $communityCollector->assertHasItem('Community not found.');
+        $community = $communityCollector->first();
 
-        $collector = $this->susu->activeByGroupId($group->id());
+        $collector = $this->susu->activeByCommunityId($community->id());
         $collector->assertHasItem('No active susu found.');
         $susu = $collector->first();
 
         $links = $this->links->links($susu->id());
         $members = $this->users->usersByIdArray($links->attrArray('memberId'));
-        $owners = $this->user->user($group->creatorId());
+        $owners = $this->user->user($community->creatorId());
 
         $members->hasItem() && $susu->setMembers($members);
         $owners->hasItem() && $susu->setOwner($owners->first());

@@ -1,16 +1,16 @@
 <?php
-namespace src\module\groups\action;
+namespace src\module\communities\action;
 
 use src\infrastructure\IAction;
 use src\infrastructure\Request;
-use src\module\groups\service\MemberGroupsService;
+use src\module\communities\service\MemberCommunitiesService;
 
-class MemberGroupsAction extends Request implements IAction{
+class MemberCommunitiesAction extends Request implements IAction{
     protected $service;
 
     public function __construct(){
         parent::__REQUEST__();
-        $this->service = new MemberGroupsService();
+        $this->service = new MemberCommunitiesService();
     }
 
     public function execute(){

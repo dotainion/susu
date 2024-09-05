@@ -6,19 +6,19 @@ use src\infrastructure\DateHelper;
 use src\infrastructure\Id;
 use src\infrastructure\Service;
 use src\module\invites\factory\InviteFactory;
-use src\module\invites\logic\AppendGroupToInvites;
+use src\module\invites\logic\AppendCommunityToInvites;
 use src\module\invites\logic\SetInvite;
 
 class SetInviteService extends Service{
     protected SetInvite $save;
     protected InviteFactory $factory;
-    protected AppendGroupToInvites $append;
+    protected AppendCommunityToInvites $append;
 
     public function __construct(){
         parent::__construct();
         $this->save = new SetInvite();
         $this->factory = new InviteFactory();
-        $this->append = new AppendGroupToInvites();
+        $this->append = new AppendCommunityToInvites();
     }
     
     public function process($id, $memberId, $targetId, $isSusu){
@@ -37,7 +37,7 @@ class SetInviteService extends Service{
         ]);
 
         $this->save->set($invite);
-        $this->append->appendGroup($invite);
+        $this->append->appendCommunity($invite);
 
         $this->setOutput($invite);
         return $this;

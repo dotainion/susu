@@ -6,10 +6,10 @@ import { MessageBox } from "../components/MessageBox";
 import { api } from "../request/Api";
 import { useParams } from "react-router-dom";
 
-export const GroupMessages = () =>{
+export const CommunityMessages = () =>{
     const { user } = useAuth();
 
-    const [group, setGroup] = useState();
+    const [community, setCommunity] = useState();
     const [messages, setMessages] = useState([]);
 
     const params = useParams();
@@ -21,7 +21,7 @@ export const GroupMessages = () =>{
         const data = {
             id: null,
             fromId: user.id,
-            toId: params.groupId,
+            toId: params.communityId,
             message: message,
             read: false,
             hide: false,
@@ -38,20 +38,20 @@ export const GroupMessages = () =>{
     }, [messages]);
 
     useEffect(()=>{
-        api.message.groupConversation(params.groupId).then((response)=>{
+        api.message.communityConversation(params.communityId).then((response)=>{
             setMessages(response.data.data);
         }).catch((error)=>{
 
         });
 
-        api.group.group(params.groupId).then((response)=>{
-            setGroup(response.data.data[0]);
+        api.community.community(params.communityId).then((response)=>{
+            setCommunity(response.data.data[0]);
         }).catch((error)=>{
 
         });
 
         intervalRef.current = setInterval(() => {
-            api.message.groupConversation(params.groupId, false).then((response)=>{
+            api.message.communityConversation(params.communityId, false).then((response)=>{
                 const msgsIds = messagesRef.current.map((msg)=>msg.id);
                 setMessages((msgs)=>[...msgs, ...response.data.data.filter((msg)=>!msgsIds.includes(msg.id))]);
             }).catch((error)=>{
@@ -66,9 +66,9 @@ export const GroupMessages = () =>{
 
     return(
         <MessageBox 
-            isGroupMessanger
+            isCommunityMessanger
             messages={messages}
-            messageToName={group?.attributes?.name || ''}
+            messageToName={community?.attributes?.name || ''}
             sendMessage={sendMessage}
         />
     )

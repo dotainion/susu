@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { api } from "../request/Api";
 import { utils } from "../utils/Utils";
 
-export const GroupSusuWallet = () =>{
+export const CommunitySusuWallet = () =>{
     const [susu , setSusu] = useState();
     const [members, setMembers] = useState([]);
     const [schedule, setSchedule] = useState([]);
@@ -23,13 +23,13 @@ export const GroupSusuWallet = () =>{
     }
 
     useEffect(() => {
-        api.susu.active(params.groupId).then((response)=>{
+        api.susu.active(params.communityId).then((response)=>{
             setSusu(response.data.data[0]);
             setMembers(response.data.data[0].attributes.members || []);
         }).catch((error)=>{
             
         });
-        api.schedule.list(params.groupId).then((response)=>{
+        api.schedule.list(params.communityId).then((response)=>{
             setSchedule(response.data.data);
         }).catch((error)=>{
             
@@ -64,7 +64,7 @@ export const GroupSusuWallet = () =>{
 
     return(
         <div className="container">
-            <div className="h4 my-3">Group Susu Manager</div>
+            <div className="h4 my-3">Community Susu Manager</div>
             <div>Susu Credit Line</div>
             <div className="h1 mb-4">${parseFloat(susu?.attributes?.contribution || 0).toFixed(2)}</div>
 
@@ -78,7 +78,7 @@ export const GroupSusuWallet = () =>{
                     <div className="small fw-bold">{utils.date.toLocalDate(susu?.attributes?.startDate)} - {consolidate.endDate}</div>
                 </div>
                 <div className="w-50">
-                    <div className="small text-muted">GROUP OWNER</div>
+                    <div className="small text-muted">COMMUNITY OWNER</div>
                     <div className="small fw-bold">{susu?.attributes?.owner?.attributes?.firstName} {susu?.attributes?.owner?.attributes?.lastName}</div>
                 </div>
             </div>
@@ -100,7 +100,7 @@ export const GroupSusuWallet = () =>{
                 <table className="w-100">
                     <tbody>
                         {members.map((member, key)=>(
-                            <tr onClick={()=>navigate(routes.susu().nested().updateMemberSusuWallet(params.groupId, member.id))} className="border-bottom border-secondary pointer" key={member.id}>
+                            <tr onClick={()=>navigate(routes.susu().nested().updateMemberSusuWallet(params.communityId, member.id))} className="border-bottom border-secondary pointer" key={member.id}>
                                 <td className="py-2">
                                     <div className="d-flex">
                                         <div className="me-2 d-none d-sm-block">

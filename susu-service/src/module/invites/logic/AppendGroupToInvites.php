@@ -2,44 +2,44 @@
 namespace src\module\invites\logic;
 
 use src\infrastructure\Collector;
-use src\module\groups\logic\ListGroups;
+use src\module\communities\logic\ListCommunities;
 use src\module\invites\objects\Invite;
 use src\module\susu\logic\ListSusu;
 
-class AppendGroupToInvites{
+class AppendCommunityToInvites{
     protected ListSusu $susu;
-    protected ListGroups $groups;
+    protected ListCommunities $communities;
 
     public function __construct(){
         $this->susu = new ListSusu();
-        $this->groups = new ListGroups();
+        $this->communities = new ListCommunities();
     }
 
-    public function appendGroups(Collector &$collector):void{
+    public function appendCommunities(Collector &$collector):void{
         $targetIdArray = $collector->attrArray('targetId');
         $susus = $this->susu->byIdArray($targetIdArray);
-        $targetIdArray = [...$targetIdArray, ...$susus->attrArray('groupId')];
+        $targetIdArray = [...$targetIdArray, ...$susus->attrArray('communityId')];
 
         $references = [];
         foreach($susus->list() as $susu){
-            $references[$susu->id()->toString()] = $susu->groupId()->toString();
+            $references[$susu->id()->toString()] = $susu->communityId()->toString();
         }
 
-        $groups = $this->groups->byIdArray($targetIdArray);
+        $communities = $this->communities->byIdArray($targetIdArray);
         
         foreach($collector->list() as $invite){
-            foreach($groups->list() as $group){
+            foreach($communities->list() as $community){
                 $ref = $references[$invite->targetId()->toString()] ?? null;
-                if($invite->targetId()->toString() === $group->id()->toString() || $ref === $group->id()->toString()){
-                    $invite->setGroup($group);
+                if($invite->targetId()->toString() === $community->id()->toString() || $ref === $community->id()->toString()){
+                    $invite->setCommunity($community);
                 }
             }
         }
     }
 
-    public function appendGroup(Invite $invite):void{
+    public function appendCommunity(Invite $invite):void{
         $collector = new Collector();
         $collector->add($invite);
-        $this->appendGroups($collector);
+        $this->appendCommunities($collector);
     }
 }

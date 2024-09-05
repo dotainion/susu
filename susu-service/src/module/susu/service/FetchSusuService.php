@@ -4,7 +4,7 @@ namespace src\module\susu\service;
 use src\infrastructure\Assert;
 use src\infrastructure\Id;
 use src\infrastructure\Service;
-use src\module\groups\logic\FetchGroup;
+use src\module\communities\logic\FetchCommunity;
 use src\module\susu\logic\FetchSusu;
 use src\module\susu\logic\ListSusuLink;
 use src\module\user\logic\FetchUser;
@@ -15,7 +15,7 @@ class FetchSusuService extends Service{
     protected ListSusuLink $links;
     protected ListUsers $users;
     protected FetchUser $user;
-    protected FetchGroup $group;
+    protected FetchCommunity $community;
 
     public function __construct(){
         parent::__construct();
@@ -23,7 +23,7 @@ class FetchSusuService extends Service{
         $this->links = new ListSusuLink();
         $this->users = new ListUsers();
         $this->user = new FetchUser();
-        $this->group = new FetchGroup();
+        $this->community = new FetchCommunity();
     }
     
     public function process($susuId){
@@ -33,13 +33,13 @@ class FetchSusuService extends Service{
         $collector->assertHasItem('No active susu found.');
         $susu = $collector->first();
 
-        $groupCollector = $this->group->group($susu->groupId());
-        $groupCollector->assertHasItem('Group not found.');
-        $group = $groupCollector->first();
+        $communityCollector = $this->community->community($susu->communityId());
+        $communityCollector->assertHasItem('Community not found.');
+        $community = $communityCollector->first();
 
         $links = $this->links->links($susu->id());
         $members = $this->users->usersByIdArray($links->attrArray('memberId'));
-        $owners = $this->user->user($group->creatorId());
+        $owners = $this->user->user($community->creatorId());
 
         $members->hasItem() && $susu->setMembers($members);
         $owners->hasItem() && $susu->setOwner($owners->first());

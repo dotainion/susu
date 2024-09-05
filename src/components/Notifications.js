@@ -42,7 +42,7 @@ const Notification = ({info}) =>{
         setErrors(null);
         const apiCall = info.attributes.isSusu
             ? api.susu.join(info.attributes.targetId, user.id)
-            : api.group.join(info.attributes.targetId, user.id);
+            : api.community.join(info.attributes.targetId, user.id);
 
         apiCall.then((response)=>{
             removeInvite();
@@ -67,9 +67,9 @@ const Notification = ({info}) =>{
 
     useEffect(()=>{
         if(info.attributes.isSusu){
-            setMessages(`You were invited to join susu under group: ${info.attributes.group.attributes.name}`);
+            setMessages(`You were invited to join susu under community: ${info.attributes.community.attributes.name}`);
         }else{
-            setMessages(`You were invited to join group: ${info.attributes.group.attributes.name}`);
+            setMessages(`You were invited to join community: ${info.attributes.community.attributes.name}`);
         }
     }, [info]);
 

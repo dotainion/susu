@@ -1,24 +1,24 @@
 <?php
-namespace src\module\groups\logic;
+namespace src\module\communities\logic;
 
-use src\module\groups\objects\GroupLink;
-use src\module\groups\repository\GroupRepository;
+use src\module\communities\objects\CommunityLink;
+use src\module\communities\repository\CommunityRepository;
 
-class JoinGroup{
-    protected GroupRepository $repo;
+class JoinCommunity{
+    protected CommunityRepository $repo;
 
     public function __construct(){
-        $this->repo = new GroupRepository();
+        $this->repo = new CommunityRepository();
     }
 
-    public function join(GroupLink $link):void{
-        $collector = $this->repo->listJoinGroup([
-            'groupId' => $link->groupId(),
+    public function join(CommunityLink $link):void{
+        $collector = $this->repo->listJoinCommunity([
+            'communityId' => $link->communityId(),
             'memberId' => $link->memberId()
         ]);
         if($collector->hasItem()){
             return;
         }
-        $this->repo->joinGroup($link);
+        $this->repo->joinCommunity($link);
     }
 }

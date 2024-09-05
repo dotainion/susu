@@ -49,7 +49,7 @@ export const MembersList = () => {
                                         <img className="card-img-sub" src="https://media.istockphoto.com/id/1327592506/vector/default-avatar-photo-placeholder-icon-grey-profile-picture-business-man.jpg?s=612x612&w=0&k=20&c=BpR0FVaEa5F24GIw7K8nMWiiGmbb8qmhfkpXcp1dhQg=" alt="" />
                                         <div>
                                             <div className="fw-bold">{member.attributes.firstName} {member.attributes.lastName}</div>
-                                            <div className="small lh-1"><small>Groups <b>25</b></small></div>
+                                            <div className="small lh-1"><small>Communities <b>25</b></small></div>
                                         </div>
                                     </div>
                                     <div className="text-muted small my-2">{member.attributes.bio}</div>

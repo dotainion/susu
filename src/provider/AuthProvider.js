@@ -6,6 +6,8 @@ import { ModalOverlay } from "../container/ModalOverlay";
 import $ from "jquery";
 import { routes } from "../routes/Routes";
 import { useLocation, useNavigate } from "react-router-dom";
+import { mockData } from "../container/MockData";
+import { SidebarProvider } from "../layout/SidebarProvider";
 
 const Context = createContext();
 export const useAuth = () => useContext(Context);
@@ -54,6 +56,11 @@ export const AuthProvider = ({children}) =>{
     }, [location]);
 
     useEffect(()=>{
+        if(process.env.NODE_ENV === 'development'){
+            setUser(mockData.user());
+            setIsAuthenticated(true);
+            return setLoading(false);
+        }
         api.auth.session().then((response)=>{
             setUser(response.data.data[0]);
             setIsAuthenticated(true);
@@ -74,9 +81,15 @@ export const AuthProvider = ({children}) =>{
 
     return(
         <Context.Provider value={value}>
-            {loading ? null : children}
+            {
+                loading 
+                ? null 
+                : <SidebarProvider>
+                    {children}
+                </SidebarProvider>
+            }
             {isAuthenticated ? <Notifications/> : null}
-            <div id="login-notification" style={{display: 'none'}}>
+            {/*<div id="login-notification" style={{display: 'none'}}>
                 <ModalOverlay show centered noHeader>
                     <div className="d-flex align-items-center w-100">
                         <div className="w-100">You are no longer logged in.</div>
@@ -86,7 +99,7 @@ export const AuthProvider = ({children}) =>{
                         }} className="btn btn-sm btn-primary">Okay</button>
                     </div>
                 </ModalOverlay>
-            </div>
+            </div>*/}
         </Context.Provider>
     )
 }

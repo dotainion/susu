@@ -20,7 +20,7 @@ class SetSusuAction extends Request implements IAction{
             $this->get('cycle'), 
             $this->get('accurance'), 
             $this->get('startDate'), 
-            $this->get('groupId'), 
+            $this->get('communityId'), 
             $this->get('pendingStart'), 
             $this->get('completed'),
             $this->get('canceled')

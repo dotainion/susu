@@ -20,7 +20,7 @@ export const SelectOption = ({options, onChange, name, defaultValue}) =>{
     if(reRender) return;
 
     return(
-        <div className="radio-group rounded-pill d-flex align-items-center mb-3">
+        <div className="radio-community rounded-pill d-flex align-items-center mb-3">
             {options?.map((option, key)=>(
                 <span key={key}>
                     <input 

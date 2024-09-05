@@ -4,13 +4,13 @@ import { api } from "../request/Api";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../provider/AuthProvider";
 
-export const GroupMembers = () =>{
+export const CommunityMembers = () =>{
     const [members, setMembers] = useState([]);
 
     const params = useParams();
 
     useEffect(()=>{
-        api.user.byGroup(params.groupId).then((response)=>{
+        api.user.byCommunity(params.communityId).then((response)=>{
             setMembers(response.data.data);
         }).catch((error)=>{
 
@@ -20,7 +20,7 @@ export const GroupMembers = () =>{
     return(
         <div className="d-flex justify-content-center text-nowrap w-100">
             <div className="w-100" style={{maxWidth: '600px'}}>
-                <div className="h4 text-center my-4">Group Members</div>
+                <div className="h4 text-center my-4">Community Members</div>
                 <hr></hr>
                 {
                     members.length ?
@@ -45,7 +45,7 @@ const MemberCard = ({member}) =>{
 
     const deleteMember = () =>{
         setRemoveSpinner(true);
-        api.group.unlink(params.groupId, member.id).then((response)=>{
+        api.community.unlink(params.communityId, member.id).then((response)=>{
             setUndo(true);
         }).catch((error)=>{
             console.log(error);
@@ -56,7 +56,7 @@ const MemberCard = ({member}) =>{
 
     const undoDeleteMember = () =>{
         setUndoSpinner(true);
-        api.group.join(params.groupId, member.id).then((response)=>{
+        api.community.join(params.communityId, member.id).then((response)=>{
             setUndo(false);
         }).catch((error)=>{
             console.log(error);

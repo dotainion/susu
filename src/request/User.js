@@ -27,8 +27,8 @@ export class User{
         return await this.api.get('/set/address', data);
     }
 
-    async byGroup(groupId){
-        return await this.api.get('/list/group/users', {groupId});
+    async byCommunity(communityId){
+        return await this.api.get('/list/community/users', {communityId});
     }
 
     async bySusu(susuId){

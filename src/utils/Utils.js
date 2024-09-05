@@ -79,19 +79,11 @@ class DateTime{
     }
 }
 
-class Element{
-    nameToId(name, excludeHash){
-        const hash = excludeHash ? '' : '#';
-        return `${hash}${name.replace(/\s+/g, '').replace(/\//g, '')}`;
-    }
-}
-
 class Utils{
     constructor(){
         this.share = new Share();
         this.date = new DateTime();
         this.copy = new Copy();
-        this.element = new Element();
     }
 }
 

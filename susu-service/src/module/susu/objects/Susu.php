@@ -17,7 +17,7 @@ class Susu implements IObjects{
     protected string $cycle;
     protected int $accurance;
     protected DateHelper $startDate;
-    protected Id $groupId;
+    protected Id $communityId;
     protected bool $pendingStart;
     protected bool $completed;
     protected bool $canceled;
@@ -26,7 +26,7 @@ class Susu implements IObjects{
 
     public function __construct(){
         $this->id = new Id();
-        $this->groupId = new Id();
+        $this->communityId = new Id();
     }
 
     public function id():IId{
@@ -69,8 +69,8 @@ class Susu implements IObjects{
         return $this->startDate;
     }
 
-    public function groupId():IId{
-        return $this->groupId;
+    public function communityId():IId{
+        return $this->communityId;
     }
 
     public function setId(string $id):void{
@@ -109,8 +109,8 @@ class Susu implements IObjects{
         $this->pendingStart = $pendingStart;
     }
 
-    public function setGroupId(string $groupId):void{
-        $this->groupId->set($groupId);
+    public function setCommunityId(string $communityId):void{
+        $this->communityId->set($communityId);
     }
 
     public function setMembers(Collector $members):void{

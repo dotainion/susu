@@ -49,7 +49,7 @@ export const MemberSusuHistory = () =>{
         <div className="container">
             <div className="d-flex align-items-center w-100 text-nowrap mt-3">
                 <div className="h4 w-100">Contribution History</div>
-                {susu ? <button onClick={()=>navigate(routes.susu().nested().groupSusuWallet(susu.attributes.groupId))} className="btn btn-sm mx-1">To Group Wallet</button> : null}
+                {susu ? <button onClick={()=>navigate(routes.susu().nested().CommunitySusuWallet(susu.attributes.communityId))} className="btn btn-sm mx-1">To Community Wallet</button> : null}
             </div>
             <div>
                 <table className="w-100">

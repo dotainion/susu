@@ -1,38 +1,38 @@
 <?php
-namespace src\module\groups\service;
+namespace src\module\communities\service;
 
 use src\infrastructure\Assert;
 use src\infrastructure\Service;
-use src\module\groups\factory\GroupLinkFactory;
-use src\module\groups\logic\BindMembersToGroups;
-use src\module\groups\logic\FetchGroup;
-use src\module\groups\logic\JoinGroup;
+use src\module\communities\factory\CommunityLinkFactory;
+use src\module\communities\logic\BindMembersToCommunities;
+use src\module\communities\logic\FetchCommunity;
+use src\module\communities\logic\JoinCommunity;
 
-class JoinGroupService extends Service{
-    protected JoinGroup $group;
-    protected FetchGroup $fetch;
-    protected GroupLinkFactory $factory;
-    protected BindMembersToGroups $bind;
+class JoinCommunityService extends Service{
+    protected JoinCommunity $community;
+    protected FetchCommunity $fetch;
+    protected CommunityLinkFactory $factory;
+    protected BindMembersToCommunities $bind;
 
     public function __construct(){
         parent::__construct();
-        $this->group = new JoinGroup();
-        $this->fetch = new FetchGroup();
-        $this->factory = new GroupLinkFactory();
-        $this->bind = new BindMembersToGroups();
+        $this->community = new JoinCommunity();
+        $this->fetch = new FetchCommunity();
+        $this->factory = new CommunityLinkFactory();
+        $this->bind = new BindMembersToCommunities();
     }
     
-    public function process($groupId, $memberId){
-        Assert::validUuid($groupId, 'Group not found.');
+    public function process($communityId, $memberId){
+        Assert::validUuid($communityId, 'Community not found.');
         Assert::validUuid($memberId, 'Member not found.');
 
         $link = $this->factory->mapResult([
-            'groupId' => $groupId,
+            'communitId' => $communityId,
             'memberId' => $memberId,
         ]);
 
-        $this->group->join($link);
-        $collector = $this->fetch->group($link->groupId());
+        $this->community->join($link);
+        $collector = $this->fetch->community($link->communityId());
         $this->bind->bindRequirements($collector);
 
         $this->setOutput($collector);

@@ -7,7 +7,7 @@ use src\infrastructure\Service;
 use src\module\messages\logic\AppendMessageUsers;
 use src\module\messages\logic\ListMessages;
 
-class ListGroupMessagesService extends Service{
+class ListCommunityMessagesService extends Service{
     protected ListMessages $messages;
     protected AppendMessageUsers $users;
 
@@ -17,10 +17,10 @@ class ListGroupMessagesService extends Service{
         $this->users = new AppendMessageUsers();
     }
     
-    public function process($groupId, $read){
-        Assert::stringNotEmpty($groupId, 'Group not found.');
+    public function process($communityId, $read){
+        Assert::stringNotEmpty($communityId, 'Community not found.');
 
-        $collector = $this->messages->groupConversation(new Id($groupId), $read);
+        $collector = $this->messages->communityConversation(new Id($communityId), $read);
         $this->users->appendUsers($collector, $this->user());
 
         $this->setOutput($collector);

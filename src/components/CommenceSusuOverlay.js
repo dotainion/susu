@@ -19,7 +19,7 @@ export const CommenceSusuOverlay = ({isOpen, onClose, onResponse}) =>{
     const startSusu = () =>{
         setErrors(null);
         const data = {
-            groupId: params.groupId,
+            communityId: params.communityId,
             accurance: accuranceRef.current.value,
             contribution: contributionRef.current.value,
             cycle: cycle

@@ -1,27 +1,27 @@
 <?php
-namespace src\module\groups\service;
+namespace src\module\communities\service;
 
 use src\infrastructure\Assert;
 use src\infrastructure\Id;
 use src\infrastructure\Service;
-use src\module\groups\logic\BindMembersToGroups;
-use src\module\groups\logic\ListGroups;
+use src\module\communities\logic\BindMembersToCommunities;
+use src\module\communities\logic\ListCommunities;
 
-class OwnerGroupsService extends Service{
-    protected ListGroups $groups;
-    protected BindMembersToGroups $bind;
+class OwnerCommunitiesService extends Service{
+    protected ListCommunities $communities;
+    protected BindMembersToCommunities $bind;
 
     public function __construct(){
         parent::__construct();
-        $this->groups = new ListGroups();
-        $this->bind = new BindMembersToGroups();
+        $this->communities = new ListCommunities();
+        $this->bind = new BindMembersToCommunities();
     }
     
     public function process($creatorId){
         Assert::validUuid($creatorId, 'Member not found.');
 
-        $collector = $this->groups->ownerGroups(new Id($creatorId));
-        $collector->assertHasItem('Groups not found.');
+        $collector = $this->communities->ownerCommunities(new Id($creatorId));
+        $collector->assertHasItem('Communities not found.');
         
         $this->bind->bindRequirements($collector);
         $this->setOutput($collector);

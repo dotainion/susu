@@ -12,24 +12,24 @@ import { utils } from "../utils/Utils";
 export const Dashboard = () =>{
     const { user } = useAuth();
 
-    const [groups, setGroups] = useState([]);
+    const [communities, setCommunities] = useState([]);
     const [histories, setHistories] = useState([]);
-    const [selectGroup, setSelectGroup] = useState();
+    const [selectCommunity, setSelectCommunity] = useState();
 
     const navigate = useNavigate();
 
     useEffect(()=>{
         if(!user?.id) return;
-        api.group.memberGroups(user.id).then((response)=>{
-            setGroups(response.data.data);
+        api.community.memberCommunities(user.id).then((response)=>{
+            setCommunities(response.data.data);
         }).catch((error)=>{
 
         });
     }, [user]);
 
     useEffect(()=>{
-        if(!selectGroup) return;
-        api.schedule.list(selectGroup.id).then((response)=>{
+        if(!selectCommunity) return;
+        api.schedule.list(selectCommunity.id).then((response)=>{
             let unSortedPayments = [];
             response.data.data.forEach((schedule)=>{
                 unSortedPayments = [
@@ -43,7 +43,7 @@ export const Dashboard = () =>{
         }).catch((error)=>{
 
         });
-    }, [selectGroup]);
+    }, [selectCommunity]);
 
     return(
         <div className="container">
@@ -51,24 +51,24 @@ export const Dashboard = () =>{
             <hr></hr>
             <div className="d-sm-flex d-block">
                 <button 
-                    onClick={()=>navigate(routes.susu().nested().ownerGroups())} 
+                    onClick={()=>navigate(routes.susu().nested().ownerCommunities())} 
                     className="btn btn-light text-start shadow-sm me-2 d-flex align-items-center mb-3"
                 >
                     <FaLayerGroup className="fs-5"/>
-                    <div className="fs-bold ms-2">Go to my groups</div>
+                    <div className="fs-bold ms-2">Go to my communities</div>
                 </button>
                 <Dropdown 
                     className="btn-light text-start shadow-sm me-2 d-flex align-items-center mb-3"
-                    options={groups.map((g)=>({title: g.attributes.name, onClick: ()=>setSelectGroup(g)}))}
-                    defaultValue={'You are not yet in a group'}
+                    options={communities.map((c)=>({title: c.attributes.name, onClick: ()=>setSelectCommunity(c)}))}
+                    defaultValue={'You are not yet in a community'}
                 >
                     <FaLayerGroup className="fs-5"/>
-                    <div className="fs-bold ms-2">{selectGroup?.attributes?.name || 'Select group to see'} :stats</div>
+                    <div className="fs-bold ms-2">{selectCommunity?.attributes?.name || 'Select community to see'} :stats</div>
                 </Dropdown>
             </div>
             <hr></hr>
 
-            <SchedulePayoutChart groupId={selectGroup?.id}/>
+            <SchedulePayoutChart communityId={selectCommunity?.id}/>
 
             <div className="text-secondary mt-3">History</div>
             <table className="w-100 small table">

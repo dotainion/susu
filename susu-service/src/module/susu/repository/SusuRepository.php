@@ -21,7 +21,7 @@ class SusuRepository extends Repository{
             ->add('cycle', $susu->cycle())
             ->add('accurance', $susu->accurance())
             ->add('startDate', $susu->startDate()->toString())
-            ->add('groupId', $this->uuid($susu->groupId()))
+            ->add('communityId', $this->uuid($susu->communityId()))
             ->add('pendingStart', $susu->pendingStart())
             ->add('canceled', $susu->canceled())
             ->add('completed', $susu->completed());
@@ -34,7 +34,7 @@ class SusuRepository extends Repository{
             ->set('cycle', $susu->cycle())
             ->set('accurance', $susu->accurance())
             ->set('startDate', $susu->startDate()->toString())
-            ->set('groupId', $this->uuid($susu->groupId()))
+            ->set('communityId', $this->uuid($susu->communityId()))
             ->set('pendingStart', $susu->pendingStart())
             ->set('canceled', $susu->canceled())
             ->set('completed', $susu->completed())
@@ -45,8 +45,8 @@ class SusuRepository extends Repository{
     public function listSusu(array $where = []):Collector{
         $this->select('susu');
 
-        if(isset($where['groupId'])){
-            $this->where('groupId', $this->uuid($where['groupId']));
+        if(isset($where['communityId'])){
+            $this->where('communityId', $this->uuid($where['communityId']));
         }
         if(isset($where['id'])){
             $this->where('id', $this->uuid($where['id']));

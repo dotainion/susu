@@ -1,21 +1,21 @@
 <?php
-namespace src\module\groups\action;
+namespace src\module\communities\action;
 
 use src\infrastructure\IAction;
 use src\infrastructure\Request;
-use src\module\groups\service\UnlinkGroupService;
+use src\module\communities\service\UnlinkCommunityService;
 
-class UnlinkGroupAction extends Request implements IAction{
+class UnlinkCommunityAction extends Request implements IAction{
     protected $service;
 
     public function __construct(){
         parent::__REQUEST__();
-        $this->service = new UnlinkGroupService();
+        $this->service = new UnlinkCommunityService();
     }
 
     public function execute(){
         return $this->service->process(
-            $this->get('groupId'),
+            $this->get('communityId'),
             $this->get('memberId')
         );
     }

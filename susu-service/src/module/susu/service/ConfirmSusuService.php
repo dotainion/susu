@@ -21,15 +21,15 @@ class ConfirmSusuService extends Service{
         $this->activeSusu = new FetchSusu();
     }
     
-    public function process($groupId){
-        Assert::validUuid($groupId, 'Group not found.');
+    public function process($communityId){
+        Assert::validUuid($communityId, 'Community not found.');
 
-        $collector = $this->activeSusu->activeByGroupId(new Id($groupId));
+        $collector = $this->activeSusu->activeByCommunityId(new Id($communityId));
         $collector->assertHasItem('Susu not yet stared.');
         $susu = $collector->first();
         $susu->setPendingStart(false);
 
-        (new GenerateAndSaveScheduleService())->process($susu->groupId());
+        (new GenerateAndSaveScheduleService())->process($susu->communityId());
         
         $this->susu->set($susu);
 

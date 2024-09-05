@@ -60,7 +60,7 @@ export const UpdateMemberSusuWallet = () =>{
     }
 
     useEffect(()=>{
-        api.susu.active(params.groupId).then((response)=>{
+        api.susu.active(params.communityId).then((response)=>{
             setSusu(response.data.data[0]);
         }).catch((error)=>{
 
@@ -100,7 +100,7 @@ export const UpdateMemberSusuWallet = () =>{
         }).catch((error)=>{
 
         });
-        api.schedule.list(params.groupId).then((response)=>{
+        api.schedule.list(params.communityId).then((response)=>{
             setMemberSchedules(response.data.data.filter((sch)=>sch.attributes.memberId === params.memberId));
             setExtimatedTotalPayout((response.data.data.length * parseFloat(susu.attributes.contribution || 0)) * susu.attributes.accurance);
         }).catch((error)=>{
@@ -121,7 +121,7 @@ export const UpdateMemberSusuWallet = () =>{
         <div className="container">
             <div className="d-block d-sm-flex align-items-center w-100 text-nowrap mt-3">
                 <div className="h4 w-100">Contribution Management</div>
-                <button onClick={()=>navigate(routes.susu().nested().groupSusuWallet(params.groupId))} className="btn btn-sm mx-1">Back to Group Wallet</button>
+                <button onClick={()=>navigate(routes.susu().nested().communitySusuWallet(params.communityId))} className="btn btn-sm mx-1">Back to Community Wallet</button>
             </div>
             <div className="my-3">Credit Line Details: Overview</div>
             <div className="d-block d-md-flex w-100 shadow-sm bg-light rounded-4 p-4">

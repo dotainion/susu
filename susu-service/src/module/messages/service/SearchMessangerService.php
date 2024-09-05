@@ -3,27 +3,27 @@ namespace src\module\messages\service;
 
 use src\infrastructure\Assert;
 use src\infrastructure\Service;
-use src\module\groups\logic\ListGroups;
+use src\module\communities\logic\ListCommunities;
 use src\module\user\logic\ListUsers;
 
 class SearchMessangerService extends Service{
     protected ListUsers $users;
-    protected ListGroups $groups;
+    protected ListCommunities $communities;
 
     public function __construct(){
         parent::__construct();
         $this->users = new ListUsers();
-        $this->groups = new ListGroups();
+        $this->communities = new ListCommunities();
     }
     
     public function process($value){
         Assert::stringNotEmpty($value, 'No results');
 
         $usersCollector = $this->users->byName($value);
-        $groupsCollector = $this->groups->byName($value);
+        $communitiesCollector = $this->communities->byName($value);
 
         $this->setOutput($usersCollector);
-        $this->setOutput($groupsCollector);
+        $this->setOutput($communitiesCollector);
         return $this;
     }
 }

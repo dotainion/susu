@@ -1,26 +1,26 @@
 <?php
-namespace src\module\groups\logic;
+namespace src\module\communities\logic;
 
 use src\infrastructure\Collector;
 use src\infrastructure\Id;
-use src\module\groups\repository\GroupRepository;
+use src\module\communities\repository\CommunityRepository;
 
-class ListGroupLinks{
-    protected GroupRepository $repo;
+class ListCommunityLinks{
+    protected CommunityRepository $repo;
 
     public function __construct(){
-        $this->repo = new GroupRepository();
+        $this->repo = new CommunityRepository();
     }
 
-    public function groupLinks(Id $groupId):Collector{
-        return $this->repo->listJoinGroup([
-            'groupId' => $groupId
+    public function communityLinks(Id $communityId):Collector{
+        return $this->repo->listJoinCommunity([
+            'communityId' => $communityId
         ]);
     }
 
-    public function groupLinksByIdArray(Array $groupIdArray):Collector{
-        return $this->repo->listJoinGroup([
-            'groupId' => $groupIdArray
+    public function communityLinksByIdArray(Array $communityIdArray):Collector{
+        return $this->repo->listJoinCommunity([
+            'communityId' => $communityIdArray
         ]);
     }
 }

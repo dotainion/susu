@@ -37,8 +37,8 @@ class ListScheduleService extends Service{
 
         $susuCollector = $this->susu->byId(new Id($susuId));
         if(!$susuCollector->hasItem()){
-            //this can be a group or susu id.
-            $susuCollector = $this->susu->activeByGroupId(new Id($susuId));
+            //this can be a community or susu id.
+            $susuCollector = $this->susu->activeByCommunityId(new Id($susuId));
         }
 
         $susuCollector->assertHasItem('Susu not found.');

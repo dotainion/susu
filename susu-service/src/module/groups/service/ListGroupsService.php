@@ -1,27 +1,23 @@
 <?php
-namespace src\module\groups\service;
+namespace src\module\communities\service;
 
 use src\infrastructure\Service;
-use src\module\groups\logic\BindMembersToGroups;
-use src\module\groups\logic\ListGroupLinks;
-use src\module\groups\logic\ListGroups;
-use src\module\user\logic\ListUsers;
+use src\module\communities\logic\BindMembersToCommunities;
+use src\module\communities\logic\ListCommunities;
 
-class ListGroupsService extends Service{
-    protected ListGroups $groups;
-    protected ListGroupLinks $groupLinks;
-    protected BindMembersToGroups $bind;
-    protected ListUsers $users;
+class ListCommunitiesService extends Service{
+    protected ListCommunities $communities;
+    protected BindMembersToCommunities $bind;
 
     public function __construct(){
         parent::__construct();
-        $this->groups = new ListGroups();
-        $this->bind = new BindMembersToGroups();
+        $this->communities = new ListCommunities();
+        $this->bind = new BindMembersToCommunities();
     }
     
     public function process(){
-        $collector = $this->groups->groups();
-        $collector->assertHasItem('Group not found.');
+        $collector = $this->communities->communities();
+        $collector->assertHasItem('Community not found.');
         
         $this->bind->bindRequirements($collector);
         $this->setOutput($collector);

@@ -47,8 +47,8 @@ class Schema{
         return $this->sql->execute();
     }
 
-    public function group(){
-        $this->sql->create('group')        
+    public function community(){
+        $this->sql->create('community')        
             ->column('id')->bindary()
             ->column('name')->string()
             ->column('description')->paragraph()
@@ -58,9 +58,9 @@ class Schema{
         return $this->sql->execute();
     }
 
-    public function groupLink(){
-        $this->sql->create('groupLink')
-            ->column('groupId')->bindary()
+    public function communityLink(){
+        $this->sql->create('communityLink')
+            ->column('communityId')->bindary()
             ->column('memberId')->bindary();
         return $this->sql->execute();
     }
@@ -72,7 +72,7 @@ class Schema{
             ->column('cycle')->string()
             ->column('accurance')->int()
             ->column('startDate')->timestamp()     
-            ->column('groupId')->bindary()
+            ->column('communityId')->bindary()
             ->column('pendingStart')->bool()
             ->column('completed')->bool()
             ->column('canceled')->bool();

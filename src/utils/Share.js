@@ -6,8 +6,11 @@ export class Share{
         return await navigator.share(data);
     }
 
-    async url(url, title){
-        return await this.share({url: `${window.location.origin}/#${url}`, title});
+    async url(url='', title){
+        const origin = window.location.origin;
+        const directory = window.location.href.replace(origin, '').split('#')[0];
+        const route = window.location.href.replace(origin, '').split('/#')[1];
+        return await this.share({url: `${origin}${directory}#${url}`, title});
     }
 
     async content(text, title){

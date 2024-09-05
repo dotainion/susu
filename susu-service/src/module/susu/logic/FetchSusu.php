@@ -18,9 +18,9 @@ class FetchSusu{
         ]);
     }
 
-    public function byGroupId(Id $id):Collector{
+    public function byCommunityId(Id $id):Collector{
         return $this->repo->listSusu([
-            'groupId' => $id
+            'communityId' => $id
         ]);
     }
 
@@ -32,9 +32,9 @@ class FetchSusu{
         ]);
     }
 
-    public function activeByGroupId(Id $groupId):Collector{
+    public function activeByCommunityId(Id $communityId):Collector{
         return $this->repo->listSusu([
-            'groupId' => $groupId,
+            'communityId' => $communityId,
             'completed' => false,
             'canceled' => false
         ]);

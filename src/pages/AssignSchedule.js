@@ -76,12 +76,12 @@ export const AssignSchedule = () =>{
     }
 
     useEffect(()=>{
-        api.schedule.list(params.groupId).then((response)=>{
+        api.schedule.list(params.communityId).then((response)=>{
             setSchedules(response.data.data);
         }).catch((error)=>{
             setErrors(new ParseError().message(error));
         });
-        api.susu.active(params.groupId).then((response)=>{
+        api.susu.active(params.communityId).then((response)=>{
             setSusu(response.data.data[0]);
             setUsers(response.data.data[0].attributes.members);
         }).catch((error)=>{

@@ -42,7 +42,7 @@ const MemberCard = ({member}) =>{
 
     const deleteMember = () =>{
         setRemoveSpinner(true);
-        api.susu.unlink(params.groupId, member.id).then((response)=>{
+        api.susu.unlink(params.communityId, member.id).then((response)=>{
             setUndo(true);
         }).catch((error)=>{
             console.log(error);
@@ -53,7 +53,7 @@ const MemberCard = ({member}) =>{
 
     const undoDeleteMember = () =>{
         setUndoSpinner(true);
-        api.susu.join(params.groupId, member.id).then((response)=>{
+        api.susu.join(params.communityId, member.id).then((response)=>{
             setUndo(false);
         }).catch((error)=>{
             console.log(error);

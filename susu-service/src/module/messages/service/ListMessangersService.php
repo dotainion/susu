@@ -5,20 +5,20 @@ use src\infrastructure\Assert;
 use src\infrastructure\Collector;
 use src\infrastructure\Id;
 use src\infrastructure\Service;
-use src\module\groups\logic\ListGroups;
+use src\module\communities\logic\ListCommunities;
 use src\module\messages\logic\ListMessages;
 use src\module\messages\objects\Messanger;
 use src\module\user\logic\ListUsers;
 
 class ListMessangersService extends Service{
     protected ListUsers $users;
-    protected ListGroups $groups;
+    protected ListCommunities $communities;
     protected ListMessages $messages;
 
     public function __construct(){
         parent::__construct();
         $this->users = new ListUsers();
-        $this->groups = new ListGroups();
+        $this->communities = new ListCommunities();
         $this->messages = new ListMessages();
     }
     
@@ -30,7 +30,7 @@ class ListMessangersService extends Service{
         $memberIdArray2 = array_map(fn($msg)=>$msg->fromId(), $messages->list());
         $uniqueMemberIdArray = array_unique([...$memberIdArray, ...$memberIdArray2]);
         $collector = $this->users->usersByIdArray($uniqueMemberIdArray);
-        $groupCollector = $this->groups->byIdArray($uniqueMemberIdArray);
+        $communitiesCollector = $this->communities->byIdArray($uniqueMemberIdArray);
 
         $messageArray = $messages->list();
         usort($messageArray, function($a, $b) {
@@ -60,9 +60,9 @@ class ListMessangersService extends Service{
                     continue;
                 }
 
-                foreach($groupCollector->list() as $group){
-                    if($group->id()->toString() === $message->toId()->toString()){
-                        $users->add($group);
+                foreach($communitiesCollector->list() as $community){
+                    if($community->id()->toString() === $message->toId()->toString()){
+                        $users->add($community);
                         break;
                     }
                 }

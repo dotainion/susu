@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { Dashboard } from "../pages/Dashboard";
 import { Messangers } from "../pages/Messangers";
-import { GroupMembersInvite } from "../pages/GroupMembersInvite";
-import { NewGroup } from "../pages/NewGroup";
-import { Group } from "../pages/Group";
+import { CommunityMembersInvite } from "../pages/CommunityMembersInvite";
+import { NewCommunity } from "../pages/NewCommunity";
+import { Community } from "../pages/Community";
 import { Profile } from "../pages/Profile";
-import { ViewGroup } from "../pages/ViewGroup";
+import { ViewCommunity } from "../pages/ViewCommunity";
 import { UpdateMemberSusuWallet } from "../pages/UpdateMemberSusuWallet";
 import { CommenceSusuOverlay } from "../components/CommenceSusuOverlay";
 import { api } from "../request/Api";
@@ -14,12 +14,12 @@ import { ModalOverlay } from "../container/ModalOverlay";
 import { InviteOption } from "../components/InviteOption";
 import { Invited } from "../pages/Invited";
 import { AssignSchedule } from "../pages/AssignSchedule";
-import { Home } from "../pages/Home";
+import { Appearance } from "../pages/Appearance";
 
 export const Test = () =>{
 
     const test = () =>{
-        api.group.memberGroups('bf08fe63-ada7-42f9-94e7-b1e34b19b0d9').then((response)=>{
+        api.community.memberCommunities('bf08fe63-ada7-42f9-94e7-b1e34b19b0d9').then((response)=>{
             console.log(response.data.data);
         }).catch((error)=>{
 
@@ -27,12 +27,14 @@ export const Test = () =>{
     }
     
     useEffect(()=>{
-        
+        //example of designs
+        //https://trello.com/
+        //form this: Workflows for any project, big or small
     }, []);
 
     return(
         <div className="container">
-            <Home/>
+            
         </div>
     )
 }

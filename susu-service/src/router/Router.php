@@ -3,17 +3,17 @@ namespace src\router;
 
 use InvalidArgumentException;
 use src\infrastructure\Https;
-use src\module\groups\action\FetchGroupAction;
-use src\module\groups\action\JoinGroupAction;
-use src\module\groups\action\ListGroupsAction;
-use src\module\groups\action\MemberGroupsAction;
-use src\module\groups\action\OwnerGroupsAction;
-use src\module\groups\action\SetGroupAction;
+use src\module\communities\action\FetchCommunityAction;
+use src\module\communities\action\JoinCommunityAction;
+use src\module\communities\action\ListCommunitiesAction;
+use src\module\communities\action\MemberCommunitiesAction;
+use src\module\communities\action\OwnerCommunitiesAction;
+use src\module\communities\action\SetCommunityAction;
 use src\module\contribution\action\AddSusuContributionAction;
 use src\module\contribution\action\ListContributionAction;
 use src\module\contribution\action\ListSusuContributionAction;
-use src\module\groups\action\SearchGroupsAction;
-use src\module\groups\action\UnlinkGroupAction;
+use src\module\communities\action\SearchCommunitiesAction;
+use src\module\communities\action\UnlinkCommunityAction;
 use src\module\invites\action\DeleteInviteAction;
 use src\module\invites\action\ListMemberInvitesAction;
 use src\module\invites\action\ListTargetInvitesAction;
@@ -26,7 +26,7 @@ use src\module\login\action\SendRecoveryEmailAction;
 use src\module\login\action\UpdateCredentialAction;
 use src\module\login\action\UpdateCredentialByTokenAction;
 use src\module\messages\action\ListConversationAction;
-use src\module\messages\action\ListGroupMessagesAction;
+use src\module\messages\action\ListCommunityMessagesAction;
 use src\module\messages\action\ListMessangersAction;
 use src\module\messages\action\ListUnSeenMessagesAction;
 use src\module\messages\action\SearchMessangerAction;
@@ -55,7 +55,7 @@ use src\module\user\action\FetchUserAction;
 use src\module\user\action\ListUsersAction;
 use src\schema\Schema;
 use src\module\user\action\FetchAddressAction;
-use src\module\user\action\ListUsersByGroupAction;
+use src\module\user\action\ListUsersByCommunityAction;
 use src\module\user\action\ListUsersBySusuAction;
 use src\module\user\action\SearchUsersAction;
 use src\module\user\action\SetAddressAction;
@@ -152,8 +152,8 @@ class Router{
             return new SearchUsersAction();
         });
 
-        $this->request->route('/list/group/users', function ($req){
-            return new ListUsersByGroupAction();
+        $this->request->route('/list/community/users', function ($req){
+            return new ListUsersByCommunityAction();
         });
 
         $this->request->route('/list/susu/users', function ($req){
@@ -172,36 +172,36 @@ class Router{
             return new UpdateCredentialByTokenAction();
         });
 
-        $this->request->route('/fetch/group', function ($req){
-            return new FetchGroupAction();
+        $this->request->route('/fetch/community', function ($req){
+            return new FetchCommunityAction();
         });
 
-        $this->request->route('/list/groups', function ($req){
-            return new ListGroupsAction();
+        $this->request->route('/list/communities', function ($req){
+            return new ListCommunitiesAction();
         });
 
-        $this->request->route('/member/groups', function ($req){
-            return new MemberGroupsAction();
+        $this->request->route('/member/communities', function ($req){
+            return new MemberCommunitiesAction();
         });
 
-        $this->request->route('/owner/groups', function ($req){
-            return new OwnerGroupsAction();
+        $this->request->route('/owner/communities', function ($req){
+            return new OwnerCommunitiesAction();
         });
 
-        $this->request->route('/search/groups', function ($req){
-            return new SearchGroupsAction();
+        $this->request->route('/search/communities', function ($req){
+            return new SearchCommunitiesAction();
         });
 
-        $this->request->route('/set/group', function ($req){
-            return new SetGroupAction();
+        $this->request->route('/set/community', function ($req){
+            return new SetCommunityAction();
         });
 
-        $this->request->route('/join/group', function ($req){
-            return new JoinGroupAction();
+        $this->request->route('/join/community', function ($req){
+            return new JoinCommunityAction();
         });
 
-        $this->request->route('/unlink/group', function ($req){
-            return new UnlinkGroupAction();
+        $this->request->route('/unlink/community', function ($req){
+            return new UnlinkCommunityAction();
         });
 
         $this->request->route('/start/susu', function ($req){
@@ -284,8 +284,8 @@ class Router{
             return new ListConversationAction();
         });
 
-        $this->request->route('/group/conversation', function ($req){
-            return new ListGroupMessagesAction();
+        $this->request->route('/community/conversation', function ($req){
+            return new ListCommunityMessagesAction();
         });
 
         $this->request->route('/list/messangers', function ($req){
