@@ -85,12 +85,10 @@ class Router{
         });*/
 
         $this->request->route('/test', function ($req){
-            $query = new Repository();
-            //$query->query('ALTER TABLE `group` RENAME TO `community`;');
-            //$query->query('ALTER TABLE `groupLink` RENAME TO `communityLink`;');
-            //$query->query('ALTER TABLE communityLink CHANGE COLUMN `groupId` `communityId` INT');
-            //$query->query('ALTER TABLE susu CHANGE COLUMN `groupId` `communityId` INT');
-            var_dump('None...');
+            /*$query = new Repository();
+            $query->query('');
+            $query->query('');
+            var_dump('None...');*/
         });
 
         $this->request->route('/signin', function ($req){

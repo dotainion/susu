@@ -4,6 +4,7 @@ import { routes } from "../routes/Routes";
 import { api } from "../request/Api";
 import { useState } from "react";
 import { ParseError } from "../utils/ParseError";
+import logo from "../images/logo.png";
 
 export const Register = () =>{
     const [error, setError] = useState();
@@ -31,7 +32,7 @@ export const Register = () =>{
     return(
         <form onSubmit={register} onKeyUp={()=>setError(null)} className="d-flex vh-100">
             <div className="d-md-flex d-none align-items-center justify-content-center bg-light w-100">
-                <GiCondorEmblem style={{fontSize: '300px'}}/>
+                <img className="w-50" src={logo} alt="Susu Logo"/>
             </div>
             <div className="d-flex flex-column justify-content-center w-100 p-4">
                 <div style={{maxWidth: '500px'}}>
@@ -50,6 +51,7 @@ export const Register = () =>{
                     <input className="form-control mb-3" placeholder="User1234#" type="password" name="confirmPassword" required/>
                     <button className="btn px-4 mt-3 d-block" type="submit">Sign up</button>
                     <span onClick={()=>navigate(routes.signIn())} className="link-primary d-inlne-block btn px-0 border-0 mt-3">Sign in instead</span>
+                    <span onClick={()=>navigate(routes.onboarding())} className="link-primary d-inlne-block btn px-0 border-0 d-block text-start">Go to website</span>
                 </div>
             </div>
         </form>

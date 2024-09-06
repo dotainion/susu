@@ -27,7 +27,7 @@ export const CommunityMembers = () =>{
                     members.map((member, key)=>(
                         <MemberCard member={member} key={key}/>
                     )):
-                    <div className="h4">No Members</div>
+                    <div>No members</div>
                 }
             </div>
         </div>

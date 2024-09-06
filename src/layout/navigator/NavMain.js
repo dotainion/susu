@@ -18,7 +18,8 @@ export const NavMain = () =>{
     const navigate = useNavigate();
 
     const categories = {
-        title: 'Navigation Bar',
+        title: 'Navigation',
+        description: 'Seamlessly handle all aspects of your experience with a central hub for key features and personalized settings.',
         list: [
             {
                 title: dashboardAndOverview.title,

@@ -5,7 +5,7 @@ use src\infrastructure\IAction;
 use src\infrastructure\Request;
 use src\module\communities\service\ListCommunitiesService;
 
-class ListcommunitiesAction extends Request implements IAction{
+class ListCommunitiesAction extends Request implements IAction{
     protected $service;
 
     public function __construct(){

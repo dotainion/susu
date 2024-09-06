@@ -42,7 +42,7 @@ export const AssociateCommunities = () => {
                 {
                     communities.length ?
                     communities.map((community) => (
-                        <CommunityCard communities={communities} key={community.id}/>
+                        <CommunityCard community={community} key={community.id}/>
                     )): 
                     <Loader/>
                 }

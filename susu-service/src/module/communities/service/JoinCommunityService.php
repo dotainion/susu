@@ -27,7 +27,7 @@ class JoinCommunityService extends Service{
         Assert::validUuid($memberId, 'Member not found.');
 
         $link = $this->factory->mapResult([
-            'communitId' => $communityId,
+            'communityId' => $communityId,
             'memberId' => $memberId,
         ]);
 

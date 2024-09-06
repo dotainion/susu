@@ -56,11 +56,11 @@ export const AuthProvider = ({children}) =>{
     }, [location]);
 
     useEffect(()=>{
-        if(process.env.NODE_ENV === 'development'){
+        /*if(process.env.NODE_ENV === 'development'){
             setUser(mockData.user());
             setIsAuthenticated(true);
             return setLoading(false);
-        }
+        }*/
         api.auth.session().then((response)=>{
             setUser(response.data.data[0]);
             setIsAuthenticated(true);

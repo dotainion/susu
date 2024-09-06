@@ -43,8 +43,8 @@ export const MembersList = () => {
                     members.length ?
                     members.map((member, key) => (
                         <div className="col-12 col-xl-3 col-lg-4 col-md-6 p-1" key={key}>
-                            <div onClick={()=>navigate(routes.susu().nested().member(member.id))} className="card position-relative h-100 m-1">
-                                <div className="card-body">
+                            <div onClick={()=>navigate(routes.susu().nested().member(member.id))} className="card card-hover position-relative h-100 m-1">
+                                <div className="card-body rounded-3">
                                     <div className="d-flex align-items-center">
                                         <img className="card-img-sub" src="https://media.istockphoto.com/id/1327592506/vector/default-avatar-photo-placeholder-icon-grey-profile-picture-business-man.jpg?s=612x612&w=0&k=20&c=BpR0FVaEa5F24GIw7K8nMWiiGmbb8qmhfkpXcp1dhQg=" alt="" />
                                         <div>

@@ -3,7 +3,7 @@ namespace src\module\communities\logic;
 
 use src\infrastructure\Collector;
 use src\infrastructure\Id;
-use src\module\communities\repository\CommunitiesRepository;
+use src\module\communities\repository\CommunityRepository;
 
 class ListCommunities{
     protected CommunityRepository $repo;

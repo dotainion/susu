@@ -5,11 +5,15 @@ import { GiPayMoney } from "react-icons/gi";
 import { GrSchedules } from "react-icons/gr";
 import { MdDashboard, MdManageAccounts } from "react-icons/md";
 import { useSidebar } from "../SidebarProvider";
+import { NavToMain } from "./NavToMain";
 
 export const Help = () =>{
     const { help } = useSidebar();
 
     return(
-        <NavGrid nav={help}/>
+        <div>
+            <NavToMain/>
+            <NavGrid nav={help}/>
+        </div>
     )
 }

@@ -38,14 +38,14 @@ class CommunityRepository extends Repository{
         $this->execute();
     }
     
-    public function joinCommunities(CommunityLink $link):void{
+    public function joinCommunity(CommunityLink $link):void{
         $this->insert('communityLink')        
             ->add('communityId', $this->uuid($link->communityId()))
             ->add('memberId', $this->uuid($link->memberId()));
         $this->execute();
     }
     
-    public function unlinkCommunities(CommunityLink $link):void{
+    public function unlinkCommunity(CommunityLink $link):void{
         $this->delete('communityLink')        
             ->where('communityId', $this->uuid($link->communityId()))
             ->where('memberId', $this->uuid($link->memberId()));

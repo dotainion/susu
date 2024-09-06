@@ -70,7 +70,7 @@ export class Api{
         }else{
             notification.hide();
         }
-        return error;
+        throw error;
     }
 
     async post(route, data){

@@ -59,39 +59,6 @@ body{
     margin-right: 5px;
 }
 
-.sidebar{
-    width: 280px;
-    min-width: 280px;
-    max-width: 280px;
-    background-color: var(--bg-sidebar);
-}
-
-.sidebar li > div{
-    padding-left: 20px;
-}
-
-.sidebar li > div li a{
-    text-decoration: none;
-}
-
-.sidebar button:not(.collapsed) .caret-right, .sidebar button.collapsed .caret-down{
-    display: none;
-}
-
-.sidebar .dropdown-menu{
-    background-color: var(--bg-secondary);
-}
-
-.sidebar button{
-    background-color: inherit !important;
-    position: relative;
-    z-index: 1000;
-}
-
-.sidebar .dropdown-menu button:hover{
-    background-color: white !important;
-}
-
 .striped-list > div:nth-child(odd) {
     background-color: inherit;
 }
@@ -275,45 +242,19 @@ hr, table tr{
     background-color: rgba(0, 0, 0, 0.3);
 }
 
+.card-hover:hover{
+    background-color: white !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar{
+    border-right: 1px solid gray;
+}
+
 @media (max-width: 576px) {
-    .sidebar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        display: none !important;
-        z-index: 2000;
-        transition: transform 0.3s ease;
-    }
-
-    .sidebar .flex-shrink-0{
-        width: 100%;
-        z-index: 1000;
-        background-color: inherit;
-    }
-
-    .sidebar.show, .sidebar-backdrop.show {
-        display: flex !important;
-    }
-
-    .sidebar-menu{
-        z-index: 1500;
-        background-color: var(--bg-sidebar);
-    }
-
-    .sidebar-menu button{
-        color: white !important;
-    }
-
-    .sidebar-backdrop{
-        position: fixed;
-        top: 0;
-        left: 0;
-        background-color: rgb(0, 0, 0, 0.3);
-        z-index: 900;
-    }
-
-    body{
-        padding-top: 40px;
+    .sidebar{
+        border-right: none;
+        border-bottom: 1px solid gray;
     }
 
     .search-row{

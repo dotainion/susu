@@ -57,7 +57,7 @@ export const CommenceSusuOverlay = ({isOpen, onClose, onResponse}) =>{
         <div onClick={onClose} className="position-fixed top-0 start-0 w-100 vh-100" style={{zIndex: '99999999999'}}>
             <div className="w-100 h-100 d-flex align-items-start justify-content-center">
                 <div onClick={(e)=>e.stopPropagation()} className="d-flex flex-column select-members-overlay px-2 my-2">
-                    <div className="bg-white rounded-4 overflow-hidden">
+                    <div className="bg-white rounded-4 overflow-hidden shadow-sm">
                         <div className="bg-sec p-3 h5">Commence susu</div>
                         <div className="p-3 pt-0">
                             {errors ? <div className="small text-danger">{errors}</div> : null}
