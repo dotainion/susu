@@ -126,4 +126,13 @@ class SecurityManager{
         unset($_SESSION[$this->SESSION_KEY]);
         session_destroy();
     }
+
+    public function authenticated(Token $token):bool{
+        //this is use for service like fetch session
+        if($this->hasSession() && $this->session()->token()->toString() === $token->toString() || $this->hasValidAccessToken()){
+            $this->assertUserAccess();
+            return true;
+        }
+        throw new NotAuthenticatedException('Your are not authenticted.');
+    }
 }
