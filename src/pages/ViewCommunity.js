@@ -18,6 +18,7 @@ export const ViewCommunity = () =>{
     const [community, setCommunity] = useState();
     const [isJoined, setIsJoined] = useState(false);
     const [isJoinedSusu, setIsJoinedSusu] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const params = useParams();
     const navigate = useNavigate();
@@ -44,19 +45,30 @@ export const ViewCommunity = () =>{
     }
 
     useEffect(() => {
+        let loadingCommunity = true;
+        let loadingSusu = true;
+        
         api.community.community(params.communityId).then((response)=>{
             if(findMe(response)) setIsJoined(true);
             setCommunity(response.data.data[0]);
         }).catch((error)=>{
 
+        }).finally(()=>{
+            loadingCommunity = false;
+            if(!loadingCommunity && !loadingSusu) setLoading(false);
         });
         api.susu.active(params.communityId).then((response)=>{
             if(findMe(response)) setIsJoinedSusu(true);
             setSusu(response.data.data[0]);
         }).catch((error)=>{
 
+        }).finally(()=>{
+            loadingSusu = false;
+            if(!loadingCommunity && !loadingSusu) setLoading(false);
         });
     }, []);
+
+    if(loading) return <Loader center/>
 
     return(
         <div className="container">
@@ -128,8 +140,7 @@ export const ViewCommunity = () =>{
                         </div>
                     </div>
                 </div>
-                : 
-                <Loader/>
+                : null
             }
         </div>
     )

@@ -16,23 +16,23 @@ class ContributionRepository extends Repository{
     
     public function create(Contribution $contribution):void{
         $this->insert('contribution')        
-            ->add('id', $this->uuid($contribution->id()))
-            ->add('susuId', $this->uuid($contribution->susuId()))
-            ->add('memberId', $this->uuid($contribution->memberId()))
-            ->add('date', $contribution->date()->toString())
-            ->add('contribution', $contribution->contribution())
-            ->add('description', $contribution->description());
+            ->column('id', $this->uuid($contribution->id()))
+            ->column('susuId', $this->uuid($contribution->susuId()))
+            ->column('memberId', $this->uuid($contribution->memberId()))
+            ->column('date', $contribution->date()->toString())
+            ->column('contribution', $contribution->contribution())
+            ->column('description', $contribution->description());
         $this->execute();
     }
     
     public function edit(Contribution $contribution):void{
         $this->insert('contribution') 
-            ->set('susuId', $this->uuid($contribution->susuId()))  
-            ->set('memberId', $this->uuid($contribution->memberId()))       
-            ->set('date', $contribution->date()->toString())
-            ->set('contribution', $contribution->contribution())
-            ->set('description', $contribution->description())
-            ->where('id', $this->uuid($contribution->id()));
+            ->column('susuId', $this->uuid($contribution->susuId()))  
+            ->column('memberId', $this->uuid($contribution->memberId()))       
+            ->column('date', $contribution->date()->toString())
+            ->column('contribution', $contribution->contribution())
+            ->column('description', $contribution->description())
+            ->where()->eq('id', $this->uuid($contribution->id()));
         $this->execute();
     }
     
@@ -40,13 +40,13 @@ class ContributionRepository extends Repository{
         $this->select('contribution');
 
         if(isset($where['id'])){
-            $this->where('id', $this->uuid($where['id']));
+            $this->where()->eq('id', $this->uuid($where['id']));
         }
         if(isset($where['susuId'])){
-            $this->where('susuId', $this->uuid($where['susuId']));
+            $this->where()->eq('susuId', $this->uuid($where['susuId']));
         }
         if(isset($where['memberId'])){
-            $this->where('memberId', $this->uuid($where['memberId']));
+            $this->where()->eq('memberId', $this->uuid($where['memberId']));
         }
         $this->execute();
         return $this->factory->map(

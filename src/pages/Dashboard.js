@@ -51,7 +51,7 @@ export const Dashboard = () =>{
             <hr></hr>
             <div className="d-sm-flex d-block">
                 <button 
-                    onClick={()=>navigate(routes.susu().nested().ownerCommunities())} 
+                    onClick={()=>navigate(routes.susu().nested().associateCommunities())} 
                     className="btn btn-light text-start shadow-sm me-2 d-flex align-items-center mb-3"
                 >
                     <FaLayerGroup className="fs-5"/>

@@ -19,53 +19,56 @@ class CredentialRepository extends Repository{
     
     public function create(ICredential $creds):void{
         $this->insert('credential')        
-            ->add('id', $this->uuid($creds->id()))
-            //->add('expire', $creds->expire())
-            ->add('token', $creds->token()->toString());
-            //->add('refreshToken', $creds->refreshToken());
+            ->column('id', $this->uuid($creds->id()))
+            //->column('expire', $creds->expire())
+            ->column('token', $creds->token()->toString());
+            //->column('refreshToken', $creds->refreshToken());
         if($creds->password()->hasPassword()){
-            $this->add('password', $creds->password()->toHash());
+            $this->column('password', $creds->password()->toHash());
         }
         $this->execute();
     }
     
     public function editPassword(Id $id, Password $password, Password $newPassword):void{
         $this->update('credential')        
-            ->set('password', $newPassword->toHash())
-            ->where('id', $this->uuid($id))
-            ->where('password', $password->toHash());
+            ->column('password', $newPassword->toHash())
+            ->where()
+            ->eq('id', $this->uuid($id))
+            ->eq('password', $password->toHash());
         $this->execute();
     }
     
     public function updatePasswordByRefreshToken(Id $id, Password $password, Token $token):void{
         $this->update('credential')        
-            ->set('password', $password->toHash())
-            ->where('id', $this->uuid($id))
-            ->where('refreshToken', $token);
+            ->column('password', $password->toHash())
+            ->where()
+            ->eq('id', $this->uuid($id))
+            ->eq('refreshToken', $token);
         $this->execute();
     }
     
     public function unsetTokenRefreshToken(Id $id, Token $token):void{
         $this->update('credential')        
-            ->set('refreshToken', '')
-            ->where('id', $this->uuid($id))
-            ->where('refreshToken', $token);
+            ->column('refreshToken', '')
+            ->where()
+            ->eq('id', $this->uuid($id))
+            ->eq('refreshToken', $token);
         $this->execute();
     }
     
     public function listHasCredential(array $where):Collector{
         $this->select('credential')
             ->innerJoin('user', 'id', 'credential', 'id')
-            ->where('hide', 0, 'user');
+            ->where()->eq('hide', 0, 'user');
 
         if(isset($where['id'])){
-            $this->where('id', $this->uuid($where['id']));
+            $this->where()->eq('id', $this->uuid($where['id']));
         }
         if(isset($where['password'])){
-            $this->where('password', $where['password']);
+            $this->where()->eq('password', $where['password']);
         }
         if(isset($where['refreshToken'])){
-            $this->where('refreshToken', $where['refreshToken']);
+            $this->where()->eq('refreshToken', $where['refreshToken']);
         }
         $this->execute();
         return $this->factory->map(

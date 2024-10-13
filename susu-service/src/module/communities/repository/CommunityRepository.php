@@ -20,42 +20,43 @@ class CommunityRepository extends Repository{
     
     public function create(Community $community):void{
         $this->insert('community')        
-            ->add('id', $this->uuid($community->id()))
-            ->add('name', $community->name())
-            ->add('description', $community->description())
-            ->add('createdDate', $community->createdDate()->toString())
-            ->add('creatorId', $this->uuid($community->creatorId()));
+            ->column('id', $this->uuid($community->id()))
+            ->column('name', $community->name())
+            ->column('description', $community->description())
+            ->column('createdDate', $community->createdDate()->toString())
+            ->column('creatorId', $this->uuid($community->creatorId()));
         $this->execute();
     }
     
     public function edit(Community $community):void{
         $this->update('community')     
-            ->set('name', $community->name())
-            ->set('description', $community->description())
-            ->set('createdDate', $community->createdDate()->toString())
-            ->set('creatorId', $this->uuid($community->creatorId()))
-            ->where('id', $this->uuid($community->id()));
+            ->column('name', $community->name())
+            ->column('description', $community->description())
+            ->column('createdDate', $community->createdDate()->toString())
+            ->column('creatorId', $this->uuid($community->creatorId()))
+            ->where()->eq('id', $this->uuid($community->id()));
         $this->execute();
     }
     
     public function joinCommunity(CommunityLink $link):void{
         $this->insert('communityLink')        
-            ->add('communityId', $this->uuid($link->communityId()))
-            ->add('memberId', $this->uuid($link->memberId()));
+            ->column('communityId', $this->uuid($link->communityId()))
+            ->column('memberId', $this->uuid($link->memberId()));
         $this->execute();
     }
     
     public function unlinkCommunity(CommunityLink $link):void{
         $this->delete('communityLink')        
-            ->where('communityId', $this->uuid($link->communityId()))
-            ->where('memberId', $this->uuid($link->memberId()));
+            ->where()
+            ->eq('communityId', $this->uuid($link->communityId()))
+            ->eq('memberId', $this->uuid($link->memberId()));
         $this->execute();
     }
     
     public function listJoinCommunity(array $where = []):Collector{
         $this->select('communityLink');
-        isset($where['communityId']) && $this->where('communityId', $this->uuid($where['communityId']));
-        isset($where['memberId']) && $this->where('memberId', $this->uuid($where['memberId']));
+        isset($where['communityId']) && $this->where()->eq('communityId', $this->uuid($where['communityId']));
+        isset($where['memberId']) && $this->where()->eq('memberId', $this->uuid($where['memberId']));
         $this->execute();
         return $this->linkFactory->map(
             $this->results()
@@ -67,20 +68,20 @@ class CommunityRepository extends Repository{
 
         if(isset($where['memberId'])){
             $this->innerJoin('communityLink', 'communityId', 'community', 'id');
-            $this->where('memberId', $this->uuid($where['memberId']), 'communityLink');
+            $this->where()->eq('memberId', $this->uuid($where['memberId']), 'communityLink');
         }
 
         if(isset($where['name'])){
-            $this->like('name', $where['name']);
+            $this->where()->like('name', $where['name']);
         }
         if(isset($where['creatorId'])){
-            $this->where('creatorId', $this->uuid($where['creatorId']));
+            $this->where()->eq('creatorId', $this->uuid($where['creatorId']));
         }
         if(isset($where['id'])){
-            $this->where('id', $this->uuid($where['id']));
+            $this->where()->eq('id', $this->uuid($where['id']));
         }
         if(isset($where['hide'])){
-            $this->where('hide', (int)$where['hide']);
+            $this->where()->eq('hide', (int)$where['hide']);
         }
         $this->execute();
         return $this->factory->map(

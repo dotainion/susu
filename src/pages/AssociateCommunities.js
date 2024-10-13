@@ -13,20 +13,30 @@ export const AssociateCommunities = () => {
 
     const [memberCommunities, setMemberCommunities] = useState([]);
     const [communities, setCommunities] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate();
 
     useEffect(() => {
         if(!user) return;
+        let loadingCommunity = true;
+        let loadingMbcommunity = true;
+        
         api.community.ownerCommunities(user.id).then((response)=>{
             setCommunities(response.data.data);
         }).catch((error)=>{
 
+        }).finally(()=>{
+            loadingCommunity = false;
+            if(!loadingCommunity && !loadingMbcommunity) setLoading(false);
         });
         api.community.memberCommunities(user.id).then((response)=>{
             setMemberCommunities(response.data.data);
         }).catch((error)=>{
 
+        }).finally(()=>{
+            loadingMbcommunity = false;
+            if(!loadingCommunity && !loadingMbcommunity) setLoading(false);
         });
     }, [user]);
 
@@ -35,17 +45,15 @@ export const AssociateCommunities = () => {
         setCommunities((ownerCommunities)=>[...ownerCommunities, ...memberCommunities.filter((community)=>!ownerCommunities.find((c)=>c.id === community.id))]);
     }, [memberCommunities]);
 
+    if(loading) return <Loader center/>
+
     return (
         <div className="container">
             <button onClick={()=>navigate(routes.susu().nested().newCommunity())} className="d-flex align-items-center btn d-block shadow-none my-3"><IoAdd className="me-2"/>Create Community</button>
             <div className="row">
-                {
-                    communities.length ?
-                    communities.map((community) => (
-                        <CommunityCard community={community} key={community.id}/>
-                    )): 
-                    <Loader/>
-                }
+                {communities.map((community) => (
+                    <CommunityCard community={community} key={community.id}/>
+                ))}
             </div>
         </div>
     )

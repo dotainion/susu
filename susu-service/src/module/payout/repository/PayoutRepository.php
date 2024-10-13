@@ -16,23 +16,23 @@ class PayoutRepository extends Repository{
     
     public function create(Payout $payout):void{
         $this->insert('payout')        
-            ->add('id', $this->uuid($payout->id()))
-            ->add('susuId', $this->uuid($payout->susuId()))
-            ->add('memberId', $this->uuid($payout->memberId()))
-            ->add('date', $payout->date()->toString())
-            ->add('amount', $payout->amount())
-            ->add('description', $payout->description());
+            ->column('id', $this->uuid($payout->id()))
+            ->column('susuId', $this->uuid($payout->susuId()))
+            ->column('memberId', $this->uuid($payout->memberId()))
+            ->column('date', $payout->date()->toString())
+            ->column('amount', $payout->amount())
+            ->column('description', $payout->description());
         $this->execute();
     }
     
     public function edit(Payout $payout):void{
         $this->insert('payout') 
-            ->set('susuId', $this->uuid($payout->susuId()))  
-            ->set('memberId', $this->uuid($payout->memberId()))       
-            ->set('date', $payout->date()->toString())
-            ->set('amount', $payout->amount())
-            ->set('description', $payout->description())
-            ->where('id', $this->uuid($payout->id()));
+            ->column('susuId', $this->uuid($payout->susuId()))  
+            ->column('memberId', $this->uuid($payout->memberId()))       
+            ->column('date', $payout->date()->toString())
+            ->column('amount', $payout->amount())
+            ->column('description', $payout->description())
+            ->where()->eq('id', $this->uuid($payout->id()));
         $this->execute();
     }
     
@@ -40,13 +40,13 @@ class PayoutRepository extends Repository{
         $this->select('payout');
 
         if(isset($where['id'])){
-            $this->where('id', $this->uuid($where['id']));
+            $this->where()->eq('id', $this->uuid($where['id']));
         }
         if(isset($where['susuId'])){
-            $this->where('susuId', $this->uuid($where['susuId']));
+            $this->where()->eq('susuId', $this->uuid($where['susuId']));
         }
         if(isset($where['memberId'])){
-            $this->where('memberId', $this->uuid($where['memberId']));
+            $this->where()->eq('memberId', $this->uuid($where['memberId']));
         }
         $this->execute();
         return $this->factory->map(

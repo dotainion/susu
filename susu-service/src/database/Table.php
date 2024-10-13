@@ -1,164 +1,139 @@
 <?php
 namespace src\database;
 
-use src\security\Connection;
-
-class Table{
-	protected Connection $db;
-	protected $statement;
-	protected $column = '';
-	protected $isCreating = false;
+class Table {
+    protected string $tableName;
+    protected string $query;
+	protected Where $where;
+	protected Column $cols;
+	protected OrderBy $orderBy;
+	protected Pagination $pagination;
 
 	public function __construct(){
-		$this->db = Connection::instance();
+		$this->where = new Where($this);
+		$this->cols = new Column();
+		$this->orderBy = new OrderBy($this);
+		$this->pagination = new Pagination();
 	}
 
-	public function create($tableName){
-		$this->isCreating = true;
-		$this->statement = 'CREATE TABLE IF NOT EXISTS `'.$tableName.'` ';
-		return $this;
-	}
+    public function toString():string{
+        return $this->build()->getQuery();
+    }
 
-	public function drop($tableName){
-		$this->statement = 'DROP TABLE `'.$tableName.'`;';
-	}
+    public function tableName():string{
+        return $this->tableName;
+    }
 
-	public function truncate($tableName){
-		$this->statement = 'TRUNCATE TABLE `'.$tableName.'`;';
-	}
+    public function select($tableName, $columns = '*'):self{
+        $this->tableName = $tableName;
+        $this->query = "SELECT $columns FROM `$this->tableName`";
+        return $this;
+    }
 
-	public function alter($tableName):self{
-		$this->statement = 'ALTER TABLE `'.$tableName.'` ';
-		return $this;
-	}
+    public function insert($tableName):self{
+        $this->tableName = $tableName;
+        $this->query = "INSERT INTO `$this->tableName` ";
+        return $this;
+    }
 
-	public function rename($name){
-		if($this->column){
-			$this->column .= ',';
-		}
-		$this->column .= 'RENAME TO `'.$name.'`;';
-		return $this;
-	}
+    public function update($tableName):self{
+        $this->tableName = $tableName;
+        $this->query = "UPDATE `$this->tableName` SET ";
+        return $this;
+    }
 
-	public function addColumn($columnName){
-		if($this->column){
-			$this->column .= ',';
-		}
-		$this->column .= 'ADD COLUMN `'.$columnName.'` ';
-		return $this;
-	}
+    public function delete($tableName):self{
+        $this->tableName = $tableName;
+        $this->query = "DELETE FROM `$this->tableName`";
+        return $this;
+    }
 
-	public function changeColumn($columnFromName, $columnToName){
-		if($this->column){
-			$this->column .= ',';
-		}
-		$this->column .= 'CHANGE COLUMN `'.$columnFromName.'` `'.$columnToName.'` ';
-		return $this;
-	}
+    public function drop($tableName) {
+        $this->query = "DROP TABLE IF EXISTS `$tableName`";
+        return $this;
+    }
 
+    public function truncate($tableName):self{
+        $this->query = "TRUNCATE TABLE `$tableName`";
+        return $this;
+    }
 
+    public function alias($columnName, $newColumnName):self{
+        $this->query = preg_replace(
+            "/`$columnName`/",
+            "`$columnName` AS `$newColumnName`",
+            $this->query
+        );
+        return $this;
+    }
 
-	public function column($columnName){
-		if($this->column){
-			$this->column .= ',';
-		}
-		$this->column .= '`'.$columnName.'` ';
-		return $this;
-	}
+    public function build():self{
+        if(strpos(strtoupper($this->query), 'INSERT INTO') === 0){
+            $columns = $this->cols()->columns();
+            $values = $this->cols()->values();
+            $this->query .= "($columns) VALUES ($values)";
+        }elseif(strpos(strtoupper($this->query), 'UPDATE') === 0) {
+            $this->query .= implode(", ", array_map(function($column, $value){
+				return "`$column` = $value";
+			}, array_keys($this->cols()->list()), array_values($this->cols()->list())));
+        }
+		$this->query .= $this->where()->get();
+		$this->query .= $this->orderBy()->get();
+		$this->query .= $this->pagination()->get();
+		$this->query .= ';';
+        return $this;
+    }
 
-	public function customQuery($statement){
-		$this->forceSemicolon($statement);
-		$this->db->query($statement);
-	}
+    public function leftJoin($tableName, $column, $onTableName, $onColumn):self{
+		$this->query .= " LEFT JOIN `$tableName` ON `$onTableName`.`$onColumn` = `$tableName`.`$column`";
+        return $this;
+    }
 
-	public function closeConnection(){
-		$this->db->close();
-	}
+    public function innerJoin($tableName, $column, $onTableName, $onColumn):self{
+		$this->query .= " INNER JOIN `$tableName` ON `$onTableName`.`$onColumn` = `$tableName`.`$column`";
+        return $this;
+    }
 
-	public function forceSemicolon(&$statement){
-		$statement = trim($statement, ' ');
-		$semicolon = substr($statement, strlen($statement) -1);
-		if($semicolon === ';'){
-			return $statement;
-		}
-		$statement.=' ;';
-	}
+    public function renameTableTo($newName):self{
+        $this->query = "ALTER TABLE `$this->tableName` RENAME TO `$newName`";
+        return $this;
+    }
 
-	public function mergeColumnWithStatement(){
-		if($this->isCreating){
-			return;
-		}
-		$this->statement .= $this->column;
-	}
+    public function renameColumn($oldName, $newName):self{
+        $this->query = "ALTER TABLE `$this->tableName` RENAME COLUMN `$oldName` TO `$newName`";
+        return $this;
+    }
 
-	public function execute(){
-		$this->isCreating && $this->endTransaction();
-		$this->mergeColumnWithStatement();
-		$this->customQuery($this->statement);
-		return $this;
-	}
+    public function reset():self{
+		$this->cols()->reset();
+		$this->where()->reset();
+		$this->pagination()->reset();
+		$this->orderBy()->reset();
+        return $this;
+    }
 
-	public function endTransaction(){
-		$this->statement .= "(".$this->column .") ENGINE=InnoDB CHARACTER SET utf8mb4;";
-		return $this;
-	}
+    public function getQuery():string{
+        return $this->query;
+    }
 
-	public function reset(){
-		$this->column = "";
-		$this->statement = "";
-		return $this;
-	}
+    public function column($name, $value):self{
+		$this->cols()->column($name, $value);
+        return $this;
+    }
 
-	public function statement():string{
-		return str_replace(PHP_EOL, '', $this->statement);
-	}
+    public function where():Where{
+        return $this->where;
+    }
 
-	private function addNullable(bool $nullable = false):string{
-		if($nullable){
-			return '';
-		}
-		return 'NOT NULL';
-	}
+    public function cols():Column{
+        return $this->cols;
+    }
 
-	public function bindary(bool $nullable = false){
-		$this->column.="binary(16) " . $this->addNullable($nullable);
-		return $this;
-	}
+    public function orderBy():OrderBy{
+        return $this->orderBy;
+    }
 
-	public function timestamp(bool $nullable = false){
-		$this->column.="timestamp ".$this->addNullable($nullable)." DEFAULT CURRENT_TIMESTAMP";
-		return $this;
-	}
-
-	public function int(){
-		$this->column.="int DEFAULT '0'";
-		return $this;
-	}
-
-	public function tinyint(){
-		$this->column.="tinyint";
-		return $this;
-	}
-
-	public function bool(){
-		$this->column.="tinyint(1) NOT NULL  DEFAULT '0'";
-		return $this;
-	}
-
-	public function string(){
-		$this->column.="varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
-		return $this;
-	}
-
-	public function paragraph(){
-		$this->column.="varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
-		return $this;
-	}
-
-	public function book(){
-		$this->column.="varchar(4000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
-		return $this;
+	public function pagination():Pagination{
+		return $this->pagination;
 	}
 }
-
-?>

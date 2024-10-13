@@ -16,29 +16,29 @@ class SusuRepository extends Repository{
     
     public function create(Susu $susu):void{
         $this->insert('susu')        
-            ->add('id', $this->uuid($susu->id()))
-            ->add('contribution', $susu->contribution())
-            ->add('cycle', $susu->cycle())
-            ->add('accurance', $susu->accurance())
-            ->add('startDate', $susu->startDate()->toString())
-            ->add('communityId', $this->uuid($susu->communityId()))
-            ->add('pendingStart', $susu->pendingStart())
-            ->add('canceled', $susu->canceled())
-            ->add('completed', $susu->completed());
+            ->column('id', $this->uuid($susu->id()))
+            ->column('contribution', $susu->contribution())
+            ->column('cycle', $susu->cycle())
+            ->column('accurance', $susu->accurance())
+            ->column('startDate', $susu->startDate()->toString())
+            ->column('communityId', $this->uuid($susu->communityId()))
+            ->column('pendingStart', $susu->pendingStart())
+            ->column('canceled', $susu->canceled())
+            ->column('completed', $susu->completed());
         $this->execute();
     }
     
     public function edit(Susu $susu):void{
         $this->update('susu')     
-            ->set('contribution', $susu->contribution())
-            ->set('cycle', $susu->cycle())
-            ->set('accurance', $susu->accurance())
-            ->set('startDate', $susu->startDate()->toString())
-            ->set('communityId', $this->uuid($susu->communityId()))
-            ->set('pendingStart', $susu->pendingStart())
-            ->set('canceled', $susu->canceled())
-            ->set('completed', $susu->completed())
-            ->where('id', $this->uuid($susu->id()));
+            ->column('contribution', $susu->contribution())
+            ->column('cycle', $susu->cycle())
+            ->column('accurance', $susu->accurance())
+            ->column('startDate', $susu->startDate()->toString())
+            ->column('communityId', $this->uuid($susu->communityId()))
+            ->column('pendingStart', $susu->pendingStart())
+            ->column('canceled', $susu->canceled())
+            ->column('completed', $susu->completed())
+            ->where()->eq('id', $this->uuid($susu->id()));
         $this->execute();
     }
     
@@ -46,16 +46,16 @@ class SusuRepository extends Repository{
         $this->select('susu');
 
         if(isset($where['communityId'])){
-            $this->where('communityId', $this->uuid($where['communityId']));
+            $this->where()->eq('communityId', $this->uuid($where['communityId']));
         }
         if(isset($where['id'])){
-            $this->where('id', $this->uuid($where['id']));
+            $this->where()->eq('id', $this->uuid($where['id']));
         }
         if(isset($where['completed'])){
-            $this->where('completed', (int)$where['completed']);
+            $this->where()->eq('completed', (int)$where['completed']);
         }
         if(isset($where['canceled'])){
-            $this->where('canceled', (int)$where['canceled']);
+            $this->where()->eq('canceled', (int)$where['canceled']);
         }
         $this->execute();
         return $this->factory->map(

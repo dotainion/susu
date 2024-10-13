@@ -3,13 +3,9 @@ import { api } from "../request/Api"
 import { useNavigate } from "react-router-dom";
 import { routes } from "../routes/Routes";
 import { utils } from "../utils/Utils";
-import { SelectOption } from "../widgets/SelectOption";
 
 export const NewCommunity = () =>{
     const navigate = useNavigate();
-
-    const [cycle , setCycle] = useState();
-    const [cycles , setCycles] = useState();
 
     const idRef = useRef(null);
     const nameRef = useRef();
@@ -31,22 +27,12 @@ export const NewCommunity = () =>{
     }
 
     useEffect(()=>{
-        api.susu.cycles().then((response)=>{
-            const cycleLists = response.data.data.map((cyc)=>{
-                return {
-                    title: cyc.attributes.cycle, 
-                    value: cyc.attributes.cycle
-                }
-            });
-            setCycles(cycleLists);
-        }).catch((error)=>{
-            console.log(error);
-        });
+        
     }, []);
 
     return(
         <div className="container">
-            <div className="bg-light py-2 rounded-4 mt-2 px-3">
+            <div className="bg-light py-2 rounded-4 mt-2 px-3 px-md-5">
                 <div className="h4 my-3">Community</div>
                 <div className="d-xl-flex d-block w-100">
                     <div className="me-5 mb-4">
@@ -60,6 +46,49 @@ export const NewCommunity = () =>{
                         <div className="d-md-flex d-block">
                             <div style={{minWidth: '200px'}}>Description</div>
                             <textarea ref={descriptionRef} className="form-control mb-3" placeholder="Description" style={{resize: 'none', maxWidth: '500px'}}/>
+                        </div>
+
+                        <hr></hr>
+                        
+                        <div className="form-group">
+                            <label>Rules and Guidelines</label>
+                            <textarea className="form-control" rows="3" style={{resize: 'none'}} disabled />
+                        </div>
+
+                        <div className="row d-flex">
+                            <div className="col form-group">
+                                <label>Privacy Settings</label>
+                                <select className="form-control" disabled>
+                                    <option value="Public">Public</option>
+                                    <option value="Private">Private</option>
+                                </select>
+                            </div>
+                            <div className="col form-group">
+                                <label>Join Request Settings</label>
+                                <select className="form-control" disabled>
+                                    <option value="Open">Open</option>
+                                    <option value="Approval Required">Approval Required</option>
+                                </select>
+                            </div>
+                            <div className="col form-group">
+                                <label>Group Type</label>
+                                <select className="form-control" disabled>
+                                    <option value="Open">Open</option>
+                                    <option value="Closed">Closed</option>
+                                    <option value="Invitation-only">Invitation-only</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <hr></hr>
+
+                        <div className="w-100 ms-0 ms-md-2 my-3 my-md-0">
+                            <div className="bg-transparent card-body">
+                                <div className="form-group">
+                                    <label>Social Media Links</label>
+                                    <input type="text" className="form-control" disabled />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

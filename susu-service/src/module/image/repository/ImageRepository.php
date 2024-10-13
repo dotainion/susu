@@ -17,31 +17,31 @@ class ImageRepository extends Repository{
     
     public function create(Image $image):void{
         $this->insert('images')        
-            ->add('id', $this->uuid($image->id()))
-            ->add('name', $image->name())
-            ->add('uniqueName', $image->uniqueName())
-            ->add('productId', $this->uuid($image->productId()))
-            ->add('default', $image->default())
-            ->add('ext', $image->extention())
-            ->add('isDocument', $image->isDocument());
+            ->column('id', $this->uuid($image->id()))
+            ->column('name', $image->name())
+            ->column('uniqueName', $image->uniqueName())
+            ->column('productId', $this->uuid($image->productId()))
+            ->column('default', $image->default())
+            ->column('ext', $image->extention())
+            ->column('isDocument', $image->isDocument());
         $this->execute();
     }
     
     public function edit(Image $image):void{
         $this->update('images')   
-            ->set('name', $image->name())
-            ->set('uniqueName', $image->uniqueName())
-            ->set('productId', $this->uuid($image->productId()))
-            ->set('default', $image->default())
-            ->set('ext', $image->extention())
-            ->set('isDocument', $image->isDocument())
-            ->where('id', $this->uuid($image->id()));
+            ->column('name', $image->name())
+            ->column('uniqueName', $image->uniqueName())
+            ->column('productId', $this->uuid($image->productId()))
+            ->column('default', $image->default())
+            ->column('ext', $image->extention())
+            ->column('isDocument', $image->isDocument())
+            ->where()->eq('id', $this->uuid($image->id()));
         $this->execute();
     }
     
     public function deleteImages(Id $id):void{
         $this->delete('images') 
-            ->where('id', $this->uuid($id));
+            ->where()->eq('id', $this->uuid($id));
         $this->execute();
     }
     
@@ -49,22 +49,22 @@ class ImageRepository extends Repository{
         $this->select('images');
 
         if(isset($where['id'])){
-            $this->where('id', $this->uuid($where['id']));
+            $this->where()->eq('id', $this->uuid($where['id']));
         }
         if(isset($where['name'])){
-            $this->where('name', $where['name']);
+            $this->where()->eq('name', $where['name']);
         }
         if(isset($where['isDocument'])){
-            $this->where('isDocument', (int)$where['isDocument']);
+            $this->where()->eq('isDocument', (int)$where['isDocument']);
         }
         if(isset($where['productId'])){
-            $this->where('productId', $this->uuid($where['productId']));
+            $this->where()->eq('productId', $this->uuid($where['productId']));
         }
         if(isset($where['default'])){
-            $this->where('default', $where['default']);
+            $this->where()->eq('default', $where['default']);
         }
         if(isset($where['ext'])){
-            $this->where('ext', $where['ext']);
+            $this->where()->eq('ext', $where['ext']);
         }
         $this->execute();
         return $this->factory->map(

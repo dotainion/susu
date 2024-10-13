@@ -2,7 +2,6 @@
 namespace src\schema;
 
 use Exception;
-use src\database\Table;
 
 class Schema{
     protected $sql = null;

@@ -66,8 +66,8 @@ export const Member = () => {
             <div className="row">
                 {
                     communities.length ?
-                    communities.map((community, key) => (
-                        <CommunityMiniCard communities={community} key={key}/>
+                    communities.map((community) => (
+                        <CommunityMiniCard community={community} key={community.id}/>
                     )):null
                 }
             </div>

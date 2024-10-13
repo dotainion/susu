@@ -9,6 +9,7 @@ import { Loader } from "../components/Loader";
 
 export const Communities = () => {
     const [communities, setCommunities] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate();
 
@@ -30,8 +31,12 @@ export const Communities = () => {
             setCommunities(response.data.data);
         }).catch((error)=>{
 
+        }).finally(()=>{
+            setLoading(false);
         });
     }, []);
+
+    if(loading) return <Loader center/>
 
     return (
         <div className="container">
@@ -45,13 +50,9 @@ export const Communities = () => {
                 <button onClick={()=>navigate(routes.susu().nested().newCommunity())} className="d-flex align-items-center btn d-block shadow-none"><IoAdd className="me-2"/>Create Community</button>
             </div>
             <div className="row row-with-search-above">
-                {
-                    communities.length ?
-                    communities.map((community, key) => (
-                        <CommunityCard community={community} key={key}/>
-                    )): 
-                    <Loader/>
-                }
+                {communities.map((community) => (
+                    <CommunityCard community={community} key={community.id}/>
+                ))}
             </div>
         </div>
     )

@@ -17,23 +17,23 @@ class InviteRepository extends Repository{
     
     public function create(Invite $invite):void{
         $this->insert('invite')        
-            ->add('id', $this->uuid($invite->id()))
-            ->add('memberId', $this->uuid($invite->memberId()))
-            ->add('targetId', $this->uuid($invite->targetId()))
-            ->add('date', $invite->date()->toString())
-            ->add('expire', $invite->expire()->toString())
-            ->add('isSusu', $invite->isSusu());
+            ->column('id', $this->uuid($invite->id()))
+            ->column('memberId', $this->uuid($invite->memberId()))
+            ->column('targetId', $this->uuid($invite->targetId()))
+            ->column('date', $invite->date()->toString())
+            ->column('expire', $invite->expire()->toString())
+            ->column('isSusu', $invite->isSusu());
         $this->execute();
     }
     
     public function edit(Invite $invite):void{
         $this->insert('invite') 
-            ->set('memberId', $this->uuid($invite->memberId()))  
-            ->set('targetId', $this->uuid($invite->targetId()))       
-            ->set('date', $invite->date()->toString())
-            ->set('expire', $invite->expire())
-            ->set('isSusu', $invite->isSusu())
-            ->where('id', $this->uuid($invite->id()));
+            ->column('memberId', $this->uuid($invite->memberId()))  
+            ->column('targetId', $this->uuid($invite->targetId()))       
+            ->column('date', $invite->date()->toString())
+            ->column('expire', $invite->expire())
+            ->column('isSusu', $invite->isSusu())
+            ->where()->eq('id', $this->uuid($invite->id()));
         $this->execute();
     }
     
@@ -47,13 +47,13 @@ class InviteRepository extends Repository{
         $this->select('invite');
 
         if(isset($where['id'])){
-            $this->where('id', $this->uuid($where['id']));
+            $this->where()->eq('id', $this->uuid($where['id']));
         }
         if(isset($where['targetId'])){
-            $this->where('targetId', $this->uuid($where['targetId']));
+            $this->where()->eq('targetId', $this->uuid($where['targetId']));
         }
         if(isset($where['memberId'])){
-            $this->where('memberId', $this->uuid($where['memberId']));
+            $this->where()->eq('memberId', $this->uuid($where['memberId']));
         }
         $this->execute();
         return $this->factory->map(

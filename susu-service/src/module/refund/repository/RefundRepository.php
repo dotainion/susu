@@ -16,25 +16,25 @@ class RefundRepository extends Repository{
     
     public function create(Refund $refund):void{
         $this->insert('refund')        
-            ->add('id', $this->uuid($refund->id()))
-            ->add('susuId', $this->uuid($refund->susuId()))
-            ->add('memberId', $this->uuid($refund->memberId()))
-            ->add('date', $refund->date()->toString())
-            ->add('amount', $refund->amount())
-            ->add('contributionId', $refund->contributionId())
-            ->add('description', $refund->description());
+            ->column('id', $this->uuid($refund->id()))
+            ->column('susuId', $this->uuid($refund->susuId()))
+            ->column('memberId', $this->uuid($refund->memberId()))
+            ->column('date', $refund->date()->toString())
+            ->column('amount', $refund->amount())
+            ->column('contributionId', $refund->contributionId())
+            ->column('description', $refund->description());
         $this->execute();
     }
     
     public function edit(Refund $refund):void{
         $this->insert('refund') 
-            ->set('susuId', $this->uuid($refund->susuId()))  
-            ->set('memberId', $this->uuid($refund->memberId()))       
-            ->set('date', $refund->date()->toString())
-            ->set('amount', $refund->amount())
-            ->set('contributionId', $refund->contributionId())
-            ->set('description', $refund->description())
-            ->where('id', $this->uuid($refund->id()));
+            ->column('susuId', $this->uuid($refund->susuId()))  
+            ->column('memberId', $this->uuid($refund->memberId()))       
+            ->column('date', $refund->date()->toString())
+            ->column('amount', $refund->amount())
+            ->column('contributionId', $refund->contributionId())
+            ->column('description', $refund->description())
+            ->where()->eq('id', $this->uuid($refund->id()));
         $this->execute();
     }
     
@@ -42,13 +42,13 @@ class RefundRepository extends Repository{
         $this->select('refund');
 
         if(isset($where['id'])){
-            $this->where('id', $this->uuid($where['id']));
+            $this->where()->eq('id', $this->uuid($where['id']));
         }
         if(isset($where['susuId'])){
-            $this->where('susuId', $this->uuid($where['susuId']));
+            $this->where()->eq('susuId', $this->uuid($where['susuId']));
         }
         if(isset($where['memberId'])){
-            $this->where('memberId', $this->uuid($where['memberId']));
+            $this->where()->eq('memberId', $this->uuid($where['memberId']));
         }
         $this->execute();
         return $this->factory->map(

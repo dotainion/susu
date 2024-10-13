@@ -16,25 +16,25 @@ class MessageRepository extends Repository{
     
     public function create(Message $message):void{
         $this->insert('message')        
-            ->add('id', $this->uuid($message->id()))
-            ->add('fromId', $this->uuid($message->fromId()))  
-            ->add('toId', $this->uuid($message->toId()))
-            ->add('date', $message->date()->toString())
-            ->add('message', $message->message())
-            ->add('read', $message->read())
-            ->add('hide', $message->hide());
+            ->column('id', $this->uuid($message->id()))
+            ->column('fromId', $this->uuid($message->fromId()))  
+            ->column('toId', $this->uuid($message->toId()))
+            ->column('date', $message->date()->toString())
+            ->column('message', $message->message())
+            ->column('read', $message->read())
+            ->column('hide', $message->hide());
         $this->execute();
     }
     
     public function edit(Message $message):void{
         $this->insert('message') 
-            ->set('fromId', $this->uuid($message->fromId()))  
-            ->set('toId', $this->uuid($message->toId()))
-            ->set('date', $message->date()->toString())
-            ->set('message', $message->message())
-            ->set('read', $message->read())
-            ->set('hide', $message->hide())
-            ->where('id', $this->uuid($message->id()));
+            ->column('fromId', $this->uuid($message->fromId()))  
+            ->column('toId', $this->uuid($message->toId()))
+            ->column('date', $message->date()->toString())
+            ->column('message', $message->message())
+            ->column('read', $message->read())
+            ->column('hide', $message->hide())
+            ->where()->eq('id', $this->uuid($message->id()));
         $this->execute();
     }
     
@@ -42,19 +42,19 @@ class MessageRepository extends Repository{
         $this->select('message');
 
         if(isset($where['id'])){
-            $this->where('id', $this->uuid($where['id']));
+            $this->where()->eq('id', $this->uuid($where['id']));
         }
         if(isset($where['fromId'])){
-            $this->where('fromId', $this->uuid($where['fromId']));
+            $this->where()->eq('fromId', $this->uuid($where['fromId']));
         }
         if(isset($where['toId'])){
-            $this->where('toId', $this->uuid($where['toId']));
+            $this->where()->eq('toId', $this->uuid($where['toId']));
         }
         if(isset($where['read'])){
-            $this->where('read', (int)$where['read']);
+            $this->where()->eq('read', (int)$where['read']);
         }
         if(isset($where['hide'])){
-            $this->where('hide', (int)$where['hide']);
+            $this->where()->eq('hide', (int)$where['hide']);
         }
         $this->execute();
         return $this->factory->map(

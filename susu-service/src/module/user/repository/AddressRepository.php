@@ -16,23 +16,23 @@ class AddressRepository extends Repository{
     
     public function create(Address $address):void{
         $this->insert('address')        
-            ->add('id', $this->uuid($address->id()))
-            ->add('country', $address->country())
-            ->add('state', $address->state())
-            ->add('address', $address->address())
-            ->add('apt', $address->apt())
-            ->add('zip', $address->zip());
+            ->column('id', $this->uuid($address->id()))
+            ->column('country', $address->country())
+            ->column('state', $address->state())
+            ->column('address', $address->address())
+            ->column('apt', $address->apt())
+            ->column('zip', $address->zip());
         $this->execute();
     }
     
     public function edit(Address $address):void{
         $this->update('address')
-            ->set('country', $address->country())
-            ->set('state', $address->state())
-            ->set('address', $address->address())
-            ->set('apt', $address->apt())
-            ->set('zip', $address->zip())
-            ->where('id', $this->uuid($address->id()));
+            ->column('country', $address->country())
+            ->column('state', $address->state())
+            ->column('address', $address->address())
+            ->column('apt', $address->apt())
+            ->column('zip', $address->zip())
+            ->where()->eq('id', $this->uuid($address->id()));
         $this->execute();
     }
     
@@ -40,7 +40,7 @@ class AddressRepository extends Repository{
         $this->select('address');
 
         if(isset($where['id'])){
-            $this->where('id', $this->uuid($where['id']));
+            $this->where()->eq('id', $this->uuid($where['id']));
         }
         $this->execute();
         return $this->factory->map(
