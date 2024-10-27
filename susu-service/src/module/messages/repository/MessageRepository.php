@@ -1,7 +1,7 @@
 <?php
 namespace src\module\messages\repository;
 
-use src\database\Repository;
+use src\infrastructure\Repository;
 use src\infrastructure\Collector;
 use src\module\messages\factory\MessageFactory;
 use src\module\messages\objects\Message;

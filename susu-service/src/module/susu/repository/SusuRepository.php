@@ -1,7 +1,7 @@
 <?php
 namespace src\module\susu\repository;
 
-use src\database\Repository;
+use src\infrastructure\Repository;
 use src\infrastructure\Collector;
 use src\module\susu\factory\SusuFactory;
 use src\module\susu\objects\Susu;

@@ -1,7 +1,7 @@
 <?php
 namespace src\module\payout\repository;
 
-use src\database\Repository;
+use src\infrastructure\Repository;
 use src\infrastructure\Collector;
 use src\module\payout\factory\PayoutFactory;
 use src\module\payout\objects\Payout;

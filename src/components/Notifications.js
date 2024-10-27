@@ -14,7 +14,7 @@ export const Notifications = () =>{
         api.invite.listByMember(user.id).then((response)=>{
             setNotififications(response.data.data);
         }).catch((error)=>{
-            console.error(error);
+            
         });
     }, []);
 

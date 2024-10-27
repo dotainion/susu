@@ -1,7 +1,7 @@
 <?php
 namespace src\module\refund\repository;
 
-use src\database\Repository;
+use src\infrastructure\Repository;
 use src\infrastructure\Collector;
 use src\module\refund\factory\RefundFactory;
 use src\module\refund\objects\Refund;

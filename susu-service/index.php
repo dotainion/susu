@@ -2,11 +2,13 @@
 
 require_once(__DIR__.'/vendor/autoload.php');
 
+use src\infrastructure\Env;
 use src\infrastructure\StatusCode;
 use src\router\Router;
 use Throwable;
 
 try{
+    Env::loadEnv();
     $status = new StatusCode();
     $status->handleExeption(function(){
         $router = new Router(basename(__DIR__));

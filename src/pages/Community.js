@@ -79,12 +79,36 @@ export const Community = () =>{
         api.community.community(params.communityId).then((response)=>{
             setCommunity(response.data.data[0]);
         }).catch((error)=>{
-            setCommunity(null);
+            setCommunity({
+                id: 'fihss',
+                attributes:{
+                    name: '',
+                    description: '',
+                    createdDate: '',
+                    members: '',
+                    creatorId: '',
+                    owner: '',
+                    susu: '',
+                    hide: '',
+                }
+            });
         });
         api.susu.active(params.communityId).then((response)=>{
             setSusu(response.data.data[0]);
         }).catch((error)=>{
-            setSusu(null);
+            setSusu({
+                id: 'some id',
+                attributes:{
+                    contribution: '',
+                    cycle: '',
+                    accurance: '',
+                    protestartDate: '',
+                    communityId: '',
+                    pendingStart: '',
+                    completed: '',
+                    canceled: '',
+                }
+            });
         });
     }, [location]);
 

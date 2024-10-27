@@ -2,10 +2,9 @@
 namespace src\infrastructure;
 
 use InvalidArgumentException;
-use src\database\Repository;
 use src\security\ValidatePassword;
 
-class Assert extends Repository{
+class Assert{
     public static function stringNotEmpty($string, string $message = 'String is empty.'):bool{
         if(empty($string)){
             throw new InvalidArgumentException($message);

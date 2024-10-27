@@ -1,7 +1,7 @@
 <?php
 namespace src\module\communities\repository;
 
-use src\database\Repository;
+use src\infrastructure\Repository;
 use src\infrastructure\Collector;
 use src\module\communities\factory\CommunityFactory;
 use src\module\communities\factory\CommunityLinkFactory;
@@ -67,7 +67,7 @@ class CommunityRepository extends Repository{
         $this->select('community');
 
         if(isset($where['memberId'])){
-            $this->innerJoin('communityLink', 'communityId', 'community', 'id');
+            $this->join()->inner('communityLink', 'communityId', 'community', 'id');
             $this->where()->eq('memberId', $this->uuid($where['memberId']), 'communityLink');
         }
 

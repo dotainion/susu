@@ -1,7 +1,7 @@
 <?php
 namespace src\module\contribution\repository;
 
-use src\database\Repository;
+use src\infrastructure\Repository;
 use src\infrastructure\Collector;
 use src\module\contribution\factory\ContributionFactory;
 use src\module\contribution\objects\Contribution;

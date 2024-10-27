@@ -1,7 +1,7 @@
 <?php
 namespace src\module\login\repository;
 
-use src\database\Repository;
+use src\infrastructure\Repository;
 use src\infrastructure\Collector;
 use src\infrastructure\ICredential;
 use src\infrastructure\Id;
@@ -58,8 +58,8 @@ class CredentialRepository extends Repository{
     
     public function listHasCredential(array $where):Collector{
         $this->select('credential')
-            ->innerJoin('user', 'id', 'credential', 'id')
-            ->where()->eq('hide', 0, 'user');
+            ->join()->inner('user', 'id', 'credential', 'id')
+            ->cursor()->where()->eq('hide', 0, 'user');
 
         if(isset($where['id'])){
             $this->where()->eq('id', $this->uuid($where['id']));

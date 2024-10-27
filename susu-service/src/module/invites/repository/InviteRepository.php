@@ -1,7 +1,7 @@
 <?php
 namespace src\module\invites\repository;
 
-use src\database\Repository;
+use src\infrastructure\Repository;
 use src\infrastructure\Collector;
 use src\infrastructure\Id;
 use src\module\invites\factory\InviteFactory;

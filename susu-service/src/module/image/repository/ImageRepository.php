@@ -1,7 +1,7 @@
 <?php
 namespace src\module\image\repository;
 
-use src\database\Repository;
+use src\infrastructure\Repository;
 use src\infrastructure\Collector;
 use src\infrastructure\Id;
 use src\module\image\factory\ImageFactory;

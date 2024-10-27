@@ -64,6 +64,49 @@
             "install-path": "../brick/math"
         },
         {
+            "name": "dotainion/query-permission",
+            "version": "1.0.0",
+            "version_normalized": "1.0.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dotainion/query-permission.git",
+                "reference": "0be60b55e1d72be6975a4c3deec0ccc0b1704020"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dotainion/query-permission/zipball/0be60b55e1d72be6975a4c3deec0ccc0b1704020",
+                "reference": "0be60b55e1d72be6975a4c3deec0ccc0b1704020",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mysqli": "*",
+                "kyegil/mysqli-connection": "^1.3",
+                "php": ">=7.0",
+                "ramsey/uuid": "^4.2"
+            },
+            "time": "2024-10-23T11:34:32+00:00",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "classmap": [
+                    "permission/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "dotainion",
+                    "email": "mb.repairss@gmail.com"
+                }
+            ],
+            "description": "A package for managing query permissions",
+            "support": {
+                "issues": "https://github.com/dotainion/query-permission/issues",
+                "source": "https://github.com/dotainion/query-permission/tree/v1.0.0"
+            },
+            "install-path": "../dotainion/query-permission"
+        },
+        {
             "name": "kyegil/mysqli-connection",
             "version": "1.3.6",
             "version_normalized": "1.3.6.0",

@@ -1,7 +1,7 @@
 <?php
 namespace src\security;
 
-use src\database\Repository;
+use src\infrastructure\Repository;
 use src\infrastructure\Collector;
 use src\infrastructure\DateHelper;
 use src\infrastructure\Id;
@@ -32,7 +32,7 @@ class SecurityRepository extends Repository{
 
     public function listSecurity(array $where = []):Collector{
         $this->select('user')
-            ->innerJoin('credential', 'id', 'user', 'id');
+            ->join()->inner('credential', 'id', 'user', 'id');
         if(isset($where['id'])){
             $this->where()->eq('id', $this->uuid($where['id']));
         }

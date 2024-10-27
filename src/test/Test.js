@@ -34,7 +34,7 @@ export const Test = () =>{
 
     return(
         <div className="container">
-            
+            <Community/>
         </div>
     )
 }

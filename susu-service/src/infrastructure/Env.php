@@ -1,6 +1,8 @@
 <?php
 namespace src\infrastructure;
 
+use Exception;
+
 class Env{
     protected array $messages = [];
 
@@ -69,20 +71,56 @@ class Env{
     public static function authorizationHeader():?string{
         return self::headers('Authorization');
     }
+    
+    public static function parseEnvFile() {
+        $filePath = __DIR__ . '/../../.env';
+        if (!file_exists($filePath)) {
+            throw new Exception("The .env file does not exist.");
+        }
+    
+        $variables = [];
+        $lines = file($filePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    
+        foreach ($lines as $line) {
+            if (trim($line) === '') {
+                continue;
+            }
+            list($key, $value) = explode('=', rtrim($line, ";"), 2);
+            $variables[trim($key)] = trim($value);
+        }
+        return $variables;
+    }
+    
+    public static function loadEnv() {
+        foreach (self::parseEnvFile() as $key => $value) {
+            $_ENV[$key] = $value;
+            putenv("$key=$value");
+        }
+    }
+
+    public static function env(?string $key=null){
+        if($key === null){
+            return $_ENV;
+        }
+        if(isset($_ENV[$key])){
+            return $_ENV[$key];
+        }
+        return null;
+    }
 
     public static function server():string{
-        return 'localhost';
+        return self::env('DB_SERVER');
     }
 
     public static function username():string{
-        return 'ccagrena_pos';
+        return self::env('DB_USERNAME');
     }
 
     public static function password():string{
-        return 'ccagrena_pos#1';
+        return self::env('DB_PASSWORD');
     }
 
     public static function database():string{
-        return 'ccagrena_pos';
+        return self::env('DB_DATABASE');
     }
 }

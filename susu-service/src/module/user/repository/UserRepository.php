@@ -1,7 +1,7 @@
 <?php
 namespace src\module\user\repository;
 
-use src\database\Repository;
+use src\infrastructure\Repository;
 use src\infrastructure\Collector;
 use src\module\user\factory\UserFactory;
 use src\module\user\objects\User;
