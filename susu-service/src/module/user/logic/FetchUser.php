@@ -1,9 +1,9 @@
 <?php
 namespace src\module\user\logic;
 
-use src\infrastructure\Collector;
-use src\infrastructure\Email;
-use src\infrastructure\Id;
+use tools\infrastructure\Collector;
+use tools\infrastructure\Email;
+use tools\infrastructure\Id;
 use src\module\user\repository\UserRepository;
 
 class FetchUser{

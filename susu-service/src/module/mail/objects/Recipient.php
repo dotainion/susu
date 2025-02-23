@@ -1,10 +1,10 @@
 <?php
 namespace src\module\mail\objects;
 
-use src\infrastructure\Assert;
-use src\infrastructure\Id;
-use src\infrastructure\IId;
-use src\infrastructure\IObjects;
+use tools\infrastructure\Assert;
+use tools\infrastructure\Id;
+use tools\infrastructure\IId;
+use tools\infrastructure\IObjects;
 
 class Recipient implements IObjects{
     protected Id $id;

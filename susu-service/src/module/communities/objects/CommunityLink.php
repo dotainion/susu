@@ -1,8 +1,8 @@
 <?php
 namespace src\module\communities\objects;
 
-use src\infrastructure\Id;
-use src\infrastructure\IId;
+use tools\infrastructure\Id;
+use tools\infrastructure\IId;
 
 class CommunityLink{
     protected Id $communityId;

@@ -2,7 +2,7 @@
 namespace src\module\user\repository;
 
 use src\infrastructure\Repository;
-use src\infrastructure\Collector;
+use tools\infrastructure\Collector;
 use src\module\user\factory\AddressFactory;
 use src\module\user\objects\Address;
 

@@ -1,8 +1,8 @@
 <?php
 namespace src\module\communities\factory;
 
-use src\infrastructure\Collector;
-use src\infrastructure\Factory;
+use tools\infrastructure\Collector;
+use tools\infrastructure\Factory;
 use src\module\communities\objects\CommunityLink;
 
 class CommunityLinkFactory extends Collector{

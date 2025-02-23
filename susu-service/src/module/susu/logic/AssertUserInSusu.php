@@ -2,7 +2,7 @@
 namespace src\module\susu\logic;
 
 use InvalidArgumentException;
-use src\infrastructure\Id;
+use tools\infrastructure\Id;
 
 class AssertUserInSusu{
     protected FetchSusuLink $link;

@@ -11,6 +11,7 @@ import { Payout } from "./Payout";
 import { Inviate } from "./Inviate";
 import { Refund } from "./Refund";
 import { routes } from "../routes/Routes";
+import { Payment } from "./Payment";
 import $ from "jquery";
 
 export class Api{
@@ -36,11 +37,12 @@ export class Api{
         this.refund = new Refund(this);
         this.message = new Messages(this);
         this.invite = new Inviate(this);
+        this.payment = new Payment(this);
     }
 
     initialize(){
         if(process.env.NODE_ENV === 'development'){
-            this.baseURL = 'https://www.caribbeancodingacademygrenada.com/susu-service'
+            this.baseURL = 'https://www.caribbeancodingacademygrenada.com/susu-service';
         }else if(process.env.NODE_ENV === 'production'){
             this.baseURL = '/susu-service';
         }else{

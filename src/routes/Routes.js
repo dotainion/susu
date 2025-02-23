@@ -1,6 +1,7 @@
 class Susu{
     _nested = '';
     default = () => '/susu/*';
+    susu = (communityId = ':communityId') => this._nested + 'susu/' + communityId;
     newCommunity = () => this._nested + 'create/community';
     community = (communityId = ':communityId') => this._nested + 'community/' + communityId;
     communities = () => this._nested + 'communities';
@@ -8,7 +9,7 @@ class Susu{
     member = (memberId = ':memberId') => this._nested + 'member/' + memberId;
     memberList = () => this._nested + 'member/list';
     profile = () => this._nested + 'profile';
-    communitySusuWallet = (communityId = ':communityId') => this._nested + 'wallet/' + communityId;
+    contributionAndPayments = (communityId = ':communityId') => this._nested + 'wallet/' + communityId;
     updateMemberSusuWallet = (communityId = ':communityId', memberId = ':memberId') => this._nested + 'update/wallet/' + communityId + '/' + memberId;
     memberSusuHistory = (susuId = ':susuId', memberId = ':memberId') => this._nested + 'member/susu/history/' + susuId + '/' + memberId;
     schedule = (communityId = ':communityId') => this._nested + 'schedule/' + communityId;
@@ -19,10 +20,11 @@ class Susu{
     messangers = () => this._nested + 'owner/messages';
     messages = (memberId = ':memberId') => this._nested + 'messages/' + memberId;
     communityMessages = (communityId = ':communityId') => this._nested + 'community/messages/' + communityId;
-    communityInvites = (communityId = ':communityId') => this._nested + 'community/invites/' + communityId;
-    susuInvites = (susuId = ':susuId') => this._nested + 'susu/invites/' + susuId;
     refund = (susuId = ':susuId', memberId = ':memberId') => this._nested + 'susu/refund/' + susuId + '/member/' + memberId;
+    cardRefund = (susuId = ':susuId', memberId = ':memberId', contributionId = ':contributionId') => this._nested + 'card/refund/susu/' + susuId + '/member/' + memberId + '/contribution/' + contributionId;
     assignSchedule = (communityId = ':communityId') => this._nested + 'assign/schedule/' + communityId;
+    payment = (susuId = ':susuId', communityId = ':communityId', memberId = ':memberId') => this._nested + 'payment/' + susuId + '/group/' + communityId + '/member/' + memberId;
+    receipt = (paymentIntentId = ':paymentIntentId', susuId = ':susuId', memberId = ':memberId') => this._nested + 'payment/receipt/' + paymentIntentId + '/susu/' + susuId + '/member/' + memberId;
     nested = () => {
         this._nested = this.default().replace('*', '');
         return this;

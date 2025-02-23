@@ -1,8 +1,8 @@
 <?php
 namespace src\module\image\service;
 
-use src\infrastructure\Assert;
-use src\infrastructure\Id;
+use tools\infrastructure\Assert;
+use tools\infrastructure\Id;
 use src\infrastructure\Service;
 use src\module\image\logic\FetchImage;
 use src\module\image\logic\SaveImage;

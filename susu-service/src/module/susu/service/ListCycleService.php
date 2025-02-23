@@ -1,7 +1,7 @@
 <?php
 namespace src\module\susu\service;
 
-use src\infrastructure\Collector;
+use tools\infrastructure\Collector;
 use src\infrastructure\Service;
 use src\module\susu\objects\Cycle;
 

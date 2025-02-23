@@ -1,8 +1,8 @@
 <?php
 namespace src\module\image\action;
 
-use src\infrastructure\IAction;
-use src\infrastructure\Request;
+use tools\infrastructure\IAction;
+use tools\infrastructure\Request;
 use src\module\image\service\DeleteFileService;
 
 class DeleteFileAction extends Request implements IAction{

@@ -24,18 +24,20 @@ export const Sidebar = () =>{
         <>
         <div className="d-flex align-items-center flex-sm-column sidebar">
             <div className="mb-auto me-auto">
-                <button onClick={()=>navigate(routes.nav().main())} className="btn bg-transparent text-primary shadow-none border-0 p-2"><MdMenu className="fs-2"/></button>
+                <button onClick={()=>navigate(routes.nav().main())} className="btn bg-transparent text-primary shadow-none border-0 p-2">
+                    <MdMenu className="fs-2"/>
+                </button>
             </div>
             <div className="dropdown mb-sm-3 me-2 me-sm-0">
                 <a href="#" className="d-flex justify-content-center d-block w-100" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQJxKGGpPc9-5g25KWwnsCCy9O_dlS4HWo5A&s" alt="" width="32" height="32" className="rounded-circle"/>
                 </a>
-                <ul className="dropdown-menu text-small shadow" aria-labelledby="dropdownUser1">
-                    <li><button onClick={()=>navigate(routes.susu().newCommunity())} className="btn bg-transparent w-100">New Community...</button></li>
-                    <li><button className="btn bg-transparent w-100">Settings</button></li>
-                    <li><button onClick={()=>navigate(routes.susu().profile())} className="btn bg-transparent w-100">Profile</button></li>
+                <ul className="dropdown-menu text-smallshadow" aria-labelledby="dropdownUser1">
+                    <li><a onClick={()=>navigate(routes.susu().newCommunity())} className="dropdown-item pointer">New Community</a></li>
+                    <li><a onClick={()=>navigate(routes.nav().nested().settings())} className="dropdown-item pointer">Settings</a></li>
+                    <li><a onClick={()=>navigate(routes.susu().profile())} className="dropdown-item pointer">Profile</a></li>
                     <li><hr className="dropdown-divider"/></li>
-                    <li><button onClick={signOut} className="btn bg-transparent w-100">Sign out</button></li>
+                    <li><a onClick={signOut} className="dropdown-item pointer">Sign out</a></li>
                 </ul>
             </div>
         </div>

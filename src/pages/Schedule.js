@@ -54,7 +54,7 @@ export const Schedule = () =>{
 
     return(
         <div className="container">
-            <button onClick={()=>navigate(routes.susu().nested().communitySusuWallet(params.communityId))} className="btn bg-transparent p-0 my-4"><IoIosArrowBack/> To Susu Manager</button>
+            <a onClick={()=>navigate(routes.susu().nested().contributionAndPayments(params.communityId))} className="btn text-primary p-0 my-4"><IoIosArrowBack/> To Susu Manager</a>
             <div className="d-flex align-items-center h4 mb-3">
                 <FcClock/>
                 <div className="mx-2 w-100">Payout Schedule</div>

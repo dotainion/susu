@@ -2,7 +2,7 @@
 namespace src\module\susu\repository;
 
 use src\infrastructure\Repository;
-use src\infrastructure\Collector;
+use tools\infrastructure\Collector;
 use src\module\susu\factory\SusuLinkFactory;
 use src\module\susu\objects\SusuLink;
 
@@ -22,7 +22,7 @@ class SusuLinkRepository extends Repository{
         $this->execute();
     }
     
-    public function editPosition(SusuLink $link):void{
+    public function edit(SusuLink $link):void{
         $this->insert('susuLink') 
             ->column('position', $link->position())       
             ->where()

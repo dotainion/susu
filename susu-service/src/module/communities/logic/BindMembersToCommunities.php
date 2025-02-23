@@ -1,7 +1,7 @@
 <?php
 namespace src\module\communities\logic;
 
-use src\infrastructure\Collector;
+use tools\infrastructure\Collector;
 use src\module\communities\repository\CommunityRepository;
 use src\module\susu\logic\ListSusu;
 use src\module\user\logic\ListUsers;

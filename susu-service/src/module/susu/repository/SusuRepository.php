@@ -2,7 +2,7 @@
 namespace src\module\susu\repository;
 
 use src\infrastructure\Repository;
-use src\infrastructure\Collector;
+use tools\infrastructure\Collector;
 use src\module\susu\factory\SusuFactory;
 use src\module\susu\objects\Susu;
 

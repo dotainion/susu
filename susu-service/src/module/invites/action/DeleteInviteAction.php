@@ -1,8 +1,8 @@
 <?php
 namespace src\module\invites\action;
 
-use src\infrastructure\IAction;
-use src\infrastructure\Request;
+use tools\infrastructure\IAction;
+use tools\infrastructure\Request;
 use src\module\invites\service\DeleteInviteService;
 
 class DeleteInviteAction extends Request implements IAction{

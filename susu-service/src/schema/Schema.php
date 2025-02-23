@@ -2,13 +2,9 @@
 namespace src\schema;
 
 use Exception;
+use tools\schema\Schema as ToolsSchema;
 
-class Schema{
-    protected $sql = null;
-
-    public function __construct(){
-        $this->sql = new Table();
-    }
+class Schema extends ToolsSchema{
 
     public function user(){
         $this->sql->create('user')
@@ -52,7 +48,8 @@ class Schema{
             ->column('name')->string()
             ->column('description')->paragraph()
             ->column('createdDate')->timestamp()     
-            ->column('creatorId')->bindary()
+            ->column('creatorId')->bindary()    
+            ->column('privacy')->string()
             ->column('hide')->bool();
         return $this->sql->execute();
     }
@@ -93,7 +90,9 @@ class Schema{
             ->column('memberId')->bindary()
             ->column('contribution')->string()
             ->column('description')->paragraph()
-            ->column('date')->timestamp();
+            ->column('date')->timestamp()
+            ->column('paymentIntentId')->string()
+            ->column('type')->string();
         return $this->sql->execute();
     }
 
@@ -116,6 +115,7 @@ class Schema{
             ->column('amount')->string()
             ->column('description')->paragraph()
             ->column('contributionId')->bindary()
+            ->column('type')->string()
             ->column('date')->timestamp();
         return $this->sql->execute();
     }

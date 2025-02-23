@@ -1,7 +1,7 @@
 <?php
 namespace src\module\communities\service;
 
-use src\infrastructure\Assert;
+use tools\infrastructure\Assert;
 use src\infrastructure\Service;
 use src\module\communities\factory\CommunityLinkFactory;
 use src\module\communities\logic\BindMembersToCommunities;

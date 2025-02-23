@@ -66,6 +66,6 @@ export const NavMain = () =>{
     }
 
     return(
-        <NavGrid nav={categories}/>
+        <NavGrid nav={categories} useMenu/>
     )
 }

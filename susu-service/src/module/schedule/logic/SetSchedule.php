@@ -1,7 +1,7 @@
 <?php
 namespace src\module\schedule\logic;
 
-use src\infrastructure\Collector;
+use tools\infrastructure\Collector;
 use src\module\schedule\objects\Schedule;
 use src\module\susu\repository\ScheduleRepository;
 

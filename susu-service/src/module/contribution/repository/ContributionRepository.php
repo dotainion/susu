@@ -2,7 +2,7 @@
 namespace src\module\contribution\repository;
 
 use src\infrastructure\Repository;
-use src\infrastructure\Collector;
+use tools\infrastructure\Collector;
 use src\module\contribution\factory\ContributionFactory;
 use src\module\contribution\objects\Contribution;
 
@@ -21,7 +21,8 @@ class ContributionRepository extends Repository{
             ->column('memberId', $this->uuid($contribution->memberId()))
             ->column('date', $contribution->date()->toString())
             ->column('contribution', $contribution->contribution())
-            ->column('description', $contribution->description());
+            ->column('description', $contribution->description())
+            ->column('paymentIntentId', $contribution->paymentIntentId());
         $this->execute();
     }
     
@@ -32,6 +33,7 @@ class ContributionRepository extends Repository{
             ->column('date', $contribution->date()->toString())
             ->column('contribution', $contribution->contribution())
             ->column('description', $contribution->description())
+            ->column('paymentIntentId', $contribution->paymentIntentId())
             ->where()->eq('id', $this->uuid($contribution->id()));
         $this->execute();
     }
@@ -47,6 +49,9 @@ class ContributionRepository extends Repository{
         }
         if(isset($where['memberId'])){
             $this->where()->eq('memberId', $this->uuid($where['memberId']));
+        }
+        if(isset($where['paymentIntentId'])){
+            $this->where()->eq('paymentIntentId', $where['paymentIntentId']);
         }
         $this->execute();
         return $this->factory->map(

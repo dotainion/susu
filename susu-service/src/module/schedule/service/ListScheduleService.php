@@ -1,8 +1,9 @@
 <?php
 namespace src\module\schedule\service;
 
-use src\infrastructure\Assert;
-use src\infrastructure\Id;
+use InvalidArgumentException;
+use tools\infrastructure\Assert;
+use tools\infrastructure\Id;
 use src\infrastructure\Service;
 use src\module\contribution\logic\ListContribution;
 use src\module\payout\logic\ListPayout;
@@ -43,6 +44,10 @@ class ListScheduleService extends Service{
 
         $susuCollector->assertHasItem('Susu not found.');
         $susu = $susuCollector->first();
+
+        if($susu->pendingStart()){
+            throw new InvalidArgumentException('To schedule a susu, you must first initiate the susu.');
+        }
 
         $collector = $this->schedule->bySusuId($susu->id());
         $collector->assertHasItem('Schedule not found.');

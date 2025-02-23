@@ -49,7 +49,7 @@ export const MessageBox = ({messageToName, messages, isCommunityMessanger, sendM
                 </div>
                 <div className="p-4">
                     <div className="d-flex align-items-center w-100 rounded-3 bg-white py-2">
-                        <input ref={messageRef} className="form-control shadow-none border-0" type="text" placeholder="Message: John Smith"/>
+                        <input ref={messageRef} className="form-control shadow-none border-0 bg-white" type="text" placeholder="Message: John Smith"/>
                         <button onClick={postMessage} className="btn shadow-none bg-transparent p-0 me-3"><MdSend className="fs-3" /></button>
                     </div>
                 </div>

@@ -1,8 +1,8 @@
 <?php
 namespace src\module\refund\action;
 
-use src\infrastructure\IAction;
-use src\infrastructure\Request;
+use tools\infrastructure\IAction;
+use tools\infrastructure\Request;
 use src\module\refund\service\AddSusuRefundService;
 
 class AddSusuRefundAction extends Request implements IAction{
@@ -18,7 +18,8 @@ class AddSusuRefundAction extends Request implements IAction{
             $this->get('susuId'),
             $this->get('memberId'),
             $this->get('amount'),
-            $this->get('contributionId')
+            $this->get('contributionId'),
+            $this->get('type')
         );
     }
 }

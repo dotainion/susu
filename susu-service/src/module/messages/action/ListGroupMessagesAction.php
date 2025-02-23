@@ -1,8 +1,8 @@
 <?php
 namespace src\module\messages\action;
 
-use src\infrastructure\IAction;
-use src\infrastructure\Request;
+use tools\infrastructure\IAction;
+use tools\infrastructure\Request;
 use src\module\messages\service\ListCommunityMessagesService;
 
 class ListCommunityMessagesAction extends Request implements IAction{

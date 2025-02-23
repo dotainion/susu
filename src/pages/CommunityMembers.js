@@ -35,6 +35,7 @@ export const CommunityMembers = () =>{
 }
 
 const MemberCard = ({member}) =>{
+    console.log(member);
     const { user } = useAuth();
 
     const [undo, setUndo] = useState(false);
@@ -66,48 +67,46 @@ const MemberCard = ({member}) =>{
     }
 
     return(
-        <button className="selected-label btn bg-transparent d-block shadow-none text-start my-1 border-0 w-100">
-            <label className="d-flex align-items-center pointer">
-                <div className="me-2">
-                    <FaUserCircle className="display-5"/>
-                </div>
-                <input className="d-none" type="checkbox" id={member.id}/>
-                <div className="w-100">
-                    {
-                        user.id === member.id
-                        ? <div className="text-truncate">Me</div>
-                        : <div className="text-truncate">{member.attributes.firstName} {member.attributes.lastName}</div>
-                    }
-                    <div className="small"><small>First Name Last Name</small></div>
-                </div>
-                <div>
-                    {
-                        undo
-                        ? <button onClick={undoDeleteMember} className="d-flex align-items-center btn btn-sm btn-outline-primary bg-transparent text-primary">
+        <div className="d-flex align-items-center text-dark py-2 w-100">
+            <div className="me-2">
+                <FaUserCircle className="display-5"/>
+            </div>
+            <input className="d-none" type="checkbox" id={member.id}/>
+            <div className="w-100">
+                {
+                    user.id === member.id
+                    ? <div className="text-truncate">Me</div>
+                    : <div className="text-truncate">{member.attributes.firstName} {member.attributes.lastName}</div>
+                }
+                <div className="small"><small>{member.attributes.email}</small></div>
+            </div>
+            <div>
+                {
+                    undo
+                    ? <button onClick={undoDeleteMember} className="d-flex align-items-center btn btn-sm btn-outline-primary bg-transparent text-primary">
+                        {
+                            undoSpinner 
+                            ? <div className="spinner-border spinner-border-sm me-2" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div> 
+                            : null
+                        }
+                        <div>Undo</div>
+                    </button>
+                    : user.id !== member.id
+                        ? <button onClick={deleteMember} className="d-flex align-items-center btn btn-sm btn-danger">
                             {
-                                undoSpinner 
+                                removeSpinner
                                 ? <div className="spinner-border spinner-border-sm me-2" role="status">
                                     <span className="visually-hidden">Loading...</span>
-                                </div> 
+                                </div>
                                 : null
                             }
-                            <div>Undo</div>
+                            <div>Remove</div>
                         </button>
-                        : user.id !== member.id
-                            ? <button onClick={deleteMember} className="d-flex align-items-center btn btn-sm btn-danger">
-                                {
-                                    removeSpinner
-                                    ? <div className="spinner-border spinner-border-sm me-2" role="status">
-                                        <span className="visually-hidden">Loading...</span>
-                                    </div>
-                                    : null
-                                }
-                                <div>Remove</div>
-                            </button>
-                            : <span>Owner</span>
-                    }
-                </div>
-            </label>
-        </button>
+                        : <span className="px-3">Owner</span>
+                }
+            </div>
+        </div>
     )
 }

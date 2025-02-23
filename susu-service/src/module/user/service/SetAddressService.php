@@ -1,7 +1,7 @@
 <?php
 namespace src\module\user\service;
 
-use src\infrastructure\Assert;
+use tools\infrastructure\Assert;
 use src\infrastructure\Service;
 use src\module\user\factory\AddressFactory;
 use src\module\user\logic\SetAddress;

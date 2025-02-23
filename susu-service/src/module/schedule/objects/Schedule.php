@@ -1,11 +1,11 @@
 <?php
 namespace src\module\schedule\objects;
 
-use src\infrastructure\Collector;
-use src\infrastructure\DateHelper;
-use src\infrastructure\Id;
-use src\infrastructure\IId;
-use src\infrastructure\IObjects;
+use tools\infrastructure\Collector;
+use tools\infrastructure\DateHelper;
+use tools\infrastructure\Id;
+use tools\infrastructure\IId;
+use tools\infrastructure\IObjects;
 use src\module\user\objects\User;
 
 class Schedule implements IObjects{

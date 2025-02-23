@@ -1,8 +1,8 @@
 <?php
 namespace src\module\communities\logic;
 
-use src\infrastructure\Collector;
-use src\infrastructure\Id;
+use tools\infrastructure\Collector;
+use tools\infrastructure\Id;
 use src\module\communities\repository\CommunityRepository;
 
 class FetchCommunity{

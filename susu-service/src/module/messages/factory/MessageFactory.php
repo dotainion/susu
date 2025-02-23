@@ -1,8 +1,8 @@
 <?php
 namespace src\module\messages\factory;
 
-use src\infrastructure\Collector;
-use src\infrastructure\Factory;
+use tools\infrastructure\Collector;
+use tools\infrastructure\Factory;
 use src\module\messages\objects\Message;
 
 class MessageFactory extends Collector{

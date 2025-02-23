@@ -1,8 +1,8 @@
 <?php
 namespace src\module\contribution\logic;
 
-use src\infrastructure\Collector;
-use src\infrastructure\Id;
+use tools\infrastructure\Collector;
+use tools\infrastructure\Id;
 use src\module\contribution\repository\ContributionRepository;
 
 class ListContribution{
@@ -10,6 +10,12 @@ class ListContribution{
 
     public function __construct(){
         $this->repo = new ContributionRepository();
+    }
+
+    public function byId(Id $contributionId):Collector{
+        return $this->repo->listContribution([
+            'id' => $contributionId,
+        ]);
     }
 
     public function history(Id $susuId, Id $memberId):Collector{

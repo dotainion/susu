@@ -1,8 +1,8 @@
 <?php
 namespace src\module\payout\factory;
 
-use src\infrastructure\Collector;
-use src\infrastructure\Factory;
+use tools\infrastructure\Collector;
+use tools\infrastructure\Factory;
 use src\module\payout\objects\Payout;
 
 class PayoutFactory extends Collector{

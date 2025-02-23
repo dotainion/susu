@@ -1,9 +1,9 @@
 <?php
 namespace src\module\messages\service;
 
-use src\infrastructure\Assert;
-use src\infrastructure\Collector;
-use src\infrastructure\Id;
+use tools\infrastructure\Assert;
+use tools\infrastructure\Collector;
+use tools\infrastructure\Id;
 use src\infrastructure\Service;
 use src\module\communities\logic\ListCommunities;
 use src\module\messages\logic\ListMessages;

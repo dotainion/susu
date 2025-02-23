@@ -1,8 +1,8 @@
 <?php
 namespace src\module\mail\factory;
 
-use src\infrastructure\Collector;
-use src\infrastructure\Factory;
+use tools\infrastructure\Collector;
+use tools\infrastructure\Factory;
 use src\module\mail\objects\Recipient;
 
 class RecipientFactory extends Collector{

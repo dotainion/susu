@@ -2,7 +2,7 @@
 namespace src\module\schedule\service;
 
 use InvalidArgumentException;
-use src\infrastructure\Assert;
+use tools\infrastructure\Assert;
 use src\infrastructure\Service;
 use src\module\schedule\logic\FetchSchedule;
 use src\module\schedule\logic\SetSchedule;

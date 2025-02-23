@@ -1,8 +1,8 @@
 <?php
 namespace src\module\communities\service;
 
-use src\infrastructure\DateHelper;
-use src\infrastructure\Id;
+use tools\infrastructure\DateHelper;
+use tools\infrastructure\Id;
 use src\infrastructure\Service;
 use src\module\communities\factory\CommunityFactory;
 use src\module\communities\factory\CommunityLinkFactory;
@@ -26,7 +26,7 @@ class SetCommunityService extends Service{
         $this->bind = new BindMembersToCommunities();
     }
     
-    public function process($id, $name, $description, $cycle, $hide){
+    public function process($id, $name, $description, $cycle, $privacy, $hide){
         $idObj = new Id();
         $communityId = $idObj->isValid($id) ? $idObj->set($id) : $idObj->new();
 
@@ -37,6 +37,7 @@ class SetCommunityService extends Service{
             'cycle' => $cycle,
             'createdDate' => (new DateHelper())->new()->toString(),
             'creatorId' => $this->user()->id()->toString(),
+            'privacy' => $privacy,
             'hide' => $hide
         ]]);
         $community = $collector->first();

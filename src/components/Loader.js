@@ -13,7 +13,7 @@ export const Loader = ({center}) =>{
         }, 10000);
 
         return ()=>{
-            setShow(true);
+            setShow(false);
         }
     }, []);
 

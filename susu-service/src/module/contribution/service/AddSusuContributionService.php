@@ -1,9 +1,9 @@
 <?php
 namespace src\module\contribution\service;
 
-use src\infrastructure\Assert;
-use src\infrastructure\DateHelper;
-use src\infrastructure\Id;
+use tools\infrastructure\Assert;
+use tools\infrastructure\DateHelper;
+use tools\infrastructure\Id;
 use src\infrastructure\Service;
 use src\module\contribution\factory\ContributionFactory;
 use src\module\contribution\logic\AddContribution;
@@ -19,7 +19,7 @@ class AddSusuContributionService extends Service{
         $this->factory = new ContributionFactory();
     }
     
-    public function process($susuId, $memberId, $contribution){
+    public function process($susuId, $memberId, $contribution, $paymentIntentId, $type){
         Assert::validUuid($susuId, 'Susu not found.');
         Assert::validUuid($memberId, 'Member not found.');
 
@@ -29,7 +29,9 @@ class AddSusuContributionService extends Service{
             'date' => (new DateHelper())->new()->toString(),
             'memberId' => $memberId,
             'contribution' => $contribution,
-            'setDescription' => null
+            'setDescription' => null,
+            'paymentIntentId' => $paymentIntentId,
+            'type' => $type
         ]);
 
         (new AssertUserInSusu())->assertUserInSusu($history->memberId(), $history->susuId());

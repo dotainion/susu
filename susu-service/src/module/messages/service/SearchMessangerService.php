@@ -1,7 +1,7 @@
 <?php
 namespace src\module\messages\service;
 
-use src\infrastructure\Assert;
+use tools\infrastructure\Assert;
 use src\infrastructure\Service;
 use src\module\communities\logic\ListCommunities;
 use src\module\user\logic\ListUsers;

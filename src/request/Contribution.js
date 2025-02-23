@@ -11,6 +11,10 @@ export class Contribution{
         return await this.api.get('/list/susu/contribution', {susuId, memberId});
     }
 
+    async contribution(contributionId){
+        return await this.api.get('/fetch/contribution', {contributionId});
+    }
+
     async list(susuId){
         return await this.api.get('/list/contribution', {susuId});
     }

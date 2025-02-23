@@ -1,8 +1,8 @@
 <?php
 namespace src\module\communities\action;
 
-use src\infrastructure\IAction;
-use src\infrastructure\Request;
+use tools\infrastructure\IAction;
+use tools\infrastructure\Request;
 use src\module\communities\service\FetchCommunityService;
 
 class FetchCommunityAction extends Request implements IAction{

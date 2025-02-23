@@ -1,10 +1,10 @@
 <?php
 namespace src\module\invites\objects;
 
-use src\infrastructure\DateHelper;
-use src\infrastructure\Id;
-use src\infrastructure\IId;
-use src\infrastructure\IObjects;
+use tools\infrastructure\DateHelper;
+use tools\infrastructure\Id;
+use tools\infrastructure\IId;
+use tools\infrastructure\IObjects;
 use src\module\communities\objects\Community;
 
 class Invite implements IObjects{

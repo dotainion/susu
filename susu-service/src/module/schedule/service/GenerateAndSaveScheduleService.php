@@ -2,8 +2,8 @@
 namespace src\module\schedule\service;
 
 use InvalidArgumentException;
-use src\infrastructure\Assert;
-use src\infrastructure\Id;
+use tools\infrastructure\Assert;
+use tools\infrastructure\Id;
 use src\infrastructure\Service;
 use src\module\schedule\logic\CalculateSchedule;
 use src\module\schedule\logic\SetSchedule;

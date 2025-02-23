@@ -1,9 +1,9 @@
 <?php
 namespace src\module\messages\service;
 
-use src\infrastructure\Assert;
-use src\infrastructure\DateHelper;
-use src\infrastructure\Id;
+use tools\infrastructure\Assert;
+use tools\infrastructure\DateHelper;
+use tools\infrastructure\Id;
 use src\infrastructure\Service;
 use src\module\messages\factory\MessageFactory;
 use src\module\messages\logic\AppendMessageUsers;

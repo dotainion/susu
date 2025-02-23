@@ -1,8 +1,8 @@
 <?php
 namespace src\module\communities\service;
 
-use src\infrastructure\Assert;
-use src\infrastructure\Id;
+use tools\infrastructure\Assert;
+use tools\infrastructure\Id;
 use src\infrastructure\Service;
 use src\module\communities\logic\BindMembersToCommunities;
 use src\module\communities\logic\FetchCommunity;

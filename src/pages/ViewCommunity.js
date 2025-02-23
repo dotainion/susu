@@ -92,7 +92,8 @@ export const ViewCommunity = () =>{
                                             <div className="my-2"><GiReceiveMoney className="fs-4 me-2 text-brown"/>Next Payout: [<b>None</b>]</div>
                                         </div>
                                         <button onClick={()=>navigate(routes.susu().nested().memberSusuHistory(susu.id, user.id))} className="btn btn-sm me-2">View current susu history</button>
-                                        <button onClick={()=>navigate(routes.susu().nested().schedule(params.communityId))} className="btn btn-sm">Schedule</button>
+                                        <button onClick={()=>navigate(routes.susu().nested().schedule(params.communityId))} className="btn btn-sm me-2">Schedule</button>
+                                        <button onClick={()=>navigate(routes.susu().nested().payment(susu.id, params.communityId, user.id))} className="btn btn-sm">Make Contribution</button>
                                     </div>
                                     : <div>
                                         <p className="fw-bold">We are excited to announce that a new susu will be starting soon, and you’re invited to join!</p>
@@ -118,21 +119,21 @@ export const ViewCommunity = () =>{
             {
                 community ? 
                 <div className="row- mt-4">
-                    <div className="d-flex bg-light p-3 m-1 rounded-3 shadow-sm">
+                    <div className="d-flex p-3 mx-1 my-3 rounded-3 shadow-sm">
                         <div><CgNametag className="display-5 text-brown"/></div>
                         <div className="ms-2">
                             <small className="fw-bold text-secondary">Community Name</small>
                             <div className="text-brown small fw-bold" type="text">{community.attributes.name}</div>
                         </div>
                     </div>
-                    <div className="d-flex bg-light p-3 m-1 rounded-3 shadow-sm">
+                    <div className="d-flex p-3 mx-1 my-3 rounded-3 shadow-sm">
                         <div><HiMiniUsers className="display-5 text-brown"/></div>
                         <div className="ms-2">
                             <small className="fw-bold text-secondary">Members</small>
                             <div className="text-brown small fw-bold">{community.attributes.members.length || 'none'}</div>
                         </div>
                     </div>
-                    <div className="d-flex bg-light p-3 m-1 rounded-3 shadow-sm">
+                    <div className="d-flex p-3 mx-1 my-3 rounded-3 shadow-sm">
                         <div><MdDescription className="display-5 text-brown"/></div>
                         <div className="ms-2">
                             <small className="fw-bold text-secondary">Description</small>

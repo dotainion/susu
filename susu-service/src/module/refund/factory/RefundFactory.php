@@ -1,8 +1,8 @@
 <?php
 namespace src\module\refund\factory;
 
-use src\infrastructure\Collector;
-use src\infrastructure\Factory;
+use tools\infrastructure\Collector;
+use tools\infrastructure\Factory;
 use src\module\refund\objects\Refund;
 
 class RefundFactory extends Collector{
@@ -20,6 +20,7 @@ class RefundFactory extends Collector{
         $history->setAmount($record['amount']);
         $history->setDescription((string)$record['description']);
         $history->setContributionId($this->uuid($record['contributionId']));
+        $history->setType($record['type']);
         return $history;
     }
 }

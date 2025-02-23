@@ -2,12 +2,13 @@
 namespace src\module\refund\objects;
 
 use InvalidArgumentException;
-use src\infrastructure\Id;
+use tools\infrastructure\Id;
 use src\infrastructure\Payment;
 
 class Refund extends Payment{
     protected string $amount;
     protected Id $contributionId;
+    protected string $type;
 
     public function __construct(){
         parent::__construct();

@@ -2,22 +2,21 @@
 namespace src\module\login\service;
 
 use src\infrastructure\Service;
-use src\security\SecurityManager;
+use tools\security\Session;
+use tools\SecurityTools;
 
 class GoogleLoginService extends Service{
-    protected SecurityManager $security;
+    protected SecurityTools $secure;
 
     public function __construct(){
         parent::__construct(false);
-        $this->security = new SecurityManager();
+        $this->secure = new SecurityTools();
     }
     
     public function process($accessToken){
         
-        $this->security->googleLogin($accessToken);
+        $this->secure->googleLogin($accessToken);
         
-        $this->setOutput($this->security->user());
-        
-        return $this;
+        return $this->setOutput(Session::user());
     }
 }

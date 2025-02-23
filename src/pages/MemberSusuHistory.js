@@ -4,13 +4,19 @@ import { GoDotFill } from "react-icons/go";
 import { routes } from "../routes/Routes";
 import { FaStar } from "react-icons/fa";
 import { api } from "../request/Api";
+import { useAuth } from "../provider/AuthProvider";
+import { Loader } from "../components/Loader";
 
 export const MemberSusuHistory = () =>{
+    const { user } = useAuth();
+
     const [susu, setSusu] = useState();
+    const [owner, setOwner] = useState();
     const [histories, setHistories] = useState([]);
     const [payouts, setPayouts] = useState([]);
     const [refunds, setRefunds] = useState([]);
     const [contributions, setContributions] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const params = useParams();
     const navigate = useNavigate();
@@ -18,12 +24,12 @@ export const MemberSusuHistory = () =>{
     useEffect(()=>{
         api.susu.fetch(params.susuId).then((response)=>{
             setSusu(response.data.data[0]);
+            setOwner(response.data.data[0].attributes.owner);
         }).catch((error)=>{
 
+        }).finally(()=>{
+            setLoading(false);
         });
-    }, []);
-
-    useEffect(()=>{
         api.contribution.listContributions(params.susuId, params.memberId).then((response)=>{
             setContributions(response.data.data);
         }).catch((error)=>{
@@ -45,11 +51,17 @@ export const MemberSusuHistory = () =>{
         setHistories([...payouts, ...refunds, ...contributions].sort((a, b)=>new Date(a.attributes.date) - new Date(b.attributes.date)));
     }, [payouts, refunds, contributions]);
 
+    if(loading) return <Loader center/>
+
     return(
         <div className="container">
             <div className="d-flex align-items-center w-100 text-nowrap mt-3">
                 <div className="h4 w-100">Contribution History</div>
-                {susu ? <button onClick={()=>navigate(routes.susu().nested().CommunitySusuWallet(susu.attributes.communityId))} className="btn btn-sm mx-1">To Community Wallet</button> : null}
+                {
+                    (susu && owner && owner.id === user.id) 
+                    ? <button onClick={()=>navigate(routes.susu().nested().contributionAndPayments(susu.attributes.communityId))} className="btn btn-sm mx-1">Contribution and payments</button> 
+                    : null
+                }
             </div>
             <div>
                 <table className="w-100">

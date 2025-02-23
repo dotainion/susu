@@ -1,7 +1,7 @@
 <?php
 namespace src\module\invites\logic;
 
-use src\infrastructure\Collector;
+use tools\infrastructure\Collector;
 use src\module\communities\logic\ListCommunities;
 use src\module\invites\objects\Invite;
 use src\module\susu\logic\ListSusu;

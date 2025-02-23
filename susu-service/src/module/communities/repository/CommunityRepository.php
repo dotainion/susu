@@ -2,7 +2,7 @@
 namespace src\module\communities\repository;
 
 use src\infrastructure\Repository;
-use src\infrastructure\Collector;
+use tools\infrastructure\Collector;
 use src\module\communities\factory\CommunityFactory;
 use src\module\communities\factory\CommunityLinkFactory;
 use src\module\communities\objects\Community;
@@ -24,7 +24,8 @@ class CommunityRepository extends Repository{
             ->column('name', $community->name())
             ->column('description', $community->description())
             ->column('createdDate', $community->createdDate()->toString())
-            ->column('creatorId', $this->uuid($community->creatorId()));
+            ->column('creatorId', $this->uuid($community->creatorId()))
+            ->column('privacy', $this->uuid($community->privacy()));
         $this->execute();
     }
     
@@ -34,6 +35,7 @@ class CommunityRepository extends Repository{
             ->column('description', $community->description())
             ->column('createdDate', $community->createdDate()->toString())
             ->column('creatorId', $this->uuid($community->creatorId()))
+            ->column('privacy', $this->uuid($community->privacy()))
             ->where()->eq('id', $this->uuid($community->id()));
         $this->execute();
     }
@@ -70,7 +72,9 @@ class CommunityRepository extends Repository{
             $this->join()->inner('communityLink', 'communityId', 'community', 'id');
             $this->where()->eq('memberId', $this->uuid($where['memberId']), 'communityLink');
         }
-
+        if(isset($where['privacy'])){
+            $this->where()->eq('privacy', $where['privacy']);
+        }
         if(isset($where['name'])){
             $this->where()->like('name', $where['name']);
         }

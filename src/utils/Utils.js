@@ -79,11 +79,121 @@ class DateTime{
     }
 }
 
+class Dom {
+    element;
+    events = [];
+
+    setScrollElement(element){
+      if (!element || !(element instanceof HTMLElement)) {
+        console.error('Element is not found or is not a valid HTML element.');
+      }
+      this.element = element;
+    }
+
+    scroll(direction){
+      if(!['LEFT', 'RIGHT'].includes(direction)){
+        return console.error('Scroll direction can only be LEFT or RIGHT.');
+      }
+      const scrollAmount = direction === 'LEFT' ? -150 : 150;
+      this.element.scrollBy({left: scrollAmount, behavior: 'smooth'});
+      setTimeout(()=>this.events.forEach((event)=>event.cmd === 'scroll' && event.trigger()), 200);
+    };
+
+    scrollLeft(){
+      this.scroll('LEFT');
+    }
+
+    scrollRight(){
+      this.scroll('RIGHT');
+    }
+
+    on(cmd, fx){
+      this.events.push({cmd, trigger: fx});
+    }
+
+    removeDragScroll() {
+      if (!this.element || !(this.element instanceof HTMLElement)) {
+        return console.error('Element is not found or is not a valid HTML element.');
+      }
+  
+      this.element.removeEventListener('mousedown', this.mouseDownHandler);
+      this.element.removeEventListener('mouseleave', this.mouseLeaveHandler);
+      this.element.removeEventListener('mouseup', this.mouseUpHandler);
+      this.element.removeEventListener('mousemove', this.mouseMoveHandler);
+  
+      this.element.removeEventListener('touchstart', this.touchStartHandler);
+      this.element.removeEventListener('touchend', this.touchEndHandler);
+      this.element.removeEventListener('touchmove', this.touchMoveHandler);
+    }
+  
+    enableDragScroll() {
+      if (!this.element || !(this.element instanceof HTMLElement)) {
+        return console.error('Element is not found or is not a valid HTML element.');
+      }
+  
+      let isDragging = false;
+      let startX;
+      let scrollLeft;
+  
+      this.mouseDownHandler = (e) => {
+        isDragging = true;
+        startX = e.pageX - this.element.offsetLeft;
+        scrollLeft = this.element.scrollLeft;
+      };
+  
+      this.mouseLeaveHandler = () => {
+        isDragging = false;
+      };
+  
+      this.mouseUpHandler = () => {
+        isDragging = false;
+      };
+  
+      this.mouseMoveHandler = (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - this.element.offsetLeft;
+        const walk = (x - startX) * 2;
+        this.element.scrollLeft = scrollLeft - walk;
+        this.events.forEach((event)=>event.cmd === 'scroll' && event.trigger());
+      };
+  
+      this.touchStartHandler = (e) => {
+        isDragging = true;
+        startX = e.touches[0].pageX - this.element.offsetLeft;
+        scrollLeft = this.element.scrollLeft;
+      };
+  
+      this.touchEndHandler = () => {
+        isDragging = false;
+      };
+  
+      this.touchMoveHandler = (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.touches[0].pageX - this.element.offsetLeft;
+        const walk = (x - startX) * 2;
+        this.element.scrollLeft = scrollLeft - walk;
+        this.events.forEach((event)=>event.cmd === 'scroll' && event.trigger());
+      };
+  
+      this.element.addEventListener('mousedown', this.mouseDownHandler);
+      this.element.addEventListener('mouseleave', this.mouseLeaveHandler);
+      this.element.addEventListener('mouseup', this.mouseUpHandler);
+      this.element.addEventListener('mousemove', this.mouseMoveHandler);
+  
+      this.element.addEventListener('touchstart', this.touchStartHandler);
+      this.element.addEventListener('touchend', this.touchEndHandler);
+      this.element.addEventListener('touchmove', this.touchMoveHandler);
+    }
+}
+
 class Utils{
     constructor(){
         this.share = new Share();
         this.date = new DateTime();
         this.copy = new Copy();
+        this.dom = new Dom();
     }
 }
 

@@ -1,18 +1,19 @@
 <?php
 namespace src\module\communities\objects;
 
-use src\infrastructure\Collector;
-use src\infrastructure\DateHelper;
-use src\infrastructure\Id;
-use src\infrastructure\IId;
-use src\infrastructure\IObjects;
-use src\infrastructure\IUser;
+use tools\infrastructure\Collector;
+use tools\infrastructure\DateHelper;
+use tools\infrastructure\Id;
+use tools\infrastructure\IId;
+use tools\infrastructure\IObjects;
+use tools\infrastructure\IUser;
 use src\module\susu\objects\Susu;
 
 class Community implements IObjects{
     protected Id $id;
     protected string $name;
     protected string $description;
+    protected string $privacy;
     protected ?DateHelper $createdDate = null;
     protected ?Collector $members = null;
     protected Id $creatorId;
@@ -61,6 +62,10 @@ class Community implements IObjects{
         return $this->creatorId;
     }
 
+    public function privacy():string{
+        return $this->privacy;
+    }
+
     public function setId(string $id):void{
         $this->id->set($id);
     }
@@ -75,6 +80,10 @@ class Community implements IObjects{
 
     public function setSusu(Susu $susu):void{
         $this->susu = $susu;
+    }
+
+    public function setPrivacy(string $privacy):void{
+        $this->privacy = $privacy;
     }
 
     public function setHide(bool $hide):void{

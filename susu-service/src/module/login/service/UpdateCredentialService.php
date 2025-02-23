@@ -1,34 +1,20 @@
 <?php
 namespace src\module\login\service;
 
-use src\infrastructure\Assert;
-use src\infrastructure\Id;
-use src\infrastructure\Password;
 use src\infrastructure\Service;
-use src\module\login\logic\UpdateCredential;
+use tools\SecurityTools;
 
 class UpdateCredentialService extends Service{
-    protected UpdateCredential $creds;
+    protected SecurityTools $secure;
 
     public function __construct(){
         parent::__construct();
-        $this->creds = new UpdateCredential();
+        $this->secure = new SecurityTools();
     }
     
     public function process($id, $password, $currentPassword){
-        Assert::validUuid($id, 'Invalid user');
-        Assert::validPassword($password, 'Invalid password');
-        Assert::validPassword($currentPassword, 'Invalid password');
+        $service = $this->secure->updateCredential($id, $password, $currentPassword);
 
-        $userId = new Id();
-        $userId->set($id);
-        $currentPasswordObj = new Password();
-        $currentPasswordObj->set($currentPassword);
-        $passwordObj = new Password();
-        $passwordObj->set($password);
-
-        $this->creds->updatecredential($userId, $currentPasswordObj, $passwordObj);
-        
-        return $this;
+        return $this->setOutput($service);
     }
 }

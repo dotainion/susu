@@ -1,8 +1,8 @@
 <?php
 namespace src\module\login\action;
 
-use src\infrastructure\IAction;
-use src\infrastructure\Request;
+use tools\infrastructure\IAction;
+use tools\infrastructure\Request;
 use src\module\login\service\UpdateCredentialService;
 
 class UpdateCredentialAction extends Request implements IAction{

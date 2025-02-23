@@ -1,44 +1,20 @@
 <?php
 namespace src\module\login\service;
 
-use InvalidArgumentException;
-use src\infrastructure\Assert;
-use src\infrastructure\Email;
-use src\infrastructure\Password;
-use src\infrastructure\Phone;
 use src\infrastructure\Service;
-use src\security\SecurityManager;
+use tools\security\Session;
+use tools\SecurityTools;
 
 class LoginService extends Service{
-    protected SecurityManager $security;
+    protected SecurityTools $secure;
 
     public function __construct(){
         parent::__construct(false);
-        $this->security = new SecurityManager();
+        $this->secure = new SecurityTools();
     }
     
     public function process($email, $phone, $password){
-        Assert::validPassword($password, 'Invalid password', false);
-        
-        if(!$email && !$phone){
-            throw new InvalidArgumentException('Invalid email or phone number.');
-        }
-
-        if($email){
-            Assert::validEmail($email, 'Invalid email');
-            $identifier = new Email();
-            $identifier->set($email);
-        }else{
-            $identifier = new Phone();
-            $identifier->set($phone);
-        }
-
-        $passwordObj = new Password();
-        $passwordObj->set($password);
-
-        $this->security->login($identifier, $passwordObj);
-        
-        $this->setOutput($this->security->user());
-        return $this;
+        $this->secure->signIn((string)$email, (string)$phone, $password);
+        return $this->setOutput(Session::user());
     }
 }

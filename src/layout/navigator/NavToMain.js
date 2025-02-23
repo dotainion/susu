@@ -19,6 +19,6 @@ export const NavToMain = () =>{
     }
 
     return(
-        <NavGrid nav={main}/>
+        <NavGrid nav={main} useMenu/>
     )
 }

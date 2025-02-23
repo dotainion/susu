@@ -2,20 +2,20 @@
 namespace src\module\login\service;
 
 use src\infrastructure\Service;
-use src\security\SecurityManager;
+use tools\security\Session;
+use tools\SecurityTools;
 
 class LogoutService extends Service{
-    protected SecurityManager $manager;
+    protected SecurityTools $secure;
 
     public function __construct(){
         parent::__construct();
-        $this->manager = new SecurityManager();
+        $this->secure = new SecurityTools();
     }
     
     public function process(){
-        $user = $this->manager->user();
-        $this->manager->logout();
-        $this->setOutput($user);
-        return $this;
+        $user = Session::user();
+        $this->secure->signOut();
+        return $this->setOutput($user);
     }
 }

@@ -1,13 +1,13 @@
 <?php
 namespace src\module\user\objects;
 
-use src\infrastructure\DateHelper;
-use src\infrastructure\Email;
-use src\infrastructure\Id;
-use src\infrastructure\IId;
-use src\infrastructure\IObjects;
-use src\infrastructure\IUser;
-use src\infrastructure\Token;
+use tools\infrastructure\DateHelper;
+use tools\infrastructure\Email;
+use tools\infrastructure\Id;
+use tools\infrastructure\IId;
+use tools\infrastructure\Token;
+use tools\infrastructure\IObjects;
+use tools\infrastructure\IUser;
 
 class User implements IObjects, IUser{
     protected Id $id;

@@ -1,8 +1,8 @@
 <?php
 namespace src\module\communities\action;
 
-use src\infrastructure\IAction;
-use src\infrastructure\Request;
+use tools\infrastructure\IAction;
+use tools\infrastructure\Request;
 use src\module\communities\service\SetCommunityService;
 
 class SetCommunityAction extends Request implements IAction{
@@ -19,6 +19,7 @@ class SetCommunityAction extends Request implements IAction{
             $this->get('name'), 
             $this->get('description'), 
             $this->get('cycle'), 
+            $this->get('privacy'), 
             $this->get('hide')
         );
     }

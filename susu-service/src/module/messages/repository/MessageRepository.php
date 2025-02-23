@@ -2,7 +2,7 @@
 namespace src\module\messages\repository;
 
 use src\infrastructure\Repository;
-use src\infrastructure\Collector;
+use tools\infrastructure\Collector;
 use src\module\messages\factory\MessageFactory;
 use src\module\messages\objects\Message;
 

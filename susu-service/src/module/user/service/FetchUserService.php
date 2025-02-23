@@ -1,7 +1,7 @@
 <?php
 namespace src\module\user\service;
 
-use src\infrastructure\Id;
+use tools\infrastructure\Id;
 use src\infrastructure\Service;
 use src\module\user\logic\FetchUser;
 

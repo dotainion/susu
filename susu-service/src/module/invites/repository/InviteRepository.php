@@ -2,8 +2,8 @@
 namespace src\module\invites\repository;
 
 use src\infrastructure\Repository;
-use src\infrastructure\Collector;
-use src\infrastructure\Id;
+use tools\infrastructure\Collector;
+use tools\infrastructure\Id;
 use src\module\invites\factory\InviteFactory;
 use src\module\invites\objects\Invite;
 
@@ -39,7 +39,7 @@ class InviteRepository extends Repository{
     
     public function deleteInvite(Id $id):void{
         $this->delete('invite')
-            ->where('id', $this->uuid($id));
+            ->where()->eq('id', $this->uuid($id));
         $this->execute();
     }
     

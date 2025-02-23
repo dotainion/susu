@@ -1,11 +1,11 @@
 <?php
 namespace src\module\image\objects;
 
-use src\infrastructure\Assert;
-use src\infrastructure\Env;
-use src\infrastructure\Id;
-use src\infrastructure\IId;
-use src\infrastructure\IObjects;
+use tools\infrastructure\Assert;
+use tools\infrastructure\Env;
+use tools\infrastructure\Id;
+use tools\infrastructure\IId;
+use tools\infrastructure\IObjects;
 
 class Image implements IObjects
 {

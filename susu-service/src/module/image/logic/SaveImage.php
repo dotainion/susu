@@ -1,7 +1,7 @@
 <?php
 namespace src\module\image\logic;
 
-use src\infrastructure\Collector;
+use tools\infrastructure\Collector;
 use src\module\image\objects\Image;
 use src\module\image\repository\ImageRepository;
 

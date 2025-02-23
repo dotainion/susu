@@ -1,8 +1,8 @@
 <?php
 namespace src\module\payout\action;
 
-use src\infrastructure\IAction;
-use src\infrastructure\Request;
+use tools\infrastructure\IAction;
+use tools\infrastructure\Request;
 use src\module\payout\service\ListPayoutService;
 
 class ListPayoutAction extends Request implements IAction{

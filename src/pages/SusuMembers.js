@@ -69,9 +69,9 @@ const MemberCard = ({member}) =>{
                     <FaUserCircle className="display-5"/>
                 </div>
                 <input className="d-none" type="checkbox" id={member.id}/>
-                <div className="w-100">
+                <div className="w-100 text-dark">
                     <div className="text-truncate">{member.attributes.firstName} {member.attributes.lastName}</div>
-                    <div className="small"><small>First Name Last Name</small></div>
+                    <div className="small"><small>{member.attributes.email}</small></div>
                 </div>
                 <div>
                     {

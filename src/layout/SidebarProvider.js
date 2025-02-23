@@ -79,12 +79,12 @@ export const SidebarProvider = ({children}) =>{
                 icon: LuGroup,
                 description: 'Initiate the process of establishing a new community, including setting up its name, purpose, and initial settings.'
             },{
-                title: 'Communities', 
+                title: 'Explore Communities', 
                 onClick: ()=>navigate(routes.susu().nested().communities()), 
                 icon: FaLayerGroup,
                 description: 'View and explore all available communities, including public and private groups that you can join or interact with.'
             },{
-                title: 'My Communities', 
+                title: 'Community Hub', 
                 onClick: ()=>navigate(routes.susu().nested().associateCommunities()), 
                 icon: FaObjectUngroup,
                 description: 'Access a list of communities you are a member of or actively involved in, providing quick access to your personal groups.'

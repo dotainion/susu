@@ -1,8 +1,8 @@
 <?php
 namespace src\module\user\factory;
 
-use src\infrastructure\Collector;
-use src\infrastructure\Factory;
+use tools\infrastructure\Collector;
+use tools\infrastructure\Factory;
 use src\module\user\objects\Address;
 
 class AddressFactory extends Collector{

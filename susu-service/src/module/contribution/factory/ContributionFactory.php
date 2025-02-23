@@ -1,8 +1,8 @@
 <?php
 namespace src\module\contribution\factory;
 
-use src\infrastructure\Collector;
-use src\infrastructure\Factory;
+use tools\infrastructure\Collector;
+use tools\infrastructure\Factory;
 use src\module\contribution\objects\Contribution;
 
 class ContributionFactory extends Collector{
@@ -19,6 +19,8 @@ class ContributionFactory extends Collector{
         $history->setMemberId($this->uuid($record['memberId']));
         $history->setContribution($record['contribution']);
         $history->setDescription((string)$record['description']);
+        $history->setPaymentIntentId((string)($record['paymentIntentId'] ?? ''));
+        $history->setType((string)($record['type'] ?? ''));
         return $history;
     }
 }

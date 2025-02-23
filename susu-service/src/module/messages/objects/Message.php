@@ -2,10 +2,10 @@
 namespace src\module\messages\objects;
 
 use InvalidArgumentException;
-use src\infrastructure\DateHelper;
-use src\infrastructure\Id;
-use src\infrastructure\IId;
-use src\infrastructure\IObjects;
+use tools\infrastructure\DateHelper;
+use tools\infrastructure\Id;
+use tools\infrastructure\IId;
+use tools\infrastructure\IObjects;
 use src\module\user\objects\User;
 
 class Message implements IObjects{

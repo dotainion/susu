@@ -52,7 +52,7 @@ export const SearchCommunitiesOrMembersToMessageOverlay = ({isOpen, onClose}) =>
                                         <FaUserCircle className="display-5"/>
                                     </div>
                                     <div className="w-100">
-                                        <div className="text-truncate">{member.attributes.name || ''}{member.attributes.firstName} {member.attributes.lastName}</div>
+                                        <div className="text-truncate">{member.attributes.name || ''}{member.attributes.firstName || ''} {member.attributes.lastName || ''}</div>
                                         <div className="small"><small>{member.type.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}</small></div>
                                     </div>
                                 </label>

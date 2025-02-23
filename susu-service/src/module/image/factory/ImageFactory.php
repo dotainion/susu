@@ -1,8 +1,8 @@
 <?php
 namespace src\module\image\factory;
 
-use src\infrastructure\Collector;
-use src\infrastructure\Factory;
+use tools\infrastructure\Collector;
+use tools\infrastructure\Factory;
 use src\module\image\objects\Image;
 
 class ImageFactory extends Collector{

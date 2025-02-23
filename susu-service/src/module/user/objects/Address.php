@@ -1,9 +1,9 @@
 <?php
 namespace src\module\user\objects;
 
-use src\infrastructure\Id;
-use src\infrastructure\IId;
-use src\infrastructure\IObjects;
+use tools\infrastructure\Id;
+use tools\infrastructure\IId;
+use tools\infrastructure\IObjects;
 
 class Address implements IObjects{
     protected Id $id;

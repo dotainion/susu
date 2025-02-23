@@ -1,18 +1,77 @@
+.input-bg{
+    background-color: var(--bg-input);
+}
+
+input:not(:disabled):not(.bg-white):not(.bg-transparent), textarea:not(:disabled):not(.bg-white), select:not(:disabled):not(.bg-white){
+    background-color: var(--bg-input) !important;
+    border-color: rgb(217, 143, 98);
+}
+
+input[disabled], textarea[disabled], select[disabled]{
+    background-color: rgb(174, 149, 130, 0.05) !important;
+    border: none !important;
+}
+
+input:focus:not(.bg-white), textarea:focus:not(.bg-white), button:focus:not(.bg-white), select:focus:not(.bg-white){
+  border-color: var(--bg-sidebar) !important;
+  background-color: var(--bg-light) !important;
+}
+
+input:not(.shadow-none):focus, textarea:not(.shadow-none):focus, button:not(.shadow-none):focus, select:not(.shadow-none):focus{
+  box-shadow: 0 0 0 0.2rem var(--bg-shadow) !important; 
+}
+
 input[type=search]{
     width: 400px;
 }
 
-input:focus, textarea:focus, button:focus, select:focus{
-  border-color: var(--bg-sidebar) !important;
+input[type="checkbox"] {
+    position: relative;
+    overflow: hidden !important;
+    border-color: var(--bg-sidebar) !important;
 }
 
-input:not(.shadow-none):focus, textarea:not(.shadow-none):focus, button:not(.shadow-none):focus, select:not(.shadow-none):focus{
-  box-shadow: 0 0 0 0.2rem var(--bg-shadow) !important;
+input[type="checkbox"]:checked {
+    border-color: green !important;
 }
 
-button:not(.btn-dark):not(.btn-primary):not(.btn-secondary):not(.btn-danger):not(.btn-info):not(.btn-light):not(.btn-success):not(.bg-sidebar){
-    color: var(--bg-dark);
-    background-color: var(--bg-info);
+input[type="checkbox"]:checked::after {
+    content: "✔";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 16px;
+    color: green !important;
+    transform: translate(-50%, -50%);
+    background-color: white !important;
+}
+
+input[type="checkbox"]:not(:checked)::after {
+    content: "✖";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 16px;
+    color: var(--bg-sidebar) !important;
+    transform: translate(-50%, -50%);
+    background-color: white !important;
+}
+
+button:not(.btn-dark):not(.btn-primary):not(.btn-secondary):not(.btn-danger):not(.btn-info):not(.btn-light):not(.btn-success):not(.bg-sidebar):not(.btn-outline-dark):not(.btn-outline-primary):not(.btn-outline-secondary):not(.btn-outline-danger):not(.btn-outline-info):not(.btn-outline-light):not(.btn-outline-success){
+    color: var(--bg-light);
+    background-color: var(--bg-sidebar);
+}
+
+button:not(.shadow-none):hover{
+    box-shadow: 0 0 0 0.2rem var(--bg-shadow) !important; 
+}
+
+button.btn:not(.bg-transparent):focus{
+    background-color: var(--bg-sidebar) !important; 
+}
+
+button.btn.bg-transparent:focus{
+    background-color: transparent !important; 
 }
 
 button.bg-sidebar:hover{
@@ -28,6 +87,11 @@ button.bg-sidebar{
     color: white;
 }
 
+button > span, button > div, button > svg{
+    background-color: inherit !important;
+    color: inherit !important;
+}
+
 body{
     background-color: var(--bg-primary);
 }
@@ -38,7 +102,7 @@ body{
 }
 
 .card-body{
-    background: white;/*linear-gradient(to top, #b8a89d, white);*/
+    background: white;
 }
 
 .card .card-img-top{
@@ -110,6 +174,14 @@ input[type=datetime-local]::-webkit-calendar-picker-indicator {
     cursor: pointer;
 }
 
+.move{
+    cursor: move;
+}
+
+.cursor-defualt{
+    cursor: default !important
+}
+
 .radio-community{
     background-color: white;
 }
@@ -140,9 +212,11 @@ hr, table tr{
     border-color: var(--bg-sidebar) !important;
 }
 
-*.border:not(.border-danger):not(.border-info):not(.border-secondary):not(.border-dark):not(.border-warning):not(.border-success), 
-.border-top:not(.border-danger):not(.border-info):not(.border-secondary):not(.border-dark):not(.border-warning):not(.border-success),
-.border-bottom:not(.border-danger):not(.border-info):not(.border-secondary):not(.border-dark):not(.border-warning):not(.border-success){
+*.border:not(.border-danger):not(.border-info):not(.border-secondary):not(.border-dark):not(.border-warning):not(.border-success):not(.border-primary):not(.border-default), 
+.border-top:not(.border-danger):not(.border-info):not(.border-secondary):not(.border-dark):not(.border-warning):not(.border-success):not(.border-primary):not(.border-default),
+.border-bottom:not(.border-danger):not(.border-info):not(.border-secondary):not(.border-dark):not(.border-warning):not(.border-success):not(.border-primary):not(.border-default),
+.border-start:not(.border-danger):not(.border-info):not(.border-secondary):not(.border-dark):not(.border-warning):not(.border-success):not(.border-primary):not(.border-default),
+.border-end:not(.border-danger):not(.border-info):not(.border-secondary):not(.border-dark):not(.border-warning):not(.border-success):not(.border-primary):not(.border-default){
     border-color: var(--bg-sidebar) !important;
 }
 
@@ -163,6 +237,8 @@ hr, table tr{
     width: 0;
     height: 0;
     display: none;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 .text-brown{
@@ -248,7 +324,90 @@ hr, table tr{
 }
 
 .sidebar{
-    border-right: 1px solid gray;
+    border-right: 1px solid var(--border-input);
+    background-color: var(--bg-input);
+}
+
+.bg-light-faded{
+    background-color: rgb(255, 255, 255, 0.4);
+}
+
+.resize-none{
+    resize: none;
+}
+
+.bg-inherit{
+    background-color: inherit;
+}
+
+.share-icons a:hover{
+    background-color: rgb(0, 0, 0, 0.1);
+}
+
+.share-icons .title{
+    font-size: 8px;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.share-icons .whatsapp {
+    color: #25D366;
+}
+
+.share-icons .facebook-messenger {
+    color: #0084FF;
+}
+
+.share-icons .telegram {
+    color: #0088CC;
+}
+
+.share-icons .twitter {
+    color: #1DA1F2;
+}
+
+.share-icons .linkedin {
+    color: #0077B5;
+}
+
+.share-icons .pinterest {
+    color: #E60023;
+}
+
+.share-icons .instagram {
+    color: #E1306C;
+}
+
+.share-icons .tiktok {
+    color: #010002;
+}
+
+.share-icons .reddit {
+    color: #FF4500;
+}
+
+.share-icons .email {
+    color: #1a73e8;
+}
+
+.share-icons .share {
+    color: #4CAF50;
+}
+
+.share-icons .threads {
+    color: #000000;
+}
+
+.card-body-light{
+    background-color: var(--bg-light);
+}
+
+.hover-decoration-underline{
+    text-decoration: none;
+}
+
+.hover-decoration-underline:hover{
+    text-decoration: underline;
 }
 
 @media (max-width: 576px) {
@@ -293,3 +452,10 @@ hr, table tr{
         width: 100% !important;
     }
 }
+
+@media (max-width: 768px) {
+    .w-md-100{
+        width: 100% !important;
+    }
+}
+

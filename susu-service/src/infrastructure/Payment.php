@@ -1,6 +1,13 @@
 <?php
 namespace src\infrastructure;
 
+use InvalidArgumentException;
+use tools\infrastructure\DateHelper;
+use tools\infrastructure\Id;
+use tools\infrastructure\IId;
+use tools\infrastructure\IObjects;
+use tools\infrastructure\IUser;
+
 class Payment implements IObjects{
     protected Id $id;
     protected Id $susuId;
@@ -8,6 +15,8 @@ class Payment implements IObjects{
     protected DateHelper $date;
     protected ?IUser $user=null;
     protected string $description;
+    protected string $paymentIntentId;
+    protected string $type;
 
     public function __construct(){
         $this->id = new Id();
@@ -39,6 +48,14 @@ class Payment implements IObjects{
         return $this->description;
     }
 
+    public function paymentIntentId():string{
+        return $this->paymentIntentId;
+    }
+
+    public function type():string{
+        return $this->type;
+    }
+
     public function setId(string $id):void{
         $this->id->set($id);
     }
@@ -61,5 +78,16 @@ class Payment implements IObjects{
 
     public function setDescription(string $description):void{
         $this->description = $description;
+    }
+
+    public function setPaymentIntentId(string $paymentIntentId):void{
+        $this->paymentIntentId = $paymentIntentId;
+    }
+
+    public function setType(string $type):void{
+        if(!in_array($type, ['Card', 'Cash'])){
+            throw new InvalidArgumentException('Invalid payment type.');
+        }
+        $this->type = $type;
     }
 }

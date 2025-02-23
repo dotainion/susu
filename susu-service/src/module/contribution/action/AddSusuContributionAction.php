@@ -1,8 +1,8 @@
 <?php
 namespace src\module\contribution\action;
 
-use src\infrastructure\IAction;
-use src\infrastructure\Request;
+use tools\infrastructure\IAction;
+use tools\infrastructure\Request;
 use src\module\contribution\service\AddSusuContributionService;
 
 class AddSusuContributionAction extends Request implements IAction{
@@ -17,7 +17,9 @@ class AddSusuContributionAction extends Request implements IAction{
         return $this->service->process(
             $this->get('susuId'),
             $this->get('memberId'),
-            $this->get('contribution')
+            $this->get('contribution'),
+            $this->get('paymentIntentId'),
+            $this->get('type')
         );
     }
 }

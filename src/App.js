@@ -1,8 +1,8 @@
 import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./themes/theme.css"
-import "./themes/index.css"
+import "./themes/theme.css";
+import "./themes/index.css";
 
 import { routes } from "./routes/Routes";
 import { SusuRouter } from "./routes/SusuRouter";

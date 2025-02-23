@@ -2,7 +2,7 @@
 namespace src\module\refund\repository;
 
 use src\infrastructure\Repository;
-use src\infrastructure\Collector;
+use tools\infrastructure\Collector;
 use src\module\refund\factory\RefundFactory;
 use src\module\refund\objects\Refund;
 
@@ -22,7 +22,8 @@ class RefundRepository extends Repository{
             ->column('date', $refund->date()->toString())
             ->column('amount', $refund->amount())
             ->column('contributionId', $refund->contributionId())
-            ->column('description', $refund->description());
+            ->column('description', $refund->description())
+            ->column('type', $refund->type());
         $this->execute();
     }
     
@@ -34,6 +35,7 @@ class RefundRepository extends Repository{
             ->column('amount', $refund->amount())
             ->column('contributionId', $refund->contributionId())
             ->column('description', $refund->description())
+            ->column('type', $refund->type())
             ->where()->eq('id', $this->uuid($refund->id()));
         $this->execute();
     }
@@ -49,6 +51,9 @@ class RefundRepository extends Repository{
         }
         if(isset($where['memberId'])){
             $this->where()->eq('memberId', $this->uuid($where['memberId']));
+        }
+        if(isset($where['type'])){
+            $this->where()->eq('type', $where['type']);
         }
         $this->execute();
         return $this->factory->map(

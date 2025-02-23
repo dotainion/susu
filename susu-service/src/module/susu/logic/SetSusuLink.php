@@ -17,13 +17,11 @@ class SetSusuLink{
             'susuId' => $link->susuId(),
             'memberId' => $link->memberId()
         ]);
+        if($collector->hasItem() && !$link->position()){
+            return;
+        }
         if($collector->hasItem()){
-            //position should mostlikely be set only when editing.. 
-            //at the point of joing a choice of position should not be available
-            if(!is_int($link->position())){
-                throw new InvalidArgumentException('A schedule payout was not selected.');
-            }
-            $this->repo->editPosition($link);
+            $this->repo->edit($link);
             return;
         }
         $this->repo->create($link);

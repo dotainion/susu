@@ -1,8 +1,8 @@
 <?php
 namespace src\module\susu\action;
 
-use src\infrastructure\IAction;
-use src\infrastructure\Request;
+use tools\infrastructure\IAction;
+use tools\infrastructure\Request;
 use src\module\susu\service\FetchSusuService;
 
 class FetchSusuAction extends Request implements IAction{

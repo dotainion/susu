@@ -1,8 +1,8 @@
 <?php
 namespace src\module\schedule\factory;
 
-use src\infrastructure\Collector;
-use src\infrastructure\Factory;
+use tools\infrastructure\Collector;
+use tools\infrastructure\Factory;
 use src\module\schedule\objects\Schedule;
 
 class ScheduleFactory extends Collector{

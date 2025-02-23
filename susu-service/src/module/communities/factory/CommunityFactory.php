@@ -1,8 +1,8 @@
 <?php
 namespace src\module\communities\factory;
 
-use src\infrastructure\Collector;
-use src\infrastructure\Factory;
+use tools\infrastructure\Collector;
+use tools\infrastructure\Factory;
 use src\module\communities\objects\Community;
 
 class CommunityFactory extends Collector{
@@ -18,6 +18,7 @@ class CommunityFactory extends Collector{
         $community->setDescription($record['description'] ?? '');
         $community->setCreatedDate($record['createdDate']);
         $community->setCreatorId($this->uuid($record['creatorId']));
+        $community->setPrivacy($record['privacy']);
         $community->setHide((bool)$record['hide']);
         return $community;
     }

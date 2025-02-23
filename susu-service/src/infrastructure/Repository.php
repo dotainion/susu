@@ -1,16 +1,13 @@
 <?php
+
 namespace src\infrastructure;
 
-use permission\database\Permission;
-use permission\SqlRepository;
+use tools\infrastructure\Repository as ToolsRepository;
 
-class Repository extends SqlRepository{
-	protected static ?string $userId = null;
+class Repository extends ToolsRepository{
 
-	public function __construct(){
-		parent::__construct();
-		Permission::setRequirePermission(false);
-	}
+    public function __construct(){
+        parent::permissionOff();
+        parent::__construct();
+    }
 }
-
-?>

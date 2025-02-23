@@ -1,9 +1,9 @@
 <?php
 namespace src\module\mail\service;
 
-use src\infrastructure\Assert;
-use src\infrastructure\Id;
-use src\infrastructure\SendMail;
+use tools\infrastructure\Assert;
+use tools\infrastructure\Id;
+use tools\infrastructure\SendMail;
 use src\infrastructure\Service;
 use src\module\mail\factory\AttatchmentFactory;
 use src\module\mail\factory\MailFactory;

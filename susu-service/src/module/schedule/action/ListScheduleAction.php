@@ -1,8 +1,8 @@
 <?php
 namespace src\module\schedule\action;
 
-use src\infrastructure\IAction;
-use src\infrastructure\Request;
+use tools\infrastructure\IAction;
+use tools\infrastructure\Request;
 use src\module\schedule\service\ListScheduleService;
 
 class ListScheduleAction extends Request implements IAction{

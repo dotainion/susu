@@ -1,42 +1,21 @@
 <?php
 namespace src\module\login\service;
 
-use src\infrastructure\Assert;
-use src\infrastructure\Id;
-use src\infrastructure\Password;
 use src\infrastructure\Service;
-use src\infrastructure\Token;
-use src\module\login\factory\CredentialFactory;
-use src\module\login\logic\CreateCredential;
+use tools\SecurityTools;
 
 class CreateCredentialService extends Service{
-    protected CredentialFactory $factory;
-    protected CreateCredential $credential;
+    protected SecurityTools $secure;
 
     public function __construct(){
         parent::__construct(false);
-        $this->factory = new CredentialFactory();
-        $this->credential = new CreateCredential();
+        $this->secure = new SecurityTools();
     }
     
     public function process($id, $password){
-        Assert::validUuid($id, 'User not found.');
-        Assert::validPassword($password, 'Invalid password.');
-        
-        $idObj = new Id();
-        $idObj->set($id);
-        $passwordObj = new Password();
-        $passwordObj->set($password);
 
-        $credential = $this->factory->mapResult([
-            'id' => $idObj->toString(),
-            'hide' => false,
-            'token' => (new Token())->new()->toString(),
-            'password' => $passwordObj->toString(),
-        ]);
+        $serivce = $this->secure->createCredential($id, $password);
 
-        $this->credential->create($credential);
-        
-        return $this;
+        return $this->mergeOutput($serivce);
     }
 }

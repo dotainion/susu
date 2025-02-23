@@ -7,6 +7,10 @@ export class Refund{
         return await this.api.get('/add/susu/refund', data);
     }
 
+    async card(data){
+        return await this.api.get('', data);
+    }
+
     async listRefunds(susuId, memberId){
         return await this.api.get('/list/susu/refund', {susuId, memberId});
     }

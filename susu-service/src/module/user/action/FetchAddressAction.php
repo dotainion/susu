@@ -1,8 +1,8 @@
 <?php
 namespace src\module\user\action;
 
-use src\infrastructure\IAction;
-use src\infrastructure\Request;
+use tools\infrastructure\IAction;
+use tools\infrastructure\Request;
 use src\module\user\service\FetchAddressService;
 
 class FetchAddressAction extends Request implements IAction{

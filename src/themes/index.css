@@ -19,5 +19,7 @@ code {
   --bg-info: #89bdd3;
   --bg-sidebar: #c29b87;
   --bg-shadow: rgb(194, 155, 135, 0.3);
+  --bg-input: rgb(217, 143, 98, 0.2);
+  --border-input: rgb(217, 143, 98);
 }
 

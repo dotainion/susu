@@ -1,8 +1,8 @@
 <?php
 namespace src\module\susu\service;
 
-use src\infrastructure\Assert;
-use src\infrastructure\Id;
+use tools\infrastructure\Assert;
+use tools\infrastructure\Id;
 use src\infrastructure\Service;
 use src\module\schedule\service\GenerateAndSaveScheduleService;
 use src\module\susu\factory\SusuFactory;

@@ -3,7 +3,7 @@ namespace src\router;
 
 use InvalidArgumentException;
 use src\database\Repository;
-use src\infrastructure\Https;
+use tools\infrastructure\Https;
 use src\module\communities\action\FetchCommunityAction;
 use src\module\communities\action\JoinCommunityAction;
 use src\module\communities\action\ListCommunitiesAction;
@@ -15,6 +15,7 @@ use src\module\contribution\action\ListContributionAction;
 use src\module\contribution\action\ListSusuContributionAction;
 use src\module\communities\action\SearchCommunitiesAction;
 use src\module\communities\action\UnlinkCommunityAction;
+use src\module\contribution\action\FetchContributionAction;
 use src\module\invites\action\DeleteInviteAction;
 use src\module\invites\action\ListMemberInvitesAction;
 use src\module\invites\action\ListTargetInvitesAction;
@@ -32,6 +33,8 @@ use src\module\messages\action\ListMessangersAction;
 use src\module\messages\action\ListUnSeenMessagesAction;
 use src\module\messages\action\SearchMessangerAction;
 use src\module\messages\action\SetMessageAction;
+use src\module\payment\action\CreatePaymentIntentAction;
+use src\module\payment\action\PaymentReceiptAction;
 use src\module\payout\action\AddSusuPayoutAction;
 use src\module\payout\action\ListPayoutAction;
 use src\module\payout\action\ListSusuPayoutAction;
@@ -239,6 +242,10 @@ class Router{
             return new ListSusuContributionAction();
         });
 
+        $this->request->route('/fetch/contribution', function ($req){
+            return new FetchContributionAction();
+        });
+
         $this->request->route('/list/contribution', function ($req){
             return new ListContributionAction();
         });
@@ -309,6 +316,14 @@ class Router{
 
         $this->request->route('/list/susu/refund', function ($req){
             return new ListSusuRefundAction();
+        });
+
+        $this->request->route('/create/payment/intent', function ($req){
+            return new CreatePaymentIntentAction();
+        });
+
+        $this->request->route('/payment/receipt', function ($req){
+            return new PaymentReceiptAction();
         });
     }
 

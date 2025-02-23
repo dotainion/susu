@@ -2,7 +2,7 @@
 namespace src\module\payout\repository;
 
 use src\infrastructure\Repository;
-use src\infrastructure\Collector;
+use tools\infrastructure\Collector;
 use src\module\payout\factory\PayoutFactory;
 use src\module\payout\objects\Payout;
 

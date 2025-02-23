@@ -41,10 +41,12 @@ export const Communities = () => {
     return (
         <div className="container">
             <div className="search-row mb-3">
-                <div className="my-3 d-inline-block border border-light rounded-3 bg-light">
-                    <div className="d-flex align-items-center w-auto">
+                <div className="my-3 d-inline-block border border-light rounded-3">
+                    <div className="d-flex align-items-stretch align-items-center w-auto">
                         <input onKeyUp={searchCommunities} className="form-control bg-transparent shadow-none border-0 pe-1" placeholder="Search..." type="search" />
-                        <IoSearchOutline className="fs-4 me-2"/>
+                        <div className="d-flex align-items-center input-bg">
+                            <IoSearchOutline className="fs-4 mx-2"/>
+                        </div>
                     </div>
                 </div>
                 <button onClick={()=>navigate(routes.susu().nested().newCommunity())} className="d-flex align-items-center btn d-block shadow-none"><IoAdd className="me-2"/>Create Community</button>

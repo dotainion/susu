@@ -1,7 +1,7 @@
 <?php
 namespace src\module\susu\logic;
 
-use src\infrastructure\Collector;
+use tools\infrastructure\Collector;
 use src\module\susu\repository\SusuRepository;
 
 class ListSusu{

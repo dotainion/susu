@@ -1,7 +1,7 @@
 <?php
 namespace src\module\invites\logic;
 
-use src\infrastructure\Id;
+use tools\infrastructure\Id;
 use src\module\invites\repository\InviteRepository;
 
 class DeleteInvite{

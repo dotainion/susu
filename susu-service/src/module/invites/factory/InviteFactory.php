@@ -1,8 +1,8 @@
 <?php
 namespace src\module\invites\factory;
 
-use src\infrastructure\Collector;
-use src\infrastructure\Factory;
+use tools\infrastructure\Collector;
+use tools\infrastructure\Factory;
 use src\module\invites\objects\Invite;
 
 class InviteFactory extends Collector{

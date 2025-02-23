@@ -1,8 +1,8 @@
 <?php
 namespace src\module\schedule\logic;
 
-use src\infrastructure\Collector;
-use src\infrastructure\Id;
+use tools\infrastructure\Collector;
+use tools\infrastructure\Id;
 use src\module\susu\repository\ScheduleRepository;
 
 class ListSchedule{

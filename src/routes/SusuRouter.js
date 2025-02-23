@@ -10,22 +10,24 @@ import { Member } from "../pages/Member";
 import { routes } from "../routes/Routes";
 import { ViewCommunity } from "../pages/ViewCommunity";
 import { useAuth } from "../provider/AuthProvider";
-import { CommunitySusuWallet } from "../pages/CommunitySusuWallet";
+import { ContributionAndPayments } from "../pages/ContributionAndPayments";
 import { UpdateMemberSusuWallet } from "../pages/UpdateMemberSusuWallet";
 import { Schedule } from "../pages/Schedule";
 import { MemberSusuHistory } from "../pages/MemberSusuHistory";
 import { CommunityMembers } from "../pages/CommunityMembers";
 import { SusuMembers } from "../pages/SusuMembers";
 import { AssociateCommunities } from "../pages/AssociateCommunities";
-import { Dashboard } from "../pages/Dashboard";
+import { Dashboard } from "../pages/dashboard/Dashboard";
 import { Messangers } from "../pages/Messangers";
 import { Messages } from "../pages/Messages";
 import { CommunityMessages } from "../pages/CommunityMessages";
-import { CommunityMembersInvite } from "../pages/CommunityMembersInvite";
-import { SusuMembersInvite } from "../pages/SusuMembersInvite";
 import { ContributionRefund } from "../pages/ContributionRefund";
 import { AssignSchedule } from "../pages/AssignSchedule";
 import { NavRouter } from "./NavRouter";
+import { Susu } from "../pages/Susu";
+import { Payments } from "../pages/Payments";
+import { PaymentSuccess } from "../pages/PaymentSuccess";
+import { PaymentRefund } from "../pages/PaymentRefund";
 
 export const SusuRouter = () =>{
   const { isAuthenticated } = useAuth();
@@ -44,7 +46,7 @@ export const SusuRouter = () =>{
         <Route path={routes.susu().newCommunity()} element={<NewCommunity/>} />
         <Route path={routes.susu().memberList()} element={<MembersList/>} />
         <Route path={routes.susu().member()} element={<Member/>} />
-        <Route path={routes.susu().communitySusuWallet()} element={<CommunitySusuWallet/>} />
+        <Route path={routes.susu().contributionAndPayments()} element={<ContributionAndPayments/>} />
         <Route path={routes.susu().schedule()} element={<Schedule/>} />
         <Route path={routes.susu().updateMemberSusuWallet()} element={<UpdateMemberSusuWallet/>} />
         <Route path={routes.susu().memberSusuHistory()} element={<MemberSusuHistory/>} />
@@ -55,10 +57,12 @@ export const SusuRouter = () =>{
         <Route path={routes.susu().messangers()} element={<Messangers/>} />
         <Route path={routes.susu().messages()} element={<Messages/>} />
         <Route path={routes.susu().communityMessages()} element={<CommunityMessages/>} />
-        <Route path={routes.susu().communityInvites()} element={<CommunityMembersInvite/>} />
-        <Route path={routes.susu().susuInvites()} element={<SusuMembersInvite/>} />
         <Route path={routes.susu().refund()} element={<ContributionRefund/>} />
+        <Route path={routes.susu().cardRefund()} element={<PaymentRefund/>} />
         <Route path={routes.susu().assignSchedule()} element={<AssignSchedule/>} />
+        <Route path={routes.susu().susu()} element={<Susu/>} />
+        <Route path={routes.susu().payment()} element={<Payments/>} />
+        <Route path={routes.susu().receipt()} element={<PaymentSuccess/>} />
         <Route path={'*'} element={<Navigate to={routes.nav().nested().main()}/>} />
       </Routes>
     </Layout>

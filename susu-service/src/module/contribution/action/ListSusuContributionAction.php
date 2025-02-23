@@ -1,8 +1,8 @@
 <?php
 namespace src\module\contribution\action;
 
-use src\infrastructure\IAction;
-use src\infrastructure\Request;
+use tools\infrastructure\IAction;
+use tools\infrastructure\Request;
 use src\module\contribution\service\ListSusuContributionService;
 
 class ListSusuContributionAction extends Request implements IAction{

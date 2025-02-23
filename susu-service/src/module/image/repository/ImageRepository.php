@@ -2,8 +2,8 @@
 namespace src\module\image\repository;
 
 use src\infrastructure\Repository;
-use src\infrastructure\Collector;
-use src\infrastructure\Id;
+use tools\infrastructure\Collector;
+use tools\infrastructure\Id;
 use src\module\image\factory\ImageFactory;
 use src\module\image\objects\Image;
 

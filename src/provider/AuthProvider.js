@@ -89,7 +89,7 @@ export const AuthProvider = ({children}) =>{
                 </SidebarProvider>
             }
             {isAuthenticated ? <Notifications/> : null}
-            {/*<div id="login-notification" style={{display: 'none'}}>
+            <div id="login-notification" style={{display: 'none'}}>
                 <ModalOverlay show centered noHeader>
                     <div className="d-flex align-items-center w-100">
                         <div className="w-100">You are no longer logged in.</div>
@@ -99,7 +99,7 @@ export const AuthProvider = ({children}) =>{
                         }} className="btn btn-sm btn-primary">Okay</button>
                     </div>
                 </ModalOverlay>
-            </div>*/}
+            </div>
         </Context.Provider>
     )
 }
