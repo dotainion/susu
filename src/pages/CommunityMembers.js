@@ -67,7 +67,7 @@ const MemberCard = ({member}) =>{
     }
 
     return(
-        <div className="d-flex align-items-center text-dark py-2 w-100">
+        <div className="d-flex align-items-center border-bottom text-dark py-2 w-100">
             <div className="me-2">
                 <FaUserCircle className="display-5"/>
             </div>

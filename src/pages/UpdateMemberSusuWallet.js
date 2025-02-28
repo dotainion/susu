@@ -7,8 +7,12 @@ import $ from 'jquery';
 import { utils } from "../utils/Utils";
 import { Dropdown } from "../widgets/Dropdown";
 import { ParseError } from "../utils/ParseError";
+import { useAuth } from "../provider/AuthProvider";
+import { Loader } from "../components/Loader";
 
 export const UpdateMemberSusuWallet = () =>{
+    const { user } = useAuth();
+
     const [susu, setSusu] = useState();
     const [memberSchedules, setMemberSchedules] = useState([]);
     const [member, setMember] = useState();
@@ -21,6 +25,7 @@ export const UpdateMemberSusuWallet = () =>{
     const [price, setPrice] = useState({payments: 0, refunds: 0, payouts: 0});
     const [extimatedTotalPayout, setExtimatedTotalPayout] = useState(0);
     const [currentDateTime, setCurrentDateTime] = useState();
+    const [loading, setLoading] = useState(true);
 
     const params = useParams();
     const navigate = useNavigate();
@@ -82,31 +87,59 @@ export const UpdateMemberSusuWallet = () =>{
 
     useEffect(()=>{
         if(!susu) return;
+
+        let userLoading = true;
+        let contributionLoading = true;
+        let refundLoading = true;
+        let payoutLoading = true;
+        let scheduleLoading = true;
+
+        const checkLoading = () =>{
+            if(!userLoading, !contributionLoading, !refundLoading, !payoutLoading, !scheduleLoading){
+                setLoading(false);
+            }
+        }
+
         api.user.user(params.memberId).then((response)=>{
             setMember(response.data.data[0]);
         }).catch((error)=>{
 
+        }).finally(()=>{
+            userLoading = false;
+            checkLoading();
         });
         api.contribution.listContributions(susu.id, params.memberId).then((response)=>{
             setContributions(response.data.data);
         }).catch((error)=>{
 
+        }).finally(()=>{
+            contributionLoading = false;
+            checkLoading();
         });
         api.refund.listRefunds(susu.id, params.memberId).then((response)=>{
             setRefunds(response.data.data);
         }).catch((error)=>{
 
+        }).finally(()=>{
+            refundLoading = false;
+            checkLoading();
         });
         api.payout.listPayouts(susu.id, params.memberId).then((response)=>{
             setPayouts(response.data.data);
         }).catch((error)=>{
 
+        }).finally(()=>{
+            payoutLoading = false;
+            checkLoading();
         });
         api.schedule.list(params.communityId).then((response)=>{
             setMemberSchedules(response.data.data.filter((sch)=>sch.attributes.memberId === params.memberId));
             setExtimatedTotalPayout((response.data.data.length * parseFloat(susu.attributes.contribution || 0)) * susu.attributes.accurance);
         }).catch((error)=>{
 
+        }).finally(()=>{
+            scheduleLoading = false;
+            checkLoading();
         });
     }, [susu]);
 
@@ -119,11 +152,22 @@ export const UpdateMemberSusuWallet = () =>{
         setHistory([...refunds, ...payouts, ...contributions].sort((a, b)=>new Date(a.attributes.date) - new Date(b.attributes.date)).reverse());
     }, [contributions, payouts, refunds]);
 
+    if(loading) return <Loader center/>
+
+    if(!susu || !user || susu?.attributes?.owner?.id !== user?.id){
+        return(
+            <div className="container my-5">
+                <div className="alert alert-danger h4">You are not authorize to assign schedules</div>
+            </div>
+        )
+    }
+
     return(
         <div className="container">
             <div className="d-block d-sm-flex align-items-center w-100 text-nowrap mt-3">
                 <div className="h4 w-100">Contribution Management</div>
                 <button onClick={()=>navigate(routes.susu().nested().contributionAndPayments(params.communityId))} className="btn btn-sm mx-1">Participants</button>
+                <button onClick={()=>navigate(routes.susu().nested().memberSusuHistory(susu.id, params.memberId))} className="btn btn-sm mx-1">Contribution history</button>
             </div>
             <div className="my-3">Credit Line Details: Overview</div>
             <div className="d-block d-md-flex w-100 shadow-sm bg-light rounded-4 p-4">
@@ -136,7 +180,7 @@ export const UpdateMemberSusuWallet = () =>{
                         <div className="d-flex">
                             <div className="w-50">
                                 <div>Susu Credit Line</div>
-                                <div className="h3">${parseFloat(susu?.attributes?.contribution || 0).toFixed(2)}</div>
+                                <div className="h3">${parseFloat(susu.attributes.contribution || 0).toFixed(2)}</div>
                             </div>
                             <div className="w-50">
                                 <div className="small"><small>Extimated total payout</small></div>
@@ -169,7 +213,7 @@ export const UpdateMemberSusuWallet = () =>{
                 <div className="text-nowrap">
                     <div className="d-flex">
                         <div className="w-100">Credit Statement</div>
-                        <a onClick={()=>navigate(routes.susu().nested().refund(susu?.id, params.memberId))} className="link-primary">Add Refund</a>
+                        <a onClick={()=>navigate(routes.susu().nested().refund(susu?.id, params.memberId))} className="link-primary pointer">Add Refund</a>
                     </div>
                     {errors ? <div className="alert alert-danger border-0 py-1">{errors}</div> : null}
                     <div className="d-flex justify-content-center w-100 my-4">

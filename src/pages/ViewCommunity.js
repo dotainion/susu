@@ -10,12 +10,23 @@ import { MdDescription } from "react-icons/md";
 import { RiRecycleFill } from "react-icons/ri";
 import { Loader } from "../components/Loader";
 import { routes } from "../routes/Routes";
+import { CommunityHeader } from "../components/CommunityHeader";
 
 export const ViewCommunity = () =>{
     const { user } = useAuth();
 
     const [susu, setSusu] = useState();
-    const [community, setCommunity] = useState();
+    const [community, setCommunity] = useState({
+        id: 12,
+        attributes: {
+            name: 'fishing man',
+            members: [],
+            owner: {
+                id: 114,
+            }
+        }
+    });
+    const [members, setMembers] = useState([]);
     const [isJoined, setIsJoined] = useState(false);
     const [isJoinedSusu, setIsJoinedSusu] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -46,6 +57,7 @@ export const ViewCommunity = () =>{
 
     useEffect(() => {
         let loadingCommunity = true;
+        let loadingMembers = true;
         let loadingSusu = true;
         
         api.community.community(params.communityId).then((response)=>{
@@ -55,7 +67,7 @@ export const ViewCommunity = () =>{
 
         }).finally(()=>{
             loadingCommunity = false;
-            if(!loadingCommunity && !loadingSusu) setLoading(false);
+            if(!loadingMembers && !loadingCommunity && !loadingSusu) setLoading(false);
         });
         api.susu.active(params.communityId).then((response)=>{
             if(findMe(response)) setIsJoinedSusu(true);
@@ -64,7 +76,15 @@ export const ViewCommunity = () =>{
 
         }).finally(()=>{
             loadingSusu = false;
-            if(!loadingCommunity && !loadingSusu) setLoading(false);
+            if(!loadingMembers && !loadingCommunity && !loadingSusu) setLoading(false);
+        });
+        api.user.byCommunity(params.communityId).then((response)=>{
+            setMembers(response.data.data);
+        }).catch((error)=>{
+            
+        }).finally(()=>{
+            loadingMembers = false;
+            if(!loadingMembers && !loadingCommunity && !loadingSusu) setLoading(false);
         });
     }, []);
 
@@ -72,10 +92,15 @@ export const ViewCommunity = () =>{
 
     return(
         <div className="container">
-            <div className="position-absolute h4 mx-3 my-3">Community</div>
-            <div className="mb-4" style={{height: '30vh'}}>
-                <img className="w-100 h-100" src="https://media.istockphoto.com/id/1327592506/vector/default-avatar-photo-placeholder-icon-grey-profile-picture-business-man.jpg?s=612x612&w=0&k=20&c=BpR0FVaEa5F24GIw7K8nMWiiGmbb8qmhfkpXcp1dhQg=" alt="" />
+            <CommunityHeader community={community} members={members}/>
+
+            <div className="card bg-transparent cursor-defualt border overflow-hidden w-100 mt-3">
+                <div className="card-body bg-transparent">
+                    <div className="h5">About</div>
+                    <div className="">{community.attributes.description}</div>
+                </div>
             </div>
+
             <hr className="my-5"></hr>
            { 
                 isJoined  
@@ -93,7 +118,8 @@ export const ViewCommunity = () =>{
                                         </div>
                                         <button onClick={()=>navigate(routes.susu().nested().memberSusuHistory(susu.id, user.id))} className="btn btn-sm me-2">View current susu history</button>
                                         <button onClick={()=>navigate(routes.susu().nested().schedule(params.communityId))} className="btn btn-sm me-2">Schedule</button>
-                                        <button onClick={()=>navigate(routes.susu().nested().payment(susu.id, params.communityId, user.id))} className="btn btn-sm">Make Contribution</button>
+                                        <button onClick={()=>navigate(routes.susu().nested().payment(susu.id, params.communityId, user.id))} className="btn btn-sm me-2">Make contribution</button>
+                                        <button onClick={()=>navigate(routes.susu().nested().contributionAndPayments(params.communityId))} className="btn btn-sm me-2">Make contribution for someone</button>
                                     </div>
                                     : <div>
                                         <p className="fw-bold">We are excited to announce that a new susu will be starting soon, and you’re invited to join!</p>
@@ -102,8 +128,11 @@ export const ViewCommunity = () =>{
                                             <li>Contribution Amount: [<b>{susu.attributes.contribution}</b>]</li>
                                             <li>Cycle Duration: [<b>{susu.attributes.cycle}</b>]</li>
                                         </ul>
-                                        <p>This is a great opportunity to save consistently and receive a lump sum of money at the end of each cycle. If you’re interested or have any questions, please get in touch with [Contact Person’s Name] by [Deadline Date].</p>
-                                        <div>We look forward to having you on board! <button onClick={joinSusu} className="btn btn-sm">Join Susu</button></div>
+                                        <p>This is a great opportunity to save consistently and receive a lump sum of money at the end of each cycle. If you’re interested or have any questions, please get in touch with [{susu.attributes.owner.attributes.firstName} {susu.attributes.owner.attributes.lastName}].</p>
+                                        <div><b>Email:</b> {susu.attributes.owner.attributes.email}</div>
+                                        <div><b>Contact:</b> {susu.attributes.owner.attributes.phoneNumber}</div>
+                                        <div className="mt-2 mb-3">We look forward to having you on board!</div>
+                                        <button onClick={joinSusu} className="btn btn-sm btn-primary">Join Susu</button>
                                     </div>
                                 }
                             </div>
@@ -115,33 +144,6 @@ export const ViewCommunity = () =>{
                             <button onClick={join} className="btn px-4">Join Community</button>
                         </div>
                     </div> 
-            }
-            {
-                community ? 
-                <div className="row- mt-4">
-                    <div className="d-flex p-3 mx-1 my-3 rounded-3 shadow-sm">
-                        <div><CgNametag className="display-5 text-brown"/></div>
-                        <div className="ms-2">
-                            <small className="fw-bold text-secondary">Community Name</small>
-                            <div className="text-brown small fw-bold" type="text">{community.attributes.name}</div>
-                        </div>
-                    </div>
-                    <div className="d-flex p-3 mx-1 my-3 rounded-3 shadow-sm">
-                        <div><HiMiniUsers className="display-5 text-brown"/></div>
-                        <div className="ms-2">
-                            <small className="fw-bold text-secondary">Members</small>
-                            <div className="text-brown small fw-bold">{community.attributes.members.length || 'none'}</div>
-                        </div>
-                    </div>
-                    <div className="d-flex p-3 mx-1 my-3 rounded-3 shadow-sm">
-                        <div><MdDescription className="display-5 text-brown"/></div>
-                        <div className="ms-2">
-                            <small className="fw-bold text-secondary">Description</small>
-                            <div className="text-brown small fw-bold">{community.attributes.description}</div>
-                        </div>
-                    </div>
-                </div>
-                : null
             }
         </div>
     )

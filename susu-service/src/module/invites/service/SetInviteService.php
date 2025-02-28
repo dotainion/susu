@@ -36,6 +36,10 @@ class SetInviteService extends Service{
             'isSusu' => $isSusu
         ]);
 
+        if($invite->isSusu()){
+            //check to see if it already stated.. if so throw error
+        }
+
         $this->save->set($invite);
         $this->append->appendCommunity($invite);
 

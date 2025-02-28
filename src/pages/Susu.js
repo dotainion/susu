@@ -81,57 +81,57 @@ export const Susu = () =>{
                 {
                     susu?.attributes?.pendingStart
                     ? <div className="col-12 col-lg-4 m-0 p-1">
-                        <div className="d-flex border h-100 p-3">
-                            <div className="me-3" style={{minWidth: 150}}>
-                                <button onClick={confirms} className="btn btn-sm btn-success w-100 text-nowrap fw-bold" disabled={!susu}>Apply & Confirm</button>
+                        <div className="d-flex flex-column border h-100 p-3">
+                            <div className="mb-auto">Confirms a user’s participation in the Susu after two or more members join, finalizing their membership and starting the pooling.</div>
+                            <div className="d-flex justify-content-end mt-3">
+                                <button onClick={confirms} className="btn btn-sm btn-success text-nowrap fw-bold" disabled={!susu} style={{minWidth: 150}}>Apply & Confirm</button>
                             </div>
-                            <div>Confirms a user’s participation in the Susu after two or more members join, finalizing their membership and starting the pooling.</div>
                         </div>
                     </div>
                     : <div className="col-12 col-lg-4 m-0 p-1">
-                        <div className="d-flex border h-100 p-3">
-                            <div className="me-3" style={{minWidth: 150}}>
-                                <div className="w-100 text-nowrap fw-bold text-success">Susu in progress</div>
+                        <div className="d-flex flex-column border h-100 p-3">
+                            <div className="mb-auto">The Susu is currently active, with the pooling process underway and members contributing.</div>
+                            <div className="d-flex justify-content-end mt-3">
+                                <div className="text-nowrap fw-bold text-success" style={{minWidth: 150}}>Susu in progress</div>
                             </div>
-                            <div>The Susu is currently active, with the pooling process underway and members contributing.</div>
                         </div>
                     </div>
                 }
                 <div className="col-12 col-lg-4 m-0 p-1">
-                    <div className="d-flex border h-100 p-3">
-                        <div className="me-3" style={{minWidth: 150}}>
+                    <div className="d-flex flex-column border h-100 p-3">
+                        <div className="mb-auto">Cancel a Susu activity, halting members contributions and participation in the susu.</div>
+                        <div className="d-flex justify-content-end mt-3">
                             <div className="dropdown">
-                                <button className="btn btn-sm btn-danger w-100 text-nowrap fw-bold" id="cancelSusu1" disabled={!susu} data-bs-toggle="dropdown" aria-expanded="false">Cancel Susu</button>
+                                <button className="btn btn-sm btn-danger text-nowrap fw-bold" id="cancelSusu1" disabled={!susu} data-bs-toggle="dropdown" aria-expanded="false" style={{minWidth: 150}}>Cancel Susu</button>
                                 <ul className="dropdown-menu" aria-labelledby="cancelSusu1">
                                     <li><a onClick={cancel} className="dropdown-item pointer">Confirm Cancelation</a></li>
                                 </ul>
                             </div>
                         </div>
-                        <div>Cancel a Susu activity, halting members contributions and participation in the susu.</div>
                     </div>
                 </div>
                 <div className="col-12 col-lg-4 m-0 p-1">
-                    <div className="d-flex border h-100 p-3">
-                        <div className="me-3" style={{minWidth: 150}}>
-                            <button onClick={()=>navigate(routes.susu().nested().contributionAndPayments(params.communityId, susu.id))} className="btn btn-sm btn-secondary w-100 text-nowrap fw-bold" disabled={!susu}>Contributors & Pay</button>
+                    <div className="d-flex flex-column border h-100 p-3">
+                        <div className="mb-auto">Allows the administrator to view and manage members, track contributions, and make updates to the Susu details.</div>
+                        <div className="d-flex justify-content-end mt-3">
+                            <button onClick={()=>navigate(routes.susu().nested().contributionAndPayments(params.communityId, susu.id))} className="btn btn-sm btn-secondary text-nowrap fw-bold" disabled={!susu} style={{minWidth: 150}}>Contributors & Pay</button>
                         </div>
-                        <div>Allows the administrator to view and manage members, track contributions, and make updates to the Susu details.</div>
                     </div>
                 </div>
                 <div className="col-12 col-lg-4 m-0 p-1">
-                    <div className="d-flex border h-100 p-3">
-                        <div className="me-3" style={{minWidth: 150}}>
-                            <button onClick={()=>navigate(routes.susu().nested().susuMembers(params.communityId, susu.id))} className="btn btn-sm btn-danger w-100 text-nowrap fw-bold" disabled={!susu}>Remove a members</button>
+                    <div className="d-flex flex-column border h-100 p-3">
+                        <div className="mb-auto">Remove a susu susu member, this might halting the pooling process and ending the susu activity.</div>
+                        <div className="d-flex justify-content-end mt-3">
+                            <button onClick={()=>navigate(routes.susu().nested().susuMembers(params.communityId, susu.id))} className="btn btn-sm btn-danger text-nowrap fw-bold" disabled={!susu} style={{minWidth: 150}}>Remove a members</button>
                         </div>
-                        <div>Remove a susu susu member, this might halting the pooling process and ending the susu activity.</div>
                     </div>
                 </div>
                 <div className="col-12 col-lg-4 m-0 p-1">
-                    <div className="d-flex border h-100 p-3">
-                        <div className="me-3" style={{minWidth: 150}}>
-                            <button onClick={()=>navigate(routes.susu().nested().schedule(params.communityId))} className="btn btn-sm btn-primary w-100 text-nowrap fw-bold" disabled={susu?.attributes?.pendingStart}>Schedule</button>
+                    <div className="d-flex flex-column border h-100 p-3">
+                        <div className="mb-auto">This action sets the timing for member contributions and payouts, defining the frequency and when funds are collected or distributed within the Susu.</div>
+                        <div className="d-flex justify-content-end mt-3">
+                            <button onClick={()=>navigate(routes.susu().nested().schedule(params.communityId))} className="btn btn-sm btn-primary text-nowrap fw-bold" disabled={susu?.attributes?.pendingStart} style={{minWidth: 150}}>Schedule</button>
                         </div>
-                        <div>This action sets the timing for member contributions and payouts, defining the frequency and when funds are collected or distributed within the Susu.</div>
                     </div>
                 </div>
                 <div className="col-12 col-lg-4 m-0 p-1">

@@ -66,6 +66,9 @@ export class Api{
     }
 
     parseError(error){
+        if(process.env.NODE_ENV === 'development'){
+            throw error;
+        }
         const notification = $('#login-notification');
         if(error.status === 401 && !this.isAuthRoute()){
             notification.show('fast');

@@ -23,6 +23,7 @@ import { Payments } from "../pages/Payments";
 import { PaymentSuccess } from "../pages/PaymentSuccess";
 import { SiTruenas } from "react-icons/si";
 import { PaymentRefund } from "../pages/PaymentRefund";
+import { Schedule } from "../pages/Schedule";
 
 export const Test = () =>{
 
@@ -42,7 +43,7 @@ export const Test = () =>{
 
     return(
         <div className="container">
-            <AssignSchedule />
+            <ViewCommunity />
         </div>
     )
 }

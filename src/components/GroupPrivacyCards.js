@@ -36,8 +36,8 @@ export const GroupPrivacyCards = ({community, onCommunityChange}) =>{
     }, [community]);
 
     return(
-        <div className="card cursor-defualt border-0 overflow-hidden w-100 px-0 mt-3">
-            <div className="card-body card-body-light">
+        <div className="card bg-transparent cursor-defualt border overflow-hidden w-100 px-0 mt-3">
+            <div className="card-body bg-transparent">
                 <div className="user-select-none">
                     <div>
                         <div className="h5">Privacy</div>
@@ -47,8 +47,8 @@ export const GroupPrivacyCards = ({community, onCommunityChange}) =>{
                     <hr></hr>
                     <div className="row d-flex flex-column flex-md-row">
                         <div className="col-12 col-md-4 mb-2 mb-md-0 px-2">
-                            <div onClick={()=>change(PRIVACY.PUBLIC)} className={`card overflow-hidden position-relative h-100 ${privacy === PRIVACY.PUBLIC ? 'border-primary' : ''}`}>
-                                <div className="card-body">
+                            <div onClick={()=>change(PRIVACY.PUBLIC)} className={`card card-hover bg-transparent overflow-hidden position-relative h-100 ${privacy === PRIVACY.PUBLIC ? 'border-primary' : ''}`}>
+                                <div className="card-body bg-transparent">
                                     <div className="d-flex d-lg-block justify-content-between h5 fw-bold small">Public<MdPublic className="text-primary fs-5 ms-2"/></div>
                                     <div>Anyone can view this group content and join</div>
                                 </div>
@@ -60,8 +60,8 @@ export const GroupPrivacyCards = ({community, onCommunityChange}) =>{
                             </div>
                         </div>
                         <div className="col-12 col-md-4 mb-2 mb-md-0 px-2">
-                            <div onClick={()=>change(PRIVACY.PRIVATE)} className={`card overflow-hidden position-relative h-100 ${privacy === PRIVACY.PRIVATE ? 'border-primary' : ''}`}>
-                                <div className="card-body">
+                            <div onClick={()=>change(PRIVACY.PRIVATE)} className={`card card-hover bg-transparent overflow-hidden position-relative h-100 ${privacy === PRIVACY.PRIVATE ? 'border-primary' : ''}`}>
+                                <div className="card-body bg-transparent">
                                     <div className="d-flex d-lg-block justify-content-between h5 fw-bold small">Private<MdLockOutline className="text-primary fs-5 ms-2"/></div>
                                     <div>Anyone who i invite or have the group info can join</div>
                                 </div>
@@ -73,8 +73,8 @@ export const GroupPrivacyCards = ({community, onCommunityChange}) =>{
                             </div>
                         </div>
                         <div className="col-12 col-md-4 mb-2 mb-md-0 px-2">
-                            <div onClick={()=>change(PRIVACY.LINK)} className={`card overflow-hidden position-relative h-100 ${privacy === PRIVACY.LINK ? 'border-primary' : ''}`}>
-                                <div className="card-body">
+                            <div onClick={()=>change(PRIVACY.LINK)} className={`card card-hover bg-transparent overflow-hidden position-relative h-100 ${privacy === PRIVACY.LINK ? 'border-primary' : ''}`}>
+                                <div className="card-body bg-transparent">
                                     <div className="d-flex d-lg-block justify-content-between h5 fw-bold small">Only via links<FaCreditCard className="text-primary fs-5 ms-2"/></div>
                                     <div>Anyone who have the link can join</div>
                                 </div>

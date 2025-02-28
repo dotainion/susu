@@ -33,6 +33,8 @@ class JoinSusuService extends Service{
         $collector->assertHasItem('Susu not yet stared.');
         $susu = $collector->first();
 
+        //todo: if susu is active then throw error that susu already been started...
+
         $link = $this->factory->mapResult([
             'susuId' => $susu->id()->toString(),
             'memberId' => $memberId,

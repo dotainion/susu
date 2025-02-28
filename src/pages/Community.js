@@ -6,11 +6,10 @@ import { ParseError } from "../utils/ParseError";
 import { ShareSocialMediaOverlay } from "../components/ShareSocialMediaOverlay";
 import { Loader } from "../components/Loader";
 import { FaCreditCard } from "react-icons/fa";
-import { IoIosAdd } from "react-icons/io";
-import { IoMdShareAlt } from "react-icons/io";
 import { utils } from "../utils/Utils";
 import { GroupPrivacyCards } from "../components/GroupPrivacyCards";
 import { MdOutlineManageHistory } from "react-icons/md";
+import { CommunityHeader } from "../components/CommunityHeader";
 
 export const Community = () =>{
     const [community, setCommunity] = useState();
@@ -22,20 +21,6 @@ export const Community = () =>{
     const params = useParams();
     const navigate = useNavigate();
     const location = useLocation();
-
-    const changeCommunityName = (e) =>{
-        setErrors(null);
-        const data = {
-            id: community.id,
-            ...community.attributes,
-            name: e.target.value
-        }
-        api.community.set(data).then((response)=>{
-            
-        }).catch((error)=>{
-            setErrors(new ParseError().message(error));
-        });
-    }
 
     const remove = () =>{
         setErrors(null);
@@ -87,60 +72,26 @@ export const Community = () =>{
     }, [location]);
 
     if(loading) return <Loader center />;
+
+    if(!community){
+        return(
+            <div className="container my-5">
+                <div className="alert alert-danger h4">You are not authorize to view this page</div>
+            </div>
+        )
+    }
     
     return(
         <div className="container">
-            <div className="d-flex flex-wrap gap-3">
-                <div className="card cursor-defualt border-0 overflow-hidden col-12 px-0">
-                    <div className="card-body card-body-light">
-                        <div className="mb-3">
-                            <input className="form-control border-0 bg-transparent px-0 fs-3 mb-3" onChange={changeCommunityName} defaultValue={community.attributes.name}/>
-                            {errors ? <div className="alert alert-danger small border-0">{errors}</div> : null}
-                            <div className="d-flex align-items-center small">
-                                <div className="text-nowrap me-2">{members.length} Members</div>
-                                {Array.from({length: members.length > 10 ? 10 : members.length}, (_, i) => i + 1).map((_, key)=>(
-                                    <div className="d-flex align-items-center justify-content-center rounded-circle bg-primary small" style={{width: '15px', height: '15px', minWidth: '15px', minHeight: '15px', marginRight: '1px'}} key={key}>
-                                        <small></small>
-                                    </div>
-                                ))}
-                                {members.length > 10 && (
-                                    <div className="d-flex" style={{marginLeft: '2px'}}>
-                                        <div className="bg-primary rounded-circle" style={{padding: '2px', marginRight: '2px'}}></div>
-                                        <div className="bg-primary rounded-circle" style={{padding: '2px', marginRight: '2px'}}></div>
-                                        <div className="bg-primary rounded-circle" style={{padding: '2px', marginRight: '2px'}}></div>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                        <div className="d-flex justify-content-between user-select-none">
-                            <div className="d-flex flex-wrap gap-3 mb-2">
-                                <a onClick={()=>navigate(routes.susu().nested().communities())} className="link-primary hover-decoration-underline pointer">Search communities</a>
-                                <a onClick={()=>navigate(routes.susu().nested().newCommunity())} className="link-primary hover-decoration-underline pointer">Create community</a>
-                                <a onClick={()=>navigate(routes.susu().nested().associateCommunities())} className="link-primary hover-decoration-underline pointer">Associated Communities</a>
-                            </div>
-                            <div className="d-flex flex-md-row flex-column gap-2">
-                                <button onClick={()=>setOpenCommunityInvite(true)} className="btn btn-sm btn-outline-primary"><IoIosAdd/>Invite members</button>
-                                <button onClick={builtInShare} className="btn bg-transparent border-0 shadow-none text-primary text-nowrap p-0"><IoMdShareAlt className="fs-3"/><span className="d-inline-block d-md-none">Share</span></button>
-                            </div>
-                        </div>
-                        <div className="col-12 px-0 mt-2 border-top border-default pt-2">
-                            {/*All this dashbords button are just for style an may need to change or remove*/}
-                            <button className="btn btn-sm btn-primary rounded-0 me-1" disabled>Operational Dashboard</button>
-                            <button className="btn btn-sm btn-primary rounded-0 me-1" disabled>Strategic Dashboard</button>
-                            <button className="btn btn-sm btn-primary rounded-0 me-1" disabled>Analytical Dashboard</button>
-                            <button className="btn btn-sm btn-primary rounded-0 me-1" disabled>Financial Dashboard</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <CommunityHeader community={community} members={members}/>
 
             <hr></hr>
 
             <div className="d-flex flex-md-row flex-column gap-3 mt-3">
                 <div className="w-75 w-md-100 px-0">
                     <div className="d-flex gap-3">
-                        <div className="card cursor-defualt border-0 overflow-hidden w-100 px-0">
-                            <div className="d-flex flex-column card-body card-body-light">
+                        <div className="card bg-transparent cursor-defualt border overflow-hidden w-100 px-0">
+                            <div className="d-flex flex-column card-body bg-transparent">
                                 <div className="d-flex gap-3 mb-auto">
                                     <div className="w-100">
                                         <div className="h5">Set up credit card payment</div>
@@ -156,8 +107,8 @@ export const Community = () =>{
                             </div>
                         </div>
 
-                        <div className="card cursor-defualt border-0 overflow-hidden w-100 px-0">
-                            <div className="d-flex flex-column card-body card-body-light">
+                        <div className="card bg-transparent cursor-defualt border overflow-hidden w-100 px-0">
+                            <div className="d-flex flex-column card-body bg-transparent">
                                 <div className="d-flex gap-3 mb-auto">
                                     <div className="w-100">
                                         <div className="h5">Manage susu</div>
@@ -177,16 +128,16 @@ export const Community = () =>{
                 </div>
                 <div className="w-25 w-md-100 w-sm-100 px-0">
                     <div className="d-flex flex-column gap-3">
-                        <div className="card cursor-defualt border-0 overflow-hidden w-100">
-                            <div className="card-body card-body-light">
+                        <div className="card bg-transparent cursor-defualt border overflow-hidden w-100">
+                            <div className="card-body bg-transparent">
                                 <div className="h5">About</div>
                                 <div className="">{community.attributes.description}</div>
                             </div>
                         </div>
 
-                        <div className="card cursor-defualt border-0 overflow-hidden w-100">
-                            <div className="card-body card-body-light">
-                                <div className="h5">Members</div>
+                        <div className="card bg-transparent cursor-defualt border overflow-hidden w-100">
+                            <div className="card-body bg-transparent">
+                                <div className="h5">Members<span className="ms-2 small badge bg-primary">{members.length}</span></div>
                                 <div className="overflow-auto" style={{height: '150px'}}>
                                     {
                                         members.length ?

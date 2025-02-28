@@ -85,7 +85,9 @@ export const ShareSocialMediaOverlay = ({show, onClose, referenceId, isSusu, mem
 
     const share = () =>{
         setErrors(null);
-        selection.forEach((member)=>{
+        const reset = () => setTimeout(()=>setSelection([]), 5000);
+        selection.forEach((member, i)=>{
+            clearTimeout(timeoutRef.current);
             const data = {
                 id: null,
                 memberId: member.id,
@@ -94,6 +96,9 @@ export const ShareSocialMediaOverlay = ({show, onClose, referenceId, isSusu, mem
             }
             api.invite.set(data).then((response)=>{
                 setInvites((inviteIdArray)=>[response.data.data[0].id, ...inviteIdArray]);
+                if((i+1) === selection.length){
+                    timeoutRef.current = setTimeout(()=>setSelection([]), 5000);
+                }
             }).catch((error)=>{
                 setErrors(new ParseError().message(error));
             });

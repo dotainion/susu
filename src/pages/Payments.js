@@ -252,11 +252,78 @@ export const StripePayments = () => {
     );
 };
 
-const stripePromise = loadStripe('pk_test_51HMQLOBZvIBjqI0ERBmRc4Feu7qu6fXdnc8IZ9whUpTWAMIEZyYRSUsFCc2LQlXIPJJqBYgzcIbQJY5WODNXdiuf00TucXVjmM');
+/*const stripePromise = loadStripe('pk_test_51HMQLOBZvIBjqI0ERBmRc4Feu7qu6fXdnc8IZ9whUpTWAMIEZyYRSUsFCc2LQlXIPJJqBYgzcIbQJY5WODNXdiuf00TucXVjmM');
 export const Payments = () => {
     return (
         <Elements stripe={stripePromise}>
             <StripePayments />
         </Elements>
     )
+}*/
+
+export const Payments = () => {
+    const [isFygaroLoaded, setIsFygaroLoaded] = useState(false);
+
+  useEffect(() => {
+    // Dynamically load the Fygaro script from the correct CDN
+    const script = document.createElement('script');
+    script.src = "https://cdn.fygaro.com/your-fygaro-script.js"; // Replace with the actual Fygaro script URL
+    script.async = true;
+
+    // On script load, set the state to indicate that Fygaro is available
+    script.onload = () => {
+      // Check if Fygaro is loaded and available in the window object
+      if (window.Fygaro) {
+        setIsFygaroLoaded(true);
+        console.log('Fygaro script loaded successfully.');
+      } else {
+        console.error('Fygaro did not load correctly.');
+      }
+    };
+
+    // On script error, log an error
+    script.onerror = () => {
+      console.error('Failed to load Fygaro script.');
+    };
+
+    // Append the script to the body
+    document.body.appendChild(script);
+
+    // Cleanup: Remove the script when the component unmounts
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  const handlePayment = () => {
+    if (!isFygaroLoaded) {
+      console.error('Fygaro is not loaded.');
+      return;
+    }
+
+    // Trigger Fygaro's payment window when the button is clicked
+    if (window.Fygaro) {
+      window.Fygaro.openPaymentWindow({
+        amount: 1000, // Amount in cents (e.g., $10.00)
+        currency: 'USD',
+        description: 'Example Product', // Description of the product
+        successCallback: (response) => {
+          console.log('Payment successful:', response);
+        },
+        errorCallback: (error) => {
+          console.error('Payment failed:', error);
+        },
+      });
+    } else {
+      console.error('Fygaro is not defined or loaded.');
+    }
+  };
+
+  return (
+    <div>
+      <button onClick={handlePayment} disabled={!isFygaroLoaded}>
+        Pay with Fygaro
+      </button>
+    </div>
+  );
 }

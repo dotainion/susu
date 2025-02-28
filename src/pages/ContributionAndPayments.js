@@ -4,8 +4,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { api } from "../request/Api";
 import { utils } from "../utils/Utils";
+import { useAuth } from "../provider/AuthProvider";
 
 export const ContributionAndPayments = () =>{
+    const { user } = useAuth();
+
     const [susu , setSusu] = useState();
     const [members, setMembers] = useState([]);
     const [schedule, setSchedule] = useState([]);
@@ -20,6 +23,13 @@ export const ContributionAndPayments = () =>{
         const mbSched = schedule.find((sch)=>sch.attributes.memberId === memberId);
         if(!mbSched) return 'No asign schedule';
         return utils.date.toLocalDate(mbSched.attributes.date);
+    }
+
+    const onMakePayment = (member) =>{
+        if(susu?.attributes?.owner?.id !== user?.id){
+            return navigate(routes.susu().nested().payment(susu.id, params.communityId, member.id));
+        }
+        navigate(routes.susu().nested().updateMemberSusuWallet(params.communityId, member.id));
     }
 
     useEffect(() => {
@@ -99,8 +109,8 @@ export const ContributionAndPayments = () =>{
             <div>
                 <table className="w-100">
                     <tbody>
-                        {members.map((member, key)=>(
-                            <tr onClick={()=>navigate(routes.susu().nested().updateMemberSusuWallet(params.communityId, member.id))} className="border-bottom border-secondary pointer" title="Click to make contribution" key={member.id}>
+                        {members.map((member)=>(
+                            <tr onClick={()=>onMakePayment(member)} className="border-bottom border-secondary pointer" title="Click to make contribution" key={member.id}>
                                 <td className="py-2">
                                     <div className="d-flex">
                                         <div className="me-2 d-none d-sm-block">
@@ -108,7 +118,7 @@ export const ContributionAndPayments = () =>{
                                         </div>
                                         <div className="small">
                                             <div className="small">{member.attributes.firstName} {member.attributes.lastName}</div>
-                                            <small className="btn small rounded-pill text-primary border border-primary py-0 px-2"><small><small>Contributor</small></small></small>
+                                            <small className="small"><small><small className="badge bg-primary">Contributor</small></small></small>
                                         </div>
                                     </div>
                                 </td>
