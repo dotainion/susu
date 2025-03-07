@@ -6,14 +6,15 @@ import { GrSchedules } from "react-icons/gr";
 import { MdDashboard, MdManageAccounts } from "react-icons/md";
 import { useSidebar } from "../SidebarProvider";
 import { NavToMain } from "./NavToMain";
+import { Page } from "../../animation/Page";
 
 export const Help = () =>{
     const { help } = useSidebar();
 
     return(
-        <div>
+        <Page>
             <NavToMain/>
             <NavGrid nav={help}/>
-        </div>
+        </Page>
     )
 }

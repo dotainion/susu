@@ -46,7 +46,7 @@ export const SearchCommunitiesOrMembersToMessageOverlay = ({isOpen, onClose}) =>
                     </div>
                     <div className="bg-white py-3 px-1 rounded-bottom-4 shadow-sm overflow-y-auto overflow-x-hidden">
                         {messagners.map((member, key)=>(
-                            <button onClick={()=>navigateTo(member)} className="btn bg-light d-block shadow-none text-start my-1 border-0 w-100" key={key}>
+                            <button onClick={()=>navigateTo(member)} className="btn bg-light text-dark d-block shadow-none text-start my-1 border-0 w-100" key={key}>
                                 <label className="d-flex align-items-center pointer">
                                     <div className="position-relative me-2">
                                         <FaUserCircle className="display-5"/>

@@ -25,7 +25,7 @@ class CommunityRepository extends Repository{
             ->column('description', $community->description())
             ->column('createdDate', $community->createdDate()->toString())
             ->column('creatorId', $this->uuid($community->creatorId()))
-            ->column('privacy', $this->uuid($community->privacy()));
+            ->column('privacy', $community->privacy());
         $this->execute();
     }
     
@@ -33,9 +33,9 @@ class CommunityRepository extends Repository{
         $this->update('community')     
             ->column('name', $community->name())
             ->column('description', $community->description())
-            ->column('createdDate', $community->createdDate()->toString())
-            ->column('creatorId', $this->uuid($community->creatorId()))
-            ->column('privacy', $this->uuid($community->privacy()))
+            //->column('createdDate', $community->createdDate()->toString())
+            //->column('creatorId', $this->uuid($community->creatorId()))
+            ->column('privacy', $community->privacy())
             ->where()->eq('id', $this->uuid($community->id()));
         $this->execute();
     }

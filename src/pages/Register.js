@@ -8,11 +8,13 @@ import logo from "../images/logo.png";
 
 export const Register = () =>{
     const [error, setError] = useState();
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
     const register = (e) =>{
         e.preventDefault();
+        setLoading(true);
         const formData = new FormData(e.target);
         const data = {
             firstName: formData.get('firstName'),
@@ -26,6 +28,8 @@ export const Register = () =>{
             navigate(routes.susu().default());
         }).catch((error)=>{
             setError(new ParseError().message(error));
+        }).finally(()=>{
+            setLoading(false);
         });
     }
     

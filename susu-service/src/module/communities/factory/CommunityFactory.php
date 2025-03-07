@@ -18,7 +18,7 @@ class CommunityFactory extends Collector{
         $community->setDescription($record['description'] ?? '');
         $community->setCreatedDate($record['createdDate']);
         $community->setCreatorId($this->uuid($record['creatorId']));
-        $community->setPrivacy($record['privacy']);
+        $community->setPrivacy($record['privacy'] ?? '');
         $community->setHide((bool)$record['hide']);
         return $community;
     }

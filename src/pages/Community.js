@@ -124,7 +124,7 @@ export const Community = () =>{
                             </div>
                         </div>
                     </div>
-                    <GroupPrivacyCards community={community} onCommunityChange={setCommunity} />                    
+                    <GroupPrivacyCards community={community} onPrivacyChange={setCommunity} />                    
                 </div>
                 <div className="w-25 w-md-100 w-sm-100 px-0">
                     <div className="d-flex flex-column gap-3">
@@ -165,8 +165,8 @@ export const Community = () =>{
                                     }
                                 </div>
                                 <div className={`d-flex ${members.length ? '' : 'invisible'} justify-content-between mt-3`}>
-                                    <a onClick={()=>navigate(routes.susu().nested().communityMembers(params.communityId))} className="link-primary text-decoration-none lh-1">See all member</a>
-                                    <a onClick={()=>setOpenCommunityInvite(true)} className="link-primary text-decoration-none lh-1">Add member</a>
+                                    <a onClick={()=>navigate(routes.susu().nested().communityMembers(params.communityId))} className="link-primary text-decoration-none lh-1 pointer">Remove a member</a>
+                                    <a onClick={()=>setOpenCommunityInvite(true)} className="link-primary text-decoration-none lh-1 pointer">Add member</a>
                                 </div>
                             </div>
                         </div>

@@ -73,16 +73,16 @@ export const Dashboard = () =>{
             <div className="text-secondary mt-3">History</div>
             <table className="w-100 small table">
                 <thead>
-                    <tr className="border-bottom border-dark">
-                        <th className="py-2">Member</th>
-                        <th className="py-2">Date</th>
-                        <th className="py-2">Status</th>
-                        <th className="py-2">Amount</th>
+                    <tr className="bg-transparent">
+                        <th className="py-2 bg-transparent">Member</th>
+                        <th className="py-2 bg-transparent">Date</th>
+                        <th className="py-2 bg-transparent">Status</th>
+                        <th className="py-2 bg-transparent">Amount</th>
                     </tr>
                 </thead>
                 <tbody className="">
                     {histories.map((history, key)=>(
-                        <tr className="border-bottom" key={key}>
+                        <tr className="bg-transparent" key={key}>
                             <td className="py-2">{history.attributes.user.attributes.firstName} {history.attributes.user.attributes.lastName}</td>
                             <td className="py-2">{utils.date.toLocalDateTime(history.attributes.date)}</td>
                             <td className="py-2">

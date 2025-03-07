@@ -2,7 +2,7 @@
 namespace src\router;
 
 use InvalidArgumentException;
-use src\database\Repository;
+use src\infrastructure\Repository;
 use tools\infrastructure\Https;
 use src\module\communities\action\FetchCommunityAction;
 use src\module\communities\action\JoinCommunityAction;
@@ -88,10 +88,9 @@ class Router{
         });*/
 
         $this->request->route('/test', function ($req){
-            /*$query = new Repository();
+            $query = new Repository();
             $query->query('');
-            $query->query('');
-            var_dump('None...');*/
+            var_dump('None...');
         });
 
         $this->request->route('/signin', function ($req){

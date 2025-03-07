@@ -55,6 +55,7 @@ export const ContributionRefund = () =>{
         }).catch((error)=>{
 
         }).finally(()=>{
+            contributionLoading = false;
             if(!contributionLoading && !refundsLoading){
                 setLoading(false);
             }
@@ -64,6 +65,7 @@ export const ContributionRefund = () =>{
         }).catch((error)=>{
 
         }).finally(()=>{
+            refundsLoading = false;
             if(!contributionLoading && !refundsLoading){
                 setLoading(false);
             }

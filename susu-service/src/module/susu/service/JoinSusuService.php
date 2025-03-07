@@ -1,6 +1,7 @@
 <?php
 namespace src\module\susu\service;
 
+use InvalidArgumentException;
 use tools\infrastructure\Assert;
 use tools\infrastructure\Id;
 use src\infrastructure\Service;
@@ -33,7 +34,9 @@ class JoinSusuService extends Service{
         $collector->assertHasItem('Susu not yet stared.');
         $susu = $collector->first();
 
-        //todo: if susu is active then throw error that susu already been started...
+        if(!$susu->pendingStart()){
+            throw new InvalidArgumentException('You cannot join a susu that has already been activated.');
+        }
 
         $link = $this->factory->mapResult([
             'susuId' => $susu->id()->toString(),

@@ -43,7 +43,7 @@ export const Test = () =>{
 
     return(
         <div className="container">
-            <ViewCommunity />
+            <Payments />
         </div>
     )
 }

@@ -23,6 +23,7 @@ export const PaymentRefund = () => {
     const partialElementRef = useRef();
 
     const onRefund = async(e) =>{
+        if(loading) return;
         try{
             e.preventDefault();
             setLoading(true);

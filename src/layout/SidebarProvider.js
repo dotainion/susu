@@ -43,7 +43,7 @@ export const SidebarProvider = ({children}) =>{
     const navigate = useNavigate();
 
     const dashboardAndOverview =    {
-        title: 'Dashboard and Overview',
+        title: 'Dashboard & Overview',
         description: 'Get a snapshot of your key metrics and current activities. Monitor performance, track progress, and stay updated with important notifications.',
         list: [
             {

@@ -119,7 +119,7 @@ export const SchedulePayoutChart = ({communityId}) => {
                     <Bar dataKey="refund" fill="#A397D1" stackId="c" />
                 </BarChart >
             </ResponsiveContainer>
-            <div className="my-4 p-3 bg-light rounded-3">
+            <div className="my-4 p-3 border rounded-3">
                 <div className="h4">Contributions</div>
                 <div className="d-flex">
                     <div className="border rounded-3 px-3">

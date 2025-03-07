@@ -1,6 +1,7 @@
 <?php
 namespace src\module\invites\service;
 
+use InvalidArgumentException;
 use tools\infrastructure\Assert;
 use tools\infrastructure\DateHelper;
 use tools\infrastructure\Id;
@@ -8,17 +9,21 @@ use src\infrastructure\Service;
 use src\module\invites\factory\InviteFactory;
 use src\module\invites\logic\AppendCommunityToInvites;
 use src\module\invites\logic\SetInvite;
+use src\module\susu\logic\FetchSusu;
+use src\module\susu\objects\Susu;
 
 class SetInviteService extends Service{
     protected SetInvite $save;
     protected InviteFactory $factory;
     protected AppendCommunityToInvites $append;
+    protected FetchSusu $susu;
 
     public function __construct(){
         parent::__construct();
         $this->save = new SetInvite();
         $this->factory = new InviteFactory();
         $this->append = new AppendCommunityToInvites();
+        $this->susu = new FetchSusu();
     }
     
     public function process($id, $memberId, $targetId, $isSusu){
@@ -37,7 +42,11 @@ class SetInviteService extends Service{
         ]);
 
         if($invite->isSusu()){
-            //check to see if it already stated.. if so throw error
+            $collector = $this->susu->activeById($invite->targetId());
+            $collector->assertHasItem('Susu not yet stared.');
+            if(!$collector->first()->pendingStart()){
+                throw new InvalidArgumentException('You cannot send an invite on a susu that has already been activated.');
+            }
         }
 
         $this->save->set($invite);

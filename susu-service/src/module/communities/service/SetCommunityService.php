@@ -43,7 +43,7 @@ class SetCommunityService extends Service{
         $community = $collector->first();
 
         $link = $this->linkFactory->mapResult([
-            'CommunityId' => $community->id()->toString(),
+            'communityId' => $community->id()->toString(),
             'memberId' => $this->user()->id()->toString(),
         ]);
 

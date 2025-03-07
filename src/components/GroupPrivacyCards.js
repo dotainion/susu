@@ -6,7 +6,7 @@ import { FaCircleCheck } from "react-icons/fa6";
 import { api } from "../request/Api";
 import { ParseError } from "../utils/ParseError";
 
-export const GroupPrivacyCards = ({community, onCommunityChange}) =>{
+export const GroupPrivacyCards = ({community, onPrivacyChange, asInput}) =>{
     const [privacy, setPrivacy] = useState();
     const [errors, setErrors] = useState();
 
@@ -17,6 +17,10 @@ export const GroupPrivacyCards = ({community, onCommunityChange}) =>{
     }
 
     const change = (newPrivacy) =>{
+        if(asInput){ 
+            setPrivacy(newPrivacy);
+            return onPrivacyChange?.(newPrivacy);
+        }
         setErrors(null);
         const data = {
             id: community.id,
@@ -25,14 +29,14 @@ export const GroupPrivacyCards = ({community, onCommunityChange}) =>{
         }
         api.community.set(data).then((response)=>{
             setPrivacy(response.data.data[0].attributes.privacy);
-            onCommunityChange?.(response.data.data[0]);
+            onPrivacyChange?.(response.data.data[0]);
         }).catch((error)=>{
             setErrors(new ParseError().message(error));
         });
     }
 
     useEffect(()=>{
-        setPrivacy(community.attributes.privacy);
+        setPrivacy(community?.attributes?.privacy ?? null);
     }, [community]);
 
     return(
