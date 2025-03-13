@@ -410,6 +410,10 @@ hr, table tr{
     text-decoration: underline;
 }
 
+.position-md-absolute{
+    position: relative !important;
+}
+
 @media (max-width: 576px) {
     .sidebar{
         border-right: none;
@@ -456,6 +460,10 @@ hr, table tr{
 @media (max-width: 768px) {
     .w-md-100{
         width: 100% !important;
+    }
+
+    .position-md-absolute{
+        position: absolute !important;
     }
 }
 

@@ -13,6 +13,8 @@ import { AuthProvider } from "./provider/AuthProvider";
 import { Test } from "./test/Test";
 import { Invited } from "./pages/Invited";
 import { NavRouter } from "./routes/NavRouter";
+import { AboutUs } from "./pages/AboutUs";
+import { ReasonForUs } from "./pages/ReasonForUs";
 
 //https://fastsusu.com/
 
@@ -24,6 +26,8 @@ function App() {
           <Route path={routes.signIn()} element={<Signin/>} />
           <Route path={routes.register()} element={<Register/>} />
           <Route path={routes.onboarding()} element={<Onboarding/>} />
+          <Route path={routes.aboutUs()} element={<AboutUs/>} />
+          <Route path={routes.reasonForUs()} element={<ReasonForUs/>} />
           <Route path={routes.invited()} element={<Invited/>} />
           <Route path={routes.default()} element={<Navigate to={routes.onboarding()}/>} />
           <Route path={routes.susu().default()} element={<SusuRouter/>} />

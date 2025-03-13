@@ -53,6 +53,8 @@ class Routes{
     _nested = '';
     default = () => '/';
     onboarding = () => this._nested + '/onboarding';
+    aboutUs = () => this._nested + '/about/us';
+    reasonForUs = () => this._nested + '/reason/for/us';
     signIn = () => this._nested + '/sign/in';
     register = () => this._nested + '/register';
     invited = () => this._nested + 'invited';

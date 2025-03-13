@@ -6,7 +6,7 @@ import { ModalOverlay } from "../container/ModalOverlay";
 import $ from "jquery";
 import { routes } from "../routes/Routes";
 import { useLocation, useNavigate } from "react-router-dom";
-import { mockData } from "../container/MockData";
+import { mockData } from "../contents/MockData";
 import { SidebarProvider } from "../layout/SidebarProvider";
 
 const Context = createContext();
