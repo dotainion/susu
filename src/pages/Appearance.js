@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../provider/AuthProvider"
-import { Onboarding } from "./Onboarding"
+import { Home } from "./landing/Home";
 
 export const Appearance = () =>{
     const [theme, setTheme] = useState('--bg-primary');
@@ -14,7 +14,7 @@ export const Appearance = () =>{
             <div className="d-flex bg-white">
                 <div className="pe-none user-select-none border border-5">
                     <div className="pe-none user-select-none" style={{backgroundColor: theme}}>
-                        <Onboarding/>
+                        <Home/>
                     </div>
                 </div>
                 <div className="p-5">

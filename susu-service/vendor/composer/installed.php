@@ -3,7 +3,7 @@
         'name' => 'rhea/ccawebsiteservice',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '3aee501c02e459022cd245ac371565daedee1e0d',
+        'reference' => 'b4468e3d9a622044a2c988a0a8174ff1cff06651',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -31,7 +31,7 @@
         'dotainion/security-tools' => array(
             'pretty_version' => 'v1.0.0',
             'version' => '1.0.0.0',
-            'reference' => 'c993d20e212e2aedee06738e4eeb333e96cdf763',
+            'reference' => 'c977d5cc4b7726dd13d07cdcfe8614c38e32faaf',
             'type' => 'library',
             'install_path' => __DIR__ . '/../dotainion/security-tools',
             'aliases' => array(),
@@ -76,7 +76,7 @@
         'rhea/ccawebsiteservice' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '3aee501c02e459022cd245ac371565daedee1e0d',
+            'reference' => 'b4468e3d9a622044a2c988a0a8174ff1cff06651',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

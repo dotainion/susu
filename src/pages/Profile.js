@@ -110,70 +110,88 @@ export const Profile = () =>{
                 </div>
                 <div onChange={update} className="text-nowrap w-100">
                     {error ? <div className="alert alert-danger border-0">{error}</div> : null}
-                    <div className="d-md-flex d-block">
-                        <div style={{minWidth: '200px'}}>First Name</div>
-                        <input ref={firstNameRef} className="form-control mb-3" placeholder="John" type="text" style={{maxWidth: '500px'}}/>
+                    <div className="card overflow-hidden mb-3">
+                        <div class="card-header text-muted small">User information</div>
+                        <div className="card-body">
+                            <div className="d-md-flex d-block">
+                                <div style={{minWidth: '200px'}}>First Name</div>
+                                <input ref={firstNameRef} className="form-control mb-3" placeholder="John" type="text" style={{maxWidth: '500px'}}/>
+                            </div>
+                            <div className="d-md-flex d-block">
+                                <div style={{minWidth: '200px'}}>Last Name</div>
+                                <input ref={lastNameRef} className="form-control mb-3" placeholder="Wick" type="text" style={{maxWidth: '500px'}}/>
+                            </div>
+                            <div className="d-md-flex d-block">
+                                <div style={{minWidth: '200px'}}>Gender</div>
+                                <select ref={genderRef} className="form-control form-select mb-3" style={{maxWidth: '500px'}}>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                    <div className="d-md-flex d-block">
-                        <div style={{minWidth: '200px'}}>Last Name</div>
-                        <input ref={lastNameRef} className="form-control mb-3" placeholder="Wick" type="text" style={{maxWidth: '500px'}}/>
+                    <div className="card overflow-hidden mb-3">
+                        <div class="card-header text-muted small">Contact information</div>
+                        <div className="card-body">
+                            <div className="d-md-flex d-block">
+                                <div style={{minWidth: '200px'}}>Email</div>
+                                <input ref={emailRef} className="form-control mb-3" placeholder="example@example.com" type="email" style={{maxWidth: '500px'}}/>
+                            </div>
+                            <div className="d-md-flex d-block">
+                                <div style={{minWidth: '200px'}}>Phone Number</div>
+                                <input ref={phoneRef} className="form-control mb-3" placeholder="1 (473) 000 0000" type="tel" style={{maxWidth: '500px'}}/>
+                            </div>
+                        </div>
                     </div>
-                    <div className="d-md-flex d-block">
-                        <div style={{minWidth: '200px'}}>Gender</div>
-                        <select ref={genderRef} className="form-control form-select mb-3" style={{maxWidth: '500px'}}>
-                            <option>Male</option>
-                            <option>Female</option>
-                        </select>
+                    <div className="card overflow-hidden mb-3">
+                        <div class="card-header text-muted small">About me</div>
+                        <div className="card-body">
+                            <div className="d-md-flex d-block">
+                                <div style={{minWidth: '200px'}}>Bio</div>
+                                <textarea ref={bioRef} className="form-control mb-3" placeholder="Bio" style={{resize: 'none', maxWidth: '500px'}}/>
+                            </div>
+                        </div>
                     </div>
-                    <div className="border-bottom mb-3 text-muted small">Contact information</div>
-                    <div className="d-md-flex d-block">
-                        <div style={{minWidth: '200px'}}>Email</div>
-                        <input ref={emailRef} className="form-control mb-3" placeholder="example@example.com" type="email" style={{maxWidth: '500px'}}/>
-                    </div>
-                    <div className="d-md-flex d-block">
-                        <div style={{minWidth: '200px'}}>Phone Number</div>
-                        <input ref={phoneRef} className="form-control mb-3" placeholder="1 (473) 000 0000" type="tel" style={{maxWidth: '500px'}}/>
-                    </div>
-                    <div className="border-bottom mb-3 text-muted small">About me</div>
-                    <div className="d-md-flex d-block">
-                        <div style={{minWidth: '200px'}}>Bio</div>
-                        <textarea ref={bioRef} className="form-control mb-3" placeholder="Bio" style={{resize: 'none', maxWidth: '500px'}}/>
-                    </div>
-                    <div className="border-bottom mb-3 text-muted small">Location</div>
-                    <div className="d-md-flex d-block">
-                        <div style={{minWidth: '200px'}}>Country</div>
-                        <select ref={countryRef} className="form-control form-select mb-3" style={{maxWidth: '500px'}}>
-                            <option>Grenada</option>
-                        </select>
-                    </div>
-                    <div className="d-md-flex d-block">
-                        <div style={{minWidth: '200px'}}>State</div>
-                        <select ref={stateRef} className="form-control form-select mb-3" style={{maxWidth: '500px'}}>
-                            <option>Saint George</option>
-                            <option>Saint John</option>
-                            <option>Saint Mark</option>
-                            <option>Saint Patrick</option>
-                            <option>Saint Andrew</option>
-                            <option>Saint David</option>
-                            <option>Carriacou</option>
-                            <option>Petite Martinique</option>
-                        </select>
-                    </div>
-                    <div className="d-md-flex d-block">
-                        <div style={{minWidth: '200px'}}>Address</div>
-                        <input ref={addressRef} className="form-control mb-3" placeholder="Address" type="text" style={{maxWidth: '500px'}}/>
-                    </div>
-                    <div className="d-md-flex d-block">
-                        <div style={{minWidth: '200px'}}>Apartment</div>
-                        <input ref={aptRef} className="form-control mb-3" placeholder="Apt" type="text" style={{maxWidth: '500px'}}/>
-                    </div>
-                    <div className="d-md-flex d-block">
-                        <div style={{minWidth: '200px'}}>Zip</div>
-                        <input ref={zipRef} className="form-control mb-3" placeholder="00000" type="text" style={{maxWidth: '500px'}} disabled/>
+                    <div className="card overflow-hidden mb-3">
+                        <div class="card-header text-muted small">Location</div>
+                        <div className="card-body">
+                            <div className="d-md-flex d-block">
+                                <div style={{minWidth: '200px'}}>Country</div>
+                                <select ref={countryRef} className="form-control form-select mb-3" style={{maxWidth: '500px'}}>
+                                    <option>Grenada</option>
+                                </select>
+                            </div>
+                            <div className="d-md-flex d-block">
+                                <div style={{minWidth: '200px'}}>State</div>
+                                <select ref={stateRef} className="form-control form-select mb-3" style={{maxWidth: '500px'}}>
+                                    <option>Saint George</option>
+                                    <option>Saint John</option>
+                                    <option>Saint Mark</option>
+                                    <option>Saint Patrick</option>
+                                    <option>Saint Andrew</option>
+                                    <option>Saint David</option>
+                                    <option>Carriacou</option>
+                                    <option>Petite Martinique</option>
+                                </select>
+                            </div>
+                            <div className="d-md-flex d-block">
+                                <div style={{minWidth: '200px'}}>Address</div>
+                                <input ref={addressRef} className="form-control mb-3" placeholder="Address" type="text" style={{maxWidth: '500px'}}/>
+                            </div>
+                            <div className="d-md-flex d-block">
+                                <div style={{minWidth: '200px'}}>Apartment</div>
+                                <input ref={aptRef} className="form-control mb-3" placeholder="Apt" type="text" style={{maxWidth: '500px'}}/>
+                            </div>
+                            <div className="d-md-flex d-block">
+                                <div style={{minWidth: '200px'}}>Zip</div>
+                                <input ref={zipRef} className="form-control mb-3" placeholder="00000" type="text" style={{maxWidth: '500px'}} disabled/>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div className="bg-sec rounded-4 d-flex w-100 justify-content-center flex-column striped-list">
+            <hr></hr>
+            <div className="d-flex w-100 justify-content-center flex-column striped-list">
                 <div className="py-3 px-2 m-auto" style={{maxWidth: '500px'}}>
                     <div>Member ID</div>
                     <div onClick={(e)=>utils.copy.toClipboard($(e.currentTarget).find('div').first())} className="d-flex align-items-center form-control bg-white position-relative pointer">

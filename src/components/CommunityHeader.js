@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { ParseError } from "../utils/ParseError";
 import { utils } from "../utils/Utils";
 import { ShareSocialMediaOverlay } from "./ShareSocialMediaOverlay";
+import { DashboardOptionButton } from "./DashboardOptionButton";
 
 export const CommunityHeader = ({community, members}) =>{
     const { user } = useAuth();
@@ -43,18 +44,14 @@ export const CommunityHeader = ({community, members}) =>{
         });
     }
 
-    useEffect(() => {
-
-    }, []);
-
     return(
         <div className="d-flex flex-wrap gap-3">
-            <div className="card bg-transparent cursor-defualt border overflow-hidden col-12 px-0">
+            <div className="card bg-transparent cursor-defualt overflow-hidden col-12 px-0">
                 <div className="card-body bg-transparent">
                     <div className="mb-3">
                         {
                             !community || community.attributes.owner.id !== user.id
-                                ? <div className="fs-3 mb-3">{community.attributes.name}</div>
+                                ? <div className="fs-3 mb-3">{community ? community.attributes.name : 'none'}</div>
                                 : <input className="form-control border-0 bg-transparent px-0 fs-3 mb-3" onChange={changeCommunityName} defaultValue={community.attributes.name}/>
                         }
                         {errors ? <div className="alert alert-danger small border-0">{errors}</div> : null}
@@ -86,11 +83,11 @@ export const CommunityHeader = ({community, members}) =>{
                         </div>
                     </div>
                     <div className="d-flex flex-wrap gap-1 px-0 mt-2 border-top border-default pt-2">
-                        {/*All this dashbords button are just for style an may need to change or remove*/}
-                        <button className="btn btn-sm bg-sec rounded-0" disabled>Operational Dashboard</button>
-                        <button className="btn btn-sm bg-sec rounded-0" disabled>Strategic Dashboard</button>
-                        <button className="btn btn-sm bg-sec rounded-0" disabled>Analytical Dashboard</button>
-                        <button className="btn btn-sm bg-sec rounded-0" disabled>Financial Dashboard</button>
+                        <DashboardOptionButton className="btn btn-sm btn-primary rounded-0"/>
+                        <button className="btn btn-sm btn-primary rounded-0" disabled>Operational</button>
+                        <button className="btn btn-sm btn-primary rounded-0" disabled>Strategic</button>
+                        <button className="btn btn-sm btn-primary rounded-0" disabled>Analytical</button>
+                        <button className="btn btn-sm btn-primary rounded-0" disabled>Financial</button>
                     </div>
                 </div>
             </div>

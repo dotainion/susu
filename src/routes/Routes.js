@@ -16,7 +16,7 @@ class Susu{
     communityMembers = (communityId = ':communityId') => this._nested + 'community/members/' + communityId;
     susuMembers = (communityId = ':communityId', susuId = ':susuId') => this._nested + 'list/of/members/' + communityId + '/' + susuId;
     associateCommunities = () => this._nested + 'associate/communities';
-    dashboard = () => this._nested + 'dashboard';
+    dashboard = (susuId = ':susuId', communityId = ':communityId') => this._nested + 'dashboard/susu/' + susuId + '/' + communityId;
     messangers = () => this._nested + 'owner/messages';
     messages = (memberId = ':memberId') => this._nested + 'messages/' + memberId;
     communityMessages = (communityId = ':communityId') => this._nested + 'community/messages/' + communityId;
@@ -35,13 +35,13 @@ class NavBar{
     _nested = '';
     default = () => '/susu/nav/*';
     main = () => this._nested + 'main';
-    dashboardAndOverview = () => this._nested + 'dashboardAndOverview';
+    managementAndOverview = () => this._nested + 'managementAndOverview';
     communities = () => this._nested + 'communities';
     profile = () => this._nested + 'profile';
     contributionManagement = () => this._nested + 'contributionManagement';
     messaging = () => this._nested + 'messaging';
     help = () => this._nested + 'help';
-    onboarding = () => this._nested + 'onboarding';
+    landing = () => this._nested + 'home';
     settings = () => this._nested + 'settings';
     nested = () => {
         this._nested = this.default().replace('*', '');
@@ -52,9 +52,11 @@ class NavBar{
 class Routes{
     _nested = '';
     default = () => '/';
-    onboarding = () => this._nested + '/onboarding';
-    aboutUs = () => this._nested + '/about/us';
-    reasonForUs = () => this._nested + '/reason/for/us';
+    landing = () => this._nested + '/home';
+    about = () => this._nested + '/about/us';
+    reason = () => this._nested + '/reason/for/us';
+    contact = () => this._nested + '/contact/us';
+    faq = () => this._nested + '/faq';
     signIn = () => this._nested + '/sign/in';
     register = () => this._nested + '/register';
     invited = () => this._nested + 'invited';

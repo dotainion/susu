@@ -8,13 +8,13 @@ import { useSidebar } from "../SidebarProvider";
 import { NavToMain } from "./NavToMain";
 import { Page } from "../../animation/Page";
 
-export const DashboardAndOverview = () =>{
-    const { dashboardAndOverview } = useSidebar();
+export const ManagementAndOverview = () =>{
+    const { managementAndOverview } = useSidebar();
 
     return(
         <Page>
             <NavToMain/>
-            <NavGrid nav={dashboardAndOverview}/>
+            <NavGrid nav={managementAndOverview}/>
         </Page>
     )
 }

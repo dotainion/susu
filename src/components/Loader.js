@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react";
 
-export const Loader = ({center}) =>{
+export const Loader = ({keepAlive, center}) =>{
     const [show, setShow] = useState(true);
 
     const loaderRef = useRef();
@@ -17,7 +17,7 @@ export const Loader = ({center}) =>{
         }
     }, []);
 
-    if(!show) return;
+    if(!show && !keepAlive) return;
 
     return(
         <div ref={loaderRef} className={`d-flex justify-content-center ${center ? 'align-items-center w-100 vh-100' : ''}`}>

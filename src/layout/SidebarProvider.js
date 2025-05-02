@@ -42,16 +42,11 @@ export const SidebarProvider = ({children}) =>{
 
     const navigate = useNavigate();
 
-    const dashboardAndOverview =    {
-        title: 'Dashboard & Overview',
+    const managementAndOverview =    {
+        title: 'Management & Overview',
         description: 'Get a snapshot of your key metrics and current activities. Monitor performance, track progress, and stay updated with important notifications.',
         list: [
             {
-                title: 'Dashboard', 
-                onClick: ()=>navigate(routes.susu().nested().dashboard()), 
-                icon: MdDashboard,
-                description: 'Provides an overview of key metrics and current activity, offering a snapshot of your system’s performance and status.'
-            },{
                 title: 'Contribution Summary', 
                 disabled: true, 
                 icon: GiPayMoney,
@@ -262,7 +257,7 @@ export const SidebarProvider = ({children}) =>{
     }
 
     const value = {
-        dashboardAndOverview,
+        managementAndOverview,
         communities,
         profile,
         contributionManagement,

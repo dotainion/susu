@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { NavGrid } from "../../components/NavGrid";
 
 export const NavMain = () =>{
-    const { dashboardAndOverview, communities, profile, contributionManagement, messaging, help, onboarding, settings } = useSidebar();
+    const { managementAndOverview, communities, profile, contributionManagement, messaging, help, onboarding, settings } = useSidebar();
 
     const navigate = useNavigate();
 
@@ -22,10 +22,10 @@ export const NavMain = () =>{
         description: 'Seamlessly handle all aspects of your experience with a central hub for key features and personalized settings.',
         list: [
             {
-                title: dashboardAndOverview.title,
-                onClick: ()=>navigate(routes.nav().nested().dashboardAndOverview()),
+                title: managementAndOverview.title,
+                onClick: ()=>navigate(routes.nav().nested().managementAndOverview()),
                 icon: MdDashboard,
-                description: dashboardAndOverview.description
+                description: managementAndOverview.description
             },{
                 title: communities.title,
                 onClick: ()=>navigate(routes.nav().nested().communities()),
@@ -53,7 +53,7 @@ export const NavMain = () =>{
                 description: help.description
             },{
                 title: onboarding.title,
-                onClick: ()=>navigate(routes.nav().nested().onboarding()),
+                onClick: ()=>navigate(routes.nav().nested().landing()),
                 icon: MdManageAccounts,
                 description: onboarding.description
             },{

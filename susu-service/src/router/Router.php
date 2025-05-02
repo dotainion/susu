@@ -27,6 +27,7 @@ use src\module\login\action\LogoutAction;
 use src\module\login\action\SendRecoveryEmailAction;
 use src\module\login\action\UpdateCredentialAction;
 use src\module\login\action\UpdateCredentialByTokenAction;
+use src\module\mail\action\SendMailAction;
 use src\module\messages\action\ListConversationAction;
 use src\module\messages\action\ListCommunityMessagesAction;
 use src\module\messages\action\ListMessangersAction;
@@ -49,6 +50,7 @@ use src\module\susu\action\JoinSusuAction;
 use src\module\schedule\action\ListScheduleAction;
 use src\module\schedule\action\SelectScheduleAction;
 use src\module\susu\action\ListCycleAction;
+use src\module\susu\action\ListSusuAction;
 use src\module\susu\action\SetSusuAction;
 use src\module\susu\action\StartSusuAction;
 use src\module\susu\action\UnlinkSusuAction;
@@ -209,6 +211,10 @@ class Router{
             return new FetchSusuAction();
         });
 
+        $this->request->route('/list/susu', function ($req){
+            return new ListSusuAction();
+        });
+
         $this->request->route('/conform/susu', function ($req){
             return new ConfirmSusuAction();
         });
@@ -323,6 +329,10 @@ class Router{
 
         $this->request->route('/payment/receipt', function ($req){
             return new PaymentReceiptAction();
+        });
+
+        $this->request->route('/send/mail', function ($req){
+            return new SendMailAction();
         });
     }
 

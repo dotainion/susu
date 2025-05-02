@@ -82,7 +82,7 @@ export const Community = () =>{
     }
     
     return(
-        <div className="container">
+        <div className="container pt-3">
             <CommunityHeader community={community} members={members}/>
 
             <hr></hr>
@@ -90,7 +90,7 @@ export const Community = () =>{
             <div className="d-flex flex-md-row flex-column gap-3 mt-3">
                 <div className="w-75 w-md-100 px-0">
                     <div className="d-flex gap-3">
-                        <div className="card bg-transparent cursor-defualt border overflow-hidden w-100 px-0">
+                        <div className="card bg-transparent cursor-defualt overflow-hidden w-100 px-0">
                             <div className="d-flex flex-column card-body bg-transparent">
                                 <div className="d-flex gap-3 mb-auto">
                                     <div className="w-100">
@@ -107,7 +107,7 @@ export const Community = () =>{
                             </div>
                         </div>
 
-                        <div className="card bg-transparent cursor-defualt border overflow-hidden w-100 px-0">
+                        <div className="card bg-transparent cursor-defualt overflow-hidden w-100 px-0">
                             <div className="d-flex flex-column card-body bg-transparent">
                                 <div className="d-flex gap-3 mb-auto">
                                     <div className="w-100">
@@ -128,14 +128,14 @@ export const Community = () =>{
                 </div>
                 <div className="w-25 w-md-100 w-sm-100 px-0">
                     <div className="d-flex flex-column gap-3">
-                        <div className="card bg-transparent cursor-defualt border overflow-hidden w-100">
+                        <div className="card bg-transparent cursor-defualt overflow-hidden w-100">
                             <div className="card-body bg-transparent">
                                 <div className="h5">About</div>
                                 <div className="">{community.attributes.description}</div>
                             </div>
                         </div>
 
-                        <div className="card bg-transparent cursor-defualt border overflow-hidden w-100">
+                        <div className="card bg-transparent cursor-defualt overflow-hidden w-100">
                             <div className="card-body bg-transparent">
                                 <div className="h5">Members<span className="ms-2 small badge bg-primary">{members.length}</span></div>
                                 <div className="overflow-auto" style={{height: '150px'}}>

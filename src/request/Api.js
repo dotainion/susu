@@ -13,6 +13,7 @@ import { Refund } from "./Refund";
 import { routes } from "../routes/Routes";
 import { Payment } from "./Payment";
 import $ from "jquery";
+import { Email } from "./Email";
 
 export class Api{
     baseURL;
@@ -38,6 +39,7 @@ export class Api{
         this.message = new Messages(this);
         this.invite = new Inviate(this);
         this.payment = new Payment(this);
+        this.mail = new Email(this);
     }
 
     initialize(){
@@ -58,7 +60,7 @@ export class Api{
         if(
             window.location.href.includes(routes.signIn()) || 
             window.location.href.includes(routes.register()) || 
-            window.location.href.includes(routes.onboarding())
+            window.location.href.includes(routes.landing())
         ){
             return true;
         }

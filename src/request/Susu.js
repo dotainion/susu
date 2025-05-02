@@ -14,6 +14,14 @@ export class Susu{
     async fetch(susuId){
         return await this.api.get('/fetch/susu', {susuId});
     }
+    
+    async list(communityId){
+        return await this.api.get('/list/susu', {communityId});
+    }
+    
+    async listByUserId(memberId){
+        return await this.api.get('/list/susu', {memberId});
+    }
 
     async conform(communityId){
         return await this.api.get('/conform/susu', {communityId});

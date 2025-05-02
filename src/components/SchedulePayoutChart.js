@@ -23,9 +23,9 @@ const colors = [
     '#B39DDB',
     '#8E7CC3',
     '#A397D1',
-]
+];
 
-export const SchedulePayoutChart = ({communityId}) => {
+export const SchedulePayoutChart = ({susuId}) => {
     const [lines, setLines] = useState([]);
     const [employees, setEmployees] = useState([]);
     const [payments, setPayments] = useState({contributions: 0, payouts: 0, refunds: 0});
@@ -77,8 +77,8 @@ export const SchedulePayoutChart = ({communityId}) => {
     }
 
     useEffect(()=>{
-        if(!communityId) return;
-        api.schedule.list(communityId).then((response)=>{
+        if(!susuId) return;
+        api.schedule.list(susuId).then((response)=>{
             let pay = {contributions: 0, payouts: 0, refunds: 0};
             response.data.data.forEach((p)=>p.attributes.contributions.forEach((r)=>pay.contributions += parseFloat(r.attributes.contribution)));
             response.data.data.forEach((p)=>p.attributes.payouts.forEach((r)=>pay.payouts += parseFloat(r.attributes.amount)));
@@ -100,7 +100,7 @@ export const SchedulePayoutChart = ({communityId}) => {
         }).catch((error)=>{
 
         });
-    }, [communityId]);
+    }, [susuId]);
 
     return (
         <div>

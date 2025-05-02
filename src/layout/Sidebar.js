@@ -24,7 +24,7 @@ export const Sidebar = () =>{
         <>
         <div className="d-flex align-items-center flex-sm-column sidebar">
             <div className="mb-auto me-auto">
-                <button onClick={()=>navigate(routes.nav().main())} className="btn bg-transparent text-primary shadow-none border-0 p-2">
+                <button onClick={()=>navigate(routes.nav().main())} className="btn bg-transparent text-light shadow-none border-0 p-2">
                     <MdMenu className="fs-2"/>
                 </button>
             </div>

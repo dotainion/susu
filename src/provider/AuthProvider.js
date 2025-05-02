@@ -50,7 +50,7 @@ export const AuthProvider = ({children}) =>{
 
     useEffect(()=>{
         const path = window.location.hash.replace('#', '');
-        if([routes.signIn(), routes.register(), routes.onboarding()].includes(path) || path.includes('test')){
+        if([routes.signIn(), routes.register(), routes.landing()].includes(path) || path.includes('test')){
             $(`#${alertIdRef.current}`).hide('fast');
         }
     }, [location]);

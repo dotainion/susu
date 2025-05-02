@@ -17,8 +17,7 @@ class SendMailAction extends Request implements IAction{
         return $this->service->process(
             $this->get('subject'),
             $this->get('body'),
-            $this->get('recipients'),
-            $this->get('attatchments')
+            $this->get('recipient')
         );
     }
 }

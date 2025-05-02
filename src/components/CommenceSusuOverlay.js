@@ -57,8 +57,8 @@ export const CommenceSusuOverlay = ({isOpen, onClose, onResponse}) =>{
         <div onClick={onClose} className="position-fixed top-0 start-0 w-100 vh-100" style={{zIndex: '99999999999'}}>
             <div className="w-100 h-100 d-flex align-items-start justify-content-center">
                 <div onClick={(e)=>e.stopPropagation()} className="d-flex flex-column select-members-overlay px-2 my-2">
-                    <div className="bg-white rounded-4 overflow-hidden shadow-sm">
-                        <div className="bg-sec p-3 h5">Commence susu</div>
+                    <div className="bg-white rounded-4 overflow-hidden border shadow-sm">
+                        <div className="bg-primary text-light p-3 h5">Commence susu</div>
                         <div className="p-3 pt-0">
                             {errors ? <div className="small text-danger">{errors}</div> : null}
                             <div className="small text-secondary">Contribution</div>
@@ -71,8 +71,8 @@ export const CommenceSusuOverlay = ({isOpen, onClose, onResponse}) =>{
                                 <small>The "Accurance" defines how many complete rotation cycles each member will receive their payout before the susu ends. For instance, with an accurance of 2, every member gets their payout twice in total before the susu concludes.</small>
                             </div>
                             <div className="d-flex justify-content-end mt-3">
-                                <button onClick={onClose} className="btn btn-sm bg-sidebar shadow-none me-2">Cancel</button>
-                                <button onClick={startSusu} className="btn btn-sm bg-sidebar shadow-none">Commence susu</button>
+                                <button onClick={onClose} className="btn btn-sm bg-secondary shadow-none me-2">Cancel</button>
+                                <button onClick={startSusu} className="btn btn-sm bg-primary shadow-none">Commence susu</button>
                             </div>
                         </div>
                     </div>

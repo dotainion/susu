@@ -29,7 +29,7 @@ export const CommunityMiniCard = ({community}) =>{
 
     return(
         <div className="col-12 col-xl-3 col-lg-4 col-md-6 p-1">
-            <div onClick={()=>navigate(routes.susu().nested().community(community.id))} className="card position-relative h-100 m-1">
+            <div onClick={()=>navigate(routes.susu().nested().community(community.id))} className="card overflow-hidden position-relative h-100 m-1">
                 <div className="card-body">
                     <div className="d-flex">
                         <img className="card-img-sub" src="https://media.istockphoto.com/id/1327592506/vector/default-avatar-photo-placeholder-icon-grey-profile-picture-business-man.jpg?s=612x612&w=0&k=20&c=BpR0FVaEa5F24GIw7K8nMWiiGmbb8qmhfkpXcp1dhQg=" alt="" />

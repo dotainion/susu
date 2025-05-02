@@ -33,7 +33,7 @@ export const SusuRouter = () =>{
   const { isAuthenticated } = useAuth();
 
   if(!isAuthenticated){
-    return <Navigate to={routes.onboarding()}/>;
+    return <Navigate to={routes.landing()}/>;
   }
 
   return(

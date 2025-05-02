@@ -5,6 +5,35 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-primary);
+}
+
+.landing .bg-primary, .landing .btn-primary{
+  background-color: var(--bg-landing-primary) !important;
+  border-color: var(--bg-landing-primary) !important;
+}
+
+.landing .btn-primary:hover{
+  background-color: var(--bg-landing-primary-hover) !important;
+  background: var(--bg-landing-primary-hover) !important;
+  border-color: var(--bg-landing-primary-hover) !important;
+}
+
+.landing .btn-primary:active, .landing .btn-primary:focus{
+  background-color: var(--bg-landing-primary-active) !important;
+  background: var(--bg-landing-primary-active) !important;
+  border-color: var(--bg-landing-primary-active) !important;
+}
+
+.landing .text-primary{
+  color: var(--bg-landing-primary) !important;
+}
+
+#root{
+  min-height: 100vh;
+  background: white;
+  background-color: white;
+  overflow: auto;
 }
 
 code {
@@ -12,14 +41,14 @@ code {
 }
 
 :root{
-  --bg-primary: #eae5dc;
-  --bg-secondary: #b8a89d;
+  --bg-primary: white;
+  --bg-secondary: dodgerblue;
   --bg-dark: #444444;
   --bg-light: #f5f5f5;
-  --bg-info: #89bdd3;
-  --bg-sidebar: #c29b87;
-  --bg-shadow: rgb(194, 155, 135, 0.3);
-  --bg-input: rgb(217, 143, 98, 0.2);
-  --border-input: rgb(217, 143, 98);
+  --bg-info: dodgerblue;
+  --bg-sidebar: dodgerblue;
+  --bg-shadow: rgb(30, 144, 255, 0.3);
+  --bg-landing-primary: #6a7fd2;
+  --bg-landing-primary-hover: #5568b6;
+  --bg-landing-primary-active: #758adf;
 }
-

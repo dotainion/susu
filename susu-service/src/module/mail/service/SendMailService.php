@@ -5,28 +5,26 @@ use tools\infrastructure\Assert;
 use tools\infrastructure\Id;
 use tools\infrastructure\SendMail;
 use src\infrastructure\Service;
-use src\module\mail\factory\AttatchmentFactory;
-use src\module\mail\factory\MailFactory;
-use src\module\mail\factory\RecipientFactory;
+use tools\infrastructure\Collector;
+use tools\module\mail\factory\MailFactory;
+use tools\module\mail\factory\RecipientFactory;
 
 class SendMailService extends Service{
     protected SendMail $mail;
     protected MailFactory $factory;
     protected RecipientFactory $recipientsFactory;
-    protected AttatchmentFactory $attatchmentFactory;
 
     public function __construct(){
-        parent::__construct();
+        parent::__construct(authCheck: false);
         $this->mail = new SendMail();
         $this->factory = new MailFactory();
         $this->recipientsFactory = new RecipientFactory();
-        $this->attatchmentFactory = new AttatchmentFactory();
     }
     
-    public function process($subject, $body, $recipients, $attatchments){
+    public function process($subject, $body, $recipient){
         Assert::stringNotEmpty($subject, 'Mail subject is required.');
         Assert::stringNotEmpty($body, 'Mail body is required.');
-        Assert::isArray($recipients, 'Recipients must be an array.');
+        Assert::stringNotEmpty($recipient, 'Recipient is required.');
 
         $mail = $this->factory->mapResult([
             'id' => (new Id())->new()->toString(),
@@ -34,28 +32,17 @@ class SendMailService extends Service{
             'body' => $body,
         ]);
 
-        foreach($recipients ?? [] as $recip){
-            $recipient = $this->recipientsFactory->mapResult([
+        $this->recipientsFactory->add(
+            $this->recipientsFactory->mapResult([
                 'id' => (new Id())->new()->toString(),
                 'mailId' => $mail->id()->toString(),
-                'userId' => $recip['userId'],
-                'recipient' => $recip['recipient'],
-            ]);
-            $this->recipientsFactory->add($recipient);
-        }
-
-        foreach($attatchments ?? [] as $attatch){
-            $attatchment = $this->attatchmentFactory->mapResult([
-                'id' => (new Id())->new()->toString(),
-                'mailId' => $mail->id()->toString(),
-                'image' => $attatch['img'],
-                'contentId' => $attatch['contentId']
-            ]);
-            $this->attatchmentFactory->add($attatchment);
-        }
+                'userId' => (new Id())->new()->toString(),//create a new user id for each user
+                'recipient' => $recipient,
+            ])
+        );
 
         $mail->setRecipients($this->recipientsFactory);
-        $mail->setAttatchments($this->attatchmentFactory);
+        $mail->setAttatchments(new Collector());
         
         $this->mail->setMail($mail)->send();
 

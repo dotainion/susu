@@ -18,6 +18,12 @@ class FetchSusu{
         ]);
     }
 
+    public function byIdArray(array $idArray):Collector{
+        return $this->repo->listSusu([
+            'id' => $idArray
+        ]);
+    }
+
     public function byCommunityId(Id $id):Collector{
         return $this->repo->listSusu([
             'communityId' => $id

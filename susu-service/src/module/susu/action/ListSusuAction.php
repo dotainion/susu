@@ -1,0 +1,22 @@
+<?php
+namespace src\module\susu\action;
+
+use tools\infrastructure\IAction;
+use tools\infrastructure\Request;
+use src\module\susu\service\ListSusuService;
+
+class ListSusuAction extends Request implements IAction{
+    protected $service;
+
+    public function __construct(){
+        parent::__REQUEST__();
+        $this->service = new ListSusuService();
+    }
+
+    public function execute(){
+        return $this->service->process(
+            $this->get('memberId'),
+            $this->get('communityId')
+        );
+    }
+}

@@ -117,7 +117,7 @@ export const Invited = () =>{
                         <button onClick={()=>setShowRegister(true)} className="d-flex align-items-center btn btn-sm btn-primary">Confirm invite<MdSwitchAccount className="ms-2"/></button>
                     </div>
                     <div className="rounded-3 p-3 my-1">
-                        <button onClick={()=>navigate(routes.onboarding())} className="d-flex align-items-center btn btn-sm btn-secondary">Go to website<GiWorld className="ms-2"/></button>
+                        <button onClick={()=>navigate(routes.landing())} className="d-flex align-items-center btn btn-sm btn-secondary">Go to website<GiWorld className="ms-2"/></button>
                     </div>
                 </div>
                 <img className="w-50" src={mobileView} alt=""/>

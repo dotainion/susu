@@ -23,7 +23,7 @@ export const Payments = () => {
     
     return(
         <div className="container">
-            <div className="card mt-3">
+            <div className="card overflow-hidden mt-3">
                 <div className="card-body overflow-hidden">
                     <h4>Card Payment is Currently Unavailable </h4>
                     <p>Payment is Currently Unavailable

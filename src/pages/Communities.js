@@ -44,7 +44,7 @@ export const Communities = () => {
                 <div className="my-3 d-inline-block border border-light rounded-3">
                     <div className="d-flex align-items-stretch align-items-center w-auto">
                         <input onKeyUp={searchCommunities} className="form-control bg-transparent shadow-none border-0 pe-1" placeholder="Search..." type="search" />
-                        <div className="d-flex align-items-center input-bg">
+                        <div className="d-flex align-items-center">
                             <IoSearchOutline className="fs-4 mx-2"/>
                         </div>
                     </div>

@@ -17,4 +17,10 @@ class ListSusuLink{
             'susuId' => $susuId
         ]);
     }
+
+    public function byMemberId(Id $memberId):Collector{
+        return $this->repo->listSusuLink([
+            'memberId' => $memberId
+        ]);
+    }
 }

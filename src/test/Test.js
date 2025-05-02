@@ -15,7 +15,6 @@ import { Invited } from "../pages/Invited";
 import { AssignSchedule } from "../pages/AssignSchedule";
 import { Appearance } from "../pages/Appearance";
 import { CommunityDashboard } from "../pages/dashboard/CommunityDashboard";
-import { Transaction } from "../pages/dashboard/Transaction";
 import { ShareSocialMediaOverlay } from "../components/ShareSocialMediaOverlay";
 import { Susu } from "../pages/Susu";
 import { NavMain } from "../layout/navigator/NavMain";
@@ -24,6 +23,7 @@ import { PaymentSuccess } from "../pages/PaymentSuccess";
 import { SiTruenas } from "react-icons/si";
 import { PaymentRefund } from "../pages/PaymentRefund";
 import { Schedule } from "../pages/Schedule";
+import { CommunityHeader } from "../components/CommunityHeader";
 
 export const Test = () =>{
 
@@ -43,7 +43,7 @@ export const Test = () =>{
 
     return(
         <div className="container">
-            <Payments />
+            <Dashboard />
         </div>
     )
 }
