@@ -15,15 +15,18 @@ class Community implements IObjects{
     protected string $description;
     protected string $privacy;
     protected ?DateHelper $createdDate = null;
-    protected ?Collector $members = null;
+    protected Collector $members;
     protected Id $creatorId;
     protected ?IUser $owner = null;
     protected ?Susu $susu = null;
     protected bool $hide;
+    protected Collector $likes;
 
     public function __construct(){
         $this->id = new Id();
         $this->creatorId = new Id();
+        $this->likes = new Collector();
+        $this->members = new Collector();
     }
 
     public function id():IId{
@@ -54,7 +57,7 @@ class Community implements IObjects{
         return $this->createdDate;
     }
 
-    public function members():?Collector{
+    public function members():Collector{
         return $this->members;
     }
 
@@ -64,6 +67,10 @@ class Community implements IObjects{
 
     public function privacy():string{
         return $this->privacy;
+    }
+
+    public function likes():Collector{
+        return $this->likes;
     }
 
     public function setId(string $id):void{

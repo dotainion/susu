@@ -30,7 +30,7 @@ export const Signin = () =>{
             <div className="container">
                 <Header/>
             </div>
-            <form onSubmit={login} onKeyUp={()=>setError(null)} className="d-flex vh-100">
+            <form onSubmit={login} onKeyUp={()=>setError(null)} className="d-flex vh-100" autoComplete="on" method="post">
                 <div className="d-md-flex d-none align-items-center justify-content-center bg-light w-100">
                     <img className="w-50" src={logo} alt="Susu Logo"/>
                 </div>
@@ -40,9 +40,9 @@ export const Signin = () =>{
                         <hr></hr>
                         {error ? <div className="text-danger">{error}</div> : null}
                         <small>Email Address</small>
-                        <input className="form-control mb-3" placeholder="example@example.com" type="email" name="email" required/>
+                        <input className="form-control mb-3" placeholder="example@example.com" autoComplete="email" type="email" name="email" required/>
                         <small>Password</small>
-                        <input className="form-control mb-3" placeholder="User1234#" type="password" name="password" required/>
+                        <input className="form-control mb-3" placeholder="User1234#" autoComplete="current-password" type="password" name="password" required/>
                         <button className="btn px-4 mt-3 d-block" type="submit">Sign in</button>
                         <span onClick={()=>navigate(routes.register())} className="link-primary d-inlne-block btn px-0 border-0 mt-3">Sign up instead</span>
                     </div>

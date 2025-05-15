@@ -12,6 +12,10 @@ export class Auth{
         return await this.api.post('/signin', {email, password});
     }
 
+    async changePassword(id, password, currentPassword){
+        return await this.api.post('/update/credential', {id, password, currentPassword});
+    }
+
     async signUp(data){
         return await this.api.post('/create/user', data);
     }

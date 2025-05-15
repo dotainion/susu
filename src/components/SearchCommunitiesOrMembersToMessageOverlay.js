@@ -35,20 +35,20 @@ export const SearchCommunitiesOrMembersToMessageOverlay = ({isOpen, onClose}) =>
     if(!isOpen) return null;
 
     return(
-        <div onClick={onClose} className="position-fixed top-0 start-0 w-100 vh-100" style={{zIndex: '99999999999', backgroundColor: 'rgb(0, 0, 0, 0.3)'}}>
+        <div onClick={onClose} className="position-fixed bg-dark bg-opacity-10 top-0 start-0 w-100 vh-100" style={{zIndex: '99999999999'}}>
             <div className="w-100 h-100 d-flex align-items-start justify-content-center">
                 <div onClick={(e)=>e.stopPropagation()} className="d-flex flex-column select-members-overlay px-2 my-2 position-relative">
-                    <div className="bg-white p-3 rounded-top-4">
+                    <div className="bg-white p-3 rounded-top-1">
                         <div className="fw-bold">Search members or goups</div>
                         <input onChange={searchMembers} className="form-control shadow-none" type="text" placeholder="Search members..."/>
                         <div className="small"><small>Click on a member or community to send a message</small></div>
                         <button onClick={onClose} className="btn-danger btn-close position-absolute top-0 end-0 me-3 mt-1"></button>
                     </div>
-                    <div className="bg-white py-3 px-1 rounded-bottom-4 shadow-sm overflow-y-auto overflow-x-hidden">
+                    <div className="bg-white py-3 px-1 rounded-bottom-1 shadow-sm overflow-y-auto overflow-x-hidden">
                         {messagners.map((member, key)=>(
                             <button onClick={()=>navigateTo(member)} className="btn bg-light text-dark d-block shadow-none text-start my-1 border-0 w-100" key={key}>
                                 <label className="d-flex align-items-center pointer">
-                                    <div className="position-relative me-2">
+                                    <div className="position-relative me-2" style={{minWidth: '50px', minHeight: '50px', maxWidth: '50px', maxHeight: '50px'}}>
                                         <FaUserCircle className="display-5"/>
                                     </div>
                                     <div className="w-100">

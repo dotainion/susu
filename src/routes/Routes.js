@@ -9,13 +9,13 @@ class Susu{
     member = (memberId = ':memberId') => this._nested + 'member/' + memberId;
     memberList = () => this._nested + 'member/list';
     profile = () => this._nested + 'profile';
-    contributionAndPayments = (communityId = ':communityId') => this._nested + 'wallet/' + communityId;
+    contributors = (communityId = ':communityId') => this._nested + 'wallet/' + communityId;
     updateMemberSusuWallet = (communityId = ':communityId', memberId = ':memberId') => this._nested + 'update/wallet/' + communityId + '/' + memberId;
     memberSusuHistory = (susuId = ':susuId', memberId = ':memberId') => this._nested + 'member/susu/history/' + susuId + '/' + memberId;
     schedule = (communityId = ':communityId') => this._nested + 'schedule/' + communityId;
     communityMembers = (communityId = ':communityId') => this._nested + 'community/members/' + communityId;
     susuMembers = (communityId = ':communityId', susuId = ':susuId') => this._nested + 'list/of/members/' + communityId + '/' + susuId;
-    associateCommunities = () => this._nested + 'associate/communities';
+    associateCommunities = (memberId = ':memberId') => this._nested + 'associate/communities/' + memberId;
     dashboard = (susuId = ':susuId', communityId = ':communityId') => this._nested + 'dashboard/susu/' + susuId + '/' + communityId;
     messangers = () => this._nested + 'owner/messages';
     messages = (memberId = ':memberId') => this._nested + 'messages/' + memberId;

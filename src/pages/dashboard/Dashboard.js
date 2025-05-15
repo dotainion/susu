@@ -1,5 +1,5 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { api } from "../../request/Api";
 import { useAuth } from "../../provider/AuthProvider";
 import { CommunityDashboard } from "./CommunityDashboard";
@@ -7,9 +7,12 @@ import { SusuDashboard } from "./SusuDashboard";
 import { MdCancel, MdCheckCircle, MdHourglassEmpty } from "react-icons/md";
 import { DashboardOptionButton } from "../../components/DashboardOptionButton";
 import { ShareSocialMediaOverlay } from "../../components/ShareSocialMediaOverlay";
+import { PageHeader } from "../../layout/PageHeader";
+import { useLayout } from "../../layout/Layout";
 
 export const Dashboard = () =>{
     const { user } = useAuth();
+    const { setParams, setLayoutParams } = useLayout();
 
     const [susu, setSusu] = useState();
 
@@ -27,6 +30,12 @@ export const Dashboard = () =>{
         }
         return (<><MdHourglassEmpty className="text-warning" size={24} /><span>Pending</span></>);
     }
+    
+    useLayoutEffect(() => {
+        if(!susu) return;
+        setParams({communityId: params.communityId});
+        return () => setLayoutParams({});
+    }, [susu]);
 
     useEffect(()=>{
         api.susu.fetch(params.susuId).then((response)=>{
@@ -34,7 +43,7 @@ export const Dashboard = () =>{
         }).catch((error)=>{
 
         });
-    }, [location]);
+    }, [location, params]);
 
     return(
         <div className="container">
@@ -44,7 +53,7 @@ export const Dashboard = () =>{
                     <small className="ms-2">Dashboard</small>
                 </div>
                 <button className="btn btn-sm btn-light"></button>
-                <DashboardOptionButton className="form-control btn btn-sm btn-light w-auto" />
+                <DashboardOptionButton className="form-control btn btn-sm btn-light w-auto text-nowrap" autoClose >Switch Dashboard</DashboardOptionButton>
                 <div className="d-flex form-control bg-light w-auto border-0">
                     <Status />
                 </div>

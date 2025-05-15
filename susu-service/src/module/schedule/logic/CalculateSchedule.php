@@ -9,32 +9,34 @@ use src\module\schedule\factory\ScheduleFactory;
 use src\module\susu\objects\Cycle;
 use src\module\susu\objects\Susu;
 
-class CalculateSchedule{
-
+class CalculateSchedule
+{
     private Susu $susu;
     private Collector $members;
-    protected ScheduleFactory $factory;
+    protected ScheduleFactory $scheduleCollector;
 
-    public function __construct(Susu $susu, Collector $members) {
+    public function __construct(Susu $susu, Collector $members){
         $this->susu = $susu;
         $this->members = $members;
-        $this->factory = new ScheduleFactory();
+        $this->scheduleCollector = new ScheduleFactory();
     }
 
-    private function payoutDate($memberIndex):DateHelper{
-        $dateHelper = clone $this->susu->startDate(); // Use startDate from Susu
-        $intervalSpec = $this->getInterval($this->susu);
-        list($intervalValue, $intervalUnit) = explode(' ', $intervalSpec);
+    private function payoutDate(int $memberIndex): DateHelper{
+        $dateHelper = clone $this->susu->startDate();
+        [$intervalValue, $intervalUnit] = $this->getInterval($this->susu);
 
         switch ($intervalUnit) {
             case 'weeks':
                 $dateHelper->addDays(7 * $intervalValue * $memberIndex);
                 break;
+
             case 'months':
+                // If DateHelper supports addMonths, use that. Otherwise use fallback:
                 for ($i = 0; $i < $intervalValue * $memberIndex; $i++) {
                     $dateHelper->addDays($dateHelper->daysInMonth());
                 }
                 break;
+
             default:
                 throw new InvalidArgumentException("Unsupported interval unit: {$intervalUnit}");
         }
@@ -42,43 +44,39 @@ class CalculateSchedule{
         return $dateHelper;
     }
 
-    private function getInterval(Susu $susu) {
-        switch ($susu->cycle()) {
-            case Cycle::Weekly:
-                return '1 weeks';
-            case Cycle::BiWeekly:
-                return '2 weeks';
-            case Cycle::Monthly:
-                return '1 months';
-            case Cycle::BiMonthly:
-                return '2 months';
-            default:
-                throw new InvalidArgumentException("Unknown cycle type: {$susu->cycle()}");
-        }
+    private function getInterval(Susu $susu): array{
+        return match ($susu->cycle()) {
+            Cycle::Weekly    => [1, 'weeks'],
+            Cycle::BiWeekly  => [2, 'weeks'],
+            Cycle::Monthly   => [1, 'months'],
+            Cycle::BiMonthly => [2, 'months'],
+            default          => throw new InvalidArgumentException("Unknown cycle type: {$susu->cycle()}"),
+        };
     }
 
-    private function calculate(int $accurance) {
-        for ($position = 1; $position <= $this->members->count(); $position++) {
-            $schedule = $this->factory->mapResult([
-                'id' => (new Id())->new()->toString(),
-                'memberId' => null,
-                'date' => $this->payoutDate($position)->toString(),
-                'position' => $position,
-                'susuId' => $this->susu->id()->toString(),
+    private function calculate(int $accurance): void{
+        for ($index = 0; $index < $this->members->count(); $index++) {
+            $schedule = $this->scheduleCollector->mapResult([
+                'id'        => (new Id())->new()->toString(),
+                'memberId'  => null,
+                'date'      => $this->payoutDate($index)->toString(),
+                'position'  => $index + 1,
+                'susuId'    => $this->susu->id()->toString(),
                 'accurance' => $accurance
             ]);
-            $this->factory->add($schedule);
+
+            $this->scheduleCollector->add($schedule);
         }
     }
 
-    private function buildAccurances():void{
+    private function buildAccurances(): void{
         for ($accurance = 1; $accurance <= $this->susu->accurance(); $accurance++) {
             $this->calculate($accurance);
         }
     }
 
-    public function schedules():Collector {
+    public function schedules(): Collector{
         $this->buildAccurances();
-        return $this->factory;
+        return $this->scheduleCollector;
     }
 }

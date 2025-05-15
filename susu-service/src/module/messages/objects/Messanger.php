@@ -6,7 +6,7 @@ use tools\infrastructure\DateHelper;
 use tools\infrastructure\Id;
 use tools\infrastructure\IId;
 use tools\infrastructure\IObjects;
-use src\security\SecurityManager;
+use tools\security\SecurityManager;
 
 class Messanger implements IObjects{
     protected Id $id;

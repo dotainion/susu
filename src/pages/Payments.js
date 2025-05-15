@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { useStripe, useElements, CardElement, PaymentRequestButtonElement } from '@stripe/react-stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import { api } from '../request/Api';
@@ -18,9 +18,18 @@ import { FaEllipsisVertical } from "react-icons/fa6";
 import { FaCcVisa, FaCcMastercard, FaCcAmex, FaCcDiscover, FaCcJcb } from 'react-icons/fa';
 import $ from 'jquery';
 import paymentImg from '../images/card-payment.png';
+import { useLayout } from '../layout/Layout';
 
 export const Payments = () => {
-    
+    const { setParams, setLayoutParams } = useLayout();
+
+    const params = useParams();
+
+    useLayoutEffect(() => {
+        setParams({communityId: params.communityId});
+        return () => setLayoutParams({});
+    }, []);
+
     return(
         <div className="container">
             <div className="card overflow-hidden mt-3">

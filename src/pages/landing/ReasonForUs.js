@@ -4,6 +4,7 @@ import { useAuth } from "../../provider/AuthProvider";
 import tabletView from "../../images/tablet-view.png";
 import logo from "../../images/logo.png";
 import { LandingLayout } from "../../layout/LandingLayout";
+import { AccordionOptions } from "../../components/AccordionOptions";
 
 export const ReasonForUs = () =>{
     const { isAuthenticated, user } = useAuth();
@@ -110,8 +111,8 @@ export const ReasonForUs = () =>{
 
                 <section className="my-5">
                     <h3 className="fw-bold text-center my-4">Frequently Asked Questions</h3>
-                    <div className="accordion" id="faqAccordion">
-                        {[
+                    <AccordionOptions
+                        faqs={[
                             {
                                 question: "Is SusuSpice free to use?",
                                 answer: "Yes! Creating an account and forming a group is free. Some premium features may be added in the future, but core susu functionality remains free."
@@ -125,26 +126,12 @@ export const ReasonForUs = () =>{
                                 question: "What if someone misses a payment?",
                                 answer: "The app will notify them instantly and notify the admin. You can set grace periods or remove inactive members based on your group’s rules."
                             }
-                        ].map(({question, answer}, i) => (
-                            <div className="accordion-item" key={i}>
-                                <h2 className="accordion-header" id={`heading${i}`}>
-                                    <button
-                                        className="accordion-button collapsed bg-light text-dark"
-                                        type="button"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target={`#collapse${i}`}
-                                        aria-expanded="false"
-                                        aria-controls={`collapse${i}`}
-                                    >
-                                    {question}
-                                    </button>
-                                </h2>
-                                <div id={`collapse${i}`} className="accordion-collapse collapse" aria-labelledby={`heading${i}`} data-bs-parent="#faqAccordion">
-                                    <div className="accordion-body">{answer}</div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                        ]}
+                        accordionItem={{
+                            content: 'See more...',
+                            action: ()=>navigate(routes.faq())
+                        }}
+                    />
                 </section>
 
                 <div className="py-3"></div>

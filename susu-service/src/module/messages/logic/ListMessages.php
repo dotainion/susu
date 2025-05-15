@@ -38,7 +38,14 @@ class ListMessages{
             'toId' => $toId,
             'read' => $read,
             'hide' => false
-        ]);
+        ])->mergeCollection(
+            (new $this->repo)->listMessages([
+                'fromId' => $toId,
+                'toId' => $fromId,
+                'read' => $read,
+                'hide' => false
+            ])
+        );
     }
 
     public function communityConversation(Id $toId, ?bool $read):Collector{

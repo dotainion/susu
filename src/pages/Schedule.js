@@ -6,78 +6,71 @@ import { useAuth } from "../provider/AuthProvider";
 import { api } from "../request/Api";
 import { utils } from "../utils/Utils";
 import { ParseError } from "../utils/ParseError";
+import { useLayout } from "../layout/Layout";
+import { SusuSchedules } from "../components/SusuSchedules";
+import { mockData } from "../contents/MockData";
 
 export const Schedule = () =>{
     const { user } = useAuth();
+    //const { setParams } = useLayout();
 
     const [susu, setSusu] = useState();
-    const [schedules, setSchedules] = useState([]);
     const [errors, setErrors] = useState();
-    const [users, setUsers] = useState([]);
+    const [members, setMembers] = useState([]);
+    const [schedules, setSchedules] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const  params = useParams();
     const navigate = useNavigate();
 
-    const sortUserSchedulePosition = (sortedUsers, sches) =>{
-        if(!sches.length || !sortedUsers.length) return [];
-        return sortedUsers.sort((a, b) => {
-            const indexA = sches.findIndex(sch => sch.attributes.memberId === a.id);
-            const indexB = sches.findIndex(sch => sch.attributes.memberId === b.id);
-            return indexA - indexB;
-        });
-    }
-
-    const scheduleByPositionDate = (index) =>{
-        if(!schedules[index]) console.error('schdule index not found.');
-        return utils.date.toLocalDate(schedules[index].attributes.date);
-    }
-
-    const memberScheduleLabel = (member) =>{
-        const schedule = schedules.find((sch)=>sch.attributes.memberId === member.id);
-        if(schedule) return <div className="small badge bg-warning">Assigned</div>;
-        return <div className="small badge bg-secondary">Unassigned</div>;
-    }
-
     useEffect(()=>{
-        let responseSchedules = [];
-        api.schedule.list(params.communityId).then((response)=>{
-            responseSchedules = response.data.data;
-            setSchedules(response.data.data);
+        api.susu.active(params.communityId).then((response)=>{
+            setSusu(response.data.data[0]);
+            setMembers(response.data.data[0].attributes.members);
         }).catch((error)=>{
             setErrors(new ParseError().message(error));
         }).finally(()=>{
-            api.susu.active(params.communityId).then((response)=>{
-                if(!responseSchedules.length) return;
-                setSusu(response.data.data[0]);
-                setUsers(sortUserSchedulePosition(response.data.data[0].attributes.members || [], responseSchedules));
-            }).catch((error)=>{
-                setErrors(new ParseError().message(error));
-            });
+            setLoading(false);
         });
+        if(process.env.NODE_ENV === 'development'){
+            setMembers(mockData.susu().attributes.members);
+            setSusu(mockData.susu());
+        }
     }, []);
+
+    if(loading) return null;
 
     return(
         <div className="container">
-            <div className="d-flex gap-2 align-items-center mt-4">
-                <div className="d-flex align-items-center h5 mx-2 me-auto">
-                    <FcClock className="fs-1"/>
-                    <div>Schedule Payout</div>
+            <div className="d-flex justify-content-between align-items-center mb-4">
+                <h2 className="fw-bold mb-0">💸 Payout Schedule</h2>
+            </div>
+
+            <div className="card border-0 shadow-sm rounded-4 mb-4">
+                <div className="card-body d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
+                    <div className="mb-3 mb-md-0">
+                        <h5 className="fw-semibold mb-1">Group: <span className="text-primary">Spice Circle</span></h5>
+                        <p className="text-muted small mb-0">
+                            Cycle: <strong>{susu?.attributes?.cycle}</strong> • Slots: <strong>{schedules.length}</strong> • Start Date:{' '}
+                            <strong>{utils.date.toLocalDate(susu?.attributes?.startDate)}</strong>
+                        </p>
+                    </div>
+                    <span 
+                        className={`badge px-3 py-2 rounded-pill mt-2 mt-md-0 ${susu?.attributes?.pendingStart ? 'bg-warning text-dark' : 'bg-success'}`}
+                    >{susu?.attributes?.pendingStart ? 'Pending Start' : 'Active'}</span>
                 </div>
-                {susu && user && susu?.attributes?.owner?.id === user?.id ? <button onClick={()=>navigate(routes.susu().nested().assignSchedule(params.communityId))} className="btn btn-sm bg-sec">Assign Schedule</button> : null}
-                <button onClick={()=>navigate(routes.susu().nested().contributionAndPayments(params.communityId))} className="btn btn-sm bg-sec">Contributors & Payments</button>
             </div>
 
             <hr></hr>
-
-            {errors ? <div className="alert alert-danger border-0">{errors}</div> : null}
             
-            {users.map((u, index)=>(
-                <div className="d-flex border-bottom py-2" key={index}>
-                    <div className="me-2">{memberScheduleLabel(u)}</div>
-                    <div className="me-auto text-truncate">{u.attributes.firstName} {u.attributes.lastName}</div>
-                    <div>{scheduleByPositionDate(index)}</div>
-                </div>
-            ))}
+            {errors ? <div className="alert alert-danger border-0 py-1 mt-3">{errors}</div> : null}     
+
+            <SusuSchedules
+                members={members}
+                onDropped={()=>null}
+                onSelectError={setErrors}
+                itemsState={setSchedules}
+            />
         </div>
     )
 }

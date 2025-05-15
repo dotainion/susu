@@ -1,58 +1,47 @@
-import { useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { MdSend } from "react-icons/md";
 import { useAuth } from "../provider/AuthProvider";
+import { MinChatUiProvider, MainContainer, MessageInput, MessageContainer, MessageList, MessageHeader } from '@minchat/react-chat-ui';
+import $ from "jquery";
+import { useNavigate } from "react-router-dom";
 
-export const MessageBox = ({messageToName, messages, isCommunityMessanger, sendMessage}) =>{
+export const MessageBox = ({messageToName, messages, sendMessage, isCommunity}) =>{
     const { user } = useAuth();
-    
-    const messageRef = useRef();
-    const scrollRef = useRef();
 
-    const postMessage = () =>{
-        sendMessage(messageRef.current.value);
-    }
+    const navigate = useNavigate();
 
-    const scrollToBottom = () =>{
-        scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
+    useLayoutEffect(()=>{
+        $('header').removeClass('d-flex').addClass('d-none');
+        return ()=>$('header').addClass('d-flex').removeClass('d-none');
+    }, []);
 
     return(
-        <div className="container">
-            <div className="d-flex flex-column vh-100 mx-auto" style={{maxWidth: '800px'}}>
-                <div className="bg-sidebar h4 p-3">{messageToName}</div>
-                <div ref={scrollRef} className="overflow-auto mb-auto">
-                    {messages.map((message, key)=>(
-                        <div className={`d-flex ${message.attributes.isCurrentUser ? 'justify-content-end' : 'justify-content-start'}`} key={key}>
-                            <div className={`d-flex ${message.attributes.isCurrentUser ? 'justify-content-end' : 'justify-content-start'} w-75`}>
-                                <div className="d-inline-block py-2 px-3">
-                                    <div className={`${message.attributes.isCurrentUser ? 'message-right justify-content-end' : 'message-left justify-content-start'} d-flex position-relative w-auto rounded-3 m-0 p-2`}>
-                                        <div>
-                                            {
-                                                isCommunityMessanger 
-                                                ? <div className="text-primary small">
-                                                    {
-                                                        message.attributes.user.id === user.id
-                                                        ? <span>Me</span>
-                                                        : <span>{message.attributes.user.attributes.firstName} {message.attributes.user.attributes.lastName}</span>
-                                                    }
-                                                </div>
-                                                : null
-                                            }
-                                            <div>{message.attributes.message}</div>
-                                        </div>
-                                        <div className="small mt-auto ms-2">{message.attributes.date}</div>
-                                    </div>
+        <div className="d-flex justify-content-center">
+            <div className="flex-fill" style={{maxWidth: '700px'}}>
+                <MinChatUiProvider theme="#6ea9d7">
+                    <MainContainer style={{height: '100vh'}}>
+                        <MessageContainer>
+                            <MessageHeader onBack={()=>navigate(-1)} lastActive >
+                                <div className="w-100 text-start ps-5">
+                                    <span>{messageToName}</span>
                                 </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-                <div className="p-4">
-                    <div className="d-flex align-items-center w-100 rounded-3 bg-white py-2">
-                        <input ref={messageRef} className="form-control shadow-none border-0 bg-white" type="text" placeholder="Message: John Smith"/>
-                        <button onClick={postMessage} className="btn shadow-none bg-transparent p-0 me-3"><MdSend className="fs-3" /></button>
-                    </div>
-                </div>
+                            </MessageHeader>
+                            <MessageList
+                                currentUserId={user.id}
+                                messages={[
+                                    ...messages.sort((a, b)=>new Date(a.attributes.date) - new Date(b.attributes.date)).map((msg)=>({
+                                        text: msg.attributes.message, 
+                                        user: {
+                                            id: msg.attributes.user.id,
+                                            name: isCommunity ? `${msg.attributes.user.attributes.firstName} ${msg.attributes.user.attributes.lastName}`.trim() : '',
+                                        }
+                                    }))
+                                ]}
+                            />
+                            <MessageInput onSendMessage={sendMessage} showAttachButton={false} />
+                        </MessageContainer>
+                    </MainContainer>
+                </MinChatUiProvider>
             </div>
         </div>
     )

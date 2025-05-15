@@ -33,7 +33,7 @@ export const SusuDashboard = () =>{
         }).catch((error)=>{
 
         });
-    }, []);
+    }, [params]);
 
     return(
         <div className="">

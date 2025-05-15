@@ -8,20 +8,23 @@ use src\infrastructure\Service;
 use src\module\messages\factory\MessageFactory;
 use src\module\messages\logic\AppendMessageUsers;
 use src\module\messages\logic\SetMessage;
+use tools\SecurityTools;
 
 class SetMessageService extends Service{
     protected SetMessage $message;
     protected MessageFactory $factory;
     protected AppendMessageUsers $users;
+    protected SecurityTools $secure;
 
     public function __construct(){
         parent::__construct();
         $this->message = new SetMessage();
         $this->factory = new MessageFactory();
         $this->users = new AppendMessageUsers();
+        $this->secure = new SecurityTools();
     }
     
-    public function process($id, $fromId, $toId, $message, $read, $hide){
+    public function process($id, $fromId, $toId, $message, $read, $hide, $channel, $event){
         Assert::stringNotEmpty($fromId, 'Sender not found.');
         Assert::stringNotEmpty($toId, 'Recipient not found.');
 
@@ -40,6 +43,7 @@ class SetMessageService extends Service{
 
         $this->message->set($collector->first());
         $this->users->appendUsers($collector, $this->user());
+        $this->secure->pusherMessanger($channel, $event, $collector->first());
 
         $this->setOutput($collector);
         return $this;

@@ -18,7 +18,25 @@ class ListCommunityLinks{
         ]);
     }
 
+    public function byMemberId(Id $memberId):Collector{
+        return $this->repo->listJoinCommunity([
+            'memberId' => $memberId
+        ]);
+    }
+
+    public function byMemberIdArray(Array $memberIdArray):Collector{
+        if(empty($memberIdArray)){
+            return new Collector();
+        }
+        return $this->repo->listJoinCommunity([
+            'memberId' => $memberIdArray
+        ]);
+    }
+
     public function communityLinksByIdArray(Array $communityIdArray):Collector{
+        if(empty($communityIdArray)){
+            return new Collector();
+        }
         return $this->repo->listJoinCommunity([
             'communityId' => $communityIdArray
         ]);

@@ -21,11 +21,12 @@ class Susu implements IObjects{
     protected bool $pendingStart;
     protected bool $completed;
     protected bool $canceled;
-    protected ?Collector $members = null;
+    protected Collector $members;
     protected ?IUser $owner = null;
 
     public function __construct(){
         $this->id = new Id();
+        $this->members = new Collector();
         $this->communityId = new Id();
     }
 
@@ -37,7 +38,7 @@ class Susu implements IObjects{
         return $this->pendingStart;
     }
 
-    public function members():?Collector{
+    public function members():Collector{
         return $this->members;
     }
 
@@ -51,6 +52,10 @@ class Susu implements IObjects{
 
     public function completed():bool{
         return $this->completed;
+    }
+
+    public function active():bool{
+        return(!$this->canceled() && !$this->completed());
     }
 
     public function contribution():string{

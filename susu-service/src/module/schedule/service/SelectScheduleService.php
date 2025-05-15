@@ -8,15 +8,20 @@ use src\infrastructure\Service;
 use src\module\schedule\logic\FetchSchedule;
 use src\module\schedule\logic\SetSchedule;
 use src\module\susu\logic\AssertUserInSusu;
+use src\module\susu\logic\FetchSusu;
 
 class SelectScheduleService extends Service{
     protected FetchSchedule $fetch;
     protected SetSchedule $schedule;
+    protected FetchSusu $susu;
+    protected AssertUserInSusu $assert;
 
     public function __construct(){
         parent::__construct();
         $this->fetch = new FetchSchedule();
         $this->schedule = new SetSchedule();
+        $this->susu = new FetchSusu();
+        $this->assert = new AssertUserInSusu();
     }
     
     public function process($id, $memberId){
@@ -37,7 +42,15 @@ class SelectScheduleService extends Service{
             throw new InvalidArgumentException('A member already assign to the schedule '.$schedule->date()->toString());
         }
 
-        (new AssertUserInSusu())->assertUserInSusu(new Id($memberId), $schedule->susuId());
+        $susuCollector = $this->susu->byId($schedule->susuId());
+        $susuCollector->assertHasItem('Please start a susu before setting a schedule.');
+        $susu = $susuCollector->first();
+
+        if(!$susu->pendingStart() && !$susu->canceled()){
+            throw new InvalidArgumentException('You cannot assign schedule on a active susu.');
+        }
+
+        $this->assert->assertUserInSusu(new Id($memberId), $schedule->susuId(), 'ou cannot join a susu that is already in progress.');
 
         $schedule->setMemberId($memberId);
 

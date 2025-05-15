@@ -21,6 +21,9 @@ class ListSusu{
     }
 
     public function activeByCommunityIdArray(array $communityIdArray):Collector{
+        if(empty($communityIdArray)){
+            return new Collector();
+        }
         return $this->repo->listSusu([
             'communityId' => $communityIdArray,
             'completed' => false,

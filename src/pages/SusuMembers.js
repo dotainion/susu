@@ -1,12 +1,20 @@
-import { useEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useState } from "react"
 import { FaUserCircle } from "react-icons/fa"
 import { api } from "../request/Api";
 import { useParams } from "react-router-dom";
+import { useLayout } from "../layout/Layout";
 
 export const SusuMembers = () =>{
+    const { setParams, setLayoutParams } = useLayout();
+
     const [members, setMembers] = useState([]);
 
     const params = useParams();
+
+    useLayoutEffect(() => {
+        setParams({communityId: params.communityId});
+        return () => setLayoutParams({});
+    }, []);
 
     useEffect(()=>{
         api.user.bySusu(params.susuId).then((response)=>{

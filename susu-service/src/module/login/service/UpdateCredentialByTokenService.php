@@ -16,6 +16,6 @@ class UpdateCredentialByTokenService extends Service{
 
         $service = $this->secure->updateCredentialByToken($id, $password, $refreshToken);
         
-        return $this->setOutput($service);
+        return $this->mergeOutput($service);
     }
 }

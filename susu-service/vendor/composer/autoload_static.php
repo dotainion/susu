@@ -7,7 +7,11 @@ namespace Composer\Autoload;
 class ComposerStaticInit71120c75292eae0dbbda1b628875a0f1
 {
     public static $files = array (
+        '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         'e39a8b23c42d4e1452234d762b03835a' => __DIR__ . '/..' . '/ramsey/uuid/src/functions.php',
+        '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
+        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
+        '3109cb1a231dcd04bee1f9f620d46975' => __DIR__ . '/..' . '/paragonie/sodium_compat/autoload.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -22,11 +26,21 @@ class ComposerStaticInit71120c75292eae0dbbda1b628875a0f1
         ),
         'P' => 
         array (
+            'Pusher\\' => 7,
+            'Psr\\Log\\' => 8,
+            'Psr\\Http\\Message\\' => 17,
+            'Psr\\Http\\Client\\' => 16,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
         'K' => 
         array (
             'Kyegil\\MysqliConnection\\' => 24,
+        ),
+        'G' => 
+        array (
+            'GuzzleHttp\\Psr7\\' => 16,
+            'GuzzleHttp\\Promise\\' => 19,
+            'GuzzleHttp\\' => 11,
         ),
         'B' => 
         array (
@@ -47,6 +61,23 @@ class ComposerStaticInit71120c75292eae0dbbda1b628875a0f1
         array (
             0 => __DIR__ . '/..' . '/ramsey/collection/src',
         ),
+        'Pusher\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/pusher/pusher-php-server/src',
+        ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/src',
+        ),
+        'Psr\\Http\\Message\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'Psr\\Http\\Client\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-client/src',
+        ),
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
@@ -54,6 +85,18 @@ class ComposerStaticInit71120c75292eae0dbbda1b628875a0f1
         'Kyegil\\MysqliConnection\\' => 
         array (
             0 => __DIR__ . '/..' . '/kyegil/mysqli-connection',
+        ),
+        'GuzzleHttp\\Psr7\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
+        ),
+        'GuzzleHttp\\Promise\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/promises/src',
+        ),
+        'GuzzleHttp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
         'Brick\\Math\\' => 
         array (
@@ -182,13 +225,6 @@ class ComposerStaticInit71120c75292eae0dbbda1b628875a0f1
         'src\\module\\login\\service\\UpdateCredentialByTokenService' => __DIR__ . '/../..' . '/src/module/login/service/UpdateCredentialByTokenService.php',
         'src\\module\\login\\service\\UpdateCredentialService' => __DIR__ . '/../..' . '/src/module/login/service/UpdateCredentialService.php',
         'src\\module\\mail\\action\\SendMailAction' => __DIR__ . '/../..' . '/src/module/mail/action/SendMailAction.php',
-        'src\\module\\mail\\factory\\AttatchmentFactory' => __DIR__ . '/../..' . '/src/module/mail/factory/AttatchmentFactory.php',
-        'src\\module\\mail\\factory\\MailFactory' => __DIR__ . '/../..' . '/src/module/mail/factory/MailFactory.php',
-        'src\\module\\mail\\factory\\RecipientFactory' => __DIR__ . '/../..' . '/src/module/mail/factory/RecipientFactory.php',
-        'src\\module\\mail\\logic\\RecoveryTemplate' => __DIR__ . '/../..' . '/src/module/mail/logic/RecoveryTemplate.php',
-        'src\\module\\mail\\objects\\Attatchment' => __DIR__ . '/../..' . '/src/module/mail/objects/Attatchment.php',
-        'src\\module\\mail\\objects\\Mail' => __DIR__ . '/../..' . '/src/module/mail/objects/Mail.php',
-        'src\\module\\mail\\objects\\Recipient' => __DIR__ . '/../..' . '/src/module/mail/objects/Recipient.php',
         'src\\module\\mail\\service\\SendMailService' => __DIR__ . '/../..' . '/src/module/mail/service/SendMailService.php',
         'src\\module\\messages\\action\\ListCommunityMessagesAction' => __DIR__ . '/../..' . '/src/module/messages/action/ListGroupMessagesAction.php',
         'src\\module\\messages\\action\\ListConversationAction' => __DIR__ . '/../..' . '/src/module/messages/action/ListConversationAction.php',
@@ -233,6 +269,23 @@ class ComposerStaticInit71120c75292eae0dbbda1b628875a0f1
         'src\\module\\payout\\service\\AddSusuPayoutService' => __DIR__ . '/../..' . '/src/module/payout/service/AddSusuPayoutService.php',
         'src\\module\\payout\\service\\ListPayoutService' => __DIR__ . '/../..' . '/src/module/payout/service/ListPayoutService.php',
         'src\\module\\payout\\service\\ListSusuPayoutService' => __DIR__ . '/../..' . '/src/module/payout/service/ListSusuPayoutService.php',
+        'src\\module\\posts\\action\\ListPostAction' => __DIR__ . '/../..' . '/src/module/posts/action/ListPostAction.php',
+        'src\\module\\posts\\action\\SetPostAction' => __DIR__ . '/../..' . '/src/module/posts/action/SetPostAction.php',
+        'src\\module\\posts\\action\\SetReactionAction' => __DIR__ . '/../..' . '/src/module/posts/action/SetReactionAction.php',
+        'src\\module\\posts\\factory\\PostFactory' => __DIR__ . '/../..' . '/src/module/posts/factory/PostFactory.php',
+        'src\\module\\posts\\factory\\ReactionFactory' => __DIR__ . '/../..' . '/src/module/posts/factory/ReactionFactory.php',
+        'src\\module\\posts\\logic\\ListPost' => __DIR__ . '/../..' . '/src/module/posts/logic/ListPost.php',
+        'src\\module\\posts\\logic\\ListReaction' => __DIR__ . '/../..' . '/src/module/posts/logic/ListReaction.php',
+        'src\\module\\posts\\logic\\PostToTree' => __DIR__ . '/../..' . '/src/module/posts/logic/PostToTree.php',
+        'src\\module\\posts\\logic\\SetPost' => __DIR__ . '/../..' . '/src/module/posts/logic/SetPost.php',
+        'src\\module\\posts\\logic\\SetReaction' => __DIR__ . '/../..' . '/src/module/posts/logic/SetReaction.php',
+        'src\\module\\posts\\objects\\Post' => __DIR__ . '/../..' . '/src/module/posts/objects/Post.php',
+        'src\\module\\posts\\objects\\Reaction' => __DIR__ . '/../..' . '/src/module/posts/objects/Reaction.php',
+        'src\\module\\posts\\repository\\PostRepository' => __DIR__ . '/../..' . '/src/module/posts/repository/PostRepository.php',
+        'src\\module\\posts\\repository\\ReactionRepository' => __DIR__ . '/../..' . '/src/module/posts/repository/ReactionRepository.php',
+        'src\\module\\posts\\service\\ListPostService' => __DIR__ . '/../..' . '/src/module/posts/service/ListPostService.php',
+        'src\\module\\posts\\service\\SetPostService' => __DIR__ . '/../..' . '/src/module/posts/service/SetPostService.php',
+        'src\\module\\posts\\service\\SetReactionService' => __DIR__ . '/../..' . '/src/module/posts/service/SetReactionService.php',
         'src\\module\\refund\\action\\AddSusuRefundAction' => __DIR__ . '/../..' . '/src/module/refund/action/AddSusuRefundAction.php',
         'src\\module\\refund\\action\\ListRefundAction' => __DIR__ . '/../..' . '/src/module/refund/action/ListRefundAction.php',
         'src\\module\\refund\\action\\ListSusuRefundAction' => __DIR__ . '/../..' . '/src/module/refund/action/ListSusuRefundAction.php',
@@ -369,6 +422,7 @@ class ComposerStaticInit71120c75292eae0dbbda1b628875a0f1
         'tools\\infrastructure\\exeptions\\UrlNotFoundException' => __DIR__ . '/..' . '/dotainion/security-tools/tools/infrastructure/exeptions/UrlNotFoundException.php',
         'tools\\module\\login\\factory\\CredentialFactory' => __DIR__ . '/..' . '/dotainion/security-tools/tools/module/login/factory/CredentialFactory.php',
         'tools\\module\\login\\logic\\CreateCredential' => __DIR__ . '/..' . '/dotainion/security-tools/tools/module/login/logic/CreateCredential.php',
+        'tools\\module\\login\\logic\\SendMessage' => __DIR__ . '/..' . '/dotainion/security-tools/tools/module/messages/logic/SendMessage.php',
         'tools\\module\\login\\logic\\UpdateCredential' => __DIR__ . '/..' . '/dotainion/security-tools/tools/module/login/logic/UpdateCredential.php',
         'tools\\module\\login\\objects\\Credential' => __DIR__ . '/..' . '/dotainion/security-tools/tools/module/login/objects/Credential.php',
         'tools\\module\\login\\repository\\CredentialRepository' => __DIR__ . '/..' . '/dotainion/security-tools/tools/module/login/repository/CredentialRepository.php',
@@ -378,6 +432,7 @@ class ComposerStaticInit71120c75292eae0dbbda1b628875a0f1
         'tools\\module\\login\\service\\GoogleLoginService' => __DIR__ . '/..' . '/dotainion/security-tools/tools/module/login/service/GoogleLoginService.php',
         'tools\\module\\login\\service\\LoginService' => __DIR__ . '/..' . '/dotainion/security-tools/tools/module/login/service/LoginService.php',
         'tools\\module\\login\\service\\LogoutService' => __DIR__ . '/..' . '/dotainion/security-tools/tools/module/login/service/LogoutService.php',
+        'tools\\module\\login\\service\\SendMessageService' => __DIR__ . '/..' . '/dotainion/security-tools/tools/module/messages/service/SendMessageService.php',
         'tools\\module\\login\\service\\SendRecoverEmailService' => __DIR__ . '/..' . '/dotainion/security-tools/tools/module/login/service/SendRecoverEmailService.php',
         'tools\\module\\login\\service\\UpdateCredentialByTokenService' => __DIR__ . '/..' . '/dotainion/security-tools/tools/module/login/service/UpdateCredentialByTokenService.php',
         'tools\\module\\login\\service\\UpdateCredentialService' => __DIR__ . '/..' . '/dotainion/security-tools/tools/module/login/service/UpdateCredentialService.php',

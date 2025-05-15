@@ -34,6 +34,12 @@ body {
   background: white;
   background-color: white;
   overflow: auto;
+  background: url(../images/susu_optimized_bg.webp);
+  background-color: rgb(225, 239, 243);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 code {

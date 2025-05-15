@@ -67,10 +67,12 @@ const Notification = ({info}) =>{
 
     useEffect(()=>{
         if(info.attributes.isSusu){
-            setMessages(`You were invited to join susu under community: ${info.attributes.community.attributes.name}`);
-        }else{
-            setMessages(`You were invited to join community: ${info.attributes.community.attributes.name}`);
+            if(info.attributes.isGroupMember){
+                return setMessages(`You were invited to join susu under community: ${info.attributes.community.attributes.name}.`);
+            }
+            return setMessages(`You were invited to join susu under community: ${info.attributes.community.attributes.name}. Once accepted, you will automatically be added as a member of the group if you are not already one.`);
         }
+        setMessages(`You were invited to join community: ${info.attributes.community.attributes.name}`);
     }, [info]);
 
     if (!isVisible) return null;

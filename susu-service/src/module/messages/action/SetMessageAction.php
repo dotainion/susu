@@ -20,7 +20,9 @@ class SetMessageAction extends Request implements IAction{
             $this->get('toId'),
             $this->get('message'),
             $this->get('read'),
-            $this->get('hide')
+            $this->get('hide'),
+            $this->get('channel'),
+            $this->get('event')
         );
     }
 }

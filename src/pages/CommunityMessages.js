@@ -1,21 +1,22 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { useAuth } from "../provider/AuthProvider";
 import { MdSend } from "react-icons/md";
 import { MessageBox } from "../components/MessageBox";
 import { api } from "../request/Api";
 import { useParams } from "react-router-dom";
+import { useLayout } from "../layout/Layout";
+import { mockData } from "../contents/MockData";
+import { PusherMessanger } from "../request/PusherMessanger";
 
 export const CommunityMessages = () =>{
     const { user } = useAuth();
+    const { setParams, setLayoutParams } = useLayout();
 
     const [community, setCommunity] = useState();
     const [messages, setMessages] = useState([]);
 
     const params = useParams();
-
-    const intervalRef = useRef();
-    const messagesRef = useRef([]);
 
     const sendMessage = (message) =>{
         const data = {
@@ -25,17 +26,20 @@ export const CommunityMessages = () =>{
             message: message,
             read: false,
             hide: false,
+            channel: params.communityId,
+            event: 'message'
         }
         api.message.set(data).then((response)=>{
-            setMessages((existingMessages)=>[...existingMessages, response.data.data[0]]);
+            
         }).catch((error)=>{
 
         });
     }
 
-    useEffect(()=>{
-        messagesRef.current = messages;
-    }, [messages]);
+    useLayoutEffect(() => {
+        setParams({communityId: params.communityId});
+        return () => setLayoutParams({});
+    }, []);
 
     useEffect(()=>{
         api.message.communityConversation(params.communityId).then((response)=>{
@@ -43,30 +47,25 @@ export const CommunityMessages = () =>{
         }).catch((error)=>{
 
         });
-
         api.community.community(params.communityId).then((response)=>{
             setCommunity(response.data.data[0]);
         }).catch((error)=>{
 
         });
-
-        intervalRef.current = setInterval(() => {
-            api.message.communityConversation(params.communityId, false).then((response)=>{
-                const msgsIds = messagesRef.current.map((msg)=>msg.id);
-                setMessages((msgs)=>[...msgs, ...response.data.data.filter((msg)=>!msgsIds.includes(msg.id))]);
-            }).catch((error)=>{
-    
-            });
-        }, 5000);
-
-        return ()=>{
-            clearInterval(intervalRef.current);
+        const pusher = new PusherMessanger({subscribe: true});
+        pusher.on(params.communityId, 'message', (message)=>{
+            setMessages((msgs)=>[...msgs, message]);
+        });
+        if(process.env.NODE_ENV === 'development'){
+            setMessages(mockData.messages());
+            setCommunity(mockData.community());
         }
+        return () => pusher.destroy();
     }, []);
 
     return(
-        <MessageBox 
-            isCommunityMessanger
+        <MessageBox
+            isCommunity
             messages={messages}
             messageToName={community?.attributes?.name || ''}
             sendMessage={sendMessage}

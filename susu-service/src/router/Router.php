@@ -39,6 +39,9 @@ use src\module\payment\action\PaymentReceiptAction;
 use src\module\payout\action\AddSusuPayoutAction;
 use src\module\payout\action\ListPayoutAction;
 use src\module\payout\action\ListSusuPayoutAction;
+use src\module\posts\action\ListPostAction;
+use src\module\posts\action\SetPostAction;
+use src\module\posts\action\SetReactionAction;
 use src\module\refund\action\AddSusuRefundAction;
 use src\module\refund\action\ListRefundAction;
 use src\module\refund\action\ListSusuRefundAction;
@@ -333,6 +336,18 @@ class Router{
 
         $this->request->route('/send/mail', function ($req){
             return new SendMailAction();
+        });
+
+        $this->request->route('/set/post', function ($req){
+            return new SetPostAction();
+        });
+
+        $this->request->route('/list/posts', function ($req){
+            return new ListPostAction();
+        });
+
+        $this->request->route('/set/links', function ($req){
+            return new SetReactionAction();
         });
     }
 

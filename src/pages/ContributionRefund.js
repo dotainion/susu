@@ -80,7 +80,7 @@ export const ContributionRefund = () =>{
         });
     }, []);
 
-    if(loading) return <Loader center={true}/>
+    if(loading) return <Loader keepAlive center/>
 
     return(
         <div className="container">

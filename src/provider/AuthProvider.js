@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useRef, useState } from "react";
+import React, { createContext, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { api } from "../request/Api";
 import { token } from "../utils/Token";
 import { Notifications } from "../components/Notifications";
@@ -48,7 +48,7 @@ export const AuthProvider = ({children}) =>{
         });
     }
 
-    useEffect(()=>{
+    useLayoutEffect(()=>{
         const path = window.location.hash.replace('#', '');
         if([routes.signIn(), routes.register(), routes.landing()].includes(path) || path.includes('test')){
             $(`#${alertIdRef.current}`).hide('fast');

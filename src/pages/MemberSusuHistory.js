@@ -51,7 +51,7 @@ export const MemberSusuHistory = () =>{
         setHistories([...payouts, ...refunds, ...contributions].sort((a, b)=>new Date(a.attributes.date) - new Date(b.attributes.date)));
     }, [payouts, refunds, contributions]);
 
-    if(loading) return <Loader center/>
+    if(loading) return <Loader keepAlive center/>
 
     return(
         <div className="container">
@@ -59,7 +59,7 @@ export const MemberSusuHistory = () =>{
                 <div className="h4 w-100">Contribution History</div>
                 {
                     (susu && owner && owner.id === user.id) 
-                    ? <button onClick={()=>navigate(routes.susu().nested().contributionAndPayments(susu.attributes.communityId))} className="btn btn-sm mx-1">Contribution and payments</button> 
+                    ? <button onClick={()=>navigate(routes.susu().nested().contributors(susu.attributes.communityId))} className="btn btn-sm mx-1">Contribution and payments</button> 
                     : null
                 }
             </div>

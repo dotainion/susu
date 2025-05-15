@@ -11,10 +11,10 @@ class AssertUserInSusu{
         $this->link = new FetchSusuLink();
     }
 
-    public function assertUserInSusu(Id $memberId, Id $susuId):bool{
+    public function assertUserInSusu(Id $memberId, Id $susuId, string $message='Member must first join susu.'):bool{
         $links = $this->link->link($susuId, $memberId);
         if(!$links->hasItem()){
-            throw new InvalidArgumentException('Member must first join susu.');
+            throw new InvalidArgumentException($message);
         }
         return true;
     }

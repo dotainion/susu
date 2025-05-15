@@ -154,6 +154,27 @@ class Schema extends ToolsSchema{
         return $this->sql->execute();
     }
 
+    public function post(){
+        $this->sql->create('post')
+            ->column('id')->bindary()
+            ->column('parentId')->bindary(true)
+            ->column('communityId')->bindary()
+            ->column('authorId')->bindary()
+            ->column('contents')->book()
+            ->column('created')->timestamp();
+        return $this->sql->execute();
+    }
+
+    public function likes(){
+        $this->sql->create('likes')
+            ->column('authorId')->bindary()
+            ->column('targetId')->bindary()//community or post
+            ->column('communityId')->bindary()
+            ->column('like')->bool()
+            ->column('created')->timestamp();
+        return $this->sql->execute();
+    }
+
     public function run(){
         foreach(get_class_methods($this) as $method){
             if($method === '__construct' || $method === 'run') continue;

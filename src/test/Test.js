@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Dashboard } from "../pages/dashboard/Dashboard";
 import { Messangers } from "../pages/Messangers";
 import { NewCommunity } from "../pages/NewCommunity";
@@ -24,26 +24,52 @@ import { SiTruenas } from "react-icons/si";
 import { PaymentRefund } from "../pages/PaymentRefund";
 import { Schedule } from "../pages/Schedule";
 import { CommunityHeader } from "../components/CommunityHeader";
+import { CommunityFeeds } from "../components/CommunityFeeds";
+import img from "../images/group-bg-profile.png";
+import $ from "jquery";
+import { LikesAndComment } from "../components/LikesAndComment";
+import { utils } from "../utils/Utils";
+import { Draggable, Droppable } from "../components/DragAndDropUtils";
+import { SusuSchedules } from "../components/SusuSchedules";
+import { FaCalendarAlt, FaGenderless, FaPhone, FaRegCopy, FaUserCircle } from 'react-icons/fa';
+import { CommunityMembers } from "../pages/CommunityMembers";
+import { Member } from "../pages/Member";
+import { mockData } from "../contents/MockData";
+import { useNavigate } from "react-router-dom";
+import { routes } from "../routes/Routes";
+import { FiPhone, FiMapPin, FiHome } from 'react-icons/fi';
+import { HiOutlineUser } from 'react-icons/hi';
+import { MembersList } from "../pages/MembersList";
+import { OwnerJoinSusuAlert } from "../components/OwnerJoinSusuAlert";
+import { TiMessages } from "react-icons/ti";
+import { MdDateRange, MdEmail, MdGroups } from "react-icons/md";
+import { AiOutlineFileProtect } from "react-icons/ai";
+import { MdLocationOn } from "react-icons/md";
+import { RiProfileLine } from "react-icons/ri";
+import { IoPeopleSharp } from "react-icons/io5";
+import { AssociateCommunities } from "../pages/AssociateCommunities";
+import { Messages } from "../pages/Messages";
 
 export const Test = () =>{
+    const [member, setMember] = useState();
+    const [communities, setCommunities] = useState([]);
 
-    const test = () =>{
-        api.community.memberCommunities('bf08fe63-ada7-42f9-94e7-b1e34b19b0d9').then((response)=>{
-            console.log(response.data.data);
-        }).catch((error)=>{
+    const navigate = useNavigate();
 
-        });
-    }
-    
     useEffect(()=>{
         //example of designs
         //https://trello.com/
         //form this: Workflows for any project, big or small
+
+        setMember(mockData.user());
+        setCommunities(mockData.communities());
     }, []);
+
+    if(!member) return null;
 
     return(
         <div className="container">
-            <Dashboard />
+            <Messages />
         </div>
     )
 }

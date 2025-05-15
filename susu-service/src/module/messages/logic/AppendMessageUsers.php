@@ -13,13 +13,28 @@ class AppendMessageUsers{
     }
 
     public function appendUsers(Collector &$messages, User $user):Collector{
-        $users = $this->users->usersByIdArray(array_unique($messages->attrArray('fromId')));
+        $collector = new Collector();
+        $messgeIdArray = [];
+        $messageList = [];
+        foreach($messages->list() as $message){
+            if(!in_array($message->id()->toString(), $messgeIdArray)){
+                $messgeIdArray[] = $message->id()->toString();
+                $messageList[] = $message;
+            }
+        }
 
+        usort($messageList, function($a, $b) {
+            return strtotime($a->date()->toString()) <=> strtotime($b->date()->toString());
+        });
+
+        array_map(fn($msg)=>$collector->add($msg), $messageList);
+
+        $users = $this->users->usersByIdArray(array_unique($collector->attrArray('fromId')));
         if(!$users->hasItem()){
             return new Collector();
         }
 
-        foreach($messages->list() as $message){
+        foreach($collector->list() as $message){
             foreach($users->list() as $member){
                 if($message->fromId()->toString() === $member->id()->toString()){
                     $message->setUser($member);
@@ -29,6 +44,6 @@ class AppendMessageUsers{
                 $message->setIsCurrentUser(true);
             }
         }
-        return $messages;
+        return $collector;
     }
 }

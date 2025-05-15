@@ -1,6 +1,6 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { api } from "../request/Api";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { routes } from "../routes/Routes";
 import { ParseError } from "../utils/ParseError";
 import { ShareSocialMediaOverlay } from "../components/ShareSocialMediaOverlay";
@@ -10,8 +10,15 @@ import { utils } from "../utils/Utils";
 import { GroupPrivacyCards } from "../components/GroupPrivacyCards";
 import { MdOutlineManageHistory } from "react-icons/md";
 import { CommunityHeader } from "../components/CommunityHeader";
+import { PageHeader } from "../layout/PageHeader";
+import { useLayout } from "../layout/Layout";
+import { useAuth } from "../provider/AuthProvider";
+import { CommunityFeeds } from "../components/CommunityFeeds";
 
 export const Community = () =>{
+    const { user } = useAuth();
+    const { setParams, setLayoutParams } = useLayout();
+
     const [community, setCommunity] = useState();
     const [members, setMembers] = useState([]);
     const [errors , setErrors] = useState();
@@ -46,6 +53,11 @@ export const Community = () =>{
         });
     }
 
+    useLayoutEffect(() => {
+        setParams({communityId: params.communityId});
+        return () => setLayoutParams({});
+    }, []);
+
     useEffect(() => {
         let communityLoading = true;
         let membersLoading = true;
@@ -71,9 +83,9 @@ export const Community = () =>{
         });
     }, [location]);
 
-    if(loading) return <Loader center />;
+    if(loading) return <Loader keepAlive center />;
 
-    if(!community){
+    if(!community || community.attributes.creatorId !== user.id){
         return(
             <div className="container my-5">
                 <div className="alert alert-danger h4">You are not authorize to view this page</div>
@@ -89,8 +101,8 @@ export const Community = () =>{
 
             <div className="d-flex flex-md-row flex-column gap-3 mt-3">
                 <div className="w-75 w-md-100 px-0">
-                    <div className="d-flex gap-3">
-                        <div className="card bg-transparent cursor-defualt overflow-hidden w-100 px-0">
+                    <div className="d-block d-sm-flex gap-3">
+                        <div className="card border-0 cursor-defualt overflow-hidden w-100 px-0">
                             <div className="d-flex flex-column card-body bg-transparent">
                                 <div className="d-flex gap-3 mb-auto">
                                     <div className="w-100">
@@ -107,7 +119,7 @@ export const Community = () =>{
                             </div>
                         </div>
 
-                        <div className="card bg-transparent cursor-defualt overflow-hidden w-100 px-0">
+                        <div className="card border-0 cursor-defualt overflow-hidden w-100 px-0">
                             <div className="d-flex flex-column card-body bg-transparent">
                                 <div className="d-flex gap-3 mb-auto">
                                     <div className="w-100">
@@ -128,14 +140,14 @@ export const Community = () =>{
                 </div>
                 <div className="w-25 w-md-100 w-sm-100 px-0">
                     <div className="d-flex flex-column gap-3">
-                        <div className="card bg-transparent cursor-defualt overflow-hidden w-100">
+                        <div className="card border-0 cursor-defualt overflow-hidden w-100">
                             <div className="card-body bg-transparent">
                                 <div className="h5">About</div>
                                 <div className="">{community.attributes.description}</div>
                             </div>
                         </div>
 
-                        <div className="card bg-transparent cursor-defualt overflow-hidden w-100">
+                        <div className="card border-0 cursor-defualt overflow-hidden w-100">
                             <div className="card-body bg-transparent">
                                 <div className="h5">Members<span className="ms-2 small badge bg-primary">{members.length}</span></div>
                                 <div className="overflow-auto" style={{height: '150px'}}>
@@ -146,7 +158,11 @@ export const Community = () =>{
                                                 <div className="d-flex align-items-center justify-content-center rounded-circle bg-primary small" style={{width: '20px', height: '20px', minWidth: '20px', minHeight: '20px'}}>
                                                     <small className="text-light">{`${member.attributes.firstName}${member.attributes.lastName}`.trim()?.[0]}</small>
                                                 </div>
-                                                <div className="text-truncate ms-2">{member.attributes.firstName} {member.attributes.lastName}</div>
+                                                {member.id === user.id ? (
+                                                    <div className="text-truncate ms-2">Me</div>
+                                                ) : (
+                                                    <div className="text-truncate ms-2">{member.attributes.firstName} {member.attributes.lastName}</div>
+                                                )}
                                             </div>
                                         )) :
                                         <div className="d-flex align-items-center justify-content-center w-100 h-100">
@@ -191,6 +207,9 @@ export const Community = () =>{
                     <div className="small px-1">Once a community is deleted, this action is irreversible. Please ensure you are certain before proceeding.</div>
                 </div>
             </div>
+
+            <CommunityFeeds community={community} />
+
             {params.communityId && (
                 <ShareSocialMediaOverlay
                     show={openCommunityInvite}

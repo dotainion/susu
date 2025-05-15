@@ -12,8 +12,10 @@ import { Inviate } from "./Inviate";
 import { Refund } from "./Refund";
 import { routes } from "../routes/Routes";
 import { Payment } from "./Payment";
-import $ from "jquery";
 import { Email } from "./Email";
+import { Feed } from "./Feed";
+import { Likes } from "./Likes";
+import $ from "jquery";
 
 export class Api{
     baseURL;
@@ -40,6 +42,8 @@ export class Api{
         this.invite = new Inviate(this);
         this.payment = new Payment(this);
         this.mail = new Email(this);
+        this.feed = new Feed(this);
+        this.likes = new Likes(this);
     }
 
     initialize(){
@@ -68,7 +72,7 @@ export class Api{
     }
 
     parseError(error){
-        if(process.env.NODE_ENV === 'development'){
+        if(process.env.NODE_ENV === 'development' || this.chechAuthNotification === 'off'){
             throw error;
         }
         const notification = $('#login-notification');

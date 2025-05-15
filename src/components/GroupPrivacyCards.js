@@ -40,7 +40,7 @@ export const GroupPrivacyCards = ({community, onPrivacyChange, asInput}) =>{
     }, [community]);
 
     return(
-        <div className="card bg-transparent cursor-defualt overflow-hidden w-100 px-0 mt-3">
+        <div className="card border-0 cursor-defualt overflow-hidden w-100 px-0 mt-3">
             <div className="card-body bg-transparent">
                 <div className="user-select-none">
                     <div>

@@ -131,8 +131,7 @@ export const ShareSocialMediaOverlay = ({show, onClose, referenceId, isSusu, mem
     }, [show]);
 
     return (
-        <ModalOverlay show={show} onClose={onClose}>
-            <h2 className="mb-2">Share Directly with Someone</h2>
+        <ModalOverlay title="Share Directly with Someone" show={show} onClose={onClose}>
             <div className="d-flex position-relative">
                 <div>
                     {showLeft && (

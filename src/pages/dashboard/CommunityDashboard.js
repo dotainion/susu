@@ -59,7 +59,7 @@ export const CommunityDashboard = () =>{
         }).catch((error)=>{
 
         });        
-    }, []);
+    }, [params]);
 
     useEffect(()=>{
         if(!schedules.length) return;
@@ -74,7 +74,7 @@ export const CommunityDashboard = () =>{
         }).catch((error)=>{
 
         });
-    }, [schedules]);
+    }, [schedules, params]);
 
     useEffect(()=>{
         if(filter === FILTER.refund){

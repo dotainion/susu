@@ -1,84 +1,67 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { api } from "../request/Api";
-import { useParams } from "react-router-dom";
 import { utils } from "../utils/Utils";
 import { GoAlert } from "react-icons/go";
-import $ from "jquery";
 import { ParseError } from "../utils/ParseError";
 import { useAuth } from "../provider/AuthProvider";
-import { DragDropContainer } from "../components/DragDropContainer";
 import { RiDraggable } from "react-icons/ri";
+import { useLayout } from "../layout/Layout";
+import { useParams } from "react-router-dom";
+import $ from "jquery";
+import { mockData } from "../contents/MockData";
+import { SusuSchedules } from "../components/SusuSchedules";
 
 export const AssignSchedule = () =>{
     const { user } = useAuth();
+    const { setLayoutParams } = useLayout();
 
-    const [users, setUsers] = useState([]);
     const [susu, setSusu] = useState();
     const [schedules, setSchedules] = useState([]);
+    const [members, setMembers] = useState([]);
     const [errors, setErrors] = useState();
+    const [override, setOverride] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [reOrderedMembers, setReOrderedMembers] = useState(true);
 
     const params = useParams();
 
-    const onSaveChanges = () =>{
-        if(susu?.attributes?.owner?.id !== user?.id) return;
+    const onScheduleUpdate = () =>{
+        if(!susu || susu?.attributes?.owner?.id !== user.id) return;
         setErrors(null);
         let data = {}
-        reOrderedMembers.forEach((mbr, i)=> data[schedules[i].id] = mbr.id);
+        schedules.forEach((sch, i)=>{
+            if(!sch.attributes.user?.id) return setErrors('Please ensure that each schedule has a selected member.');
+            data[sch.id] = sch.attributes.user?.id
+        });
         api.schedule.assign(data).then((response)=>{
-            setSchedules((scheduleArray)=>[...scheduleArray.map((sch)=>{
-                sch.attributes.memberId = data[sch.id];
-                return sch;
-            })]);
+            
         }).catch((error)=>{
             setErrors(new ParseError().message(error));
         });
     }
 
-    const scheduleByPositionDate = (index) =>{
-        if(!schedules[index]) console.error('schdule index not found.');
-        return utils.date.toLocalDate(schedules[index].attributes.date);
-    }
-
-    const memberScheduleLabel = (member) =>{
-        const schedule = schedules.find((sch)=>sch.attributes.memberId === member.id);
-        if(schedule) return <div className="small badge bg-warning">Assigned</div>;
-        return <div className="small badge bg-secondary">Unassigned</div>;
-    }
-
-    const sortUserSchedulePosition = (sortedUsers, sches) =>{
-        if(!sches.length || !sortedUsers.length) return [];
-        return sortedUsers.sort((a, b) => {
-            const indexA = sches.findIndex(sch => sch.attributes.memberId === a.id);
-            const indexB = sches.findIndex(sch => sch.attributes.memberId === b.id);
-            return indexA - indexB;
-        });
-    }
+    useLayoutEffect(() => {
+        setLayoutParams({communityId: params.communityId});
+        return () => setLayoutParams({});
+    }, []);
 
     useEffect(()=>{
-        let responseSchedules = [];
-        api.schedule.list(params.communityId).then((response)=>{
-            responseSchedules = response.data.data;
-            setSchedules(response.data.data);
+        api.susu.active(params.communityId).then((response)=>{
+            setSusu(response.data.data[0]);
+            setMembers(response.data.data[0].attributes.members);
         }).catch((error)=>{
             setErrors(new ParseError().message(error));
         }).finally(()=>{
-            api.susu.active(params.communityId).then((response)=>{
-                if(!responseSchedules.length) return;
-                setSusu(response.data.data[0]);
-                setUsers(sortUserSchedulePosition(response.data.data[0].attributes.members || [], responseSchedules));
-            }).catch((error)=>{
-                setErrors(new ParseError().message(error));
-            }).finally(()=>{
-                setLoading(false);
-            });
+            setLoading(false);
         });
+        if(process.env.NODE_ENV === 'development'){
+            setMembers(mockData.susu().attributes.members);
+            setSusu(mockData.susu());
+        }
     }, []);
 
     if(loading) return null;
 
-    if(!susu || !user || susu?.attributes?.owner?.id !== user?.id){
+    if(!susu || !user || susu?.attributes?.owner?.id !== user.id){
         return(
             <div className="container my-5">
                 <div className="alert alert-danger h4">You are not authorize to assign schedules</div>
@@ -87,36 +70,40 @@ export const AssignSchedule = () =>{
     }
 
     return(
-        <div className="container">
-            <div className="h4 text-center my-4">Payout Schedule</div>
+        <div className="container my-5">
+            <div className="d-flex justify-content-between align-items-center mb-4">
+                <h2 className="fw-bold mb-0">Payout Schedule</h2>
+                <div className="d-flex align-items-center gap-3">
+                    {override && <button onClick={onScheduleUpdate} className="btn btn-sm btn-success rounded-pill px-3">Save Changes</button>}
+                    <button onClick={()=>setOverride(()=>!override)} className={`btn px-3 ${override ? 'btn-outline-primary text-primary' : 'btn-outline-danger text-danger'} bg-transparent btn-sm rounded-pill`}>🛠️ Override Selection</button>
+                </div>
+            </div>
 
-            {susu && user && susu?.attributes?.owner?.id === user?.id && <button onClick={onSaveChanges} className="btn btn-sm btn-sec">Save chanegs</button>}
-
-            <hr></hr>
-
-            {errors ? <div className="alert alert-danger border-0 py-1 mt-3">{errors}</div> : null}            
-            <p className="text-muted mt-3">To customize the payout schedule, simply drag and drop the users to reorder their positions within the schedule. Adjust the order to fit your preferred payout timeline.</p>
-            
-            <hr></hr>
-
-            <DragDropContainer isMovable={susu?.attributes?.owner?.id === user?.id} items={users} onReordered={setReOrderedMembers}>
-                {(member, index)=>(
-                    <div className="d-flex align-items-center border-bottom move py-2">
-                        <div className="border-start border-end">
-                            <RiDraggable className="text-brown fs-3"/>
-                        </div>
-                        <div className="ps-2 me-auto text-truncate">
-                            <span className="me-2">{member.attributes.firstName}</span>
-                            <span>{member.attributes.lastName}</span>
-                        </div>
-                        <div className="d-flex small px-2">
-                            <div className="text-truncate me-2">{scheduleByPositionDate(index)}</div>
-                            <div className="small">{memberScheduleLabel(member)}</div>
-                        </div>
-                        <div className="badge bg-primary">{index + 1}</div>
+            <div className="card border-0 shadow-sm rounded-4 mb-4">
+                <div className="card-body d-md-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 className="fw-semibold mb-1">SusuSpice: <span className="text-primary">Spice Circle</span></h5>
+                        <p className="text-muted small mb-0">
+                            Cycle: <strong>{susu?.attributes?.cycle}</strong> • Slots: <strong>{schedules.length}</strong> • Start: <strong>{utils.date.toLocalDate(susu?.attributes?.startDate)}</strong>
+                        </p>
                     </div>
-                )}
-            </DragDropContainer>
+                    {
+                        susu?.attributes?.pendingStart
+                            ? <span className="badge bg-warning px-3 py-2 rounded-pill mt-3 mt-md-0">Pending</span>
+                            : <span className="badge bg-success px-3 py-2 rounded-pill mt-3 mt-md-0">Active</span>
+                    }
+                </div>
+            </div>
+
+            {errors ? <div className="alert alert-danger border-0 py-1 mt-3">{errors}</div> : null}     
+
+            <SusuSchedules
+                members={members}
+                editOerride={override}
+                onDropped={()=>{}}
+                onSelectError={setErrors}
+                itemsState={setSchedules}
+            />
         </div>
     )
 }

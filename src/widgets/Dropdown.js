@@ -1,7 +1,7 @@
-export const Dropdown = ({className, options, defaultValue, asContent, children}) =>{
+export const Dropdown = ({className, options, defaultValue, asContent, chevronOff, children}) =>{
     return(
         <div className="dropdown">
-            <button className={`btn ${className || ''} dropdown-toggle`} type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button className={`btn ${className || ''} ${chevronOff ? '' : 'dropdown-toggle'}`} type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 {children}
             </button>
             <ul className="dropdown-menu">
@@ -10,7 +10,7 @@ export const Dropdown = ({className, options, defaultValue, asContent, children}
                         {
                             asContent
                             ? <div className="px-3">{option.title}</div>
-                            : <a onClick={option?.onClick} className="dropdown-item pointer">{option.title}</a>
+                            : <a onClick={option?.onClick} className={`dropdown-item pointer ${option?.className}`}>{option.title}</a>
                         }
                     </li>
                 ))}

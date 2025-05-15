@@ -15,6 +15,7 @@ class Invite implements IObjects{
     protected DateHelper $expire;
     protected ?Community $community;
     protected bool $isSusu;
+    protected bool $isGroupMember = false;
 
     public function __construct(){
         $this->id = new Id();
@@ -52,6 +53,10 @@ class Invite implements IObjects{
         return $this->isSusu;
     }
 
+    public function isGroupMember():bool{
+        return $this->isGroupMember;
+    }
+
     public function setId(string $id):void{
         $this->id->set($id);
     }
@@ -78,5 +83,9 @@ class Invite implements IObjects{
 
     public function setIsSusu(bool $isSusu):void{
         $this->isSusu = $isSusu;
+    }
+
+    public function setIsGroupMember(bool $isGroupMember):void{
+        $this->isGroupMember = $isGroupMember;
     }
 }

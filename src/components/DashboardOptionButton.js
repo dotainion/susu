@@ -7,7 +7,7 @@ import { utils } from "../utils/Utils";
 import { Loader } from "./Loader";
 import { useAuth } from "../provider/AuthProvider";
 
-export const DashboardOptionButton = ({className, children}) =>{
+export const DashboardOptionButton = ({className, autoClose, children}) =>{
     const { user } = useAuth();
 
     const [show, setShow] = useState(false);
@@ -27,7 +27,8 @@ export const DashboardOptionButton = ({className, children}) =>{
     }
 
     const select = (susu) =>{
-        navigate(routes.susu().nested().dashboard(susu.id, susu.communityId));
+        navigate(routes.susu().nested().dashboard(susu.id, susu.attributes.communityId));
+        autoClose && setShow(false);
     }
     
     useEffect(() => {
@@ -51,7 +52,7 @@ export const DashboardOptionButton = ({className, children}) =>{
                 <div className="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-75 backdrop-blur z-index-1050 d-flex align-items-center justify-content-center" style={{ zIndex: 1050 }}>
                     <div className="bg-white rounded shadow p-4" style={{ maxWidth: '600px', width: '90%' }}>
                         <div className="d-flex justify-content-between align-items-center mb-3">
-                            <h4 className="fw-bold mb-0">Choose a Susu Plan</h4>
+                            <h4 className="fw-bold mb-0">Choose a susu plan</h4>
                             <button className="btn btn-sm btn-outline-secondary border" onClick={()=>setShow(false)}>&times;</button>
                         </div>
                 
@@ -74,7 +75,7 @@ export const DashboardOptionButton = ({className, children}) =>{
                                     )):
                                     <div className="text-center p-5">
                                         <h5 className="text-muted">No Susu options available at the moment.</h5>
-                                        <p className="text-muted">It seems like no one has created a new Susu plan yet. Check back later, or you can start one yourself!</p>
+                                        <p className="text-muted">It seems like no one has created a new Susu plan in your related group yet. Check back later, or you can start one yourself!</p>
                                     </div>
                                 }
                             </div>

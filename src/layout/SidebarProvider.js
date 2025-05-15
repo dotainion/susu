@@ -38,7 +38,7 @@ const Context = createContext();
 export const useSidebar = () => useContext(Context);
 
 export const SidebarProvider = ({children}) =>{
-    const { signOut } = useAuth();
+    const { user, signOut } = useAuth();
 
     const navigate = useNavigate();
 
@@ -80,7 +80,7 @@ export const SidebarProvider = ({children}) =>{
                 description: 'View and explore all available communities, including public and private groups that you can join or interact with.'
             },{
                 title: 'Community Hub', 
-                onClick: ()=>navigate(routes.susu().nested().associateCommunities()), 
+                onClick: ()=>navigate(routes.susu().nested().associateCommunities(user.id)), 
                 icon: FaObjectUngroup,
                 description: 'Access a list of communities you are a member of or actively involved in, providing quick access to your personal groups.'
             },{

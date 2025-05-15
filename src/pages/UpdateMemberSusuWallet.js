@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { GoDotFill } from "react-icons/go";
 import { routes } from "../routes/Routes";
@@ -9,9 +9,14 @@ import { Dropdown } from "../widgets/Dropdown";
 import { ParseError } from "../utils/ParseError";
 import { useAuth } from "../provider/AuthProvider";
 import { Loader } from "../components/Loader";
+import { useLayout } from "../layout/Layout";
+import { mockData } from "../contents/MockData";
+import { ProgressBar } from "../components/ProgressBar";
+import { FaPlus, FaMinus, FaExchangeAlt, FaHistory, FaWallet, FaArrowUp, FaArrowDown, FaMinusCircle, FaPlusCircle } from "react-icons/fa";
 
 export const UpdateMemberSusuWallet = () =>{
     const { user } = useAuth();
+    const { setParams, setLayoutParams } = useLayout();
 
     const [susu, setSusu] = useState();
     const [memberSchedules, setMemberSchedules] = useState([]);
@@ -66,6 +71,11 @@ export const UpdateMemberSusuWallet = () =>{
         });
     }
 
+    useLayoutEffect(() => {
+        setParams({communityId: params.communityId});
+        return () => setLayoutParams({});
+    }, []);
+
     useEffect(()=>{
         api.susu.active(params.communityId).then((response)=>{
             setSusu(response.data.data[0]);
@@ -79,6 +89,10 @@ export const UpdateMemberSusuWallet = () =>{
         }, 1000);
 
         $(document).on('click', ()=>setShowCustom(false));
+
+        if(process.env.NODE_ENV === 'development'){
+            setSusu(mockData.susu());
+        }
 
         return()=>{
             clearInterval(intervalRef.current);
@@ -152,25 +166,33 @@ export const UpdateMemberSusuWallet = () =>{
         setHistory([...refunds, ...payouts, ...contributions].sort((a, b)=>new Date(a.attributes.date) - new Date(b.attributes.date)).reverse());
     }, [contributions, payouts, refunds]);
 
-    if(loading) return <Loader center/>
+
+    const balance = 2450.75;
+    const transactions = [
+      { id: 1, type: "deposit", amount: 1500, date: "2025-05-01", method: "Bank Transfer" },
+      { id: 2, type: "withdrawal", amount: 500, date: "2025-05-03", method: "Mobile Money" },
+      { id: 3, type: "transfer", amount: 200, date: "2025-05-05", recipient: "John Doe" },
+    ];
+
+    if(loading) return <Loader keepAlive center/>
 
     if(!susu || !user || susu?.attributes?.owner?.id !== user?.id){
-        return(
+        /*return(
             <div className="container my-5">
                 <div className="alert alert-danger h4">You are not authorize to assign schedules</div>
             </div>
-        )
+        )*/
     }
 
     return(
-        <div className="container">
+        <div className="container py-5">
             <div className="d-block d-sm-flex align-items-center w-100 text-nowrap mt-3">
                 <div className="h4 w-100">Contribution Management</div>
-                <button onClick={()=>navigate(routes.susu().nested().contributionAndPayments(params.communityId))} className="btn btn-sm mx-1">Participants</button>
+                <button onClick={()=>navigate(routes.susu().nested().contributors(params.communityId))} className="btn btn-sm mx-1">Participants</button>
                 <button onClick={()=>navigate(routes.susu().nested().memberSusuHistory(susu.id, params.memberId))} className="btn btn-sm mx-1">Contribution history</button>
             </div>
             <div className="my-3">Credit Line Details: Overview</div>
-            <div className="d-block d-md-flex w-100 shadow-sm bg-light rounded-4 p-4">
+            <div className="d-block d-md-flex w-100 bg-light rounded-4 p-4">
                 <div className="w-100">
                     <div>
                         <button 
@@ -188,22 +210,26 @@ export const UpdateMemberSusuWallet = () =>{
                             </div>
                         </div>
                     </div>
-                    <div className="d-flex my-3">
-                        <progress className="w-100 p-3 me-1" value={price.payments} max={extimatedTotalPayout} />
-                        <progress className="w-100 p-3 mx-1" value={price.refunds} max={extimatedTotalPayout} />
-                        <progress className="w-100 p-3 ms-1" value={price.payouts} max={extimatedTotalPayout} />
-                    </div>
-                    <div className="d-flex w-100">
-                        <div className="w-50">
+                    <div className="d-flex gap-3 my-3">
+                        <div className="flex-fill">
                             <div className="small"><GoDotFill/> Payments</div>
+                            <ProgressBar className="w-100" value={price.payments} ymax={extimatedTotalPayout} inBackground>
+                                {(percent)=>`${percent}%`}
+                            </ProgressBar>
                             <div className="fw-bold">{price.payments.toFixed(2)}</div>
                         </div>
-                        <div className="w-50">
+                        <div className="flex-fill">
                             <div className="small"><GoDotFill/> Refunds</div>
+                            <ProgressBar className="w-100" value={price.refunds} ymax={extimatedTotalPayout} inBackground>
+                                {(percent)=>`${percent}%`}
+                            </ProgressBar>
                             <div className="fw-bold">{price.refunds.toFixed(2)}</div>
                         </div>
-                        <div className="w-50">
+                        <div className="flex-fill">
                             <div className="small"><GoDotFill/> Payouts</div>
+                            <ProgressBar className="w-100" value={price.payouts} ymax={extimatedTotalPayout} inBackground>
+                                {(percent)=>`${percent}%`}
+                            </ProgressBar>
                             <div className="fw-bold">{price.payouts.toFixed(2)}</div>
                         </div>
                     </div>

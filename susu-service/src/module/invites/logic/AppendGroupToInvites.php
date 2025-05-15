@@ -3,16 +3,19 @@ namespace src\module\invites\logic;
 
 use tools\infrastructure\Collector;
 use src\module\communities\logic\ListCommunities;
+use src\module\communities\logic\ListCommunityLinks;
 use src\module\invites\objects\Invite;
 use src\module\susu\logic\ListSusu;
 
 class AppendCommunityToInvites{
     protected ListSusu $susu;
     protected ListCommunities $communities;
+    protected ListCommunityLinks $communityLink;
 
     public function __construct(){
         $this->susu = new ListSusu();
         $this->communities = new ListCommunities();
+        $this->communityLink = new ListCommunityLinks();
     }
 
     public function appendCommunities(Collector &$collector):void{
@@ -26,12 +29,18 @@ class AppendCommunityToInvites{
         }
 
         $communities = $this->communities->byIdArray($targetIdArray);
+        $communityLink = $this->communityLink->byMemberIdArray($collector->attrArray('memberId'));
         
         foreach($collector->list() as $invite){
             foreach($communities->list() as $community){
                 $ref = $references[$invite->targetId()->toString()] ?? null;
                 if($invite->targetId()->toString() === $community->id()->toString() || $ref === $community->id()->toString()){
                     $invite->setCommunity($community);
+                }
+                $communityLinkCollector = $communityLink->filter('memberId', $invite->memberId()->toString());
+                $communityLinkCollectorCheck = $communityLinkCollector->filter('targetId', $community->id()->toString());
+                if($communityLinkCollectorCheck->hasItem()){
+                    $invite->setIsGroupMember(true);
                 }
             }
         }

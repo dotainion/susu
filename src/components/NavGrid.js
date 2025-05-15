@@ -16,7 +16,7 @@ export const NavGrid = ({nav, useMenu}) =>{
                 <div className="row">
                     {nav.list.map((nav, key)=>(
                         <div className="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6 p-1 text-center" key={key}>
-                            <div onClick={nav?.onClick} className={`card rounded-3 overflow-hidden h-100 ${nav?.disabled ? '' : 'card-hover'}`}>
+                            <div onClick={nav?.onClick} className={`card rounded-3 overflow-hidden border-0 h-100 ${nav?.disabled ? '' : 'card-hover'}`}>
                                 <div className={`card-body ${nav?.disabled ? 'opacity-25 pe-none' : ''}`}>
                                     <div className="d-flex gap-3">
                                         <p className="card-text text-primary">

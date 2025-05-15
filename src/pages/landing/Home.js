@@ -39,7 +39,7 @@ export const Home = () =>{
                         <p className="text-dark small mb-4">Trusted by communities across Grenada, Carriacou & Petite Martinique.</p>
 
                         <div className="d-flex gap-3 my-4">
-                            <a href="mailto:mb.repairss@gmail.com" className="btn btn-outline-primary shadow-none">Contact Us</a>
+                            <a onClick={()=>navigate(routes.contact())} className="btn btn-outline-primary shadow-none">Contact Us</a>
                             <button onClick={()=>navigate(routes.register())} className="btn btn-primary shadow-none">Get Started</button>
                         </div>
 

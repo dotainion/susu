@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { api } from "../request/Api";
 import { CommunityCard } from "../components/CommunityCard";
 import { Loader } from "../components/Loader";
+import { mockData } from "../contents/MockData";
+import { AiOutlinePlus } from "react-icons/ai";
 
 export const Communities = () => {
     const [communities, setCommunities] = useState([]);
@@ -34,24 +36,32 @@ export const Communities = () => {
         }).finally(()=>{
             setLoading(false);
         });
+        if(process.env.NODE_ENV === 'development'){
+            setCommunities(mockData.communities());
+        }
     }, []);
 
-    if(loading) return <Loader center/>
+    if(loading) return <Loader keepAlive center/>
 
     return (
-        <div className="container">
-            <div className="search-row mb-3">
-                <div className="my-3 d-inline-block border border-light rounded-3">
-                    <div className="d-flex align-items-stretch align-items-center w-auto">
-                        <input onKeyUp={searchCommunities} className="form-control bg-transparent shadow-none border-0 pe-1" placeholder="Search..." type="search" />
-                        <div className="d-flex align-items-center">
-                            <IoSearchOutline className="fs-4 mx-2"/>
+        <div className="container mb-5">
+            <div className="search-row mb-5">
+                <div className="d-flex flex-wrap align-items-center justify-content-between gap-3 my-3">
+                    <div className="d-inline-block border bg-white rounded-pill overflow-hidden">
+                        <div className="d-flex align-items-stretch align-items-center w-auto">
+                            <input onKeyUp={searchCommunities} className="form-control bg-transparent shadow-none border-0 pe-1" placeholder="Search by name, email, or ID..." type="search" />
+                            <div className="d-flex align-items-center">
+                                <IoSearchOutline className="fs-4 mx-2"/>
+                            </div>
                         </div>
                     </div>
+                    <button 
+                        onClick={()=>navigate(routes.susu().nested().newCommunity())} 
+                        className="d-flex align-items-center btn btn-sm border btn-light text-primary py-1 px-3 d-block shadow-sm rounded-pill"
+                    ><IoAdd className="fs-2 me-2"/>New</button>
                 </div>
-                <button onClick={()=>navigate(routes.susu().nested().newCommunity())} className="d-flex align-items-center btn d-block shadow-none"><IoAdd className="me-2"/>Create Community</button>
             </div>
-            <div className="row row-with-search-above">
+            <div className="row">
                 {communities.map((community) => (
                     <CommunityCard community={community} key={community.id}/>
                 ))}

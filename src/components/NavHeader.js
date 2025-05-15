@@ -8,9 +8,10 @@ import { LuGroup } from "react-icons/lu";
 import { IoChatbubbles } from "react-icons/io5";
 import { DashboardOptionButton } from "./DashboardOptionButton";
 import { MdDashboard } from "react-icons/md";
+import { IoPeopleSharp } from "react-icons/io5";
 
 export const NavHeader = () =>{
-    const { signOut } = useAuth();
+    const { user, signOut } = useAuth();
 
     const navigate = useNavigate();
 
@@ -21,6 +22,11 @@ export const NavHeader = () =>{
             onClick: ()=>navigate(routes.susu().nested().profile()),
             bg: 'primary'
         },{
+            title: 'Members',
+            icon: IoPeopleSharp,
+            onClick: ()=>navigate(routes.susu().nested().memberList()),
+            bg: 'dark'
+        },{
             title: 'New Community',
             icon: LuGroup,
             onClick: ()=>navigate(routes.susu().nested().newCommunity()),
@@ -28,7 +34,7 @@ export const NavHeader = () =>{
         },{
             title: 'Community Hub',
             icon: FaObjectUngroup,
-            onClick: ()=>navigate(routes.susu().nested().associateCommunities()),
+            onClick: ()=>navigate(routes.susu().nested().associateCommunities(user.id)),
             bg: 'warning'
         },{
             title: 'Chats',
@@ -56,7 +62,7 @@ export const NavHeader = () =>{
                     <div className="h1">Track your savings in real-time</div>
                     <div className="d-flex gap-3 align-items-center justify-content-center">
                         <div>A financial tool for modern communities</div>
-                        <DashboardOptionButton className="btn btn-sm btn-light d-flex align-items-center gap-1">
+                        <DashboardOptionButton className="btn btn-sm btn-outline-light d-flex align-items-center gap-1">
                             <MdDashboard />
                             <span>Dashboard</span>
                         </DashboardOptionButton>
@@ -65,7 +71,7 @@ export const NavHeader = () =>{
             </div>
             <div className="d-flex flex-wrap justify-content-center pt-2">
                 {quickLinks.map((link, key)=>(
-                    <div className="small text-center" style={{minWidth: '130px', maxWidth: '130px'}} key={key}>
+                    <div className="small text-center mb-3" style={{minWidth: '130px', maxWidth: '130px'}} key={key}>
                         <button onClick={link.onClick} className={`rounded-circle p-2 btn btn-${link.bg}`}><link.icon className="fs-3"/></button>
                         <div className="small">{link.title}</div>
                     </div>

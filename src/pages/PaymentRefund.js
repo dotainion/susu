@@ -5,6 +5,7 @@ import paymentImg from '../images/card-payment.png';
 import $ from 'jquery';
 import { ParseError } from '../utils/ParseError';
 import { Loader } from '../components/Loader';
+import { useLayout } from '../layout/Layout';
 
 const TYPE = {
     FULL: 'FULL',
@@ -12,6 +13,8 @@ const TYPE = {
 }
 
 export const PaymentRefund = () => {
+    const { setParams } = useLayout();
+    
     const [errors, setErrors] = useState();
     const [loading, setLoading] = useState(false);
     const [contribution, setContribution] = useState();
@@ -69,7 +72,7 @@ export const PaymentRefund = () => {
         });
     }, []);
 
-    if(!contribution) return <Loader center/>
+    if(!contribution) return <Loader keepAlive center/>
 
     return (
         <div className="container">

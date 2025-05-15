@@ -10,7 +10,7 @@ import { Member } from "../pages/Member";
 import { routes } from "../routes/Routes";
 import { ViewCommunity } from "../pages/ViewCommunity";
 import { useAuth } from "../provider/AuthProvider";
-import { ContributionAndPayments } from "../pages/ContributionAndPayments";
+import { Contributors } from "../pages/Contributors";
 import { UpdateMemberSusuWallet } from "../pages/UpdateMemberSusuWallet";
 import { Schedule } from "../pages/Schedule";
 import { MemberSusuHistory } from "../pages/MemberSusuHistory";
@@ -46,7 +46,7 @@ export const SusuRouter = () =>{
         <Route path={routes.susu().newCommunity()} element={<NewCommunity/>} />
         <Route path={routes.susu().memberList()} element={<MembersList/>} />
         <Route path={routes.susu().member()} element={<Member/>} />
-        <Route path={routes.susu().contributionAndPayments()} element={<ContributionAndPayments/>} />
+        <Route path={routes.susu().contributors()} element={<Contributors/>} />
         <Route path={routes.susu().schedule()} element={<Schedule/>} />
         <Route path={routes.susu().updateMemberSusuWallet()} element={<UpdateMemberSusuWallet/>} />
         <Route path={routes.susu().memberSusuHistory()} element={<MemberSusuHistory/>} />

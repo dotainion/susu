@@ -3,6 +3,7 @@ namespace src\module\communities\logic;
 
 use tools\infrastructure\Collector;
 use src\module\communities\repository\CommunityRepository;
+use src\module\posts\logic\ListReaction;
 use src\module\susu\logic\ListSusu;
 use src\module\user\logic\ListUsers;
 
@@ -11,12 +12,14 @@ class BindMembersToCommunities{
     protected ListCommunityLinks $communityLinks;
     protected ListUsers $users;
     protected ListSusu $susus;
+    protected ListReaction $reactions;
 
     public function __construct(){
         $this->repo = new CommunityRepository();
         $this->communityLinks = new ListCommunityLinks();
         $this->users = new ListUsers();
         $this->susus = new ListSusu();
+        $this->reactions = new ListReaction();
     }
 
     public function bindRequirements(Collector &$communities):void{
@@ -24,6 +27,7 @@ class BindMembersToCommunities{
         $membersIdArray = $links->attrArray('memberId');
         $members = $this->users->usersByIdArray($membersIdArray);
         $susus = $this->susus->activeByCommunityIdArray($communities->idArray());
+        $reactions = $this->reactions->byTargetIdArray($communities->idArray());
 
         foreach($communities->list() as $community){
             $membersIdArray = [];
@@ -44,12 +48,12 @@ class BindMembersToCommunities{
             if($memberCollector->hasItem()){
                 $community->setMembers($memberCollector);
             }
-            foreach($susus->list() as $susu){
-                if($susu->communityId()->toString() === $community->id()->toString()){
-                    $community->setSusu($susu);
-                    break;
-                }
+            $susuCollector = $susus->filter('communityId', $community->id()->toString());
+            if($susuCollector->hasItem()){
+                $community->setSusu($susuCollector->first());
             }
+            $reactionCollector = $reactions->filter('targetId', $community->id()->toString());
+            $community->likes()->mergeCollection($reactionCollector);
         }
     }
 }
