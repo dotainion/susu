@@ -23,7 +23,7 @@ class AddSusuRefundService extends Service{
         $this->fetchContribution = new FetchContribution();
     }
     
-    public function process($susuId, $memberId, $amount, $contributionId, $type){
+    public function process($susuId, $memberId, $amount, $contributionId, $reason, $type){
         Assert::validUuid($susuId, 'Susu not found.');
         Assert::validUuid($memberId, 'Member not found.');
 
@@ -35,6 +35,7 @@ class AddSusuRefundService extends Service{
             'amount' => $amount,
             'contributionId' => $contributionId,
             'setDescription' => null,
+            'reason' => $reason,
             'type' => $type
         ]);
 

@@ -49,7 +49,7 @@ export const AssociateCommunities = () => {
         setCommunities((ownerCommunities)=>[...ownerCommunities, ...memberCommunities.filter((community)=>!ownerCommunities.find((c)=>c.id === community.id))]);
     }, [memberCommunities]);
 
-    if(loading) return <Loader keepAlive center/>
+    if(loading) return <Loader show/>
 
     return (
         <div className="container mb-5">

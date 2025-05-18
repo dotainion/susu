@@ -87,6 +87,9 @@ class CommunityRepository extends Repository{
         if(isset($where['hide'])){
             $this->where()->eq('hide', (int)$where['hide']);
         }
+        if($this->request()->pagination()->limit()){
+            $this->pagination()->set($this->request()->pagination()->get());
+        }
         $this->execute();
         return $this->factory->map(
             $this->results()

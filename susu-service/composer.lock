@@ -111,12 +111,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dotainion/security-and-tools.git",
-                "reference": "334bb1fa182c22f35e61b7a7b3f479fc8f3c2fc0"
+                "reference": "5726719964a629d279c016d80dd820191ddc76dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dotainion/security-and-tools/zipball/334bb1fa182c22f35e61b7a7b3f479fc8f3c2fc0",
-                "reference": "334bb1fa182c22f35e61b7a7b3f479fc8f3c2fc0",
+                "url": "https://api.github.com/repos/dotainion/security-and-tools/zipball/5726719964a629d279c016d80dd820191ddc76dd",
+                "reference": "5726719964a629d279c016d80dd820191ddc76dd",
                 "shasum": ""
             },
             "require": {
@@ -145,7 +145,7 @@
                 "issues": "https://github.com/dotainion/security-and-tools/issues",
                 "source": "https://github.com/dotainion/security-and-tools/tree/v1.0.0"
             },
-            "time": "2025-05-13T05:05:18+00:00"
+            "time": "2025-05-16T20:31:16+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",

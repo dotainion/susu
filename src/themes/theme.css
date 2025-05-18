@@ -439,6 +439,41 @@ header{
 .rounded-bottom-start-3 {
     border-bottom-left-radius: var(--bs-border-radius-lg);
 }
+
+.three-dot-loader {
+    display: inline-block;
+}
+  
+.dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 0 4px;
+    background-color: var(--bg-secondary);
+    border-radius: 50%;
+    animation: dotBounce 1s infinite ease-in-out;
+}
+  
+.dot:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+  
+@keyframes dotBounce {
+    0%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-8px); }
+}
+  
+.shake {
+    animation: shake 0.3s ease-in-out;
+}
   
 @keyframes shake {
     0% { transform: translateX(0); }
@@ -446,10 +481,6 @@ header{
     50% { transform: translateX(4px); }
     75% { transform: translateX(-4px); }
     100% { transform: translateX(0); }
-}
-  
-.shake {
-    animation: shake 0.3s ease-in-out;
 }
 
 @media (max-width: 576px) {

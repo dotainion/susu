@@ -7,12 +7,12 @@ export class Community{
         return await this.api.get('/fetch/community', {id});
     }
 
-    async search(value){
-        return await this.api.get('/search/communities', {value});
+    async search(data){
+        return await this.api.get('/search/communities', data);
     }
 
-    async communities(){
-        return await this.api.get('/list/communities', null);
+    async communities(limit=null, offset=null){
+        return await this.api.get('/list/communities', {limit, offset});
     }
 
     async memberCommunities(memberId){

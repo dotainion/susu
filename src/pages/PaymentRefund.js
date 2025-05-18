@@ -6,6 +6,7 @@ import $ from 'jquery';
 import { ParseError } from '../utils/ParseError';
 import { Loader } from '../components/Loader';
 import { useLayout } from '../layout/Layout';
+import { mockData } from '../contents/MockData';
 
 const TYPE = {
     FULL: 'FULL',
@@ -16,9 +17,10 @@ export const PaymentRefund = () => {
     const { setParams } = useLayout();
     
     const [errors, setErrors] = useState();
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [contribution, setContribution] = useState();
     const [amount, setAmount] = useState();
+    const [reason, setReason] = useState();
 
     const params = useParams();
     const navigate = useNavigate();
@@ -41,6 +43,7 @@ export const PaymentRefund = () => {
                 susuId: params.susuId,
                 memberId: params.memberId,
                 amount: amount,
+                reason: reason,
                 contributionId: contribution.id,
                 type: 'Card'
             });
@@ -56,7 +59,7 @@ export const PaymentRefund = () => {
         if(e.target.value === TYPE.FULL){
             $(partialElementRef.current).hide('fast');
             $(partialElementRef.current).find('input').attr('required', true);
-            setAmount(null);
+            setAmount(contribution.attributes.contribution);
         }else if (e.target.value === TYPE.PARTIAL){
             $(partialElementRef.current).show('fast');
             $(partialElementRef.current).find('input').removeAttr('required');
@@ -67,12 +70,28 @@ export const PaymentRefund = () => {
     useEffect(() => {
         api.contribution.contribution().then((response)=>{
             setContribution(response.data.data[0]);
+            setAmount(response.data.data[0].attributes.contribution);
         }).catch((error)=>{
             setErrors(new ParseError().message(error));
+        }).finally(()=>{
+            setLoading(false);
         });
+        if(process.env.NODE_ENV === 'development'){
+            const contribute = mockData.contribution();
+            setContribution(contribute);
+            setAmount(contribute.attributes.contribution);
+        }
     }, []);
 
-    if(!contribution) return <Loader keepAlive center/>
+    if(loading) return <Loader show/>
+
+    if(!contribution) return(
+        <div className='container'>
+            <div className='mt-5 alert alert-danger border-0'>
+                <div>Contribution not found.</div>
+            </div>
+        </div>
+    )
 
     return (
         <div className="container">
@@ -104,7 +123,7 @@ export const PaymentRefund = () => {
                             <input onChange={onTypeChange} style={{width: '20px', height: '20px'}} name="payment-amount" value={TYPE.FULL} type="radio" required/>
                             <span className="ms-2">Full refund ({contribution.attributes.contribution})</span>
                         </label>
-                        <div>
+                        <div className="mb-3">
                             <label className="d-flex align-items-center py-1">
                                 <input onChange={onTypeChange} style={{width: '20px', height: '20px'}} name="payment-amount" value={TYPE.PARTIAL} type="radio" required/>
                                 <span className="ms-2">Partial refund</span>
@@ -114,6 +133,7 @@ export const PaymentRefund = () => {
                                 <div className="small text-muted">Please enter the partial amount to be refunded.</div>
                             </div>
                         </div>
+                        <textarea onChange={(e)=>setReason(e.target.value)} className="form-control resize-none bg-transparent" placeholder="Add reason for refund." />
 
                         {errors ? <div className="py-2 text-danger">{errors}</div> : null}
 

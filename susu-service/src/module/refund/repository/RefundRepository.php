@@ -23,18 +23,20 @@ class RefundRepository extends Repository{
             ->column('amount', $refund->amount())
             ->column('contributionId', $refund->contributionId())
             ->column('description', $refund->description())
+            ->column('reason', $refund->reason())
             ->column('type', $refund->type());
         $this->execute();
     }
     
     public function edit(Refund $refund):void{
-        $this->insert('refund') 
+        $this->update('refund') 
             ->column('susuId', $this->uuid($refund->susuId()))  
             ->column('memberId', $this->uuid($refund->memberId()))       
             ->column('date', $refund->date()->toString())
             ->column('amount', $refund->amount())
             ->column('contributionId', $refund->contributionId())
             ->column('description', $refund->description())
+            ->column('reason', $refund->reason())
             ->column('type', $refund->type())
             ->where()->eq('id', $this->uuid($refund->id()));
         $this->execute();

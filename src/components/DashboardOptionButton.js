@@ -58,7 +58,7 @@ export const DashboardOptionButton = ({className, autoClose, children}) =>{
                 
                         {
                             loading
-                            ? <Loader keepAlive />
+                            ? <Loader show />
                             : <div>
                                 {
                                     susus.length ?

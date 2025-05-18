@@ -26,7 +26,7 @@ class PayoutRepository extends Repository{
     }
     
     public function edit(Payout $payout):void{
-        $this->insert('payout') 
+        $this->update('payout') 
             ->column('susuId', $this->uuid($payout->susuId()))  
             ->column('memberId', $this->uuid($payout->memberId()))       
             ->column('date', $payout->date()->toString())

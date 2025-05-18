@@ -803,13 +803,12 @@ class MockData{
                 message: 'Hello world',
                 read: false,
                 hide: false,
-                isCurrentUser: false,
                 user: this.user(),
             }
         }
     }
 
-    messages(qty=15){
+    messages(qty=30){
         return [...Array(qty)].map(()=>this.message());
     }
 
@@ -828,6 +827,49 @@ class MockData{
 
     messangers(qty=15){
         return [...Array(qty)].map(()=>this.messanger());
+    }
+
+    contribution(min=10, max=50){
+        this.refundContribution = !this.refundContribution;
+        return{
+            id: uuidv4(),
+            attributes: {
+                susuId: uuidv4(),
+                memberId: uuidv4(),
+                date: utils.date.dbFormat(new Date()),
+                user: this.user(),
+                description: 'Some description',
+                paymentIntentId: this.refundContribution ? '' : uuidv4(),
+                contribution: Math.floor(Math.random() * (max - min + 1)) + min,
+                type: 'contribution',
+            }
+        }
+    }
+
+    contributions(qty=30, min=10, max=50){
+        this.refundContribution = true;
+        return [...Array(qty)].map(()=>this.contribution(min, max));
+    }
+
+    refund(min=10, max=50){
+        return{
+            id: uuidv4(),
+            attributes: {
+                amount: Math.floor(Math.random() * (max - min + 1)) + min,
+                contributionId: uuidv4(),
+                susuId: uuidv4(),
+                memberId: uuidv4(),
+                date: utils.date.dbFormat(new Date()),
+                user: this.user(),
+                description: 'Some refund description',
+                paymentIntentId: uuidv4(),
+                type: 'refund',
+            }
+        }
+    }
+
+    refunds(qty=30, min=10, max=50){
+        return [...Array(qty)].map(()=>this.refund(min, max));
     }
 }
 

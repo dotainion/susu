@@ -83,7 +83,7 @@ export const Community = () =>{
         });
     }, [location]);
 
-    if(loading) return <Loader keepAlive center />;
+    if(loading) return <Loader show />;
 
     if(!community || community.attributes.creatorId !== user.id){
         return(

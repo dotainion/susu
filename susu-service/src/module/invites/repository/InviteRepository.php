@@ -27,7 +27,7 @@ class InviteRepository extends Repository{
     }
     
     public function edit(Invite $invite):void{
-        $this->insert('invite') 
+        $this->update('invite') 
             ->column('memberId', $this->uuid($invite->memberId()))  
             ->column('targetId', $this->uuid($invite->targetId()))       
             ->column('date', $invite->date()->toString())

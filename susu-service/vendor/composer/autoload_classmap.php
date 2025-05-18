@@ -304,6 +304,7 @@ return array(
     'tools\\infrastructure\\Id' => $vendorDir . '/dotainion/security-tools/tools/infrastructure/Id.php',
     'tools\\infrastructure\\ImageHelper' => $vendorDir . '/dotainion/security-tools/tools/infrastructure/ImageHelper.php',
     'tools\\infrastructure\\NumberHelper' => $vendorDir . '/dotainion/security-tools/tools/infrastructure/NumberHelper.php',
+    'tools\\infrastructure\\Pagination' => $vendorDir . '/dotainion/security-tools/tools/infrastructure/Pagination.php',
     'tools\\infrastructure\\ParseConfig' => $vendorDir . '/dotainion/security-tools/tools/infrastructure/ParseConfig.php',
     'tools\\infrastructure\\Password' => $vendorDir . '/dotainion/security-tools/tools/infrastructure/Password.php',
     'tools\\infrastructure\\Period' => $vendorDir . '/dotainion/security-tools/tools/infrastructure/Period.php',

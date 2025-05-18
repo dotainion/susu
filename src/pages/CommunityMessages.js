@@ -8,6 +8,8 @@ import { useParams } from "react-router-dom";
 import { useLayout } from "../layout/Layout";
 import { mockData } from "../contents/MockData";
 import { PusherMessanger } from "../request/PusherMessanger";
+import { v4 as uuidv4 } from "uuid";
+import { utils } from "../utils/Utils";
 
 export const CommunityMessages = () =>{
     const { user } = useAuth();
@@ -30,9 +32,12 @@ export const CommunityMessages = () =>{
             event: 'message'
         }
         api.message.set(data).then((response)=>{
-            
+            setMessages((msgs)=>[...msgs.map((msg)=>{
+                if(response.data.data[0].id === msg.id) return response.data.data[0];
+                return msg;
+            })]);
         }).catch((error)=>{
-
+            setMessages((msgs)=>[...msgs, {attributes: {...data, date: utils.date.dbFormat(new Date()), user}, id: uuidv4(), unsuccess: true}]);
         });
     }
 
@@ -54,6 +59,7 @@ export const CommunityMessages = () =>{
         });
         const pusher = new PusherMessanger({subscribe: true});
         pusher.on(params.communityId, 'message', (message)=>{
+            if(messages.find((msg)=>msg.id === message.id)) return;
             setMessages((msgs)=>[...msgs, message]);
         });
         if(process.env.NODE_ENV === 'development'){
@@ -69,6 +75,10 @@ export const CommunityMessages = () =>{
             messages={messages}
             messageToName={community?.attributes?.name || ''}
             sendMessage={sendMessage}
+            pusherEvent={{
+                channel: params.communityId,
+                event: 'message'
+            }}
         />
     )
 }

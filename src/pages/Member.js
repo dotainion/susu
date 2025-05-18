@@ -68,7 +68,7 @@ export const Member = () => {
     }, []);
 
     if(loading){
-        return <Loader center keepAlive />;
+        return <Loader show />;
     }
 
     return (
@@ -89,10 +89,10 @@ export const Member = () => {
                     <div className="small text-muted">{member.attributes.bio}</div>
                 </div>
                 <div className="d-flex flex-wrap gap-2 text-nowrap pt-3 w-auto">
-                    <button onClick={()=>navigate(routes.susu().nested().messages(member.id))} className="d-flex align-items-center gap-2 btn btn-sm btn-primary shadow-none"><TiMessages/>Message</button>
-                    <button onClick={()=>window.location.href = `mailto:${member.attributes.email}`} className="d-flex align-items-center gap-2 btn btn-sm btn-primary shadow-none"><MdEmail/>Email</button>
-                    <button onClick={()=>navigate(routes.susu().nested().communities())} className="d-flex align-items-center gap-2 btn btn-sm btn-primary shadow-none"><MdGroups/>Communities</button>
-                    <button className="d-flex align-items-center gap-2 btn btn-sm btn-primary shadow-none" disabled><MdGroups/>Associate Communities</button>
+                    <button onClick={()=>navigate(routes.susu().nested().messages(member.id))} className="d-flex align-items-center gap-2 btn btn-sm btn-outline-primary rounded-pill px-3 shadow-none"><TiMessages/>Message</button>
+                    <button onClick={()=>window.location.href = `mailto:${member.attributes.email}`} className="d-flex align-items-center gap-2 btn btn-sm btn-outline-primary rounded-pill px-3 shadow-none"><MdEmail/>Email</button>
+                    <button onClick={()=>navigate(routes.susu().nested().communities())} className="d-flex align-items-center gap-2 btn btn-sm btn-outline-primary rounded-pill px-3 shadow-none"><MdGroups/>Communities</button>
+                    <button className="d-flex align-items-center gap-2 btn btn-sm btn-outline-primary rounded-pill px-3 shadow-none" disabled><MdGroups/>Associate Communities</button>
                 </div>
             </div>
 
@@ -157,7 +157,7 @@ export const Member = () => {
                         ))}
                         <div className="d-flex justify-content-start mt-3">
                             {communities.length > 5 && (
-                                <button onClick={()=>navigate(routes.susu().nested().associateCommunities(params.memberId))} className="btn btn-sm btn-primary">See {communities.length - communities.slice(0, 5).length} more...</button>
+                                <button onClick={()=>navigate(routes.susu().nested().associateCommunities(params.memberId))} className="btn btn-sm btn-outline-primary rounded-pill px-3">See {communities.length - communities.slice(0, 5).length} more...</button>
                             )}
                         </div>
 

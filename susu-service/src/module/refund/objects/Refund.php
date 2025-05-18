@@ -8,6 +8,7 @@ use src\infrastructure\Payment;
 class Refund extends Payment{
     protected string $amount;
     protected Id $contributionId;
+    protected string $reason;
     protected string $type;
 
     public function __construct(){
@@ -17,6 +18,10 @@ class Refund extends Payment{
 
     public function amount():string{
         return $this->amount;
+    }
+
+    public function reason():string{
+        return $this->reason;
     }
 
     public function contributionId():Id{
@@ -32,5 +37,9 @@ class Refund extends Payment{
 
     public function setContributionId(string $contributionId):void{
         $this->contributionId->set($contributionId);
+    }
+
+    public function setReason(string $reason):void{
+        $this->reason = $reason;
     }
 }

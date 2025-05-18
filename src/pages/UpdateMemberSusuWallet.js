@@ -166,22 +166,14 @@ export const UpdateMemberSusuWallet = () =>{
         setHistory([...refunds, ...payouts, ...contributions].sort((a, b)=>new Date(a.attributes.date) - new Date(b.attributes.date)).reverse());
     }, [contributions, payouts, refunds]);
 
-
-    const balance = 2450.75;
-    const transactions = [
-      { id: 1, type: "deposit", amount: 1500, date: "2025-05-01", method: "Bank Transfer" },
-      { id: 2, type: "withdrawal", amount: 500, date: "2025-05-03", method: "Mobile Money" },
-      { id: 3, type: "transfer", amount: 200, date: "2025-05-05", recipient: "John Doe" },
-    ];
-
-    if(loading) return <Loader keepAlive center/>
+    if(loading) return <Loader show/>
 
     if(!susu || !user || susu?.attributes?.owner?.id !== user?.id){
-        /*return(
+        return(
             <div className="container my-5">
                 <div className="alert alert-danger h4">You are not authorize to assign schedules</div>
             </div>
-        )*/
+        )
     }
 
     return(
@@ -254,7 +246,7 @@ export const UpdateMemberSusuWallet = () =>{
                     </div>
                     <div className="d-flex justify-content-center align-items-center position-relative">
                         <div className="me-5">View Details</div>
-                        <div className="d-flex flex-column">
+                        <div className="d-flex flex-column flex-fill">
                             <div className="small text-muted fw-bold">Cash payment</div>
                             <div className="dropdown">
                                 <button className="btn btn-sm bg-sidebar w-100 px-3 mb-1" id="contribution1" data-bs-toggle="dropdown" aria-expanded="false">Add Contribution</button>

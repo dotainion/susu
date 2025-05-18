@@ -16,8 +16,8 @@ class Message implements IObjects{
     protected string $message;
     protected bool $read;
     protected bool $hide;
-    protected bool $isCurrentUser=false;
     protected ?User $user=null;
+    protected ?bool $fromCommunity=false;
 
     public function __construct(){
         $this->id = new Id();
@@ -53,12 +53,12 @@ class Message implements IObjects{
         return $this->hide;
     }
 
-    public function isCurrentUser():bool{
-        return $this->isCurrentUser;
-    }
-
     public function user():?User{
         return $this->user;
+    }
+
+    public function fromCommunity():false{
+        return $this->fromCommunity;
     }
 
     public function setId(string $id):void{
@@ -92,11 +92,11 @@ class Message implements IObjects{
         $this->hide = $hide;
     }
 
-    public function setIsCurrentUser(bool $isCurrentUser):void{
-        $this->isCurrentUser = $isCurrentUser;
-    }
-
     public function setUser(User $user):void{
         $this->user = $user;
+    }
+
+    public function setFromCommunity(bool $fromCommunity):void{
+        $this->fromCommunity = $fromCommunity;
     }
 }

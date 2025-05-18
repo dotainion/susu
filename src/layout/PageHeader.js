@@ -4,12 +4,12 @@ import { menu } from "framer-motion/client";
 import { routes } from "../routes/Routes";
 import { useAuth } from "../provider/AuthProvider";
 import { useLocation, useNavigate, useParams, matchPath } from "react-router-dom";
-import { IoNotifications } from "react-icons/io5";
 import { CgCommunity } from "react-icons/cg";
 import { Fragment, useEffect, useLayoutEffect, useState } from "react";
 import { MdPeople } from "react-icons/md";
 import { useLayout } from "./Layout";
 import { MdKeyboardCommandKey } from "react-icons/md";
+import { NotificationAlert } from "../components/NotificationAlert";
 
 export const PageHeader = () =>{
     const { user, signOut } = useAuth();
@@ -97,7 +97,7 @@ export const PageHeader = () =>{
                             <span>{menu.title}</span>
                         </button>
                     ))}
-                    <IoNotifications className="mx-3"/>
+                    <NotificationAlert className="mx-3"/>
                 </div>
             </header>
         </div>

@@ -99,13 +99,7 @@ export const ContactUs = () =>{
                 </div>
             </div>
 
-            {loading && (
-                <div className="position-absolute top-0 start-0 w-100 vh-100 bg-dark bg-opacity-10">
-                    <div className="d-flex align-items-center justify-content-center w-100 h-100">
-                        <Loader keepAlive />
-                    </div>
-                </div>
-            )}
+            {loading && <Loader show />}
         </LandingLayout>
     )
 }

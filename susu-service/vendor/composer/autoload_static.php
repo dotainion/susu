@@ -403,6 +403,7 @@ class ComposerStaticInit71120c75292eae0dbbda1b628875a0f1
         'tools\\infrastructure\\Id' => __DIR__ . '/..' . '/dotainion/security-tools/tools/infrastructure/Id.php',
         'tools\\infrastructure\\ImageHelper' => __DIR__ . '/..' . '/dotainion/security-tools/tools/infrastructure/ImageHelper.php',
         'tools\\infrastructure\\NumberHelper' => __DIR__ . '/..' . '/dotainion/security-tools/tools/infrastructure/NumberHelper.php',
+        'tools\\infrastructure\\Pagination' => __DIR__ . '/..' . '/dotainion/security-tools/tools/infrastructure/Pagination.php',
         'tools\\infrastructure\\ParseConfig' => __DIR__ . '/..' . '/dotainion/security-tools/tools/infrastructure/ParseConfig.php',
         'tools\\infrastructure\\Password' => __DIR__ . '/..' . '/dotainion/security-tools/tools/infrastructure/Password.php',
         'tools\\infrastructure\\Period' => __DIR__ . '/..' . '/dotainion/security-tools/tools/infrastructure/Period.php',

@@ -20,6 +20,7 @@ class RefundFactory extends Collector{
         $history->setAmount($record['amount']);
         $history->setDescription((string)$record['description']);
         $history->setContributionId($this->uuid($record['contributionId']));
+        $history->setReason((string)($record['reason'] ?? ''));
         $history->setType($record['type']);
         return $history;
     }

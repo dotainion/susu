@@ -27,7 +27,7 @@ class ContributionRepository extends Repository{
     }
     
     public function edit(Contribution $contribution):void{
-        $this->insert('contribution') 
+        $this->update('contribution') 
             ->column('susuId', $this->uuid($contribution->susuId()))  
             ->column('memberId', $this->uuid($contribution->memberId()))       
             ->column('date', $contribution->date()->toString())

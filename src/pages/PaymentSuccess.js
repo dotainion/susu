@@ -23,7 +23,7 @@ export const PaymentSuccess = () =>{
 
     if(errors) return <div className="alert alert-danger my-5">{errors}</div>
 
-    if(!receipt || !charge) return <Loader keepAlive center/>
+    if(!receipt || !charge) return <Loader show/>
 
     return(
         <div className="container d-flex justify-content-center align-items-center vh-100">

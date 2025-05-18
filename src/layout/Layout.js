@@ -28,7 +28,7 @@ export const Layout = ({children}) =>{
         <Context.Provider value={value}>
             <div className="d-sm-flex d-block vh-100 w-100">
                 <Sidebar/>
-                <div className="overflow-auto w-100">
+                <div className="overflow-auto w-100" data-layout-scroll-container>
                     <PageHeader/>
                     {children}
                 </div>

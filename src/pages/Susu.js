@@ -66,7 +66,7 @@ export const Susu = () =>{
         });
     }, [location]);
 
-    if(loading) return <Loader keepAlive center />;
+    if(loading) return <Loader show />;
 
     return(
         <div className="container mb-5">

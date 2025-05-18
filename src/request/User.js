@@ -15,8 +15,8 @@ export class User{
         return await this.api.get('/list/users', null);
     }
 
-    async search(value){
-        return await this.api.get('/search/users', {value});
+    async search(data){
+        return await this.api.get('/search/users', data);
     }
 
     async address(id){

@@ -51,7 +51,7 @@ export const MemberSusuHistory = () =>{
         setHistories([...payouts, ...refunds, ...contributions].sort((a, b)=>new Date(a.attributes.date) - new Date(b.attributes.date)));
     }, [payouts, refunds, contributions]);
 
-    if(loading) return <Loader keepAlive center/>
+    if(loading) return <Loader show/>
 
     return(
         <div className="container">

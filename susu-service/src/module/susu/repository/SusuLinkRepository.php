@@ -23,7 +23,7 @@ class SusuLinkRepository extends Repository{
     }
     
     public function edit(SusuLink $link):void{
-        $this->insert('susuLink') 
+        $this->update('susuLink') 
             ->column('position', $link->position())       
             ->where()
             ->eq('memberId', $this->uuid($link->memberId()))

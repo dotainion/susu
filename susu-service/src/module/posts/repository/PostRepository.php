@@ -26,7 +26,7 @@ class PostRepository extends Repository{
     }
     
     public function edit(Post $post):void{
-        $this->insert('post')
+        $this->update('post')
             ->column('authorId', $this->uuid($post->authorId()))
             ->column('parentId', $this->uuid($post->parentId()))
             ->column('communityId', $this->uuid($post->communityId()))

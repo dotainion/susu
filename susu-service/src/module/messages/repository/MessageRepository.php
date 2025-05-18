@@ -27,7 +27,7 @@ class MessageRepository extends Repository{
     }
     
     public function edit(Message $message):void{
-        $this->insert('message') 
+        $this->update('message') 
             ->column('fromId', $this->uuid($message->fromId()))  
             ->column('toId', $this->uuid($message->toId()))
             ->column('date', $message->date()->toString())

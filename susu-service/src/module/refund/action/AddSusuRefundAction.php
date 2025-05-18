@@ -19,6 +19,7 @@ class AddSusuRefundAction extends Request implements IAction{
             $this->get('memberId'),
             $this->get('amount'),
             $this->get('contributionId'),
+            $this->get('reason'),
             $this->get('type')
         );
     }

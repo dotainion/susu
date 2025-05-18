@@ -115,6 +115,7 @@ class Schema extends ToolsSchema{
             ->column('amount')->string()
             ->column('description')->paragraph()
             ->column('contributionId')->bindary()
+            ->column('reason')->string()
             ->column('type')->string()
             ->column('date')->timestamp();
         return $this->sql->execute();
