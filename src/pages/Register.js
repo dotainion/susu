@@ -6,16 +6,17 @@ import { useState } from "react";
 import { ParseError } from "../utils/ParseError";
 import logo from "../images/logo.png";
 import { Header } from "../layout/Header";
+import { useAuth } from "../provider/AuthProvider";
 
 export const Register = () =>{
+    const { signUp } = useAuth();
+
     const [error, setError] = useState();
-    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
     const register = (e) =>{
         e.preventDefault();
-        setLoading(true);
         const formData = new FormData(e.target);
         const data = {
             firstName: formData.get('firstName'),
@@ -23,14 +24,15 @@ export const Register = () =>{
             email: formData.get('email'),
             phoneNumber: formData.get('phoneNumber'),
             password: formData.get('password'),
-            confirmPassword: formData.get('confirmPassword')
+            confirmPassword: formData.get('confirmPassword'),
+            session: {
+                authenticate: 'auto'
+            }
         };
-        api.auth.signUp(data).then((response)=>{
-            navigate(routes.susu().default());
-        }).catch((error)=>{
-            setError(new ParseError().message(error));
-        }).finally(()=>{
-            setLoading(false);
+        signUp(data, (status)=>{
+            if(status.loading) return setError(null);
+            if(status.error) return setError(new ParseError().message(status.error));
+            navigate(routes.susu().profile());
         });
     }
     

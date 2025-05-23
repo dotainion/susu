@@ -30,10 +30,7 @@ export const Messages = () =>{
             event: 'message'
         }
         api.message.set(data).then((response)=>{
-            setMessages((msgs)=>[...msgs.map((msg)=>{
-                if(response.data.data[0].id === msg.id) return response.data.data[0];
-                return msg;
-            })]);
+            
         }).catch((error)=>{
             setMessages((msgs)=>[...msgs, {attributes: {...data, date: utils.date.dbFormat(new Date()), user}, id: uuidv4(), unsuccess: true}]);
         });

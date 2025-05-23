@@ -21,7 +21,8 @@ class CreateUserAction extends Request implements IAction{
             $this->get('phoneNumber'),
             $this->get('gender'),
             $this->get('password'),
-            $this->get('confirmPassword')
+            $this->get('confirmPassword'),
+            $this->get('session')
         );
     }
 }

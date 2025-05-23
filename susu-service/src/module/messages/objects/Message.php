@@ -57,7 +57,7 @@ class Message implements IObjects{
         return $this->user;
     }
 
-    public function fromCommunity():false{
+    public function fromCommunity():bool{
         return $this->fromCommunity;
     }
 

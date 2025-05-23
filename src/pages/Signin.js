@@ -18,9 +18,8 @@ export const Signin = () =>{
         e.preventDefault();
         const data = new FormData(e.target);
         signIn(data.get('email'), data.get('password'), (status)=>{
-            if(status.error){
-                return setError(new ParseError().message(status.error));
-            }
+            if(status.loading) return setError(null);
+            if(status.error) return setError(new ParseError().message(status.error));
             navigate(routes.susu().default());
         });
     }

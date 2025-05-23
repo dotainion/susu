@@ -25,8 +25,6 @@ import { PaymentRefund } from "../pages/PaymentRefund";
 import { Schedule } from "../pages/Schedule";
 import { CommunityHeader } from "../components/CommunityHeader";
 import { CommunityFeeds } from "../components/CommunityFeeds";
-import img from "../images/group-bg-profile.png";
-import $ from "jquery";
 import { LikesAndComment } from "../components/LikesAndComment";
 import { utils } from "../utils/Utils";
 import { Draggable, Droppable } from "../components/DragAndDropUtils";
@@ -53,6 +51,8 @@ import { Search } from "../widgets/Search";
 import { InfiniteScrollContainer } from "../components/InfiniteScrollContainer";
 import { MessageBox } from "../components/MessageBox";
 import { FaMoneyBillWave } from 'react-icons/fa';
+import img from "../images/group-bg-profile.png";
+import $ from "jquery";
 
 export const Test = () =>{
     const [member, setMember] = useState();
@@ -74,7 +74,7 @@ export const Test = () =>{
 
     return(
         <div className="container">
-            <ContributionRefund />
+            
         </div>
     )
 }

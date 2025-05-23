@@ -241,7 +241,7 @@ const Message = ({msg, isCommunity, onUpdate}) =>{
                 <div className="d-none" style={{fontSize: '10px'}}>{msg.attributes.date}</div>
             </div>
             {error && (
-                <div className={`d-flex ${user.id === msg.attributes.user.id ? 'align-items-end' : 'align-items-start'}`}>
+                <div className={`d-flex flex-column ${user.id === msg.attributes.user.id ? 'align-items-end' : 'align-items-start'}`}>
                     <span className="user-select-none small bg-danger bg-opacity-10 rounded-1 px-2 text-danger">
                         <span>Server Error</span>
                         <span onClick={update} className="fw-semibold pointer text-decoration-underline ms-3">

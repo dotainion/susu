@@ -8,12 +8,14 @@ import { routes } from "../routes/Routes";
 import { useLocation, useNavigate } from "react-router-dom";
 import { mockData } from "../contents/MockData";
 import { SidebarProvider } from "../layout/SidebarProvider";
+import { Loader } from "../components/Loader";
 
 const Context = createContext();
 export const useAuth = () => useContext(Context);
 
 export const AuthProvider = ({children}) =>{
     const [loading, setLoading] = useState(true);
+    const [pending, setPending] = useState(false);
     const [user, setUser] = useState();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -22,21 +24,49 @@ export const AuthProvider = ({children}) =>{
 
     const alertIdRef = useRef('login-notification');
 
+    const setSuccess = (response, callback) =>{
+        token.set(response.data.data[0].attributes.token);
+        api.reInitializeAuthorizationHeader();
+        setUser(response.data.data[0]);
+        setIsAuthenticated(true);
+        callback({success: response});
+    }
+
+    const setUnsuccess = (error, callback) =>{
+        setUser(null);
+        setIsAuthenticated(false);
+        callback({error});
+    }
+
     const signIn = (email, password, callback) =>{
+        setPending(true);
+        callback({loading: true});
         api.auth.signIn(email, password).then((response)=>{
-            token.set(response.data.data[0].attributes.token);
-            api.reInitializeAuthorizationHeader();
-            setUser(response.data.data[0]);
-            setIsAuthenticated(true);
-            callback({success: response});
+            setSuccess(response, callback);
         }).catch((error)=>{
-            setUser(null);
-            setIsAuthenticated(false);
-            callback({error});
+            setUnsuccess(error, callback);
+        }).finally(()=>{
+            setPending(false);
+        });
+    }
+    
+    const signUp = (data, callback) =>{
+        setPending(true);
+        data['session'] = {
+            authenticate: 'auto'
+        }
+        callback({loading: true});
+        api.auth.signUp(data).then((response)=>{
+            setSuccess(response, callback);
+        }).catch((error)=>{
+            setUnsuccess(error, callback);
+        }).finally(()=>{
+            setPending(false);
         });
     }
 
     const signOut = () =>{
+        setPending(true);
         api.auth.logout().then((response)=>{
             token.set(null);
             setUser(null);
@@ -45,6 +75,8 @@ export const AuthProvider = ({children}) =>{
             token.set(null);
             setUser(null);
             setIsAuthenticated(false);
+        }).finally(()=>{
+            setPending(false);
         });
     }
 
@@ -76,6 +108,7 @@ export const AuthProvider = ({children}) =>{
         user,
         isAuthenticated,
         signIn,
+        signUp,
         signOut,
     }
 
@@ -83,7 +116,7 @@ export const AuthProvider = ({children}) =>{
         <Context.Provider value={value}>
             {
                 loading 
-                ? null 
+                ? <Loader show/> 
                 : <SidebarProvider>
                     {children}
                 </SidebarProvider>
@@ -100,6 +133,11 @@ export const AuthProvider = ({children}) =>{
                     </div>
                 </ModalOverlay>
             </div>
+            {pending && (
+                <div className="bg-primary bg-opacity-10 position-fixed top-0 start-0 w-100 vh-100" style={{zIndex: 9999999}}>
+                    <Loader show/>
+                </div>
+            )}
         </Context.Provider>
     )
 }
