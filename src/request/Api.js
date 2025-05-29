@@ -16,9 +16,11 @@ import { Email } from "./Email";
 import { Feed } from "./Feed";
 import { Likes } from "./Likes";
 import $ from "jquery";
+import { utils } from "../utils/Utils";
 
 export class Api{
     baseURL;
+    sessionURL = '/fetch/session';
 
     constructor(){
         this.initialize();
@@ -71,15 +73,14 @@ export class Api{
         return false;
     }
 
-    parseError(error){
-        if(process.env.NODE_ENV === 'development' || this.chechAuthNotification === 'off'){
+    parseError(route, error){
+        if(process.env.NODE_ENV === 'development' || route === this.sessionURL){
             throw error;
         }
-        const notification = $('#login-notification');
         if(error.status === 401 && !this.isAuthRoute()){
-            notification.show('fast');
+            utils.dom.loggedOutNotification().show('fast');
         }else{
-            notification.hide();
+            utils.dom.loggedOutNotification().hide();
         }
         throw error;
     }
@@ -88,7 +89,7 @@ export class Api{
         try{
             return await this.axios.post(route, data);
         }catch(error){
-            return this.parseError(error);
+            return this.parseError(route, error);
         }
     }
 
@@ -96,7 +97,7 @@ export class Api{
         try{
             return await this.axios.post(route, data);
         }catch(error){
-            return this.parseError(error);
+            return this.parseError(route, error);
         }
     }
 }

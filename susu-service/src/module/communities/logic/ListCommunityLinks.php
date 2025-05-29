@@ -25,7 +25,7 @@ class ListCommunityLinks{
     }
 
     public function byMemberIdArray(Array $memberIdArray):Collector{
-        if(empty($memberIdArray)){
+        if(empty($memberIdArray) && $this->repo->paginationIsEmpty()){
             return new Collector();
         }
         return $this->repo->listJoinCommunity([
@@ -34,7 +34,7 @@ class ListCommunityLinks{
     }
 
     public function communityLinksByIdArray(Array $communityIdArray):Collector{
-        if(empty($communityIdArray)){
+        if(empty($communityIdArray) && $this->repo->paginationIsEmpty()){
             return new Collector();
         }
         return $this->repo->listJoinCommunity([

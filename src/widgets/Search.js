@@ -19,7 +19,7 @@ export const Search = ({onSearch}) =>{
                         <MdOutlineFilterList className="text-dark fs-4" />
                     </button>
                     <ul className="dropdown-menu">
-                        <li><a onClick={()=>onSearch?.({target: {value: null}})} className="dropdown-item pointer">All</a></li>
+                        <li><a onClick={()=>onSearch?.({target: {value: null}})} className="dropdown-item pointer">Refresh</a></li>
                     </ul>
                 </div>
             </div>

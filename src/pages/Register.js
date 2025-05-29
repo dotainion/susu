@@ -32,7 +32,7 @@ export const Register = () =>{
         signUp(data, (status)=>{
             if(status.loading) return setError(null);
             if(status.error) return setError(new ParseError().message(status.error));
-            navigate(routes.susu().profile());
+            navigate(routes.susu().nested().profile());
         });
     }
     

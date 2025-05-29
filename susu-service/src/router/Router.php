@@ -1,7 +1,6 @@
 <?php
 namespace src\router;
 
-use InvalidArgumentException;
 use src\infrastructure\Repository;
 use tools\infrastructure\Https;
 use src\module\communities\action\FetchCommunityAction;

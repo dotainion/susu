@@ -83,6 +83,10 @@ class Dom {
     element;
     events = [];
 
+    loggedOutNotification = () =>{
+      return $('#login-notification');
+    }
+
     setScrollElement(element){
       if (!element || !(element instanceof HTMLElement)) {
         console.error('Element is not found or is not a valid HTML element.');

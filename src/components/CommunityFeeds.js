@@ -1,22 +1,21 @@
 import { Fragment, useEffect, useRef, useState } from "react";
-import ReactQuill from "react-quill";
-import 'react-quill/dist/quill.snow.css';
-import 'react-quill/dist/quill.bubble.css';
 import { useAuth } from "../provider/AuthProvider";
 import { MdSend } from "react-icons/md";
-import $ from "jquery";
 import { utils } from "../utils/Utils";
 import { api } from "../request/Api";
 import { ParseError } from "../utils/ParseError";
 import { useParams } from "react-router-dom";
 import { LikesAndComment } from "./LikesAndComment";
 import { mockData } from "../contents/MockData";
+import $ from "jquery";
+import ReactQuill from "react-quill";
+import 'react-quill/dist/quill.snow.css';
+import 'react-quill/dist/quill.bubble.css';
 
 const THEME = {
     BUBBLE: 'bubble',
     SNOW: 'snow'
 };
-    
 
 export const CommunityFeeds = ({community}) => {
     const [value, setValue] = useState('');

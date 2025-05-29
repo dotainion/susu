@@ -29,7 +29,7 @@ class ListCommunities{
     }
 
     public function byName(string $name):Collector{
-        if(empty($name)){
+        if(empty($name) && $this->repo->paginationIsEmpty()){
             return new Collector();
         }
         return $this->repo->listCommunities([
@@ -38,7 +38,7 @@ class ListCommunities{
     }
 
     public function byIdArray(array $communityIdArray):Collector{
-        if(empty($communityIdArray)){
+        if(empty($communityIdArray) && $this->repo->paginationIsEmpty()){
             return new Collector();
         }
         return $this->repo->listCommunities([

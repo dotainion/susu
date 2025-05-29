@@ -9,20 +9,19 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { mockData } from "../contents/MockData";
 import { SidebarProvider } from "../layout/SidebarProvider";
 import { Loader } from "../components/Loader";
+import { utils } from "../utils/Utils";
 
 const Context = createContext();
 export const useAuth = () => useContext(Context);
 
 export const AuthProvider = ({children}) =>{
+    const [user, setUser] = useState();
     const [loading, setLoading] = useState(true);
     const [pending, setPending] = useState(false);
-    const [user, setUser] = useState();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     const navigate = useNavigate();
     const location = useLocation();
-
-    const alertIdRef = useRef('login-notification');
 
     const setSuccess = (response, callback) =>{
         token.set(response.data.data[0].attributes.token);
@@ -83,7 +82,7 @@ export const AuthProvider = ({children}) =>{
     useLayoutEffect(()=>{
         const path = window.location.hash.replace('#', '');
         if([routes.signIn(), routes.register(), routes.landing()].includes(path) || path.includes('test')){
-            $(`#${alertIdRef.current}`).hide('fast');
+            utils.dom.loggedOutNotification().hide('fast');
         }
     }, [location]);
 
@@ -127,7 +126,7 @@ export const AuthProvider = ({children}) =>{
                     <div className="d-flex align-items-center w-100">
                         <div className="w-100">You are no longer logged in.</div>
                         <button onClick={()=>{
-                            $(`#${alertIdRef.current}`).hide('fast');
+                            utils.dom.loggedOutNotification().hide('fast');
                             navigate(routes.signIn());
                         }} className="btn btn-sm btn-primary">Okay</button>
                     </div>

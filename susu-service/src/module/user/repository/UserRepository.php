@@ -76,9 +76,7 @@ class UserRepository extends Repository{
         if(isset($where['lastName'])){
             $this->where()->like('lastName', $where['lastName']);
         }
-        if($this->request()->pagination()->limit()){
-            $this->pagination()->set($this->request()->pagination()->get());
-        }
+        $this->pagination()->set($this->request()->pagination()->get());
         $this->execute();
         return $this->factory->map(
             $this->results()

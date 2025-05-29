@@ -18,7 +18,7 @@ class ListUsers{
     }
 
     public function usersByIdArray(array $idArray):Collector{
-        if(empty($idArray)){
+        if(empty($idArray) && $this->repo->paginationIsEmpty()){
             return new Collector();
         }
         return $this->repo->listUsers([
@@ -28,7 +28,7 @@ class ListUsers{
     }
 
     public function byName(string $name):Collector{
-        if(empty($name)){
+        if(empty($name) && $this->repo->paginationIsEmpty()){
             return new Collector();
         }
         $firstNameCollector = $this->repo->listUsers([
