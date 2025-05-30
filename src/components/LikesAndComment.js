@@ -95,15 +95,26 @@ export const LikesAndComment = ({className, onComment, viewingReplies, onViewRep
     return(
         <div className={className}>
             <div className="d-flex gap-2 text-nowrap">
-                <SpinnerButton onClick={onLike} className="btn btn-sm bg-transparent border-0 text-dark shadow-none p-0" spin={likeSpin}>👍 Like {utils.num.uiFormat(likes)}</SpinnerButton>
-                <SpinnerButton onClick={onDislike} className="btn btn-sm bg-transparent border-0 text-dark shadow-none p-0" spin={dislikeSpin}>👎 Dislike {utils.num.uiFormat(dislikes)}</SpinnerButton>
-                <button onClick={onComment} className="btn btn-sm bg-transparent border-0 text-dark shadow-none p-0">💬 {utils.num.uiFormat(comments)} Comment</button>
+                <SpinnerButton 
+                    onClick={onLike} 
+                    className="btn btn-sm bg-transparent border-0 text-dark shadow-none p-0" spin={likeSpin}
+                >👍 Like {utils.num.uiFormat(likes)}</SpinnerButton>
+                <SpinnerButton 
+                    onClick={onDislike} 
+                    className="btn btn-sm bg-transparent border-0 text-dark shadow-none p-0" spin={dislikeSpin}
+                >👎 Dislike {utils.num.uiFormat(dislikes)}</SpinnerButton>
+                <button onClick={onComment} className="btn btn-sm bg-transparent border-0 text-dark shadow-none p-0">
+                    {object ? <span>💬 {utils.num.uiFormat(comments)} Comments</span> : <span>Reply</span>}
+                </button>
             </div>
-            {onViewReplies && (
+            {onViewReplies && posts.length > 0 && (
                 <div className="d-flex px-2">
                     <div className="border-start border-bottom border-2 rounded-bottom-start-3" style={{width: '100px', height: '15px'}}></div>
                     <div className="px-1">
-                        <button onClick={onViewReplies} className="btn btn-sm bg-transparent border-0 text-dark shadow-none p-0">{viewingReplies ? 'Hide' : 'View'} replies</button>
+                        <button 
+                            onClick={onViewReplies} 
+                            className="btn btn-sm bg-transparent border-0 text-dark shadow-none p-0"
+                        >{viewingReplies ? 'Hide' : 'View'} {countReplies(posts)} replies</button>
                     </div>
                 </div>
             )}

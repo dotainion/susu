@@ -94,7 +94,7 @@ export const Community = () =>{
     }
     
     return(
-        <div className="container pt-3">
+        <div className="container pt-3 p-0">
             <CommunityHeader community={community} members={members}/>
 
             <hr></hr>

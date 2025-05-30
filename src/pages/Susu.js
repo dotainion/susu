@@ -69,7 +69,7 @@ export const Susu = () =>{
     if(loading) return <Loader show />;
 
     return(
-        <div className="container mb-5">
+        <div className="container mb-5 p-0">
             <div className="d-flex justify-content-end gap-3 pt-3">
                 <button onClick={()=>setOpenSusuInvite(true)} className="btn btn-sm"><FaShareAlt/> Share</button>
             </div>

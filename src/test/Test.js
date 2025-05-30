@@ -70,11 +70,11 @@ export const Test = () =>{
         setCommunities(mockData.communities());
     }, []);
 
-    if(!member) return null;
-
     return(
-        <div className="container">
-            
+        <div className="container p-0">
+            <CommunityFeeds 
+                community={mockData.community()} 
+            />
         </div>
     )
 }

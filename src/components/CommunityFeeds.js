@@ -81,7 +81,7 @@ export const CommunityFeeds = ({community}) => {
                 </div>
                 <h6 className="fw-bold mb-3 px-2">Group Activity</h6>
                 <div className="overflow-x-auto px-2">
-                    <LikesAndComment className="mb-2" object={community} posts={posts}/>
+                    <LikesAndComment className="mb-2" object={community} posts={posts} onComment={()=>setShowPosts(!showPosts)} />
                     <button onClick={()=>setShowPosts(!showPosts)} className="btn btn-sm bg-transparent text-dark shadow-none border-0 p-0">{showPosts ? 'Hide' : 'Show'} Comments</button>
                     {showPosts && (
                         <div>
@@ -179,32 +179,34 @@ const Feed = ({post, onReply, level = 0}) => {
                                     <path d="M15 0 v20 q0 10 10 10 h5" stroke="lightgray" fill="transparent" strokeWidth="2"/>
                                 </svg>
                             </div>
-                            {showLine && <div
-                                className="border-start border-2 position-absolute bottom-0 start-0 h-100" 
-                                style={{marginLeft: '14px', borderColor: 'lightgray'}}
-                            ></div>}
+                            {showLine && (
+                                <div
+                                    className="border-start border-2 position-absolute bottom-0 start-0 h-100" 
+                                    style={{marginLeft: '14px', borderColor: 'lightgray'}}
+                                ></div>
+                            )}
                         </Fragment>
                     )}
                     <div className="card border-0 bg-transparent w-100 my-2">
                         <div className="card-body px-0 py-0">
-                            <div className="d-flex gap-2">
+                            <div className="d-flex gap-1">
                                 <div
                                     className="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center"
-                                    style={{width: '35px', height: '35px', minWidth: '35px', minHeight: '35px', fontWeight: '600'}}
+                                    style={{width: '30px', height: '30px', minWidth: '30px', minHeight: '30px', fontWeight: '600'}}
                                 >{`${post.attributes.author.attributes.firstName[0]}${post.attributes.author.attributes.lastName[0]}`.toUpperCase()}</div>
-                                <div>
-                                    <h6 className="fw-bold m-0">{user.id === post.attributes.author.id ? 'You' : `${post.attributes.author.attributes.firstName} ${post.attributes.author.attributes.lastName}`}</h6>
-                                    <div className="text-muted small"><small>{utils.date.toLocalDate(post.attributes.created)}</small></div>
+                                <div className="bg-light px-2 rounded-3">
+                                    <h6 className="fw-bold small m-0">{user.id === post.attributes.author.id ? 'You' : `${post.attributes.author.attributes.firstName} ${post.attributes.author.attributes.lastName}`}</h6>
+                                    <div className="text-muted" style={{fontSize: '8px'}}>{utils.date.toLocalDate(post.attributes.created)}</div>
                                     <div className="quill-content" dangerouslySetInnerHTML={{__html: post.attributes.contents}} />
                                 </div>
                             </div>
-                            <LikesAndComment onComment={onOpenComment} viewingReplies={viewReplies} onViewReplies={()=>setViewReplies(!viewReplies)} object={post}/>
+                            <LikesAndComment onComment={onOpenComment} viewingReplies={viewReplies} onViewReplies={()=>setViewReplies(!viewReplies)} posts={post.attributes.replies}/>
                             <div ref={replayContainerRef}></div>
                         </div>
                     </div>
                 </div>
                 {viewReplies && (
-                    <div className="ms-4">
+                    <div className="ms-0 ms-sm-4">
                         {
                             post.attributes.replies.length?
                             post.attributes.replies.map(reply => (
@@ -219,7 +221,7 @@ const Feed = ({post, onReply, level = 0}) => {
             </div>
 
             {showReply && (
-                <div ref={replyEditorRef} className="position-fixed bg-white px-3" style={{zIndex: 9}}>
+                <div ref={replyEditorRef} className="position-fixed bg-white px-3" style={{zIndex: 99999}}>
                     <Editor value={replyValue} onChange={setReplyValue} onSubmit={handleReply} size="sm" placeholder="Reply to the comment..." />
                 </div>
             )}

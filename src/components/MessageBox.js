@@ -187,12 +187,14 @@ const Message = ({msg, isCommunity, onUpdate}) =>{
     const { user } = useAuth();
 
     const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const messageRef = useRef();
 
     class Callback{
         constructor(observer=null){
             this.observer = observer;
+            setLoading(true);
         }
         success = () =>{
             setError(false);
@@ -200,7 +202,7 @@ const Message = ({msg, isCommunity, onUpdate}) =>{
             this.observer?.unobserve?.(messageRef.current);
         }
         unsuccess = () =>setError(true);
-        finall = () =>null;
+        finall = () =>setLoading(false);
     }
 
     const update = () =>{
@@ -244,9 +246,16 @@ const Message = ({msg, isCommunity, onUpdate}) =>{
                 <div className={`d-flex flex-column ${user.id === msg.attributes.user.id ? 'align-items-end' : 'align-items-start'}`}>
                     <span className="user-select-none small bg-danger bg-opacity-10 rounded-1 px-2 text-danger">
                         <span>Server Error</span>
-                        <span onClick={update} className="fw-semibold pointer text-decoration-underline ms-3">
+                        <span onClick={update} className="position-relative fw-semibold pointer text-decoration-underline ms-3">
                             <BiReset />
                             <span>Resend</span>
+                            {loading && (
+                                <div className="position-absolute top-50 start-50 translate-middle">
+                                    <div class="spinner-border spinner-border-sm" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            )}
                         </span>
                     </span>
                 </div>

@@ -43,12 +43,7 @@ export const PageHeader = () =>{
         communityId && 
         newMenuList.push({
             title: 'Contributors',
-            icon: ()=> (
-                <Fragment>
-                    <MdPeople />
-                    <FaCreditCard />
-                </Fragment>
-            ),
+            icon: MdPeople,
             action: ()=>navigate(routes.susu().nested().contributors(communityId)),
         });
 
