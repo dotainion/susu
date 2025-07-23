@@ -9,6 +9,7 @@ import { ProgressBar } from "../components/ProgressBar";
 import { useLayout } from "../layout/Layout";
 import { ShareSocialMediaOverlay } from "../components/ShareSocialMediaOverlay";
 import { mockData } from "../contents/MockData";
+import { Loader } from "../components/Loader";
 
 export const Contributors = () =>{
     const { user } = useAuth();
@@ -16,6 +17,7 @@ export const Contributors = () =>{
 
     const [susu , setSusu] = useState();
     const [members, setMembers] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [schedules, setSchedules] = useState([])
     const [openInvite, setOpenInvite] = useState(false);
     const [contributions, setContributions] = useState([]);
@@ -65,16 +67,31 @@ export const Contributors = () =>{
     }, []);
 
     useEffect(() => {
+        let susuLoading = true;
+        let scheduleLoading = true;
+
+        const stopLoader = () =>{
+            if(!susuLoading && !scheduleLoading){
+                setLoading(false);
+            }
+        }
+
         api.susu.active(params.communityId).then((response)=>{
             setSusu(response.data.data[0]);
             setMembers(response.data.data[0].attributes.members || []);
         }).catch((error)=>{
             
+        }).finally(()=>{
+            susuLoading = false;
+            stopLoader();
         });
         api.schedule.list(params.communityId).then((response)=>{
             setSchedules(response.data.data);
         }).catch((error)=>{
             
+        }).finally(()=>{
+            scheduleLoading = false;
+            stopLoader();
         });
         if(process.env.NODE_ENV === 'development'){
             setMembers(mockData.susu().attributes.members);
@@ -107,6 +124,8 @@ export const Contributors = () =>{
             percent: ((totalContributions / totalExpectedContribution) * 100) || 0
         });
     }, [contributions, schedules, susu]);
+
+    if(loading) return <Loader show />
 
     return(
         <div className="container bg-white shadow-sm rounded-4 p-4 mt-4">

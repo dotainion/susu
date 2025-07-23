@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useState } from "react";
-import { FaCheckCircle, FaCreditCard, FaShareAlt } from "react-icons/fa";
+import { FaCheckCircle, FaShareAlt } from "react-icons/fa";
 import { CommenceSusuOverlay } from "../components/CommenceSusuOverlay";
 import { api } from "../request/Api";
 import { ParseError } from "../utils/ParseError";
@@ -75,36 +75,29 @@ export const Susu = () =>{
             </div>
             <hr></hr>
             <div className="mb-3">
-                {
-                    susu
-                    ? <div className="m-auto w-50 w-sm-100 my-3">A susu is currently active, and members are contributing to the pooled fund as per the established schedule.</div>
-                    : <div className="d-flex flex-column align-items-center justify-content-center p-4 bg-light rounded shadow-sm">
+                {!susu && (
+                    <div className="d-flex flex-column align-items-center justify-content-center p-4 bg-light rounded shadow-sm">
                         <div className="text-center">
                             <button onClick={()=>setOpenCommenceSusu(true)} className="btn btn-sm btn-success fw-bold p-3">Commence susu</button>
                         </div>
                         <div className="m-auto w-50 w-sm-100 mt-3">Initiates a new Susu by setting up the group, defining contribution amounts, frequency, and member requirements. Once the group is created, members can join and begin contributing, marking the official start of the pooling process.</div>
                     </div>
-                }
-                {
-                    susu?.attributes?.pendingStart && (
-                        <div className="d-flex flex-column align-items-center justify-content-center p-4 bg-light rounded shadow-sm">
-                            <h3 className="fw-bold mb-3 text-primary">Susu Group Started!</h3>
-                            <p className="text-muted mb-4 text-center">
-                                Your Susu has successfully started! Now it's time to invite members and get started on achieving your goals together.
-                                <strong className="text-success ms-2">Let's build a stronger community!</strong>
-                            </p>
-                            <button onClick={()=>setOpenSusuInvite(true)} className="btn btn-primary d-flex align-items-center gap-2">
-                                <MdPersonAdd size={20} />
-                                <span>Add Members</span>
-                            </button>
-                        </div>
-                    )
-                }
-                {susu && <SusuCard susu={susu} />}
+                )}
+                {susu?.attributes?.pendingStart && (
+                    <div className="d-flex flex-column align-items-center justify-content-center p-4 bg-light rounded shadow-sm">
+                        <h3 className="fw-bold mb-3 text-primary">Susu Group Started!</h3>
+                        <p className="text-muted mb-4 text-center">
+                            Your Susu has successfully started! Now it's time to invite members and get started on achieving your goals together.
+                            <strong className="text-success ms-2">Let's build a stronger community!</strong>
+                        </p>
+                        <button onClick={()=>setOpenSusuInvite(true)} className="btn btn-primary d-flex align-items-center gap-2">
+                            <MdPersonAdd size={20} />
+                            <span>Add Members</span>
+                        </button>
+                    </div>
+                )}
             </div>
             
-            <hr></hr>
-
             {errors ? <div className="alert alert-danger small border-0">{errors}</div> : null}
                     
             <div className={`d-flex flex-wrap justify-content-center ${susu ? '' : 'opacity-50'}`}>
@@ -152,7 +145,6 @@ export const Susu = () =>{
                         <div className="d-flex justify-content-end mt-3">
                             <button onClick={()=>navigate(routes.susu().nested().contributors(params.communityId, susu.id))} className="d-flex align-items-center gap-1 btn btn-sm btn-secondary text-nowrap fw-bold" disabled={!susu} style={{minWidth: 150}}>
                                 <MdPeople />
-                                <FaCreditCard />
                                 <span>Contributors & Pay</span>
                             </button>
                         </div>
@@ -183,6 +175,8 @@ export const Susu = () =>{
                 <div className="col-12 col-lg-4 m-0 p-1">
                 </div>
             </div>
+
+            {susu && <SusuCard susu={susu} />}
 
             <ShareSocialMediaOverlay
                 show={openSusuInvite}

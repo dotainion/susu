@@ -21,8 +21,8 @@ class ListConversationService extends Service{
         Assert::stringNotEmpty($memberId, 'Member not found.');
         Assert::stringNotEmpty($receipientId, 'Receipient not found.');
 
-        $collector = $this->messages->conversation(new Id($memberId), new Id($receipientId), $read);
-        $this->users->appendUsers($collector, $this->user());
+        $conversations = $this->messages->conversation(new Id($memberId), new Id($receipientId), $read);
+        $collector = $this->users->appendUsers($conversations, $this->user());
 
         $this->setOutput($collector);
         return $this;

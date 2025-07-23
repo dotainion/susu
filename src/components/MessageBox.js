@@ -119,7 +119,6 @@ export const MessageBox = ({messageToName, messages, sendMessage, isCommunity, a
     }, []);
 
     useEffect(()=>{
-        console.log(messages)
         if(!messages?.length) return;
         let lastSenderId = null;
         const sortAndMapMessages = messages.sort((a, b)=>new Date(a.attributes.date) - new Date(b.attributes.date)).map((msg)=>{

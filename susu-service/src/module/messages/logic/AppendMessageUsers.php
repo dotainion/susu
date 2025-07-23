@@ -32,7 +32,11 @@ class AppendMessageUsers{
 
         array_map(fn($msg)=>$collector->add($msg), $messageList);
 
-        $users = $this->users->usersByIdArray(array_unique($collector->attrArray('fromId')));
+        $userIdArray = [
+            ...$collector->attrArray('toId'), 
+            ...$collector->attrArray('fromId')
+        ];
+        $users = $this->users->usersByIdArray(array_unique($userIdArray));
         if(!$users->hasItem()){
             return new Collector();
         }

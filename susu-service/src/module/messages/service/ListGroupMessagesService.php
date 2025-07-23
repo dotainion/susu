@@ -20,8 +20,8 @@ class ListCommunityMessagesService extends Service{
     public function process($communityId, $read){
         Assert::stringNotEmpty($communityId, 'Community not found.');
 
-        $collector = $this->messages->communityConversation(new Id($communityId), $read);
-        $this->users->appendUsers($collector, $this->user());
+        $conversations = $this->messages->communityConversation(new Id($communityId), $read);
+        $collector = $this->users->appendUsers($conversations, $this->user());
 
         $this->setOutput($collector);
         return $this;

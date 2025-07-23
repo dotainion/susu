@@ -152,7 +152,7 @@ export const SusuCard = ({susu: susuProp}) =>{
                     <FaClock className="me-2 text-warning" />
                     <strong>Next Payment:</strong> {nextPayout()}
                 </div>
-            </div>
+            </div>Total Members
 
             <h6 className="fw-bold mb-3">Your Contribution Progress</h6>
             <ProgressBar value={percentage} max={totalExpected}>{(perc)=><div>{perc}% contributed</div>}</ProgressBar>
@@ -172,7 +172,7 @@ export const SusuCard = ({susu: susuProp}) =>{
                 </div>
             </div>
 
-            <h6 className="fw-bold mb-2">Group Members {susuMembers.length}</h6>
+            <h6 className="fw-bold mb-2">Susu Members {susuMembers.length}</h6>
             <div className="d-flex flex-wrap gap-3 mb-4">
                 {susuMembers.slice(0, 5).map((member, idx) => (
                     <div onClick={()=>navigate(routes.susu().nested().member(member.id))} key={idx} className="d-flex align-items-center gap-2">

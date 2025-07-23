@@ -20,8 +20,8 @@ class ListUnSeenMessagesService extends Service{
     public function process($memberId){
         Assert::stringNotEmpty($memberId, 'Member not found.');
 
-        $collector = $this->messages->unSeenConversations(new Id($memberId));
-        $this->users->appendUsers($collector, $this->user());
+        $conversations = $this->messages->unSeenConversations(new Id($memberId));
+        $collector = $this->users->appendUsers($conversations, $this->user());
 
         $this->setOutput($collector);
         return $this;
